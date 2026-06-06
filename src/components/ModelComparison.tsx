@@ -12,7 +12,7 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
   const current = comparisons[activeCategory];
 
   return (
-    <section className="py-24 bg-[#1e1e1e] text-white overflow-hidden border-t border-white/5">
+    <section className="py-24 bg-ink-850 text-white overflow-hidden border-t border-white/5">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight mb-12">
@@ -67,7 +67,7 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
                       <tr 
                         key={idx} 
                         className={`border-b border-white/5 transition-colors ${
-                          idx % 2 === 0 ? 'bg-[#2a2a2a]' : 'bg-[#222222]'
+                          idx % 2 === 0 ? 'bg-ink-800' : 'bg-ink-850'
                         }`}
                       >
                         <td className="py-6 px-10 text-[14px] font-medium text-white">

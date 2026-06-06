@@ -30,7 +30,7 @@ export function FAQSection({ brandName }: { brandName: string }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24 bg-[#222222] text-white">
+    <section className="py-24 bg-ink-850 text-white">
       <div className="max-w-4xl mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-center mb-16">
           ON RÉPOND À VOS <span className="text-brand-cyan">QUESTIONS</span>
@@ -38,7 +38,7 @@ export function FAQSection({ brandName }: { brandName: string }) {
         
         <div className="space-y-4">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="bg-[#2a2a2a] rounded-2xl overflow-hidden border border-white/5">
+            <div key={idx} className="bg-ink-800 rounded-2xl overflow-hidden border border-white/5">
               <button
                 onClick={() => setActiveIndex(activeIndex === idx ? null : idx)}
                 className="w-full text-left p-6 flex items-center justify-between font-bold text-lg uppercase tracking-tight hover:bg-white/5 transition-colors"

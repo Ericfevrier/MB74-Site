@@ -4,7 +4,7 @@ export function Hero() {
   return (
     <section className="relative flex-shrink-0 h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
       <img
-        src="https://i.postimg.cc/KvGccRYb/2026-g23-perf-18.jpg"
+        src="/images/2026-g23-perf-18.jpg"
         alt="Bateau de sport en navigation sur le lac d'Annecy"
         className="absolute inset-0 z-0 w-full h-full object-cover transition-transform duration-1000 scale-105"
         fetchPriority="high"
@@ -48,7 +48,7 @@ export function Hero() {
              <span className="text-white text-[16px] font-bold tracking-[0.12em] uppercase">Concessionnaire</span>
              <div className="flex items-center border-l border-white/20 pl-3">
                <img 
-                 src="https://i.postimg.cc/nhJmcmL9/Design-sans-titre-10-11zon-e1753865977660-Photoroom.png" 
+                 src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png" 
                  alt="Nautique Boats concessionnaire officiel" 
                  className="h-10 object-contain" 
                  referrerPolicy="no-referrer"
@@ -62,7 +62,7 @@ export function Hero() {
             <span className="text-white text-[16px] font-bold tracking-widest uppercase">Importateur Exclusif</span>
             <div className="flex items-center border-l border-white/20 pl-3">
               <img 
-                src="https://i.postimg.cc/mkvXtxyB/Connelly-White-Logo.webp" 
+                src="/images/connelly-white-logo.webp" 
                 alt="Connelly importateur exclusif" 
                 className="h-8 object-contain" 
                 referrerPolicy="no-referrer"

@@ -19,7 +19,7 @@ export function ModelPage() {
 
   if (!isG25Paragon || !brand) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-[#F4F4F4]">
+      <div className="min-h-[60vh] flex items-center justify-center bg-brand-light">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-brand-dark uppercase tracking-tight mb-4">Modèle en cours de création</h2>
           <Link to="/" className="text-brand-cyan hover:underline font-bold uppercase text-sm">
@@ -49,10 +49,10 @@ export function ModelPage() {
     planDeau: "lac d'Annecy",
     note: "4.9",
     nbAvis: "12",
-    heroImage: "https://i.postimg.cc/05YSmLvk/2026-p23-ext-09-11zon.jpg",
+    heroImage: "/images/2026-p23-ext-09-11zon.jpg",
     gallery: [
-      "https://i.postimg.cc/KvGccRYb/2026-g23-perf-18.jpg",
-      "https://i.postimg.cc/xjvmHWQT/2026-p25-ext-16.jpg"
+      "/images/2026-g23-perf-18.jpg",
+      "/images/2026-p25-ext-16.jpg"
     ]
   };
 
@@ -113,7 +113,7 @@ export function ModelPage() {
   };
 
   return (
-    <div className="bg-[#F4F4F4] text-brand-dark">
+    <div className="bg-brand-light text-brand-dark">
       <Helmet>
         <title>{`${modelData.modeleCourt} ${modelData.annee} — Prix, Fiche Technique & Essai | MotorBoat74`}</title>
         <meta name="description" content={`Découvrez le ${modelData.modele} ${modelData.annee} : fiche technique, prix, essai sur le ${modelData.planDeau}. Concessionnaire officiel ${modelData.marque} à ${modelData.ville}. Devis & reprise.`} />
@@ -133,7 +133,7 @@ export function ModelPage() {
             referrerPolicy="no-referrer"
             fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/60 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-transparent"></div>
         </div>
         
         <div className="container mx-auto px-6 max-w-7xl relative z-10">
@@ -177,7 +177,7 @@ export function ModelPage() {
           <div className="flex flex-col lg:flex-row gap-12 items-center">
             <div className="w-full lg:w-1/2">
               <h2 className="text-2xl font-bold uppercase tracking-tight text-brand-dark mb-6">En bref</h2>
-              <div className="bg-[#F8F8F8] rounded-2xl p-6 border border-gray-100">
+              <div className="bg-brand-mist rounded-2xl p-6 border border-gray-100">
                 <table className="w-full text-sm">
                   <tbody>
                     <tr className="border-b border-gray-200"><td className="py-3 font-medium text-gray-500">Type</td><td className="py-3 font-bold text-right">Wakeboat {modelData.gamme}</td></tr>
@@ -202,7 +202,7 @@ export function ModelPage() {
       </section>
 
       {/* 5. Présentation du modèle */}
-      <section className="py-24 bg-[#F4F4F4]">
+      <section className="py-24 bg-brand-light">
         <div className="container mx-auto px-6 max-w-4xl text-center">
           <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-8">
             {modelData.modele} :<br/><span className="text-brand-cyan">Présentation et points forts</span>
@@ -222,7 +222,7 @@ export function ModelPage() {
       </section>
 
       {/* 6. Fiche technique */}
-      <section className="py-24 bg-[#111111] text-white">
+      <section className="py-24 bg-ink-950 text-white">
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold uppercase tracking-tight mb-4">Fiche technique du <span className="text-brand-cyan">{modelData.modeleCourt} {modelData.annee}</span></h2>
@@ -305,7 +305,7 @@ export function ModelPage() {
       </section>
 
       {/* 8. Confort, aménagement & technologies */}
-      <section className="py-24 bg-[#F8F8F8]">
+      <section className="py-24 bg-brand-mist">
         <div className="container mx-auto px-6 max-w-7xl text-center mb-16">
           <h2 className="text-4xl font-bold uppercase tracking-tight mb-4">Aménagement, confort et <span className="text-brand-cyan">équipements</span></h2>
           <p className="text-gray-500 text-lg max-w-2xl mx-auto">Un condensé d'innovation nautique pensé pour les journées prolongées sur l'eau.</p>
@@ -334,7 +334,7 @@ export function ModelPage() {
         <div className="container mx-auto px-6 max-w-5xl relative z-10 text-center">
           <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-8">Prix du <span className="text-brand-cyan">{modelData.modeleCourt} {modelData.annee}</span></h2>
           
-          <div className="bg-[#1a1a1a] p-10 rounded-[2rem] border border-white/10 mb-12 flex flex-col md:flex-row items-center justify-between gap-8 text-left">
+          <div className="bg-ink-900 p-10 rounded-[2rem] border border-white/10 mb-12 flex flex-col md:flex-row items-center justify-between gap-8 text-left">
             <div>
               <h3 className="text-2xl font-bold mb-2">{modelData.modeleCourt} Neuf</h3>
               <p className="text-gray-400 mb-4">Configuration standard moteur {modelData.moteur}.</p>
@@ -374,7 +374,7 @@ export function ModelPage() {
           <div className="bg-brand-cyan p-8 rounded-2xl text-brand-dark text-center shadow-[0_0_50px_rgba(30,227,219,0.15)] mt-12">
             <h3 className="text-2xl font-bold uppercase tracking-tighter mb-4">Recevoir le prix exact / devis personnalisé</h3>
             <p className="mb-6 font-medium max-w-2xl mx-auto">Configurez votre bateau idéal avec notre équipe. Nous vous envoyons un devis détaillé sous 24h, intégrant vos options préférées.</p>
-            <button className="bg-brand-dark text-white px-10 py-4 rounded-xl font-bold hover:bg-[#222222] transition-colors uppercase tracking-widest shadow-xl">
+            <button className="bg-brand-dark text-white px-10 py-4 rounded-xl font-bold hover:bg-ink-850 transition-colors uppercase tracking-widest shadow-xl">
               Demander un devis
             </button>
           </div>
@@ -407,7 +407,7 @@ export function ModelPage() {
               </div>
             </div>
             <div className="w-full lg:w-1/2 relative">
-               <img src="https://i.postimg.cc/xjvmHWQT/2026-p25-ext-16.jpg" alt={`Essai ${modelData.modeleCourt} lac d'annecy`} className="rounded-[2rem] shadow-xl w-full object-cover aspect-[4/3]" referrerPolicy="no-referrer" />
+               <img src="/images/2026-p25-ext-16.jpg" alt={`Essai ${modelData.modeleCourt} lac d'annecy`} className="rounded-[2rem] shadow-xl w-full object-cover aspect-[4/3]" referrerPolicy="no-referrer" />
                <div className="absolute -bottom-8 -left-8 bg-brand-cyan text-brand-dark p-8 rounded-3xl shadow-xl hidden md:block">
                  <div className="flex items-center gap-4">
                    <Award size={48} />
@@ -423,7 +423,7 @@ export function ModelPage() {
       </section>
 
       {/* 11. Vendre ou faire reprendre */}
-      <section id="reprise" className="py-24 bg-[#F8F8F8]">
+      <section id="reprise" className="py-24 bg-brand-mist">
         <div className="container mx-auto px-6 max-w-5xl text-center">
           <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight text-brand-dark mb-6">
             Vendre ou faire reprendre votre <span className="text-brand-cyan">{modelData.modeleCourt}</span>
@@ -455,7 +455,7 @@ export function ModelPage() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[600px] text-left">
               <thead>
-                <tr className="bg-[#111111] text-white">
+                <tr className="bg-ink-950 text-white">
                   <th className="py-4 px-6 rounded-tl-xl font-bold uppercase">Caractéristique</th>
                   <th className="py-4 px-6 text-brand-cyan font-bold uppercase">{modelData.modeleCourt}</th>
                   <th className="py-4 px-6 font-bold uppercase rounded-tr-xl">G23 Paragon</th>
@@ -492,7 +492,7 @@ export function ModelPage() {
       </section>
 
       {/* 13. Photos, Vidéos & Avis */}
-      <section className="py-24 bg-[#F8F8F8]">
+      <section className="py-24 bg-brand-mist">
         <div className="container mx-auto px-6 max-w-7xl">
           <h2 className="text-3xl font-bold uppercase tracking-tight text-brand-dark mb-10 text-center">
             Photos et vidéos du {modelData.modeleCourt}
@@ -535,7 +535,7 @@ export function ModelPage() {
           </h2>
           
           <div className="space-y-4">
-            <details className="group bg-[#F4F4F4] rounded-2xl border border-gray-100 [&_summary::-webkit-details-marker]:hidden">
+            <details className="group bg-brand-light rounded-2xl border border-gray-100 [&_summary::-webkit-details-marker]:hidden">
               <summary className="flex items-center justify-between p-6 cursor-pointer font-bold text-lg">
                 Quel est le prix du {modelData.modeleCourt} ?
                 <ChevronRight className="transition-transform group-open:rotate-90 text-brand-cyan" size={24} />
@@ -544,7 +544,7 @@ export function ModelPage() {
                 Le {modelData.modeleCourt} est disponible à partir de {modelData.prixDepart} chez MotorBoat74. Ce prix varie selon les options (motoriation côtière, packs audio, couleurs de gelcoat). Contactez-nous pour un devis personnalisé clair.
               </div>
             </details>
-            <details className="group bg-[#F4F4F4] rounded-2xl border border-gray-100 [&_summary::-webkit-details-marker]:hidden">
+            <details className="group bg-brand-light rounded-2xl border border-gray-100 [&_summary::-webkit-details-marker]:hidden">
               <summary className="flex items-center justify-between p-6 cursor-pointer font-bold text-lg">
                 Peut-on essayer le {modelData.modeleCourt} à {modelData.ville} ?
                 <ChevronRight className="transition-transform group-open:rotate-90 text-brand-cyan" size={24} />
@@ -553,7 +553,7 @@ export function ModelPage() {
                 Oui, absolument. En tant que concessionnaire {modelData.marque}, MotorBoat74 organise des essais complets de la gamme Paragon sur le {modelData.planDeau}. Il suffit de réserver votre créneau avec notre équipe.
               </div>
             </details>
-            <details className="group bg-[#F4F4F4] rounded-2xl border border-gray-100 [&_summary::-webkit-details-marker]:hidden">
+            <details className="group bg-brand-light rounded-2xl border border-gray-100 [&_summary::-webkit-details-marker]:hidden">
               <summary className="flex items-center justify-between p-6 cursor-pointer font-bold text-lg">
                 Le {modelData.modeleCourt} est-il disponible en occasion ?
                 <ChevronRight className="transition-transform group-open:rotate-90 text-brand-cyan" size={24} />
@@ -562,7 +562,7 @@ export function ModelPage() {
                 L'inventaire d'occasion évolue rapidement. Nous rentrons ponctuellement des {modelData.gamme} récents entièrement révisés. Contactez-nous pour être inscrit sur notre liste de recherche privée.
               </div>
             </details>
-            <details className="group bg-[#F4F4F4] rounded-2xl border border-gray-100 [&_summary::-webkit-details-marker]:hidden">
+            <details className="group bg-brand-light rounded-2xl border border-gray-100 [&_summary::-webkit-details-marker]:hidden">
               <summary className="flex items-center justify-between p-6 cursor-pointer font-bold text-lg">
                 Quel moteur équipe le {modelData.modeleCourt} ?
                 <ChevronRight className="transition-transform group-open:rotate-90 text-brand-cyan" size={24} />
@@ -583,7 +583,7 @@ export function ModelPage() {
               <h2 className="text-4xl font-bold uppercase tracking-tight mb-8">
                 MotorBoat74, concessionnaire officiel {modelData.marque} à {modelData.ville}
               </h2>
-              <div className="bg-[#111111] p-8 rounded-2xl mb-8">
+              <div className="bg-ink-950 p-8 rounded-2xl mb-8">
                 <div className="flex items-start gap-4 mb-4">
                   <MapPin className="text-brand-cyan flex-shrink-0 mt-1" size={24} />
                   <div>

@@ -33,18 +33,18 @@ const megaMenuServices = [
 ];
 
 const megaMenuBateaux = [
-  { name: "Bateaux neufs", desc: "Les dernières nouveautés", icon: Compass },
-  { name: "Bateau occasion", desc: "Certifiés et révisés", icon: Gauge },
+  { name: "Bateaux neufs", desc: "Les dernières nouveautés", icon: Compass, path: "/bateaux-neufs" },
+  { name: "Bateau occasion", desc: "Certifiés et révisés", icon: Gauge, path: "/bateaux-occasion" },
 ];
 
 const megaMenuMarques = [
-  { name: "Nautique", logo: "https://i.postimg.cc/nhJmcmL9/Design-sans-titre-10-11zon-e1753865977660-Photoroom.png" },
-  { name: "Mastercraft", logo: "https://i.postimg.cc/sxMczwWh/MCFT-70e1d427.png" },
-  { name: "Tigé", logo: "https://i.postimg.cc/Hxd0SZKD/tigeboats-logo-black-orange-Logo.jpg" },
-  { name: "Centurion", logo: "https://i.postimg.cc/Fz1Lq2Vf/centurion-boats-logo-png-seeklogo-387911.png" },
-  { name: "Supra", logo: "https://i.postimg.cc/VNY5pxYs/311-3118902-supra-logo-png-transparent-supra-boats-logo-png.png" },
-  { name: "Moomba", logo: "https://i.postimg.cc/bwR1ZHrH/moomba-roo-logo-Bf-Vrq-X3V.jpg" },
-  { name: "Axis", logo: "https://i.postimg.cc/FKBdSP4b/header-logo.png" }
+  { name: "Nautique", logo: "/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png" },
+  { name: "Mastercraft", logo: "/images/mcft-70e1d427.png" },
+  { name: "Tigé", logo: "/images/tigeboats-logo-black-orange-logo.jpg" },
+  { name: "Centurion", logo: "/images/centurion-boats-logo-png-seeklogo-387911.png" },
+  { name: "Supra", logo: "/images/311-3118902-supra-logo-png-transparent-supra-boats-logo-png.png" },
+  { name: "Moomba", logo: "/images/moomba-roo-logo-bf-vrq-x3v.jpg" },
+  { name: "Axis", logo: "/images/header-logo.png" }
 ];
 
 export function Header() {
@@ -58,7 +58,7 @@ export function Header() {
           
           {/* Logo Area */}
           <Link to="/" className="flex items-center space-x-4 flex-shrink-0 cursor-pointer group ml-[-15px]">            <img 
-              src="https://i.postimg.cc/L61DX6Qx/logo-transprent.png" 
+              src="/images/logo-transprent.png" 
               alt="Motorboat 74" 
               className="h-[100px] w-[100px] object-contain transition-transform group-hover:scale-105 duration-300"
               referrerPolicy="no-referrer"
@@ -102,11 +102,11 @@ export function Header() {
                   <ChevronDown size={14} className={`opacity-50 transition-transform duration-300 ${activeMenu === 'marques' ? 'rotate-180 opacity-100' : ''}`} />
                 </span>
               </li>
-              {["Shop", "La Team"].map((item) => (
-                <li key={item} className="h-[120px] flex items-center">
-                  <a href="#" className="hover:text-brand-cyan transition-colors uppercase py-2">
-                    {item}
-                  </a>
+              {[{ name: "Shop", path: "/shop" }, { name: "La Team", path: "/la-team" }].map((item) => (
+                <li key={item.name} className="h-[120px] flex items-center">
+                  <Link to={item.path} className="hover:text-brand-cyan transition-colors uppercase py-2">
+                    {item.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -173,7 +173,7 @@ export function Header() {
                   {megaMenuBateaux.map((item, i) => {
                     const Icon = item.icon;
                     return (
-                      <a key={i} href="#" className="flex items-center gap-3 group/item hover:bg-white/5 p-3 rounded-2xl transition-all border border-transparent hover:border-white/10">
+                      <Link key={i} to={item.path} onClick={() => setActiveMenu(null)} className="flex items-center gap-3 group/item hover:bg-white/5 p-3 rounded-2xl transition-all border border-transparent hover:border-white/10">
                         <div className="w-9 h-9 bg-white/5 rounded-xl flex items-center justify-center text-brand-cyan group-hover/item:bg-brand-cyan group-hover/item:text-brand-dark transition-all">
                           <Icon size={16} />
                         </div>
@@ -181,7 +181,7 @@ export function Header() {
                           <p className="font-bold text-base group-hover/item:text-brand-cyan transition-colors">{item.name}</p>
                           {item.desc && <p className="text-xs text-gray-500 font-medium">{item.desc}</p>}
                         </div>
-                      </a>
+                      </Link>
                     );
                   })}
                 </div>
@@ -194,18 +194,18 @@ export function Header() {
           <div className="hidden lg:flex items-center space-x-10 -mr-[25px]">
             <div className="text-right mr-[25px]">
               <p className="text-brand-cyan text-[10px] font-bold tracking-widest mb-1 leading-none">NOUS APPELER</p>
-              <p className="text-white font-bold text-xl leading-none hover:text-brand-cyan transition-colors cursor-pointer tracking-tight">04 57 57 27 27</p>
+              <a href="tel:+33457572727" className="block text-white font-bold text-xl leading-none hover:text-brand-cyan transition-colors cursor-pointer tracking-tight">04 57 57 27 27</a>
             </div>
-            <button className="bg-brand-cyan text-brand-dark font-bold py-4 px-8 rounded-2xl uppercase text-[11px] tracking-widest hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-brand-cyan/40 transition-all duration-300">
+            <a href="mailto:contact@motorboat74.com" className="bg-brand-cyan text-brand-dark font-bold py-4 px-8 rounded-2xl uppercase text-[11px] tracking-widest hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-brand-cyan/40 transition-all duration-300">
               Contactez-nous
-            </button>
+            </a>
           </div>
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center gap-4">
-             <button className="bg-brand-cyan text-brand-dark px-5 py-2.5 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:brightness-110 active:scale-95 transition-all">
-              Contact
-            </button>
+             <a href="tel:+33457572727" className="bg-brand-cyan text-brand-dark px-5 py-2.5 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:brightness-110 active:scale-95 transition-all">
+              Appeler
+            </a>
             <button aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white hover:text-brand-cyan p-2 bg-white/5 rounded-xl transition-all">
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -215,14 +215,14 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-brand-dark/98 backdrop-blur-2xl border-t border-brand-cyan/20 absolute top-full left-0 w-full shadow-2xl h-[calc(100vh-90px)] overflow-y-auto z-50">
+        <div className="lg:hidden bg-brand-dark/98 backdrop-blur-2xl border-t border-brand-cyan/20 absolute top-full left-0 w-full shadow-2xl h-[calc(100vh-120px)] overflow-y-auto z-50">
           <nav aria-label="Menu principal mobile" className="flex flex-col py-8 px-6 gap-10">
-            <div className="flex items-center gap-3 font-bold text-brand-cyan justify-center pb-8 border-b border-white/5">
+            <a href="tel:+33457572727" className="flex items-center gap-3 font-bold text-brand-cyan justify-center pb-8 border-b border-white/5">
               <div className="bg-brand-cyan/10 p-3 rounded-xl">
                 <Phone size={20} />
               </div>
               <span className="text-2xl tracking-tight">04 57 57 27 27</span>
-            </div>
+            </a>
             
             <div className="space-y-6">
               <span className="uppercase text-[10px] tracking-widest font-bold text-brand-cyan/40 px-2 block">SERVICES</span>
@@ -271,19 +271,19 @@ export function Header() {
               <span className="uppercase text-[10px] tracking-widest font-bold text-brand-cyan/40 px-2 block">CATALOGUES</span>
               <div className="grid grid-cols-1 gap-3">
                 {megaMenuBateaux.map((item, idx) => (
-                  <a key={idx} href="#" className="flex items-center space-x-3 px-6 py-4 hover:bg-white/5 transition-all rounded-2xl border border-white/5 text-gray-200">
+                  <Link key={idx} to={item.path} onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 px-6 py-4 hover:bg-white/5 transition-all rounded-2xl border border-white/5 text-gray-200">
                     <item.icon size={16} className="text-brand-cyan" />
                     <span className="text-base font-bold">{item.name}</span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
 
             <div className="flex flex-col gap-2 pt-4 border-t border-white/5">
-              {["La Team", "Boutique", "Actualités"].map((item) => (
-                <a key={item} href="#" className="uppercase tracking-widest font-bold hover:text-brand-cyan text-xl py-4 px-4 transition-all">
-                  {item}
-                </a>
+              {[{ name: "La Team", path: "/la-team" }, { name: "Boutique", path: "/shop" }].map((item) => (
+                <Link key={item.name} to={item.path} onClick={() => setIsMobileMenuOpen(false)} className="uppercase tracking-widest font-bold hover:text-brand-cyan text-xl py-4 px-4 transition-all">
+                  {item.name}
+                </Link>
               ))}
             </div>
 

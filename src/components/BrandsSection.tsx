@@ -14,18 +14,18 @@ export function BrandsSection() {
   };
 
   const categories = [
-    { name: "Ski Nautique", img: "https://i.postimg.cc/rF8Vf3ST/26723-16656744.webp" },
-    { name: "Wakeboard", img: "https://i.postimg.cc/L5sbW6W3/wakeboard-connelly-groove.webp" },
-    { name: "Wakesurf", img: "https://i.postimg.cc/MTp563YG/HABIT-87.webp" },
-    { name: "Kneeboard", img: "https://i.postimg.cc/W3NWD1sz/2023-connelly-boost-kneeboard-fib.webp" },
-    { name: "Foil", img: "https://i.postimg.cc/nL05GDRn/2026-connelly-pilot-first-roller-bottom-turn.jpg" },
-    { name: "Paddle", img: "https://i.postimg.cc/mkF546bm/Paddle-Header.webp" }
+    { name: "Ski Nautique", img: "/images/26723-16656744.webp" },
+    { name: "Wakeboard", img: "/images/wakeboard-connelly-groove.webp" },
+    { name: "Wakesurf", img: "/images/habit-87.webp" },
+    { name: "Kneeboard", img: "/images/2023-connelly-boost-kneeboard-fib.webp" },
+    { name: "Foil", img: "/images/2026-connelly-pilot-first-roller-bottom-turn.jpg" },
+    { name: "Paddle", img: "/images/paddle-header.webp" }
   ];
 
   return (
     <>
       {/* Nautique Section */}
-      <section className="bg-[#222222] py-20 text-white overflow-hidden relative">
+      <section className="bg-ink-850 py-20 text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[100px] -mr-64 -mt-64"></div>
         
         <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
@@ -37,7 +37,7 @@ export function BrandsSection() {
               </h2>
               <div className="w-12 h-12 md:w-16 md:h-16 lg:w-24 lg:h-24 flex-shrink-0 rounded-xl md:rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl shadow-black/30">
                 <img 
-                  src="https://i.postimg.cc/NGDMQYYR/event-listing-boat-shows.png" 
+                  src="/images/event-listing-boat-shows.png" 
                   alt="Logo Nautique" 
                   className="w-full h-full object-cover" 
                   referrerPolicy="no-referrer"
@@ -64,7 +64,7 @@ export function BrandsSection() {
               <div className="pt-4">
                 <Link 
                   to="/marque/nautique" 
-                  className="inline-flex items-center bg-[#00adef] text-brand-dark font-bold text-sm lg:text-base px-8 py-5 rounded-lg uppercase tracking-tight hover:bg-white transition-all duration-300 shadow-xl shadow-black/40 group"
+                  className="inline-flex items-center bg-brand-cyan text-brand-dark font-bold text-sm lg:text-base px-8 py-5 rounded-lg uppercase tracking-tight hover:bg-white transition-all duration-300 shadow-xl shadow-black/40 group"
                 >
                   DÉCOUVRIR LES MODÈLES NAUTIQUE 2026
                 </Link>
@@ -74,7 +74,7 @@ export function BrandsSection() {
             <div className="relative order-1 lg:order-2 aspect-[4/3] w-full max-w-[700px] mx-auto group/images">
               <div className="absolute top-0 left-0 w-[88%] z-10 transition-transform duration-700 ease-out group-hover/images:-translate-y-1">
                 <img 
-                  src="https://i.postimg.cc/05YSmLvk/2026-p23-ext-09-11zon.jpg" 
+                  src="/images/2026-p23-ext-09-11zon.jpg" 
                   alt="Nautique Boat sunset" 
                   className="rounded-[2rem] shadow-2xl w-full aspect-video object-cover border border-white/10"
                   loading="lazy"
@@ -83,9 +83,9 @@ export function BrandsSection() {
               </div>
               <div className="absolute bottom-0 right-0 w-[62%] z-20 transition-transform duration-700 ease-out group-hover/images:translate-y-1">
                 <img 
-                  src="https://i.postimg.cc/xjvmHWQT/2026-p25-ext-16.jpg" 
+                  src="/images/2026-p25-ext-16.jpg" 
                   alt="Nautique Boat action" 
-                  className="rounded-[2rem] shadow-[0_40px_80px_rgba(0,0,0,0.6)] w-full aspect-video object-cover border-4 border-[#222222]"
+                  className="rounded-[2rem] shadow-[0_40px_80px_rgba(0,0,0,0.6)] w-full aspect-video object-cover border-4 border-ink-850"
                   loading="lazy"
                   referrerPolicy="no-referrer"
                 />
@@ -96,7 +96,7 @@ export function BrandsSection() {
       </section>
 
       {/* Connelly Section */}
-      <section className="bg-[#242424] py-20 text-white relative overflow-hidden">
+      <section className="bg-ink-850 py-20 text-white relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-cyan/5 rounded-full blur-[80px] -ml-40 -mb-40"></div>
         
         <div className="max-w-7xl mx-auto px-4 lg:px-8 text-center relative z-10">
@@ -110,7 +110,7 @@ export function BrandsSection() {
                   IMPORTATEUR EXCLUSIF
               </h2>
               <img 
-                src="https://i.postimg.cc/mkvXtxyB/Connelly-White-Logo.webp" 
+                src="/images/connelly-white-logo.webp" 
                 alt="Connelly Logo distributeur France" 
                 className="w-[280px] md:w-[339.758px] h-auto md:h-[52px] object-contain -ml-[30px]" 
                 referrerPolicy="no-referrer"

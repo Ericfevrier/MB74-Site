@@ -4,7 +4,7 @@ import { Instagram, Facebook, Youtube, Linkedin, Phone } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-[#1e1e1e] text-gray-400 pt-20">
+    <footer className="bg-ink-850 text-gray-400 pt-20">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 mb-20">
           
@@ -13,7 +13,7 @@ export function Footer() {
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-full border-2 border-white/10 flex items-center justify-center p-2">
                 <img 
-                  src="https://i.postimg.cc/L61DX6Qx/logo-transprent.png" 
+                  src="/images/logo-transprent.png" 
                   alt="MB74 Logo" 
                   className="w-full h-full object-contain brightness-0 invert"
                   referrerPolicy="no-referrer"
@@ -30,7 +30,7 @@ export function Footer() {
 
             <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/5 grayscale-[30%] hover:grayscale-0 transition-all duration-700">
               <img 
-                src="https://i.postimg.cc/xjvmHWQT/2026-p25-ext-16.jpg" 
+                src="/images/2026-p25-ext-16.jpg" 
                 alt="Bateau Motorboat" 
                 className="w-full aspect-[16/9] object-cover"
                 referrerPolicy="no-referrer"
@@ -100,7 +100,7 @@ export function Footer() {
             <div className="flex items-center gap-4 mb-4">
               <div className="bg-red-600 w-10 h-10 rounded-lg flex items-center justify-center p-1.5 shadow-lg">
                 <img 
-                  src="https://i.postimg.cc/nhJmcmL9/Design-sans-titre-10-11zon-e1753865977660-Photoroom.png" 
+                  src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png" 
                   alt="Nautique" 
                   className="w-full h-full object-contain brightness-0 invert"
                   referrerPolicy="no-referrer"

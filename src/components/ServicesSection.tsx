@@ -5,14 +5,14 @@ const servicesData = [
   {
     title: "Vente de bateaux neufs et d'occasion",
     desc: "On vous accompagne pour trouver le bateau qui vous correspond vraiment, qu’il soit neuf ou d’occasion.\n\nOn a choisi de travailler avec des marques solides comme Nautique, MasterCraft et Tigé parce qu'on connaît leur fiabilité et ce qu'elles valent sur l'eau.\n\nOn prépare chaque unité avec soin dans nos ateliers pour qu'elle soit prête à naviguer. Notre objectif est simple : vous conseiller honnêtement pour que vous profitiez du lac sans vous soucier du reste.",
-    img: "https://i.postimg.cc/sDChcLhp/Vente-de-bateaux.jpg",
+    img: "/images/vente-de-bateaux.jpg",
     buttons: ["OCCASION", "STOCK NEUF"],
     span: "md:col-span-2"
   },
   {
     title: "Hivernage / Stockage",
     desc: "Protégez votre bateau pendant l'hiver grâce à notre service complet d'hivernage et de stockage sécurisé.",
-    img: "https://i.postimg.cc/L4LqnVbg/hivernage.jpg",
+    img: "/images/hivernage.jpg",
     list: [
       "Hangar de 3 000 m2",
       "Zone sécurisé",
@@ -26,35 +26,35 @@ const servicesData = [
   {
     title: "Entretien et réparation",
     desc: "Assurez performance, sécurité et longévité à votre bateau.\n\nNos services complets d'entretien, de réparation et de personnalisation sont réalisés par des spécialistes expérimentés.",
-    img: "https://i.postimg.cc/sx4DKwkK/imgi-5-IMG-1570-2-768x1024-1-11zon-11zon-r9wom29y8v9iir5nhw1v5emo845emka8lybu8yeirs.webp",
+    img: "/images/imgi-5-img-1570-2-768x1024-1-11zon-11zon-r9wom29y8v9iir5nhw1v5emo845emka8lybu8yeirs.webp",
     buttons: ["EN SAVOIR PLUS"],
     span: "md:col-span-1"
   },
   {
     title: "Dépannage sur le lac",
     desc: "Intervention rapide 7j/7 pour toute panne mécanique ou électrique sur le lac d'Annecy.\n\nNous assurons une assistance sur place ou un remorquage sécurisé vers notre atelier.",
-    img: "https://i.postimg.cc/XvBjtjMJ/De-pannage.jpg",
+    img: "/images/de-pannage.jpg",
     buttons: ["EN SAVOIR PLUS"],
     span: "md:col-span-1"
   },
   {
     title: "Transport en Europe",
     desc: "Confiez le transport de votre bateau à nos équipes spécialisées.\n\nNous garantissons un déplacement sûr, rapide et réalisé dans le respect des normes, partout en France et en Europe.",
-    img: "https://i.postimg.cc/cL2ZRpK4/Transport.jpg",
+    img: "/images/transport.jpg",
     buttons: ["EN SAVOIR PLUS"],
     span: "md:col-span-1"
   },
   {
     title: "Sellerie et personnalisation",
     desc: "Offrez confort, style et durabilité à votre bateau.\n\nNos services complets de confection, réparation et rénovation de sellerie nautique sur mesure sont réalisés avec savoir-faire et matériaux de qualité.",
-    img: "https://i.postimg.cc/cHWpT00p/Sellerie.webp",
+    img: "/images/sellerie.webp",
     buttons: ["EN SAVOIR PLUS"],
     span: "md:col-span-2"
   },
   {
     title: "Remorques de bateaux",
     desc: "Trouvez la remorque adaptée à votre bateau pour un transport sûr, durable et confortable.\n\nFacilitez vos déplacements en toute tranquillité quel que soit votre type d'embarcation.",
-    img: "https://i.postimg.cc/gk71QvGj/Remorques.webp",
+    img: "/images/remorques.webp",
     buttons: ["EN SAVOIR PLUS"],
     span: "md:col-span-1"
   }

@@ -30,6 +30,7 @@ export function HivernageStockagePage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     nom: '',
     tel: '',
@@ -51,14 +52,23 @@ export function HivernageStockagePage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
     setFormLoading(true);
-    // Simulate real submission
-    setTimeout(() => {
-      setFormLoading(false);
+    try {
+      const res = await fetch('/api/hivernage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) throw new Error('send_failed');
       setFormSubmitted(true);
-    }, 1500);
+    } catch {
+      setFormError("L'envoi a échoué. Réessayez ou appelez-nous au 04 57 57 27 27.");
+    } finally {
+      setFormLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -74,7 +84,7 @@ export function HivernageStockagePage() {
     "provider": {
       "@type": "LocalBusiness",
       "name": "MotorBoat 74",
-      "image": "https://i.postimg.cc/L61DX6Qx/logo-transprent.png",
+      "image": "/images/logo-transprent.png",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "161 Allée des Edelweiss",
@@ -286,7 +296,7 @@ export function HivernageStockagePage() {
         {/* Background photo of mountain lake setting */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?auto=format&fit=crop&q=80&w=1920" 
+            src="/images/placeholder-boat.jpg" 
             alt="MotorBoat 74 hangar de stockage et hivernage de bateau en Haute-Savoie" 
             className="w-full h-full object-cover opacity-35 scale-100"
             referrerPolicy="no-referrer"
@@ -391,7 +401,7 @@ export function HivernageStockagePage() {
       </section>
 
       {/* 3. Pourquoi hiverner */}
-      <section className="py-24 bg-[#111111] relative overflow-hidden">
+      <section className="py-24 bg-ink-950 relative overflow-hidden">
         {/* Subtle decorative background water elements */}
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -z-10"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
@@ -406,7 +416,7 @@ export function HivernageStockagePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Risk Card 1 */}
-            <div className="bg-[#181818] border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+            <div className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
               <div className="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 mb-6 font-bold text-2xl">
                 ❄️
               </div>
@@ -420,7 +430,7 @@ export function HivernageStockagePage() {
             </div>
 
             {/* Risk Card 2 */}
-            <div className="bg-[#181818] border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+            <div className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
               <div className="w-14 h-14 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-400 mb-6 font-bold text-2xl">
                 💧
               </div>
@@ -434,7 +444,7 @@ export function HivernageStockagePage() {
             </div>
 
             {/* Risk Card 3 */}
-            <div className="bg-[#181818] border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+            <div className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
               <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-6 font-bold text-2xl">
                 ☀️
               </div>
@@ -448,7 +458,7 @@ export function HivernageStockagePage() {
             </div>
 
             {/* Risk Card 4 */}
-            <div className="bg-[#181818] border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+            <div className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
               <div className="w-14 h-14 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 mb-6 font-bold text-2xl">
                 🔋
               </div>
@@ -483,7 +493,7 @@ export function HivernageStockagePage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {/* Formule 1 */}
-                  <div className="bg-[#141414] border-2 border-brand-cyan rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl hover:shadow-brand-cyan/5 transition-all">
+                  <div className="bg-ink-950 border-2 border-brand-cyan rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl hover:shadow-brand-cyan/5 transition-all">
                     <span className="absolute -top-4 right-6 bg-brand-cyan text-brand-dark text-[10px] font-black uppercase px-4 py-1.5 rounded-full tracking-widest">
                       Formule Recommandée
                     </span>
@@ -519,7 +529,7 @@ export function HivernageStockagePage() {
                   </div>
 
                   {/* Formule 2 */}
-                  <div className="bg-[#141414] border border-white/10 rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl transition-all">
+                  <div className="bg-ink-950 border border-white/10 rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl transition-all">
                     <div>
                       <div className="mb-4 text-brand-cyan/50 font-black text-2xl">02</div>
                       <h3 className="text-xl font-bold uppercase text-white mb-2">Stockage seul</h3>
@@ -675,7 +685,7 @@ export function HivernageStockagePage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 relative group">
                     <img 
-                      src="https://images.unsplash.com/photo-1505244208262-cd967d9310da?w=600&auto=format&fit=crop&q=80" 
+                      src="/images/placeholder-boat.jpg" 
                       alt="hangar de stockage de bateaux à Annecy avec MotorBoat 74" 
                       className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" 
                       loading="lazy"
@@ -685,7 +695,7 @@ export function HivernageStockagePage() {
                   </div>
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 relative group">
                     <img 
-                      src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80" 
+                      src="/images/stock-1581092160607-ee22621dd758-600.jpg" 
                       alt="bateaux neufs et d'occasion en hangar sécurisé à Annecy" 
                       className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" 
                       loading="lazy"
@@ -695,7 +705,7 @@ export function HivernageStockagePage() {
                   </div>
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 relative group">
                     <img 
-                      src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&auto=format&fit=crop&q=80" 
+                      src="/images/stock-1621905251189-08b45d6a269e-600.jpg" 
                       alt="maintenance mécanique de moteur hors-bord en Haute-Savoie" 
                       className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" 
                       loading="lazy"
@@ -705,7 +715,7 @@ export function HivernageStockagePage() {
                   </div>
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 relative group">
                     <img 
-                      src="https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?w=600&auto=format&fit=crop&q=80" 
+                      src="/images/placeholder-boat.jpg" 
                       alt="remisage technique sécurisé de bateaux" 
                       className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" 
                       loading="lazy"
@@ -726,11 +736,11 @@ export function HivernageStockagePage() {
                 </div>
 
                 {/* Table converting to cards on mobile */}
-                <div className="overflow-hidden border border-white/10 rounded-2xl bg-[#141414]">
+                <div className="overflow-hidden border border-white/10 rounded-2xl bg-ink-950">
                   {/* Desktop version (hidden on mobile) */}
                   <div className="hidden md:block">
                     <table className="w-full text-left text-sm">
-                      <thead className="bg-[#1c1c1c] text-white font-extrabold uppercase tracking-widest text-[11px] border-b border-white/10">
+                      <thead className="bg-ink-900 text-white font-extrabold uppercase tracking-widest text-[11px] border-b border-white/10">
                         <tr>
                           <th className="py-4 px-6 text-brand-cyan">Critère d'analyse</th>
                           <th className="py-4 px-6">Hangar Intérieur (Conseillé)</th>
@@ -818,11 +828,11 @@ export function HivernageStockagePage() {
                 </div>
 
                 {/* Rates Table converting to list on mobile */}
-                <div className="overflow-hidden border border-white/10 rounded-2xl bg-[#141414]">
+                <div className="overflow-hidden border border-white/10 rounded-2xl bg-ink-950">
                   {/* Desktop version */}
                   <div className="hidden md:block">
                     <table className="w-full text-left text-sm">
-                      <thead className="bg-[#1c1c1c] text-white font-extrabold uppercase tracking-widest text-[11px] border-b border-white/10">
+                      <thead className="bg-ink-900 text-white font-extrabold uppercase tracking-widest text-[11px] border-b border-white/10">
                         <tr>
                           <th className="py-4 px-6 text-brand-cyan">Longueur du bateau</th>
                           <th className="py-4 px-6">Hivernage Complet (Hangar Sec Inclus)</th>
@@ -903,7 +913,7 @@ export function HivernageStockagePage() {
                     <h4 className="font-extrabold text-base uppercase tracking-tight">⭐ Privilège d'Achat Nautique</h4>
                     <p className="text-xs font-semibold text-brand-dark/85 mt-1">Vous êtes propriétaire d'un bateau de marque Nautique ? Vous bénéficiez d'une réduction de -5% automatique sur l'hivernage complet.</p>
                   </div>
-                  <button onClick={scrollToForm} className="bg-brand-dark hover:bg-[#222] text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-colors whitespace-nowrap">
+                  <button onClick={scrollToForm} className="bg-brand-dark hover:bg-ink-850 text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-colors whitespace-nowrap">
                     En bénéficier
                   </button>
                 </div>
@@ -965,7 +975,7 @@ export function HivernageStockagePage() {
                   </Link>
 
                   {/* STRICT DIRECTIVE: Annecy is text, no Link because this page is the Annecy Page itself! */}
-                  <div className="col-span-1 sm:col-span-2 bg-[#181818] border border-brand-cyan/20 p-6 rounded-3xl">
+                  <div className="col-span-1 sm:col-span-2 bg-ink-900 border border-brand-cyan/20 p-6 rounded-3xl">
                     <h3 className="font-bold text-base uppercase text-brand-cyan flex items-center gap-2 mb-2">
                       📍 Pôle Central d'Annecy (Lac d'Annecy)
                     </h3>
@@ -1051,7 +1061,7 @@ export function HivernageStockagePage() {
 
                 {/* Season Timeline Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
-                  <div className="bg-[#181818] border border-white/10 p-5 rounded-2xl text-center">
+                  <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
                     <div className="text-brand-cyan font-black text-xs uppercase tracking-wider mb-2">Septembre</div>
                     <span className="block font-bold text-sm text-white uppercase leading-tight">Réservation Prioritaire</span>
                     <p className="text-[10px] text-gray-500 mt-2">Places choisies, idéal pour fixer la date de grutage idéale.</p>
@@ -1064,17 +1074,17 @@ export function HivernageStockagePage() {
                     <span className="block font-bold text-sm text-brand-cyan uppercase leading-tight">Dernières Places</span>
                     <p className="text-[10px] text-brand-cyan/80 mt-2">Le pic des demandes pour les retours au sec.</p>
                   </div>
-                  <div className="bg-[#181818] border border-white/10 p-5 rounded-2xl text-center">
+                  <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
                     <div className="text-red-400 font-black text-xs uppercase tracking-wider mb-2">Novembre</div>
                     <span className="block font-bold text-sm text-white uppercase leading-tight">Souvent Complet</span>
                     <p className="text-[10px] text-gray-500 mt-2">Interventions d'urgence avant le gel alpins.</p>
                   </div>
-                  <div className="bg-[#181818] border border-white/10 p-5 rounded-2xl text-center">
+                  <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
                     <div className="text-gray-400 font-black text-xs uppercase tracking-wider mb-2">Déc - Mars</div>
                     <span className="block font-bold text-sm text-white uppercase leading-tight">Stockage Stable</span>
                     <p className="text-[10px] text-gray-500 mt-2">Surveillance automatisée sous hangar hors-gel.</p>
                   </div>
-                  <div className="bg-[#181818] border border-white/10 p-5 rounded-2xl text-center">
+                  <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
                     <div className="text-brand-cyan font-black text-xs uppercase tracking-wider mb-2">Avr - Mai</div>
                     <span className="block font-bold text-sm text-white uppercase leading-tight">Mise à l'eau</span>
                     <p className="text-[10px] text-gray-500 mt-2">Remise en état et convoyage direct au ponton.</p>
@@ -1116,7 +1126,7 @@ export function HivernageStockagePage() {
                     return (
                       <div 
                         key={index} 
-                        className="border border-white/10 rounded-2xl overflow-hidden bg-[#121212] transition-colors"
+                        className="border border-white/10 rounded-2xl overflow-hidden bg-ink-950 transition-colors"
                       >
                         <button
                           onClick={() => setActiveFaq(isOpen ? null : index)}
@@ -1136,7 +1146,7 @@ export function HivernageStockagePage() {
                               animate={{ height: 'auto', opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: 0.3 }}
-                              className="overflow-hidden bg-[#161616] border-t border-white/5"
+                              className="overflow-hidden bg-ink-950 border-t border-white/5"
                             >
                               <div className="p-6 text-sm text-gray-400 leading-relaxed font-light">
                                 {faq.a}
@@ -1156,7 +1166,7 @@ export function HivernageStockagePage() {
             {/* RIGHT COLUMN: Sticky Form (Block 13 - CTA final) */}
             <aside 
               ref={formulationFormRef}
-              className="lg:col-span-1 lg:sticky lg:top-36 bg-[#121212] border-2 border-brand-cyan/30 rounded-3xl p-8 shadow-3xl overflow-hidden"
+              className="lg:col-span-1 lg:sticky lg:top-36 bg-ink-950 border-2 border-brand-cyan/30 rounded-3xl p-8 shadow-3xl overflow-hidden"
             >
               <div className="relative">
                 {/* Decorative border accent */}
@@ -1188,7 +1198,7 @@ export function HivernageStockagePage() {
               ) : (
                 <form onSubmit={handleFormSubmit} className="mt-8 space-y-5">
                   <div>
-                    <label htmlFor="nom" className="block text-[10px] font-black uppercase tracking-widest text-[#a0a0a0] mb-2">
+                    <label htmlFor="nom" className="block text-[10px] font-black uppercase tracking-widest text-mute mb-2">
                       Nom complet *
                     </label>
                     <input 
@@ -1199,12 +1209,12 @@ export function HivernageStockagePage() {
                       value={formData.nom}
                       onChange={handleInputChange}
                       placeholder="Ex : Éric Dupont"
-                      className="w-full bg-[#1c1c1c] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
+                      className="w-full bg-ink-900 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="tel" className="block text-[10px] font-black uppercase tracking-widest text-[#a0a0a0] mb-2">
+                    <label htmlFor="tel" className="block text-[10px] font-black uppercase tracking-widest text-mute mb-2">
                       Numéro de téléphone *
                     </label>
                     <input 
@@ -1215,12 +1225,12 @@ export function HivernageStockagePage() {
                       value={formData.tel}
                       onChange={handleInputChange}
                       placeholder="Ex : 06 12 34 56 78"
-                      className="w-full bg-[#1c1c1c] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
+                      className="w-full bg-ink-900 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-[10px] font-black uppercase tracking-widest text-[#a0a0a0] mb-2">
+                    <label htmlFor="email" className="block text-[10px] font-black uppercase tracking-widest text-mute mb-2">
                       Adresse e-mail *
                     </label>
                     <input 
@@ -1231,12 +1241,12 @@ export function HivernageStockagePage() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="Dupont@gmail.com"
-                      className="w-full bg-[#1c1c1c] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
+                      className="w-full bg-ink-900 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="modele" className="block text-[10px] font-black uppercase tracking-widest text-[#a0a0a0] mb-2">
+                    <label htmlFor="modele" className="block text-[10px] font-black uppercase tracking-widest text-mute mb-2">
                       Modèle & Longueur du bateau
                     </label>
                     <input 
@@ -1246,17 +1256,17 @@ export function HivernageStockagePage() {
                       value={formData.modele}
                       onChange={handleInputChange}
                       placeholder="Ex: Nautique G25 / 7,77 m"
-                      className="w-full bg-[#1c1c1c] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
+                      className="w-full bg-ink-900 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
                     />
                   </div>
 
                   {/* Radio selectors for formulas */}
                   <div>
-                    <span className="block text-[10px] font-black uppercase tracking-widest text-[#a0a0a0] mb-3">
+                    <span className="block text-[10px] font-black uppercase tracking-widest text-mute mb-3">
                       Formule choisie *
                     </span>
                     <div className="space-y-2 font-bold text-sm">
-                      <label className="flex items-center gap-3 bg-[#1a1a1a] border border-white/5 hover:border-brand-cyan/20 p-3 rounded-xl cursor-pointer">
+                      <label className="flex items-center gap-3 bg-ink-900 border border-white/5 hover:border-brand-cyan/20 p-3 rounded-xl cursor-pointer">
                         <input 
                           type="radio" 
                           name="formule" 
@@ -1267,7 +1277,7 @@ export function HivernageStockagePage() {
                         />
                         <span className="text-white text-xs">Hivernage Complet Tout-inclus</span>
                       </label>
-                      <label className="flex items-center gap-3 bg-[#1a1a1a] border border-white/5 hover:border-brand-cyan/20 p-3 rounded-xl cursor-pointer">
+                      <label className="flex items-center gap-3 bg-ink-900 border border-white/5 hover:border-brand-cyan/20 p-3 rounded-xl cursor-pointer">
                         <input 
                           type="radio" 
                           name="formule" 
@@ -1278,7 +1288,7 @@ export function HivernageStockagePage() {
                         />
                         <span className="text-white text-xs">Stockage Seul Hangar Sec</span>
                       </label>
-                      <label className="flex items-center gap-3 bg-[#1a1a1a] border border-white/5 hover:border-brand-cyan/20 p-3 rounded-xl cursor-pointer">
+                      <label className="flex items-center gap-3 bg-ink-900 border border-white/5 hover:border-brand-cyan/20 p-3 rounded-xl cursor-pointer">
                         <input 
                           type="radio" 
                           name="formule" 
@@ -1292,9 +1302,13 @@ export function HivernageStockagePage() {
                     </div>
                   </div>
 
+                  {formError && (
+                    <p className="text-red-400 text-xs font-bold text-center" role="alert">{formError}</p>
+                  )}
+
                   {/* Submission Button */}
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={formLoading}
                     className="w-full bg-brand-cyan text-brand-dark font-black uppercase py-4 rounded-xl text-xs tracking-widest hover:brightness-110 disabled:opacity-50 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
@@ -1324,7 +1338,7 @@ export function HivernageStockagePage() {
       </section>
 
       {/* 🛠 Bloc 14 — Services complémentaires */}
-      <section className="bg-[#111111] py-16 text-gray-400 text-xs font-semibold border-t border-white/5 border-b border-white/5">
+      <section className="bg-ink-950 py-16 text-gray-400 text-xs font-semibold border-t border-white/5 border-b border-white/5">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl text-center">
           <p className="uppercase text-brand-cyan/50 tracking-widest text-[10px] mb-6 font-black grid">Découvrez également nos autres services</p>
           <div className="flex flex-wrap justify-center gap-8 md:gap-14">

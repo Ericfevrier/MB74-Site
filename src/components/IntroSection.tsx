@@ -34,7 +34,7 @@ export function IntroSection() {
               <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl group-hover:bg-brand-cyan/20 transition-colors duration-500"></div>
               <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.02]">
                   <img 
-                      src="https://i.postimg.cc/qR618nHx/IMG-20230924-WA0017-1-11zon-11zon-e1727707593371-11zon.webp" 
+                      src="/images/img-20230924-wa0017-1-11zon-11zon-e1727707593371-11zon.webp" 
                       alt="Motor Boat 74 - Entretien de bateaux" 
                       className="w-full h-full object-cover aspect-[4/3] transition-transform duration-1000 group-hover:scale-110"
                       loading="lazy"
@@ -50,7 +50,7 @@ export function IntroSection() {
           <div className="flex items-center gap-6 text-brand-dark relative z-10 flex-col md:flex-row text-center md:text-left">
             <div className="flex-shrink-0">
                 <div className="w-16 h-16 rounded-2xl bg-white border border-brand-cyan/20 flex items-center justify-center shadow-lg shadow-brand-cyan/20">
-                    <img src="https://i.postimg.cc/hv42zYsH/Capture-d-e-cran-2026-05-11-a-19-38-17-Photoroom.png" alt="Connelly Logo distributeur" className="w-10 h-10 object-contain" loading="lazy" referrerPolicy="no-referrer" />
+                    <img src="/images/capture-d-e-cran-2026-05-11-a-19-38-17-photoroom.png" alt="Connelly Logo distributeur" className="w-10 h-10 object-contain" loading="lazy" referrerPolicy="no-referrer" />
                 </div>
             </div>
             <div className="flex-1">

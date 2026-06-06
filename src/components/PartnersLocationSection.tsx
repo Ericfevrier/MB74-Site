@@ -4,11 +4,32 @@ import { GoogleMapCustom } from './GoogleMapCustom';
 
 export function PartnersLocationSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setError(null);
+    setIsSending(true);
+    const data = new FormData(e.currentTarget);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nom: data.get('nom'),
+          email: data.get('email'),
+          message: data.get('message'),
+        }),
+      });
+      if (!res.ok) throw new Error('send_failed');
+      setIsSubmitted(true);
+    } catch {
+      setError("L'envoi a échoué. Réessayez ou appelez-nous au 04 57 57 27 27.");
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +47,7 @@ export function PartnersLocationSection() {
               <div className="w-8 h-1 bg-brand-cyan rounded-full"></div>
               <span className="uppercase tracking-widest font-bold text-[15px]">Partenaires & Réseau</span>
           </div>
-          <h2 className="text-[32px] md:text-[50px] font-bold tracking-tight" style={{ fontFamily: 'Arial, sans-serif' }}>
+          <h2 className="text-[32px] md:text-[50px] font-bold tracking-tight">
             Ils nous <span className="text-brand-cyan lowercase">font confiance</span>
           </h2>
         </div>
@@ -88,20 +109,22 @@ export function PartnersLocationSection() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                          <label htmlFor="nom-complet" className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-2">Nom Complet</label>
-                         <input 
+                         <input
                            id="nom-complet"
+                           name="nom"
                            required
-                           type="text" 
+                           type="text"
                            className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-cyan transition-colors"
                            placeholder="Jean Dupont"
                          />
                       </div>
                       <div className="space-y-2">
                          <label htmlFor="email-address" className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-2">Email</label>
-                         <input 
+                         <input
                            id="email-address"
+                           name="email"
                            required
-                           type="email" 
+                           type="email"
                            className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-cyan transition-colors"
                            placeholder="jean@email.com"
                          />
@@ -109,8 +132,9 @@ export function PartnersLocationSection() {
                     </div>
                     <div className="space-y-2">
                        <label htmlFor="contact-message" className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-2">Message</label>
-                       <textarea 
+                       <textarea
                           id="contact-message"
+                          name="message"
                           required
                           rows={4}
                           className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-cyan transition-colors resize-none"
@@ -150,11 +174,16 @@ export function PartnersLocationSection() {
                        </div>
                     </div>
 
-                    <button 
+                    {error && (
+                      <p className="text-red-400 text-sm font-medium text-center" role="alert">{error}</p>
+                    )}
+
+                    <button
                       type="submit"
-                      className="w-full bg-brand-cyan text-brand-dark font-bold py-5 rounded-2xl uppercase tracking-widest hover:bg-white transition-all duration-300 shadow-xl shadow-brand-cyan/20 active:scale-95"
+                      disabled={isSending}
+                      className="w-full bg-brand-cyan text-brand-dark font-bold py-5 rounded-2xl uppercase tracking-widest hover:bg-white transition-all duration-300 shadow-xl shadow-brand-cyan/20 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      Envoyer le Message
+                      {isSending ? 'Envoi en cours…' : 'Envoyer le Message'}
                     </button>
                  </form>
                )}
@@ -166,7 +195,7 @@ export function PartnersLocationSection() {
                     </div>
                     <div>
                       <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Appelez-nous</h4>
-                      <p className="font-bold">04 57 57 27 27</p>
+                      <a href="tel:+33457572727" className="font-bold hover:text-brand-cyan transition-colors">04 57 57 27 27</a>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -175,7 +204,7 @@ export function PartnersLocationSection() {
                     </div>
                     <div>
                       <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Email direct</h4>
-                      <p className="font-bold">contact@motorboat74.com</p>
+                      <a href="mailto:contact@motorboat74.com" className="font-bold hover:text-brand-cyan transition-colors">contact@motorboat74.com</a>
                     </div>
                   </div>
                </div>
@@ -195,7 +224,7 @@ export function PartnersLocationSection() {
 
                 <div className="relative flex-1 min-h-[500px]">
                   <div className="absolute -inset-8 bg-brand-cyan/10 rounded-[4rem] blur-3xl group-hover:bg-brand-cyan/20 transition-colors duration-1000"></div>
-                  <div className="h-full w-full bg-[#1a1a1a] rounded-[3rem] overflow-hidden relative shadow-3xl border-8 border-white/5 transition-all duration-700 hover:scale-[1.01]">
+                  <div className="h-full w-full bg-ink-900 rounded-[3rem] overflow-hidden relative shadow-3xl border-8 border-white/5 transition-all duration-700 hover:scale-[1.01]">
                     <GoogleMapCustom />
                     
                     <div className="absolute bottom-8 left-8 right-8 bg-brand-dark/90 backdrop-blur-2xl p-8 rounded-[2rem] border border-white/10 flex items-center justify-between shadow-2xl z-20">

@@ -5,7 +5,7 @@ export function GoogleMapCustom() {
   const encodedAddress = encodeURIComponent(address);
   
   return (
-    <div className="relative h-full w-full rounded-[3rem] overflow-hidden bg-[#1a1a1a]">
+    <div className="relative h-full w-full rounded-[3rem] overflow-hidden bg-ink-900">
       <iframe 
         src={`https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_MAPS_PLATFORM_KEY || ''}&q=${encodedAddress}&zoom=15&language=fr`}
         width="100%" 

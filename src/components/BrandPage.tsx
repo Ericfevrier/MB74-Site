@@ -35,7 +35,7 @@ export function BrandPage() {
   }
 
   return (
-    <div className="bg-[#F4F4F4]">
+    <div className="bg-brand-light">
       <Helmet>
         <title>{brand.fullName} | Concessionnaire {brand.name} | Motorboat 74</title>
         <meta name="description" content={`Découvrez la gamme ${brand.name}. ${brand.description.substring(0, 100)}...`} />
@@ -45,7 +45,7 @@ export function BrandPage() {
       <section className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-brand-dark cursor-default">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://i.postimg.cc/05YSmLvk/2026-p23-ext-09-11zon.jpg" 
+            src="/images/2026-p23-ext-09-11zon.jpg" 
             alt={`Bateau de la gamme ${brand.name} en navigation`} 
             className="w-full h-full object-cover opacity-60 scale-105"
             fetchPriority="high"
@@ -62,12 +62,13 @@ export function BrandPage() {
             transition={{ duration: 0.8 }}
           >
             <div className="flex flex-col items-center justify-center gap-6 mb-8">
+              <h1 className="sr-only">{brand.fullName} — Concessionnaire officiel chez Motor Boat 74</h1>
               <span className="bg-brand-cyan text-brand-dark px-6 py-2 rounded-full text-[12px] font-bold uppercase tracking-widest shadow-lg shadow-brand-cyan/20">
                 Concessionnaire Officiel {brand.name}
               </span>
               <div className="h-20 md:h-28 flex items-center justify-center">
                 <img 
-                  src="https://i.postimg.cc/76j3dyps/nautique-web-logo-white.png" 
+                  src="/images/nautique-web-logo-white.png" 
                   alt={`Logo ${brand.name}, concessionnaire autorisé`} 
                   className="max-h-full max-w-[250px] md:max-w-[350px] object-contain"
                   fetchPriority="high"
@@ -81,11 +82,11 @@ export function BrandPage() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#F4F4F4] to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-brand-light to-transparent"></div>
       </section>
 
       {/* Brand Intro */}
-      <article className="py-24 bg-[#F4F4F4]">
+      <article className="py-24 bg-brand-light">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -157,7 +158,7 @@ export function BrandPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="group relative bg-[#F8F8F8] rounded-[3rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:translate-y-[-10px] flex flex-col h-full"
+                className="group relative bg-brand-mist rounded-[3rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:translate-y-[-10px] flex flex-col h-full"
               >
                 <div className="aspect-[4/3] overflow-hidden relative">
                   <img 
