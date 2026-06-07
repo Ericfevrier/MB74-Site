@@ -567,6 +567,106 @@ export function HivernageStockagePage() {
                     </div>
                   </div>
                 </div>
+              {/* Sous-section : grille tarifaire */}
+              <div id="tarifs" className="mt-20">
+                <div className="mb-10 text-left">
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Transparence de prix</span>
+                  <h3 className="text-xl md:text-2xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
+                    Tarifs hivernage & stockage de bateau — fourchettes 2025/2026
+                  </h3>
+                </div>
+
+                {/* Rates Table converting to list on mobile */}
+                <div className="overflow-hidden border border-white/10 rounded-2xl bg-ink-950">
+                  {/* Desktop version */}
+                  <div className="hidden md:block">
+                    <table className="w-full text-left text-sm">
+                      <thead className="bg-ink-900 text-white font-extrabold uppercase tracking-widest text-[11px] border-b border-white/10">
+                        <tr>
+                          <th className="py-4 px-6 text-brand-cyan">Longueur du bateau</th>
+                          <th className="py-4 px-6">Hivernage Complet (Hangar Sec Inclus)</th>
+                          <th className="py-4 px-6">Stockage Seul Hangar (Mensuel)</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/5 font-medium text-gray-300">
+                        <tr className="hover:bg-white/5">
+                          <td className="py-4 px-6 text-white font-bold">&lt; 5,00 Mètres</td>
+                          <td className="py-4 px-6 font-bold text-brand-cyan">Dès 690 € HT</td>
+                          <td className="py-4 px-6 font-bold">120 € HT / mois</td>
+                        </tr>
+                        <tr className="hover:bg-white/5">
+                          <td className="py-4 px-6 text-white font-bold">5,00 M À 6,50 M</td>
+                          <td className="py-4 px-6 font-bold text-brand-cyan">Dès 890 € HT</td>
+                          <td className="py-4 px-6 font-bold">160 € HT / mois</td>
+                        </tr>
+                        <tr className="hover:bg-white/5">
+                          <td className="py-4 px-6 text-white font-bold">6,50 M À 8,00 M</td>
+                          <td className="py-4 px-6 font-bold text-brand-cyan">Dès 1 190 € HT</td>
+                          <td className="py-4 px-6 font-bold">210 € HT / mois</td>
+                        </tr>
+                        <tr className="hover:bg-white/5">
+                          <td className="py-4 px-6 text-white font-bold">&gt; 8,00 Mètres</td>
+                          <td className="py-4 px-6 font-bold text-brand-cyan">Sur Devis Personnalisé</td>
+                          <td className="py-4 px-6 font-bold">Sur devis individuel</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile version */}
+                  <div className="block md:hidden divide-y divide-white/5">
+                    <div className="p-5">
+                      <h4 className="font-bold text-white text-base mb-2">Bateau &lt; 5,00 m</h4>
+                      <div className="flex justify-between text-xs font-semibold py-1">
+                        <span className="text-gray-400">Hivernage complet :</span>
+                        <span className="text-brand-cyan">Dès 690 € HT</span>
+                      </div>
+                      <div className="flex justify-between text-xs font-semibold py-1">
+                        <span className="text-gray-400">Stockage seul :</span>
+                        <span className="text-white">120 € HT / mois</span>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <h4 className="font-bold text-white text-base mb-2">Bateau 5,00 m - 6,50 m</h4>
+                      <div className="flex justify-between text-xs font-semibold py-1">
+                        <span className="text-gray-400">Hivernage complet :</span>
+                        <span className="text-brand-cyan">Dès 890 € HT</span>
+                      </div>
+                      <div className="flex justify-between text-xs font-semibold py-1">
+                        <span className="text-gray-400">Stockage seul :</span>
+                        <span className="text-white">160 € HT / mois</span>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <h4 className="font-bold text-white text-base mb-2">Bateau 6,50 m - 8,00 m</h4>
+                      <div className="flex justify-between text-xs font-semibold py-1">
+                        <span className="text-gray-400">Hivernage complet :</span>
+                        <span className="text-brand-cyan">Dès 1 190 € HT</span>
+                      </div>
+                      <div className="flex justify-between text-xs font-semibold py-1">
+                        <span className="text-gray-400">Stockage seul :</span>
+                        <span className="text-white">210 € HT / mois</span>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <h4 className="font-bold text-white text-base mb-2">Bateau &gt; 8,00 m</h4>
+                      <div className="text-xs font-bold text-brand-cyan text-center py-2 uppercase tracking-wider">
+                        Tarif sur devis gratuit sous 24h
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 bg-brand-cyan text-brand-dark p-6 rounded-2xl shadow-xl">
+                  <div>
+                    <h4 className="font-extrabold text-base uppercase tracking-tight flex items-center gap-2"><Star className="w-4 h-4 fill-brand-dark" /> Privilège d'Achat Nautique</h4>
+                    <p className="text-xs font-semibold text-brand-dark/85 mt-1">Vous êtes propriétaire d'un bateau de marque Nautique ? Vous bénéficiez d'une réduction de -5% automatique sur l'hivernage complet.</p>
+                  </div>
+                  <button onClick={scrollToForm} className="bg-brand-dark hover:bg-ink-850 text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-colors whitespace-nowrap">
+                    En bénéficier
+                  </button>
+                </div>
+              </div>
               </div>
 
               {/* Bloc 5 — Process en 6 étapes (timeline visuelle) */}
@@ -731,15 +831,13 @@ export function HivernageStockagePage() {
                     <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-colors"></div>
                   </div>
                 </div>
-              </div>
 
-              {/* Bloc 7 — Comparatif intérieur vs extérieur */}
-              <div className="scroll-mt-36">
-                <div className="mb-10 text-left">
+                {/* Sous-section : comparatif intérieur vs extérieur */}
+                <div className="mt-20 mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Guide de choix</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight">
+                  <h3 className="text-xl md:text-2xl font-sans font-bold uppercase text-white tracking-tight">
                     Stockage intérieur ou extérieur : quelle solution choisir ?
-                  </h2>
+                  </h3>
                 </div>
 
                 {/* Table converting to cards on mobile */}
@@ -821,107 +919,6 @@ export function HivernageStockagePage() {
                   </div>
                   <button onClick={scrollToForm} className="text-xs text-brand-cyan font-bold uppercase tracking-wider hover:underline flex items-center gap-1">
                     Nous joindre <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Bloc 8 — Tarifs (id="tarifs") */}
-              <div id="tarifs" className="scroll-mt-36">
-                <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Transparence de prix</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
-                    Tarifs hivernage & stockage de bateau — fourchettes 2025/2026
-                  </h2>
-                </div>
-
-                {/* Rates Table converting to list on mobile */}
-                <div className="overflow-hidden border border-white/10 rounded-2xl bg-ink-950">
-                  {/* Desktop version */}
-                  <div className="hidden md:block">
-                    <table className="w-full text-left text-sm">
-                      <thead className="bg-ink-900 text-white font-extrabold uppercase tracking-widest text-[11px] border-b border-white/10">
-                        <tr>
-                          <th className="py-4 px-6 text-brand-cyan">Longueur du bateau</th>
-                          <th className="py-4 px-6">Hivernage Complet (Hangar Sec Inclus)</th>
-                          <th className="py-4 px-6">Stockage Seul Hangar (Mensuel)</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-white/5 font-medium text-gray-300">
-                        <tr className="hover:bg-white/5">
-                          <td className="py-4 px-6 text-white font-bold">&lt; 5,00 Mètres</td>
-                          <td className="py-4 px-6 font-bold text-brand-cyan">Dès 690 € HT</td>
-                          <td className="py-4 px-6 font-bold">120 € HT / mois</td>
-                        </tr>
-                        <tr className="hover:bg-white/5">
-                          <td className="py-4 px-6 text-white font-bold">5,00 M À 6,50 M</td>
-                          <td className="py-4 px-6 font-bold text-brand-cyan">Dès 890 € HT</td>
-                          <td className="py-4 px-6 font-bold">160 € HT / mois</td>
-                        </tr>
-                        <tr className="hover:bg-white/5">
-                          <td className="py-4 px-6 text-white font-bold">6,50 M À 8,00 M</td>
-                          <td className="py-4 px-6 font-bold text-brand-cyan">Dès 1 190 € HT</td>
-                          <td className="py-4 px-6 font-bold">210 € HT / mois</td>
-                        </tr>
-                        <tr className="hover:bg-white/5">
-                          <td className="py-4 px-6 text-white font-bold">&gt; 8,00 Mètres</td>
-                          <td className="py-4 px-6 font-bold text-brand-cyan">Sur Devis Personnalisé</td>
-                          <td className="py-4 px-6 font-bold">Sur devis individuel</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* Mobile version */}
-                  <div className="block md:hidden divide-y divide-white/5">
-                    <div className="p-5">
-                      <h4 className="font-bold text-white text-base mb-2">Bateau &lt; 5,00 m</h4>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Hivernage complet :</span>
-                        <span className="text-brand-cyan">Dès 690 € HT</span>
-                      </div>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Stockage seul :</span>
-                        <span className="text-white">120 € HT / mois</span>
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <h4 className="font-bold text-white text-base mb-2">Bateau 5,00 m - 6,50 m</h4>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Hivernage complet :</span>
-                        <span className="text-brand-cyan">Dès 890 € HT</span>
-                      </div>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Stockage seul :</span>
-                        <span className="text-white">160 € HT / mois</span>
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <h4 className="font-bold text-white text-base mb-2">Bateau 6,50 m - 8,00 m</h4>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Hivernage complet :</span>
-                        <span className="text-brand-cyan">Dès 1 190 € HT</span>
-                      </div>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Stockage seul :</span>
-                        <span className="text-white">210 € HT / mois</span>
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <h4 className="font-bold text-white text-base mb-2">Bateau &gt; 8,00 m</h4>
-                      <div className="text-xs font-bold text-brand-cyan text-center py-2 uppercase tracking-wider">
-                        Tarif sur devis gratuit sous 24h
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 bg-brand-cyan text-brand-dark p-6 rounded-2xl shadow-xl">
-                  <div>
-                    <h4 className="font-extrabold text-base uppercase tracking-tight flex items-center gap-2"><Star className="w-4 h-4 fill-brand-dark" /> Privilège d'Achat Nautique</h4>
-                    <p className="text-xs font-semibold text-brand-dark/85 mt-1">Vous êtes propriétaire d'un bateau de marque Nautique ? Vous bénéficiez d'une réduction de -5% automatique sur l'hivernage complet.</p>
-                  </div>
-                  <button onClick={scrollToForm} className="bg-brand-dark hover:bg-ink-850 text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-colors whitespace-nowrap">
-                    En bénéficier
                   </button>
                 </div>
               </div>
@@ -1052,66 +1049,6 @@ export function HivernageStockagePage() {
                     </p>
                     <div className="text-xs font-bold text-white uppercase tracking-wider">
                       — Jean-Marc L. · Saint-Jorioz, Correct Craft
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bloc 11 — Calendrier saisonnier (urgence) */}
-              <div className="scroll-mt-36">
-                <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Planification de votre saison</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
-                    Quand réserver votre hivernage bateau ?
-                  </h2>
-                </div>
-
-                {/* Season Timeline Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
-                  <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
-                    <div className="text-brand-cyan font-bold text-xs uppercase tracking-wider mb-2">Septembre</div>
-                    <span className="block font-bold text-sm text-white uppercase leading-tight">Réservation Prioritaire</span>
-                    <p className="text-[10px] text-gray-500 mt-2">Places choisies, idéal pour fixer la date de grutage idéale.</p>
-                  </div>
-                  <div className="bg-brand-cyan/10 border-2 border-brand-cyan p-5 rounded-2xl text-center relative">
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-cyan text-brand-dark text-[8px] font-bold uppercase px-2 py-0.5 rounded-full tracking-widest">
-                      Crucial
-                    </span>
-                    <div className="text-brand-cyan font-bold text-xs uppercase tracking-wider mb-2">Octobre</div>
-                    <span className="block font-bold text-sm text-brand-cyan uppercase leading-tight">Dernières Places</span>
-                    <p className="text-[10px] text-brand-cyan/80 mt-2">Le pic des demandes pour les retours au sec.</p>
-                  </div>
-                  <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
-                    <div className="text-gray-400 font-bold text-xs uppercase tracking-wider mb-2">Novembre</div>
-                    <span className="block font-bold text-sm text-white uppercase leading-tight">Souvent Complet</span>
-                    <p className="text-[10px] text-gray-500 mt-2">Interventions d'urgence avant le gel alpins.</p>
-                  </div>
-                  <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
-                    <div className="text-gray-400 font-bold text-xs uppercase tracking-wider mb-2">Déc - Mars</div>
-                    <span className="block font-bold text-sm text-white uppercase leading-tight">Stockage Stable</span>
-                    <p className="text-[10px] text-gray-500 mt-2">Surveillance automatisée sous hangar hors-gel.</p>
-                  </div>
-                  <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
-                    <div className="text-brand-cyan font-bold text-xs uppercase tracking-wider mb-2">Avr - Mai</div>
-                    <span className="block font-bold text-sm text-white uppercase leading-tight">Mise à l'eau</span>
-                    <p className="text-[10px] text-gray-500 mt-2">Remise en état et convoyage direct au ponton.</p>
-                  </div>
-                </div>
-
-                <div className="mt-8 bg-ink-900 border border-brand-cyan/20 p-6 rounded-3xl text-left">
-                  <div className="flex items-start gap-4">
-                    <AlertTriangle className="text-brand-cyan w-8 h-8 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-extrabold text-base uppercase text-white tracking-tight">Alerte d'échéance : Hangar en forte demande</h4>
-                      <p className="text-sm text-gray-300 mt-1 leading-relaxed">
-                        Pour garantir un emplacement sous notre hangar isolé de 3 000 m², nous vous conseillons vivement de <strong className="text-white">réserver votre place avant le 15 octobre</strong>. Passé ce jalon, la Haute-Savoie enregistre d'importantes chutes de température et notre hangar atteint régulièrement sa capacité d'accueil maximale.
-                      </p>
-                      <button
-                        onClick={scrollToForm}
-                        className="mt-4 bg-brand-cyan hover:bg-white text-brand-dark font-extrabold text-[10px] uppercase tracking-widest px-6 py-3 rounded-xl transition-colors"
-                      >
-                        Réserver ma place 2025/2026
-                      </button>
                     </div>
                   </div>
                 </div>
