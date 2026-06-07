@@ -6,7 +6,7 @@ export function ShowroomSection() {
     <section className="py-24 bg-brand-dark text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight mb-8">
+          <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-8">
             VISITEZ NOTRE <span className="text-brand-cyan">SHOWROOM</span>
           </h2>
           <p className="max-w-3xl mx-auto text-gray-400 font-medium leading-relaxed">

@@ -17,7 +17,7 @@ export function NotFound() {
           <Compass size={40} />
         </div>
         <p className="text-brand-cyan font-bold uppercase tracking-[0.3em] text-sm mb-4">Erreur 404</p>
-        <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-tight mb-6 leading-none">
+        <h1 className="text-3xl md:text-5xl font-bold uppercase tracking-tight mb-6 leading-tight">
           Cap perdu
         </h1>
         <p className="text-gray-400 text-lg mb-10 leading-relaxed">

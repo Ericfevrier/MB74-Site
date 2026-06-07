@@ -15,7 +15,7 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
     <section className="py-24 bg-ink-850 text-white overflow-hidden border-t border-white/5">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-12">
             COMPARATIF DES <span className="text-brand-cyan">MODÈLES</span>
           </h2>
 
@@ -52,11 +52,11 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-brand-cyan text-brand-dark">
-                      <th className="py-8 px-10 font-black uppercase tracking-widest text-[13px] min-w-[300px]">
+                      <th className="py-8 px-10 font-bold uppercase tracking-widest text-[13px] min-w-[300px]">
                         Caractéristiques
                       </th>
                       {current.models.map((model, idx) => (
-                        <th key={idx} className="py-8 px-10 font-black uppercase tracking-widest text-[14px] text-center">
+                        <th key={idx} className="py-8 px-10 font-bold uppercase tracking-widest text-[14px] text-center">
                           {model}
                         </th>
                       ))}

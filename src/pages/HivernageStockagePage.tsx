@@ -315,11 +315,11 @@ export function HivernageStockagePage() {
               <span className="text-white">Hivernage & Stockage</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-black uppercase text-white tracking-tighter leading-none mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-6">
               Hivernage et stockage de bateau à <span className="text-brand-cyan">Annecy</span> <span className="block mt-2 lg:inline text-white/90">— Hangar sécurisé 3 000 m²</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-300 font-medium mb-12 max-w-3xl leading-relaxed">
+            <p className="text-base md:text-lg text-gray-300 font-medium mb-10 max-w-2xl leading-relaxed">
               Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le <strong className="text-brand-cyan">Lac d'Annecy</strong>, le <strong className="text-white">Léman</strong> et toute la région. Profitez de notre hangar haut de gamme isolé contre le gel ainsi que de notre protocole mécanique minutieux.
             </p>
 
@@ -352,13 +352,13 @@ export function HivernageStockagePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button 
                 onClick={scrollToForm}
-                className="bg-brand-cyan text-brand-dark px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-xl shadow-brand-cyan/20 active:translate-y-1"
+                className="bg-brand-cyan text-brand-dark px-10 py-5 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-xl shadow-brand-cyan/20 active:translate-y-1"
               >
                 Obtenir mon devis 24 h
               </button>
               <a 
                 href="#tarifs" 
-                className="bg-transparent border-2 border-white/20 text-white px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-white/5 hover:border-brand-cyan transition-all duration-300 flex items-center justify-center gap-2"
+                className="bg-transparent border-2 border-white/20 text-white px-10 py-5 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-white/5 hover:border-brand-cyan transition-all duration-300 flex items-center justify-center gap-2"
               >
                 Voir les tarifs <ArrowRight className="w-4 h-4 text-brand-cyan" />
               </a>
@@ -384,15 +384,15 @@ export function HivernageStockagePage() {
               <Star className="w-5 h-5 fill-brand-dark text-brand-dark" />
               <span>Google ★ 4,9/5</span>
             </div>
-            <div className="hidden sm:block text-brand-dark/40 font-black">|</div>
+            <div className="hidden sm:block text-brand-dark/40 font-bold">|</div>
             <div>
               <span>600+ Bateaux entretenus par an</span>
             </div>
-            <div className="hidden md:block text-brand-dark/40 font-black">|</div>
+            <div className="hidden md:block text-brand-dark/40 font-bold">|</div>
             <div>
               <span>Plus de 10 ans d'expertise</span>
             </div>
-            <div className="hidden sm:block text-brand-dark/40 font-black">|</div>
+            <div className="hidden sm:block text-brand-dark/40 font-bold">|</div>
             <div>
               <span>Concessionnaire Nautique officiel</span>
             </div>
@@ -406,7 +406,7 @@ export function HivernageStockagePage() {
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -z-10"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-3xl md:text-[44px] font-sans font-black uppercase text-white tracking-tight leading-none mb-6">
+            <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-6">
               Pourquoi l'hivernage de votre bateau est indispensable en <span className="text-brand-cyan">Haute-Savoie</span>
             </h2>
             <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
@@ -485,8 +485,8 @@ export function HivernageStockagePage() {
               {/* Bloc 4 — Les 2 formules */}
               <div id="formules" className="scroll-mt-36">
                 <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-black text-xs block mb-2">Offres hivernage de bateaux</span>
-                  <h2 className="text-2xl md:text-4xl font-sans font-black uppercase text-white tracking-tight leading-none">
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Offres hivernage de bateaux</span>
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
                     Hivernage complet ou stockage seul — deux formules adaptées
                   </h2>
                 </div>
@@ -494,11 +494,11 @@ export function HivernageStockagePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {/* Formule 1 */}
                   <div className="bg-ink-950 border-2 border-brand-cyan rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl hover:shadow-brand-cyan/5 transition-all">
-                    <span className="absolute -top-4 right-6 bg-brand-cyan text-brand-dark text-[10px] font-black uppercase px-4 py-1.5 rounded-full tracking-widest">
+                    <span className="absolute -top-4 right-6 bg-brand-cyan text-brand-dark text-[10px] font-bold uppercase px-4 py-1.5 rounded-full tracking-widest">
                       Formule Recommandée
                     </span>
                     <div>
-                      <div className="mb-4 text-brand-cyan font-black text-2xl">01</div>
+                      <div className="mb-4 text-brand-cyan font-bold text-2xl">01</div>
                       <h3 className="text-xl font-bold uppercase text-white mb-2">Hivernage complet</h3>
                       <p className="text-xs text-gray-400 mb-6">La prestation clé en main pour préserver à 100% votre capital nautique.</p>
                       
@@ -515,7 +515,7 @@ export function HivernageStockagePage() {
 
                     <div className="pt-6 border-t border-white/5">
                       <div className="text-gray-400 text-xs mb-1">Prix de la tranquillité complète :</div>
-                      <div className="text-3xl font-black text-white">À partir de <span className="text-brand-cyan">690 €</span> <span className="text-xs font-semibold text-gray-500">HT</span></div>
+                      <div className="text-3xl font-bold text-white">À partir de <span className="text-brand-cyan">690 €</span> <span className="text-xs font-semibold text-gray-500">HT</span></div>
                       <button 
                         onClick={() => {
                           setFormData(prev => ({ ...prev, formule: 'Hivernage complet' }));
@@ -531,7 +531,7 @@ export function HivernageStockagePage() {
                   {/* Formule 2 */}
                   <div className="bg-ink-950 border border-white/10 rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl transition-all">
                     <div>
-                      <div className="mb-4 text-brand-cyan/50 font-black text-2xl">02</div>
+                      <div className="mb-4 text-brand-cyan/50 font-bold text-2xl">02</div>
                       <h3 className="text-xl font-bold uppercase text-white mb-2">Stockage seul</h3>
                       <p className="text-xs text-gray-400 mb-6">Une place au sec et sécurisée pour garer votre remorque avec son bateau.</p>
                       
@@ -547,7 +547,7 @@ export function HivernageStockagePage() {
 
                     <div className="pt-6 border-t border-white/5">
                       <div className="text-gray-400 text-xs mb-1">Tarif stockage mensuel direct :</div>
-                      <div className="text-3xl font-black text-white">À partir de <span className="text-brand-cyan">120 €</span><span className="text-base text-gray-400 font-light">/mois</span> <span className="text-xs font-semibold text-gray-500">HT</span></div>
+                      <div className="text-3xl font-bold text-white">À partir de <span className="text-brand-cyan">120 €</span><span className="text-base text-gray-400 font-light">/mois</span> <span className="text-xs font-semibold text-gray-500">HT</span></div>
                       <button 
                         onClick={() => {
                           setFormData(prev => ({ ...prev, formule: 'Stockage seul' }));
@@ -565,8 +565,8 @@ export function HivernageStockagePage() {
               {/* Bloc 5 — Process en 6 étapes (timeline visuelle) */}
               <div className="scroll-mt-36">
                 <div className="mb-12">
-                  <span className="text-brand-cyan uppercase tracking-widest font-black text-xs block mb-2">Protocole certifié</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-black uppercase text-white tracking-tight">
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Protocole certifié</span>
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight">
                     Comment se déroule l'hivernage chez MotorBoat 74
                   </h2>
                 </div>
@@ -575,7 +575,7 @@ export function HivernageStockagePage() {
                 <div className="relative border-l border-white/10 ml-4 md:ml-6 space-y-12 pl-8 pb-4">
                   {/* Step 1 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-black text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       1
                     </span>
                     <h3 className="text-lg font-bold uppercase text-white">Devis gratuit 24 h</h3>
@@ -586,7 +586,7 @@ export function HivernageStockagePage() {
 
                   {/* Step 2 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-black text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       2
                     </span>
                     <h3 className="text-lg font-bold uppercase text-white">Prise en charge personnalisée (Sept - Nov)</h3>
@@ -597,7 +597,7 @@ export function HivernageStockagePage() {
 
                   {/* Step 3 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-black text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       3
                     </span>
                     <h3 className="text-lg font-bold uppercase text-white">Mise hors d'eau & Nettoyage de coque</h3>
@@ -608,7 +608,7 @@ export function HivernageStockagePage() {
 
                   {/* Step 4 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-black text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       4
                     </span>
                     <h3 className="text-lg font-bold uppercase text-white">Hivernage moteur & électronique</h3>
@@ -619,7 +619,7 @@ export function HivernageStockagePage() {
 
                   {/* Step 5 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-black text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       5
                     </span>
                     <h3 className="text-lg font-bold uppercase text-white">Stockage sécurisé sous Hangar (Déc - Mars)</h3>
@@ -630,7 +630,7 @@ export function HivernageStockagePage() {
 
                   {/* Step 6 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-black text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       6
                     </span>
                     <h3 className="text-lg font-bold uppercase text-white">Remise en service & Livraison (Avr - Mai)</h3>
@@ -644,8 +644,8 @@ export function HivernageStockagePage() {
               {/* Bloc 6 — Le hangar 3 000 m² */}
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-black text-xs block mb-2">Visite guidée</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-black uppercase text-white tracking-tight">
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Visite guidée</span>
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight">
                     Un hangar sécurisé de 3 000 m² au cœur de la Haute-Savoie
                   </h2>
                   <p className="text-sm text-gray-400 mt-4 leading-relaxed max-w-2xl">
@@ -729,8 +729,8 @@ export function HivernageStockagePage() {
               {/* Bloc 7 — Comparatif intérieur vs extérieur */}
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-black text-xs block mb-2">Guide de choix</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-black uppercase text-white tracking-tight">
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Guide de choix</span>
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight">
                     Stockage intérieur ou extérieur : quelle solution choisir ?
                   </h2>
                 </div>
@@ -821,8 +821,8 @@ export function HivernageStockagePage() {
               {/* Bloc 8 — Tarifs (id="tarifs") */}
               <div id="tarifs" className="scroll-mt-36">
                 <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-black text-xs block mb-2">Transparence de prix</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-black uppercase text-white tracking-tight leading-none">
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Transparence de prix</span>
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
                     Tarifs hivernage & stockage de bateau — fourchettes 2025/2026
                   </h2>
                 </div>
@@ -922,8 +922,8 @@ export function HivernageStockagePage() {
               {/* Bloc 9 — Zones d'intervention (MAILLAGE INTERNE) */}
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-black text-xs block mb-2">Réseau Local de lacs</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-black uppercase text-white tracking-tight leading-none">
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Réseau Local de lacs</span>
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
                     Hivernage de bateau partout en Haute-Savoie et autour des lacs alpins
                   </h2>
                   <p className="text-sm text-gray-400 mt-4 leading-relaxed">
@@ -989,8 +989,8 @@ export function HivernageStockagePage() {
               {/* Bloc 10 — Avis clients */}
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-black text-xs block mb-2">Retours d'expérience</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-black uppercase text-white tracking-tight">
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Retours d'expérience</span>
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight">
                     Ce que disent les propriétaires qui nous confient leur bateau
                   </h2>
                 </div>
@@ -1053,8 +1053,8 @@ export function HivernageStockagePage() {
               {/* Bloc 11 — Calendrier saisonnier (urgence) */}
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-black text-xs block mb-2">Planification de votre saison</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-black uppercase text-white tracking-tight leading-none">
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Planification de votre saison</span>
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
                     Quand réserver votre hivernage bateau ?
                   </h2>
                 </div>
@@ -1062,30 +1062,30 @@ export function HivernageStockagePage() {
                 {/* Season Timeline Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
                   <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
-                    <div className="text-brand-cyan font-black text-xs uppercase tracking-wider mb-2">Septembre</div>
+                    <div className="text-brand-cyan font-bold text-xs uppercase tracking-wider mb-2">Septembre</div>
                     <span className="block font-bold text-sm text-white uppercase leading-tight">Réservation Prioritaire</span>
                     <p className="text-[10px] text-gray-500 mt-2">Places choisies, idéal pour fixer la date de grutage idéale.</p>
                   </div>
                   <div className="bg-brand-cyan/10 border-2 border-brand-cyan p-5 rounded-2xl text-center relative">
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-cyan text-brand-dark text-[8px] font-black uppercase px-2 py-0.5 rounded-full tracking-widest">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-cyan text-brand-dark text-[8px] font-bold uppercase px-2 py-0.5 rounded-full tracking-widest">
                       Crucial
                     </span>
-                    <div className="text-brand-cyan font-black text-xs uppercase tracking-wider mb-2">Octobre</div>
+                    <div className="text-brand-cyan font-bold text-xs uppercase tracking-wider mb-2">Octobre</div>
                     <span className="block font-bold text-sm text-brand-cyan uppercase leading-tight">Dernières Places</span>
                     <p className="text-[10px] text-brand-cyan/80 mt-2">Le pic des demandes pour les retours au sec.</p>
                   </div>
                   <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
-                    <div className="text-red-400 font-black text-xs uppercase tracking-wider mb-2">Novembre</div>
+                    <div className="text-red-400 font-bold text-xs uppercase tracking-wider mb-2">Novembre</div>
                     <span className="block font-bold text-sm text-white uppercase leading-tight">Souvent Complet</span>
                     <p className="text-[10px] text-gray-500 mt-2">Interventions d'urgence avant le gel alpins.</p>
                   </div>
                   <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
-                    <div className="text-gray-400 font-black text-xs uppercase tracking-wider mb-2">Déc - Mars</div>
+                    <div className="text-gray-400 font-bold text-xs uppercase tracking-wider mb-2">Déc - Mars</div>
                     <span className="block font-bold text-sm text-white uppercase leading-tight">Stockage Stable</span>
                     <p className="text-[10px] text-gray-500 mt-2">Surveillance automatisée sous hangar hors-gel.</p>
                   </div>
                   <div className="bg-ink-900 border border-white/10 p-5 rounded-2xl text-center">
-                    <div className="text-brand-cyan font-black text-xs uppercase tracking-wider mb-2">Avr - Mai</div>
+                    <div className="text-brand-cyan font-bold text-xs uppercase tracking-wider mb-2">Avr - Mai</div>
                     <span className="block font-bold text-sm text-white uppercase leading-tight">Mise à l'eau</span>
                     <p className="text-[10px] text-gray-500 mt-2">Remise en état et convoyage direct au ponton.</p>
                   </div>
@@ -1113,8 +1113,8 @@ export function HivernageStockagePage() {
               {/* Bloc 12 — FAQ (Schema FAQPage) */}
               <div className="scroll-mt-36">
                 <div className="mb-12">
-                  <span className="text-brand-cyan uppercase tracking-widest font-black text-xs block mb-2">Réponses d'experts</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-black uppercase text-white tracking-tight">
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Réponses d'experts</span>
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight">
                     Hivernage et stockage de bateau : vos questions, nos réponses
                   </h2>
                 </div>
@@ -1172,7 +1172,7 @@ export function HivernageStockagePage() {
                 {/* Decorative border accent */}
                 <div className="absolute top-0 left-0 w-2 h-16 bg-brand-cyan"></div>
                 <div className="pl-4">
-                  <h2 className="text-xl font-sans font-black uppercase text-white tracking-tight leading-tight">
+                  <h2 className="text-xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
                     Réservez votre hivernage 2025/2026 dès aujourd'hui
                   </h2>
                   <p className="text-xs text-gray-400 mt-2 font-medium">
@@ -1198,7 +1198,7 @@ export function HivernageStockagePage() {
               ) : (
                 <form onSubmit={handleFormSubmit} className="mt-8 space-y-5">
                   <div>
-                    <label htmlFor="nom" className="block text-[10px] font-black uppercase tracking-widest text-mute mb-2">
+                    <label htmlFor="nom" className="block text-[10px] font-bold uppercase tracking-widest text-mute mb-2">
                       Nom complet *
                     </label>
                     <input 
@@ -1214,7 +1214,7 @@ export function HivernageStockagePage() {
                   </div>
 
                   <div>
-                    <label htmlFor="tel" className="block text-[10px] font-black uppercase tracking-widest text-mute mb-2">
+                    <label htmlFor="tel" className="block text-[10px] font-bold uppercase tracking-widest text-mute mb-2">
                       Numéro de téléphone *
                     </label>
                     <input 
@@ -1230,7 +1230,7 @@ export function HivernageStockagePage() {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-[10px] font-black uppercase tracking-widest text-mute mb-2">
+                    <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-widest text-mute mb-2">
                       Adresse e-mail *
                     </label>
                     <input 
@@ -1246,7 +1246,7 @@ export function HivernageStockagePage() {
                   </div>
 
                   <div>
-                    <label htmlFor="modele" className="block text-[10px] font-black uppercase tracking-widest text-mute mb-2">
+                    <label htmlFor="modele" className="block text-[10px] font-bold uppercase tracking-widest text-mute mb-2">
                       Modèle & Longueur du bateau
                     </label>
                     <input 
@@ -1262,7 +1262,7 @@ export function HivernageStockagePage() {
 
                   {/* Radio selectors for formulas */}
                   <div>
-                    <span className="block text-[10px] font-black uppercase tracking-widest text-mute mb-3">
+                    <span className="block text-[10px] font-bold uppercase tracking-widest text-mute mb-3">
                       Formule choisie *
                     </span>
                     <div className="space-y-2 font-bold text-sm">
@@ -1310,7 +1310,7 @@ export function HivernageStockagePage() {
                   <button
                     type="submit"
                     disabled={formLoading}
-                    className="w-full bg-brand-cyan text-brand-dark font-black uppercase py-4 rounded-xl text-xs tracking-widest hover:brightness-110 disabled:opacity-50 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full bg-brand-cyan text-brand-dark font-bold uppercase py-4 rounded-xl text-xs tracking-widest hover:brightness-110 disabled:opacity-50 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     {formLoading ? (
                       <>
@@ -1340,7 +1340,7 @@ export function HivernageStockagePage() {
       {/* 🛠 Bloc 14 — Services complémentaires */}
       <section className="bg-ink-950 py-16 text-gray-400 text-xs font-semibold border-t border-white/5 border-b border-white/5">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl text-center">
-          <p className="uppercase text-brand-cyan/50 tracking-widest text-[10px] mb-6 font-black grid">Découvrez également nos autres services</p>
+          <p className="uppercase text-brand-cyan/50 tracking-widest text-[10px] mb-6 font-bold grid">Découvrez également nos autres services</p>
           <div className="flex flex-wrap justify-center gap-8 md:gap-14">
             <Link to="/entretien-reparation" className="hover:text-brand-cyan transition-colors uppercase tracking-wider">
               ⚙️ Entretien & Réparation

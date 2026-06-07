@@ -146,7 +146,7 @@ export function ModelPage() {
               <span className="text-white">{modelData.gamme}</span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white uppercase tracking-tighter mb-6 leading-none">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-tight mb-6 leading-tight">
               {modelData.modele} <span className="text-brand-cyan">{modelData.annee}</span>
             </h1>
             
@@ -413,7 +413,7 @@ export function ModelPage() {
                    <Award size={48} />
                    <div>
                      <p className="font-bold text-xl uppercase leading-none mb-1">Concessionnaire</p>
-                     <p className="font-black text-2xl uppercase tracking-widest">{modelData.marque}</p>
+                     <p className="font-bold text-2xl uppercase tracking-widest">{modelData.marque}</p>
                    </div>
                  </div>
                </div>

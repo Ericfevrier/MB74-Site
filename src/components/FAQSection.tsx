@@ -32,7 +32,7 @@ export function FAQSection({ brandName }: { brandName: string }) {
   return (
     <section className="py-24 bg-ink-850 text-white">
       <div className="max-w-4xl mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight text-center mb-16">
           ON RÉPOND À VOS <span className="text-brand-cyan">QUESTIONS</span>
         </h2>
         

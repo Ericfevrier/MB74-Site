@@ -6,7 +6,7 @@ export function UsedBoatsSection({ brandName }: { brandName: string }) {
   return (
     <section className="py-24 bg-brand-light">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-brand-dark mb-16 text-center">
+        <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight text-brand-dark mb-16 text-center">
           BATEAUX {brandName.toUpperCase()} OCCASION À VENDRE
         </h2>
         

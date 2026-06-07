@@ -213,7 +213,7 @@ export function BrandPage() {
       <section className="py-24 bg-brand-dark overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-64 -mt-64"></div>
         <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10 text-center">
-          <h2 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tight mb-8">Prêt à naviguer en {brand.name} ?</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-white uppercase tracking-tight mb-8">Prêt à naviguer en {brand.name} ?</h2>
           <p className="text-gray-400 text-xl max-w-2xl mx-auto mb-12">
             Contactez notre équipe d'experts pour configurer votre futur bateau ou découvrir les modèles disponibles en stock.
           </p>
