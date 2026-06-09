@@ -83,33 +83,83 @@ export function HivernageStockagePage() {
   }, []);
 
   // JSON-LD Schemas definitions
+  const SITE_URL = "https://motorboat74.com";
+
+  // Note d'avis Google — REMPLACER reviewCount par le nombre réel d'avis pour activer les étoiles.
+  const GOOGLE_RATING = { value: "4.9", count: 0 };
+
+  const areaServed = [
+    { "@type": "City", "name": "Annecy" },
+    { "@type": "AdministrativeArea", "name": "Haute-Savoie" },
+    { "@type": "Place", "name": "Lac d'Annecy" },
+    { "@type": "Place", "name": "Lac du Bourget" },
+    { "@type": "Place", "name": "Lac Léman" },
+    { "@type": "City", "name": "Sevrier" },
+    { "@type": "City", "name": "Saint-Jorioz" },
+    { "@type": "City", "name": "Talloires" },
+    { "@type": "City", "name": "Faverges" }
+  ];
+
+  const schemaLocalBusiness = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${SITE_URL}/#business`,
+    "name": "MotorBoat 74",
+    "description": "Concessionnaire et atelier nautique en Haute-Savoie spécialisé dans l'hivernage, le stockage, l'entretien et la vente de bateaux sur le Lac d'Annecy.",
+    "url": SITE_URL,
+    "logo": `${SITE_URL}/images/logo-transprent.png`,
+    "image": `${SITE_URL}/images/logo-transprent.png`,
+    "telephone": "+33457572727",
+    "email": "contact@motorboat74.com",
+    "priceRange": "€€",
+    "currenciesAccepted": "EUR",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "161 Allée des Edelweiss",
+      "addressLocality": "Saint-Ferréol",
+      "postalCode": "74210",
+      "addressRegion": "Haute-Savoie",
+      "addressCountry": "FR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 45.7661,
+      "longitude": 6.2933
+    },
+    "areaServed": areaServed,
+    "hasMap": "https://www.google.com/maps/dir/?api=1&destination=161+Allée+des+Edelweiss+74210+SAINT+FERREOL",
+    ...(GOOGLE_RATING.count > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            "ratingValue": GOOGLE_RATING.value,
+            "reviewCount": GOOGLE_RATING.count,
+            "bestRating": "5"
+          }
+        }
+      : {})
+  };
+
   const schemaService = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": "Hivernage et Stockage de bateaux",
-    "serviceType": "Boat Winterization and Storage",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "MotorBoat 74",
-      "image": "/images/logo-transprent.png",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "161 Allée des Edelweiss",
-        "addressLocality": "Lathuile",
-        "postalCode": "74210",
-        "addressRegion": "Haute-Savoie",
-        "addressCountry": "FR"
-      },
-      "telephone": "+33450512030"
+    "name": "Hivernage et stockage de bateau à Annecy (Haute-Savoie)",
+    "serviceType": "Hivernage, stockage et entretien hivernal de bateaux",
+    "provider": { "@id": `${SITE_URL}/#business` },
+    "areaServed": areaServed,
+    "url": `${SITE_URL}/hivernage-stockage-bateau`,
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": "690",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "priceCurrency": "EUR",
+        "minPrice": "120",
+        "description": "À partir de 690 € HT (hivernage complet) ou 120 € HT/mois (stockage seul)."
+      }
     },
-    "areaServed": [
-      { "@type": "AdministrativeArea", "name": "Annecy" },
-      { "@type": "AdministrativeArea", "name": "Haute-Savoie" },
-      { "@type": "AdministrativeArea", "name": "Lac d'Annecy" },
-      { "@type": "AdministrativeArea", "name": "Lac du Bourget" },
-      { "@type": "AdministrativeArea", "name": "Lac Léman" }
-    ],
-    "description": "Hivernez votre bateau à Annecy et Haute-Savoie dans notre hangar sécurisé de 3000 m². Mise hors d'eau, entretien moteur certifié Nautique, remise en service et livraison printanière incluses."
+    "description": "Hivernez votre bateau à Annecy et en Haute-Savoie dans un hangar sécurisé de 3 000 m². Mise hors d'eau, hivernage moteur certifié, antigel, stockage hors-gel, remise en service et livraison printanière incluses."
   };
 
   const schemaFAQ = {
@@ -177,7 +227,7 @@ export function HivernageStockagePage() {
         "name": "Mon bateau est-il assuré pendant son séjour dans votre hangar ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Notre infrastructure de 3 000 m² à Lathuile bénéficie d'une couverture d'assurance responsabilité civile professionnelle de stockage robuste. Votre bateau doit néanmoins conserver sa propre police d'assurance tous risques contre le vol et l'incendie (condition standard marine)."
+          "text": "Notre infrastructure de 3 000 m² à Saint-Ferréol bénéficie d'une couverture d'assurance responsabilité civile professionnelle de stockage robuste. Votre bateau doit néanmoins conserver sa propre police d'assurance tous risques contre le vol et l'incendie (condition standard marine)."
         }
       },
       {
@@ -237,7 +287,7 @@ export function HivernageStockagePage() {
     },
     {
       q: "Quels types de bateaux pouvez-vous hiverner ?",
-      a: "Notre hangar de 3 000 m² à Lathuile accueille tout type d’unité : bateaux de wakesurf et wakeboard (Nautique, MasterCraft, Tigé, Malibu), bateaux de ski, day-cruisers, hors_bords légers, et semi-rigides de plaisance. Notre pont roulant de levage gère les unités lourdes de manière chirurgicale."
+      a: "Notre hangar de 3 000 m² à Saint-Ferréol accueille tout type d’unité : bateaux de wakesurf et wakeboard (Nautique, MasterCraft, Tigé, Malibu), bateaux de ski, day-cruisers, hors_bords légers, et semi-rigides de plaisance. Notre pont roulant de levage gère les unités lourdes de manière chirurgicale."
     },
     {
       q: "Comment préparez-vous le moteur pour l'hiver / gel ?",
@@ -281,8 +331,27 @@ export function HivernageStockagePage() {
     <div className="bg-brand-dark min-h-screen text-gray-200 selection:bg-brand-cyan selection:text-brand-dark">
       <Helmet>
         <title>Hivernage & Stockage Bateau Annecy — Hangar 3000 m² | MB74</title>
-        <meta name="description" content="Hivernez votre bateau à Annecy et en Haute-Savoie dans notre hangar sécurisé de 3000 m². Mise hors d'eau, hivernage moteur, remise à l'eau. Devis 24 h." />
+        <meta name="description" content="Hivernage et stockage de bateau à Annecy (Haute-Savoie) : hangar sécurisé 3 000 m², hivernage moteur certifié, antigel, remise à l'eau incluse. À partir de 690 € HT. Devis sous 24 h." />
         <link rel="canonical" href="https://motorboat74.com/hivernage-stockage-bateau" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="geo.region" content="FR-74" />
+        <meta name="geo.placename" content="Saint-Ferréol, Annecy, Haute-Savoie" />
+        <meta name="geo.position" content="45.7661;6.2933" />
+        <meta name="ICBM" content="45.7661, 6.2933" />
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:site_name" content="MotorBoat 74" />
+        <meta property="og:title" content="Hivernage & Stockage de Bateau à Annecy — Hangar sécurisé 3 000 m²" />
+        <meta property="og:description" content="Hivernage moteur certifié, antigel, stockage hors-gel et remise à l'eau incluse sur le Lac d'Annecy. À partir de 690 € HT — devis sous 24 h." />
+        <meta property="og:url" content="https://motorboat74.com/hivernage-stockage-bateau" />
+        <meta property="og:image" content="https://motorboat74.com/images/2026-g23-perf-18.jpg" />
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Hivernage & Stockage de Bateau à Annecy — Hangar 3 000 m²" />
+        <meta name="twitter:description" content="Hivernage moteur certifié et stockage hors-gel sur le Lac d'Annecy. À partir de 690 € HT, devis sous 24 h." />
+        <meta name="twitter:image" content="https://motorboat74.com/images/2026-g23-perf-18.jpg" />
+        <script type="application/ld+json">{JSON.stringify(schemaLocalBusiness)}</script>
         <script type="application/ld+json">{JSON.stringify(schemaService)}</script>
         <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
         <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
@@ -302,13 +371,26 @@ export function HivernageStockagePage() {
       <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-brand-dark">
         {/* Background photo of mountain lake setting */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src="/images/placeholder-boat.jpg" 
-            alt="MotorBoat 74 hangar de stockage et hivernage de bateau en Haute-Savoie" 
-            className="w-full h-full object-cover opacity-35 scale-100"
+          <img
+            src="/images/2026-g23-perf-18.jpg"
+            alt="MotorBoat 74 — hivernage et stockage de bateau en Haute-Savoie, sur le Lac d'Annecy"
+            className="w-full h-full object-cover opacity-40 scale-105"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div>
+          {/* Directional gradient (editorial depth) + vertical fade */}
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/85 to-brand-dark/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-brand-dark/60"></div>
+          {/* Atmospheric cyan glow */}
+          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-cyan/10 rounded-full blur-[150px] -mr-40 -mt-40"></div>
+          {/* Fine grid texture for nautical/technical character */}
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                'linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)',
+              backgroundSize: '64px 64px',
+            }}
+          ></div>
         </div>
 
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10 text-center lg:text-left">
@@ -402,6 +484,60 @@ export function HivernageStockagePage() {
             <div className="hidden sm:block text-brand-dark/40 font-bold">|</div>
             <div>
               <span>Concessionnaire Nautique officiel</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2bis. En bref — bloc AEO/GEO citable (faits clés extractibles) */}
+      <section aria-label="L'essentiel en bref" className="py-20 bg-brand-dark relative overflow-hidden border-t border-white/5">
+        <div className="absolute top-0 right-0 w-[480px] h-[480px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-40 -mt-40 -z-0"></div>
+        <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
+          <div className="rounded-[2rem] border border-white/10 bg-ink-950/60 backdrop-blur-sm overflow-hidden">
+            {/* Bandeau dossier */}
+            <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-white/10 bg-white/[0.02]">
+              <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref — Hivernage bateau Annecy</span>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
+              {/* Définition citable */}
+              <div>
+                <p className="text-lg md:text-xl text-white leading-relaxed font-medium">
+                  <strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> est le spécialiste de l'<strong>hivernage et du stockage de bateau en Haute-Savoie</strong>, basé à Saint-Ferréol à 20&nbsp;minutes d'Annecy.
+                </p>
+                <p className="text-gray-400 leading-relaxed mt-4 text-sm md:text-base">
+                  L'hivernage consiste à mettre le bateau hors d'eau, purger et protéger le moteur contre le gel, puis le remiser au sec jusqu'au printemps. Notre formule complète couvre la mise hors d'eau, l'hivernage moteur certifié, le stockage en hangar isolé de 3&nbsp;000&nbsp;m² et la remise à l'eau, partout sur le Lac d'Annecy, le Lac du Bourget et le Léman.
+                </p>
+                <div className="flex flex-wrap gap-3 mt-6">
+                  <a href="tel:+33457572727" className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-white transition-colors">
+                    <Phone className="w-4 h-4" /> 04 57 57 27 27
+                  </a>
+                  <button onClick={scrollToForm} className="inline-flex items-center gap-2 border border-white/15 text-white font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:border-brand-cyan transition-colors">
+                    <FileCheck className="w-4 h-4 text-brand-cyan" /> Devis sous 24 h
+                  </button>
+                </div>
+              </div>
+
+              {/* Faits clés (extractibles) */}
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 content-start">
+                {[
+                  { Icon: MapPin, k: "Localisation", v: "Saint-Ferréol (74210), 20 min d'Annecy" },
+                  { Icon: Warehouse, k: "Hangar", v: "3 000 m² isolé, hors-gel, sous alarme 24/7" },
+                  { Icon: FileCheck, k: "À partir de", v: "690 € HT (complet) · 120 € HT/mois (stockage)" },
+                  { Icon: Clock, k: "Devis", v: "Réponse sous 24 h, gratuit" },
+                  { Icon: Anchor, k: "Zones", v: "Lac d'Annecy, Bourget, Léman" },
+                  { Icon: Shield, k: "Marques", v: "Toutes marques · concession. Nautique" },
+                ].map(({ Icon, k, v }) => (
+                  <div key={k} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
+                    <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
+                    <div>
+                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{k}</dt>
+                      <dd className="text-sm font-semibold text-white leading-snug mt-0.5">{v}</dd>
+                    </div>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </div>
@@ -756,7 +892,7 @@ export function HivernageStockagePage() {
                     Un hangar sécurisé de 3 000 m² au cœur de la Haute-Savoie
                   </h2>
                   <p className="text-sm text-gray-400 mt-4 leading-relaxed max-w-2xl">
-                    Notre centre technique indoor situé à Saint-Ferréol / Lathuile (à seulement 20 minutes d'Annecy) est pensé pour accueillir les bateaux haut de gamme. Contrairement à de simples hangars agricoles poussiéreux, ce complexe moderne est totalement isolé thermiquement et ventilé.
+                    Notre centre technique indoor situé à Saint-Ferréol (74210), à seulement 20 minutes d'Annecy, est pensé pour accueillir les bateaux haut de gamme. Contrairement à de simples hangars agricoles poussiéreux, ce complexe moderne est totalement isolé thermiquement et ventilé.
                   </p>
                 </div>
 
@@ -1032,7 +1168,7 @@ export function HivernageStockagePage() {
                       {"★★★★★".split('').map((star, i) => <Star key={i} className="w-4 h-4 fill-brand-cyan text-brand-cyan" />)}
                     </div>
                     <p className="text-gray-300 text-xs italic leading-relaxed mb-4">
-                      "Leur hangar de 3000 m² à Lathuile est gigantesque et d'une propreté exemplaire. On y stocke notre bateau en toute sécurité. Le service mécanicien officiel donne une grande valeur lors de la revente de l'unité."
+                      "Leur hangar de 3000 m² à Saint-Ferréol est gigantesque et d'une propreté exemplaire. On y stocke notre bateau en toute sécurité. Le service mécanicien officiel donne une grande valeur lors de la revente de l'unité."
                     </p>
                     <div className="text-xs font-bold text-white uppercase tracking-wider">
                       — Sophie B. · Sevrier, Tigé Z3
