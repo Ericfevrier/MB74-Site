@@ -368,35 +368,26 @@ export function HivernageStockagePage() {
       </div>
 
       {/* 1. Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-brand-dark">
+      <section className="relative min-h-[calc(100svh-120px)] flex items-center justify-center pt-8 pb-10 overflow-hidden bg-brand-dark">
         {/* Background photo of mountain lake setting */}
         <div className="absolute inset-0 z-0">
           <img
             src="/images/2026-g23-perf-18.jpg"
             alt="MotorBoat 74 — hivernage et stockage de bateau en Haute-Savoie, sur le Lac d'Annecy"
-            className="w-full h-full object-cover opacity-40 scale-105"
+            className="w-full h-full object-cover opacity-60 scale-105"
             referrerPolicy="no-referrer"
           />
-          {/* Directional gradient (editorial depth) + vertical fade */}
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/85 to-brand-dark/30"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-brand-dark/60"></div>
+          {/* Directional gradient: dark on the text side, image kept visible on the right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/70 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-transparent to-brand-dark/30"></div>
           {/* Atmospheric cyan glow */}
           <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-cyan/10 rounded-full blur-[150px] -mr-40 -mt-40"></div>
-          {/* Fine grid texture for nautical/technical character */}
-          <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                'linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)',
-              backgroundSize: '64px 64px',
-            }}
-          ></div>
         </div>
 
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10 text-center lg:text-left">
           <div className="max-w-4xl mx-auto lg:mx-0">
             {/* SEO Breadcrumb indicator */}
-            <div className="inline-flex items-center gap-2 bg-brand-cyan/10 border border-brand-cyan/20 rounded-full px-4 py-1.5 mb-8 text-[12px] font-bold text-brand-cyan uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 bg-brand-cyan/10 border border-brand-cyan/20 rounded-full px-4 py-1.5 mb-4 text-[12px] font-bold text-brand-cyan uppercase tracking-wider">
               <span>Accueil</span>
               <span className="opacity-40">/</span>
               <span>Services</span>
@@ -404,31 +395,31 @@ export function HivernageStockagePage() {
               <span className="text-white">Hivernage & Stockage</span>
             </div>
 
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-6">
-              Hivernage et stockage de bateau à <span className="text-brand-cyan">Annecy</span> <span className="block mt-2 lg:inline text-white/90">— Hangar sécurisé 3 000 m²</span>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
+              Hivernage et stockage de bateau à <span className="text-brand-cyan">Annecy</span> <span className="text-white/90">— Hangar sécurisé 3 000 m²</span>
             </h1>
 
-            <p className="text-base md:text-lg text-gray-300 font-medium mb-10 max-w-2xl leading-relaxed">
-              Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le <strong className="text-brand-cyan">Lac d'Annecy</strong>, le <strong className="text-white">Léman</strong> et toute la région. Profitez de notre hangar haut de gamme isolé contre le gel ainsi que de notre protocole mécanique minutieux.
+            <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
+              Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le <strong className="text-brand-cyan">Lac d'Annecy</strong>, le <strong className="text-white">Léman</strong> et toute la région.
             </p>
 
             {/* 3 USP as requested */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 text-left max-w-3xl">
-              <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6 text-left max-w-3xl">
+              <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
                 <Warehouse className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <div>
                   <p className="font-bold text-white text-base uppercase tracking-tight">Hangar 3 000 m²</p>
                   <p className="text-xs text-gray-400 mt-1 font-medium">Bâtiment industriel sécurisé & surveillé par alarme 24h/7j.</p>
                 </div>
               </div>
-              <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
+              <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
                 <Wrench className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <div>
                   <p className="font-bold text-white text-base uppercase tracking-tight">Moteur Certifié</p>
                   <p className="text-xs text-gray-400 mt-1 font-medium">Hivernage moteur de pointe par un concessionnaire officiel.</p>
                 </div>
               </div>
-              <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
+              <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
                 <Anchor className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <div>
                   <p className="font-bold text-white text-base uppercase tracking-tight">Prêt au Printemps</p>
@@ -441,20 +432,20 @@ export function HivernageStockagePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button 
                 onClick={scrollToForm}
-                className="bg-brand-cyan text-brand-dark px-10 py-5 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-xl shadow-brand-cyan/20 active:translate-y-1"
+                className="bg-brand-cyan text-brand-dark px-10 py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-xl shadow-brand-cyan/20 active:translate-y-1"
               >
                 Obtenir mon devis 24 h
               </button>
               <a 
                 href="#tarifs" 
-                className="bg-transparent border-2 border-white/20 text-white px-10 py-5 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-white/5 hover:border-brand-cyan transition-all duration-300 flex items-center justify-center gap-2"
+                className="bg-transparent border-2 border-white/20 text-white px-10 py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-white/5 hover:border-brand-cyan transition-all duration-300 flex items-center justify-center gap-2"
               >
                 Voir les tarifs <ArrowRight className="w-4 h-4 text-brand-cyan" />
               </a>
             </div>
 
             {/* Trust strip */}
-            <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-x-8 gap-y-3 pt-8 border-t border-white/10 text-xs font-semibold text-gray-400">
+            <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-8 gap-y-3 pt-5 border-t border-white/10 text-xs font-semibold text-gray-400">
               <span className="flex items-center gap-1.5 text-white">
                 <Star className="w-4 h-4 fill-brand-cyan text-brand-cyan" /> 4,9/5 sur Google
               </span>
