@@ -417,21 +417,21 @@ export function HivernageStockagePage() {
               <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
                 <Warehouse className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <div>
-                  <h3 className="font-bold text-white text-base uppercase tracking-tight">Hangar 3 000 m²</h3>
+                  <p className="font-bold text-white text-base uppercase tracking-tight">Hangar 3 000 m²</p>
                   <p className="text-xs text-gray-400 mt-1 font-medium">Bâtiment industriel sécurisé & surveillé par alarme 24h/7j.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
                 <Wrench className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <div>
-                  <h3 className="font-bold text-white text-base uppercase tracking-tight">Moteur Certifié</h3>
+                  <p className="font-bold text-white text-base uppercase tracking-tight">Moteur Certifié</p>
                   <p className="text-xs text-gray-400 mt-1 font-medium">Hivernage moteur de pointe par un concessionnaire officiel.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
                 <Anchor className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <div>
-                  <h3 className="font-bold text-white text-base uppercase tracking-tight">Prêt au Printemps</h3>
+                  <p className="font-bold text-white text-base uppercase tracking-tight">Prêt au Printemps</p>
                   <p className="text-xs text-gray-400 mt-1 font-medium">Notre package inclut la mise à l’eau garantie à date planifiée.</p>
                 </div>
               </div>
@@ -493,6 +493,7 @@ export function HivernageStockagePage() {
       <section aria-label="L'essentiel en bref" className="py-20 bg-brand-dark relative overflow-hidden border-t border-white/5">
         <div className="absolute top-0 right-0 w-[480px] h-[480px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-40 -mt-40 -z-0"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
+          <h2 className="sr-only">Hivernage et stockage de bateau à Annecy : l'essentiel</h2>
           <div className="rounded-[2rem] border border-white/10 bg-ink-950/60 backdrop-blur-sm overflow-hidden">
             {/* Bandeau dossier */}
             <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-white/10 bg-white/[0.02]">
@@ -1077,7 +1078,7 @@ export function HivernageStockagePage() {
                   <Link to="/hivernage-thonon-les-bains" className="bg-white/5 border border-white/10 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
-                        <h4 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Thonon-les-Bains</h4>
+                        <h3 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Thonon-les-Bains</h3>
                         <p className="text-xs text-gray-400 mt-1">Bassin du Lac Léman (74 & Suisse)</p>
                       </div>
                       <ArrowRight className="text-brand-cyan w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all" />
@@ -1087,7 +1088,7 @@ export function HivernageStockagePage() {
                   <Link to="/hivernage-evian-les-bains" className="bg-white/5 border border-white/10 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
-                        <h4 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Évian-les-Bains</h4>
+                        <h3 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Évian-les-Bains</h3>
                         <p className="text-xs text-gray-400 mt-1">Secteur Lémanique Est & Rive française</p>
                       </div>
                       <ArrowRight className="text-brand-cyan w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all" />
@@ -1097,7 +1098,7 @@ export function HivernageStockagePage() {
                   <Link to="/hivernage-aix-les-bains" className="bg-white/5 border border-white/10 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
-                        <h4 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Aix-les-Bains</h4>
+                        <h3 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Aix-les-Bains</h3>
                         <p className="text-xs text-gray-400 mt-1">Secteur Savoie & Lac du Bourget</p>
                       </div>
                       <ArrowRight className="text-brand-cyan w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all" />
@@ -1107,7 +1108,7 @@ export function HivernageStockagePage() {
                   <Link to="/hivernage-geneve" className="bg-white/5 border border-white/10 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
-                        <h4 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Genève</h4>
+                        <h3 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Genève</h3>
                         <p className="text-xs text-gray-400 mt-1">Confédération Suisse & Port de Genève (Leman)</p>
                       </div>
                       <ArrowRight className="text-brand-cyan w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all" />
