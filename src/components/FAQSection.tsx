@@ -30,18 +30,18 @@ export function FAQSection({ brandName }: { brandName: string }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24 bg-ink-850 text-white">
+    <section className="py-24 bg-brand-light text-brand-dark">
       <div className="max-w-4xl mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight text-center mb-16">
           ON RÉPOND À VOS <span className="text-brand-cyan">QUESTIONS</span>
         </h2>
-        
+
         <div className="space-y-4">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="bg-ink-800 rounded-2xl overflow-hidden border border-white/5">
+            <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-lg shadow-brand-dark/5">
               <button
                 onClick={() => setActiveIndex(activeIndex === idx ? null : idx)}
-                className="w-full text-left p-6 flex items-center justify-between font-bold text-lg uppercase tracking-tight hover:bg-white/5 transition-colors"
+                className="w-full text-left p-6 flex items-center justify-between font-bold text-lg uppercase tracking-tight hover:bg-gray-50 transition-colors"
                 aria-expanded={activeIndex === idx}
               >
                 {faq.question}
@@ -53,7 +53,7 @@ export function FAQSection({ brandName }: { brandName: string }) {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="px-6 pb-6 text-gray-400 font-medium leading-relaxed"
+                    className="px-6 pb-6 text-gray-600 font-medium leading-relaxed"
                   >
                     {faq.answer.replace("Nautique", brandName)}
                   </motion.div>

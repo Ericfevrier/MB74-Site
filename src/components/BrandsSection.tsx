@@ -96,8 +96,8 @@ export function BrandsSection() {
       </section>
 
       {/* Connelly Section */}
-      <section className="bg-ink-850 py-20 text-white relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-cyan/5 rounded-full blur-[80px] -ml-40 -mb-40"></div>
+      <section className="bg-brand-light py-20 text-brand-dark relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-cyan/10 rounded-full blur-[80px] -ml-40 -mb-40"></div>
         
         <div className="max-w-7xl mx-auto px-4 lg:px-8 text-center relative z-10">
           <div className="flex flex-col items-center mb-12">
@@ -110,17 +110,17 @@ export function BrandsSection() {
                   IMPORTATEUR EXCLUSIF
               </h2>
               <img 
-                src="/images/connelly-white-logo.webp" 
-                alt="Connelly Logo distributeur France" 
-                className="w-[280px] md:w-[339.758px] h-auto md:h-[52px] object-contain -ml-[30px]" 
+                src="/images/connelly-white-logo.webp"
+                alt="Connelly Logo distributeur France"
+                className="w-[280px] md:w-[339.758px] h-auto md:h-[52px] object-contain -ml-[30px] brightness-0"
                 referrerPolicy="no-referrer"
                 loading="lazy"
               />
             </div>
           </div>
 
-          <div className="max-w-3xl mx-auto space-y-6 text-gray-400 text-base leading-relaxed mb-20">
-            <p className="font-bold text-white text-2xl tracking-tight">
+          <div className="max-w-3xl mx-auto space-y-6 text-gray-600 text-base leading-relaxed mb-20">
+            <p className="font-bold text-brand-dark text-2xl tracking-tight">
               L'essence du sport nautique américain à votre portée.
             </p>
             <p>
@@ -133,14 +133,14 @@ export function BrandsSection() {
             <button 
               aria-label="Faire défiler à gauche"
               onClick={() => scroll('left')}
-              className="absolute -left-12 lg:-left-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition-all hover:bg-white/20 hover:scale-110 active:scale-95 invisible sm:visible"
+              className="absolute -left-12 lg:-left-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white border border-gray-200 text-brand-dark flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 hover:scale-110 active:scale-95 invisible sm:visible"
             >
               <ChevronLeft size={24} />
             </button>
             <button 
               aria-label="Faire défiler à droite"
               onClick={() => scroll('right')}
-              className="absolute -right-12 lg:-right-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition-all hover:bg-white/20 hover:scale-110 active:scale-95 invisible sm:visible"
+              className="absolute -right-12 lg:-right-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white border border-gray-200 text-brand-dark flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 hover:scale-110 active:scale-95 invisible sm:visible"
             >
               <ChevronRight size={24} />
             </button>

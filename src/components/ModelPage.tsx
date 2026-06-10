@@ -222,54 +222,54 @@ export function ModelPage() {
       </section>
 
       {/* 6. Fiche technique */}
-      <section className="py-24 bg-ink-950 text-white">
+      <section className="py-24 bg-brand-light text-brand-dark">
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold uppercase tracking-tight mb-4">Fiche technique du <span className="text-brand-cyan">{modelData.modeleCourt} {modelData.annee}</span></h2>
-            <p className="text-gray-400">Dimensions, poids, capacités et motorisation.</p>
+            <p className="text-gray-600">Dimensions, poids, capacités et motorisation.</p>
           </div>
           
-          <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden">
+          <div className="bg-white border border-gray-200 shadow-xl shadow-brand-dark/5 rounded-3xl overflow-hidden">
             <table className="w-full text-left">
-              <tbody className="divide-y divide-white/10">
-                <tr className="hover:bg-white/5 transition-colors">
-                  <th className="py-5 px-6 font-medium text-gray-400 w-1/2">Longueur</th>
+              <tbody className="divide-y divide-gray-200">
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <th className="py-5 px-6 font-medium text-gray-600 w-1/2">Longueur</th>
                   <td className="py-5 px-6 font-bold">{modelData.longueur}</td>
                 </tr>
-                <tr className="hover:bg-white/5 transition-colors">
-                  <th className="py-5 px-6 font-medium text-gray-400">Largeur (bau)</th>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <th className="py-5 px-6 font-medium text-gray-600">Largeur (bau)</th>
                   <td className="py-5 px-6 font-bold">2,59 m (102")</td>
                 </tr>
-                <tr className="hover:bg-white/5 transition-colors">
-                  <th className="py-5 px-6 font-medium text-gray-400">Poids à sec</th>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <th className="py-5 px-6 font-medium text-gray-600">Poids à sec</th>
                   <td className="py-5 px-6 font-bold">3 357 kg (7 400 lbs)</td>
                 </tr>
-                <tr className="hover:bg-white/5 transition-colors">
-                  <th className="py-5 px-6 font-medium text-gray-400">Moteur (standard)</th>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <th className="py-5 px-6 font-medium text-gray-600">Moteur (standard)</th>
                   <td className="py-5 px-6 font-bold">{modelData.moteur}</td>
                 </tr>
-                <tr className="hover:bg-white/5 transition-colors">
-                  <th className="py-5 px-6 font-medium text-gray-400">Motorisations en option</th>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <th className="py-5 px-6 font-medium text-gray-600">Motorisations en option</th>
                   <td className="py-5 px-6 font-bold">PCM ZZ8 600 HP (Coastal) / Yanmar 8LV Diesel</td>
                 </tr>
-                <tr className="hover:bg-white/5 transition-colors">
-                  <th className="py-5 px-6 font-medium text-gray-400">Capacité ballast</th>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <th className="py-5 px-6 font-medium text-gray-600">Capacité ballast</th>
                   <td className="py-5 px-6 font-bold">1 542 kg supplémentaires (intégré au plancher)</td>
                 </tr>
-                <tr className="hover:bg-white/5 transition-colors">
-                  <th className="py-5 px-6 font-medium text-gray-400">Réservoir carburant</th>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <th className="py-5 px-6 font-medium text-gray-600">Réservoir carburant</th>
                   <td className="py-5 px-6 font-bold">333 L (88 gal)</td>
                 </tr>
-                <tr className="hover:bg-white/5 transition-colors">
-                  <th className="py-5 px-6 font-medium text-gray-400">Capacité personnes</th>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <th className="py-5 px-6 font-medium text-gray-600">Capacité personnes</th>
                   <td className="py-5 px-6 font-bold">{modelData.capacite}</td>
                 </tr>
-                <tr className="hover:bg-white/5 transition-colors">
-                  <th className="py-5 px-6 font-medium text-gray-400">Système de vagues</th>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <th className="py-5 px-6 font-medium text-gray-600">Système de vagues</th>
                   <td className="py-5 px-6 font-bold text-brand-cyan">Nautique Surf System (NSS) avec WAVEPLATE®</td>
                 </tr>
-                <tr className="hover:bg-white/5 transition-colors">
-                  <th className="py-5 px-6 font-medium text-gray-400">Année / Millésime</th>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <th className="py-5 px-6 font-medium text-gray-600">Année / Millésime</th>
                   <td className="py-5 px-6 font-bold">{modelData.annee}</td>
                 </tr>
               </tbody>

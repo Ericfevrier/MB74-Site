@@ -12,7 +12,7 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
   const current = comparisons[activeCategory];
 
   return (
-    <section className="py-24 bg-ink-850 text-white overflow-hidden border-t border-white/5">
+    <section className="py-24 bg-white text-brand-dark overflow-hidden border-t border-gray-200">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-12">
@@ -28,7 +28,7 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
                 className={`px-8 py-3 rounded-xl font-bold uppercase tracking-widest text-[11px] transition-all duration-300 border-2 ${
                   activeCategory === idx
                     ? 'bg-brand-cyan border-brand-cyan text-brand-dark'
-                    : 'bg-transparent border-white/40 text-white hover:border-brand-cyan hover:text-brand-cyan'
+                    : 'bg-transparent border-gray-300 text-brand-dark hover:border-brand-cyan hover:text-brand-cyan'
                 }`}
               >
                 {cat.title}
@@ -46,7 +46,7 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="rounded-[1.5rem] overflow-hidden shadow-2xl border border-white/10"
+              className="rounded-[1.5rem] overflow-hidden shadow-xl shadow-brand-dark/5 border border-gray-200"
             >
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
@@ -66,15 +66,15 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
                     {current.specs.map((spec, idx) => (
                       <tr 
                         key={idx} 
-                        className={`border-b border-white/5 transition-colors ${
-                          idx % 2 === 0 ? 'bg-ink-800' : 'bg-ink-850'
+                        className={`border-b border-gray-200 transition-colors ${
+                          idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'
                         }`}
                       >
-                        <td className="py-6 px-10 text-[14px] font-medium text-white">
+                        <td className="py-6 px-10 text-[14px] font-medium text-brand-dark">
                           {spec.label}
                         </td>
                         {spec.values.map((val, vIdx) => (
-                          <td key={vIdx} className="py-6 px-10 text-[14px] text-center text-gray-400 font-medium whitespace-nowrap">
+                          <td key={vIdx} className="py-6 px-10 text-[14px] text-center text-gray-600 font-medium whitespace-nowrap">
                             {val}
                           </td>
                         ))}
