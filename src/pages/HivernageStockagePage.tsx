@@ -328,7 +328,7 @@ export function HivernageStockagePage() {
   ];
 
   return (
-    <div className="bg-brand-dark min-h-screen text-gray-200 selection:bg-brand-cyan selection:text-brand-dark">
+    <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
       <Helmet>
         <title>Hivernage & Stockage Bateau Annecy — Hangar 3000 m² | MB74</title>
         <meta name="description" content="Hivernage et stockage de bateau à Annecy (Haute-Savoie) : hangar sécurisé 3 000 m², hivernage moteur certifié, antigel, remise à l'eau incluse. À partir de 690 € HT. Devis sous 24 h." />
@@ -481,13 +481,13 @@ export function HivernageStockagePage() {
       </section>
 
       {/* 2bis. En bref — bloc AEO/GEO citable (faits clés extractibles) */}
-      <section aria-label="L'essentiel en bref" className="py-20 bg-brand-dark relative overflow-hidden border-t border-white/5">
-        <div className="absolute top-0 right-0 w-[480px] h-[480px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-40 -mt-40 -z-0"></div>
+      <section aria-label="L'essentiel en bref" className="py-20 bg-brand-light relative overflow-hidden border-t border-gray-200">
+        <div className="absolute top-0 right-0 w-[480px] h-[480px] bg-brand-cyan/10 rounded-full blur-[120px] -mr-40 -mt-40 -z-0"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
           <h2 className="sr-only">Hivernage et stockage de bateau à Annecy : l'essentiel</h2>
-          <div className="rounded-[2rem] border border-white/10 bg-ink-950/60 backdrop-blur-sm overflow-hidden">
+          <div className="rounded-[2rem] border border-gray-200 bg-white shadow-xl shadow-brand-dark/5 overflow-hidden">
             {/* Bandeau dossier */}
-            <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-white/10 bg-white/[0.02]">
+            <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-gray-200 bg-gray-50">
               <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
               <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref — Hivernage bateau Annecy</span>
             </div>
@@ -495,17 +495,17 @@ export function HivernageStockagePage() {
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               {/* Définition citable */}
               <div>
-                <p className="text-lg md:text-xl text-white leading-relaxed font-medium">
+                <p className="text-lg md:text-xl text-brand-dark leading-relaxed font-medium">
                   <strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> est le spécialiste de l'<strong>hivernage et du stockage de bateau en Haute-Savoie</strong>, basé à Saint-Ferréol à 20&nbsp;minutes d'Annecy.
                 </p>
-                <p className="text-gray-400 leading-relaxed mt-4 text-sm md:text-base">
+                <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base">
                   L'hivernage consiste à mettre le bateau hors d'eau, purger et protéger le moteur contre le gel, puis le remiser au sec jusqu'au printemps. Notre formule complète couvre la mise hors d'eau, l'hivernage moteur certifié, le stockage en hangar isolé de 3&nbsp;000&nbsp;m² et la remise à l'eau, partout sur le Lac d'Annecy, le Lac du Bourget et le Léman.
                 </p>
                 <div className="flex flex-wrap gap-3 mt-6">
-                  <a href="tel:+33457572727" className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-white transition-colors">
+                  <a href="tel:+33457572727" className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition-colors">
                     <Phone className="w-4 h-4" /> 04 57 57 27 27
                   </a>
-                  <button onClick={scrollToForm} className="inline-flex items-center gap-2 border border-white/15 text-white font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:border-brand-cyan transition-colors">
+                  <button onClick={scrollToForm} className="inline-flex items-center gap-2 border border-gray-300 text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition-colors">
                     <FileCheck className="w-4 h-4 text-brand-cyan" /> Devis sous 24 h
                   </button>
                 </div>
@@ -525,7 +525,7 @@ export function HivernageStockagePage() {
                     <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
                     <div>
                       <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{k}</dt>
-                      <dd className="text-sm font-semibold text-white leading-snug mt-0.5">{v}</dd>
+                      <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{v}</dd>
                     </div>
                   </div>
                 ))}
@@ -610,7 +610,7 @@ export function HivernageStockagePage() {
       </section>
 
       {/* 📦 COMBINED WORKSPACE FOR BLOCKS 4 TO 12 + STICKY SIDEBAR FORM ON DESKTOP */}
-      <section className="py-24 bg-transparent border-t border-white/5 relative z-10">
+      <section className="py-24 bg-transparent border-t border-gray-200 relative z-10">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             
@@ -621,23 +621,23 @@ export function HivernageStockagePage() {
               <div id="formules" className="scroll-mt-36">
                 <div className="mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Offres hivernage de bateaux</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
                     Hivernage complet ou stockage seul — deux formules adaptées
                   </h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {/* Formule 1 */}
-                  <div className="bg-ink-950 border-2 border-brand-cyan rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl hover:shadow-brand-cyan/5 transition-all">
+                  <div className="bg-white border-2 border-brand-cyan rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl hover:shadow-brand-cyan/5 transition-all">
                     <span className="absolute -top-4 right-6 bg-brand-cyan text-brand-dark text-[10px] font-bold uppercase px-4 py-1.5 rounded-full tracking-widest">
                       Formule Recommandée
                     </span>
                     <div>
                       <div className="mb-4 text-brand-cyan font-bold text-2xl">01</div>
-                      <h3 className="text-xl font-bold uppercase text-white mb-2">Hivernage complet</h3>
-                      <p className="text-xs text-gray-400 mb-6">La prestation clé en main pour préserver à 100% votre capital nautique.</p>
+                      <h3 className="text-xl font-bold uppercase text-brand-dark mb-2">Hivernage complet</h3>
+                      <p className="text-xs text-gray-600 mb-6">La prestation clé en main pour préserver à 100% votre capital nautique.</p>
                       
-                      <ul className="space-y-3 mb-8 text-sm text-gray-300">
+                      <ul className="space-y-3 mb-8 text-sm text-gray-600">
                         <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0" /> Prise en charge & Mise hors d'eau</li>
                         <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0" /> Nettoyage haute pression coque</li>
                         <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0" /> Vidange moteur & traitement carburant</li>
@@ -648,9 +648,9 @@ export function HivernageStockagePage() {
                       </ul>
                     </div>
 
-                    <div className="pt-6 border-t border-white/5">
-                      <div className="text-gray-400 text-xs mb-1">Prix de la tranquillité complète :</div>
-                      <div className="text-3xl font-bold text-white">À partir de <span className="text-brand-cyan">690 €</span> <span className="text-xs font-semibold text-gray-500">HT</span></div>
+                    <div className="pt-6 border-t border-gray-200">
+                      <div className="text-gray-600 text-xs mb-1">Prix de la tranquillité complète :</div>
+                      <div className="text-3xl font-bold text-brand-dark">À partir de <span className="text-brand-cyan">690 €</span> <span className="text-xs font-semibold text-gray-500">HT</span></div>
                       <button 
                         onClick={() => {
                           setFormData(prev => ({ ...prev, formule: 'Hivernage complet' }));
@@ -664,13 +664,13 @@ export function HivernageStockagePage() {
                   </div>
 
                   {/* Formule 2 */}
-                  <div className="bg-ink-950 border border-white/10 rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl transition-all">
+                  <div className="bg-white border border-gray-200 rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl transition-all">
                     <div>
                       <div className="mb-4 text-brand-cyan/50 font-bold text-2xl">02</div>
-                      <h3 className="text-xl font-bold uppercase text-white mb-2">Stockage seul</h3>
-                      <p className="text-xs text-gray-400 mb-6">Une place au sec et sécurisée pour garer votre remorque avec son bateau.</p>
+                      <h3 className="text-xl font-bold uppercase text-brand-dark mb-2">Stockage seul</h3>
+                      <p className="text-xs text-gray-600 mb-6">Une place au sec et sécurisée pour garer votre remorque avec son bateau.</p>
                       
-                      <ul className="space-y-3 mb-8 text-sm text-gray-300">
+                      <ul className="space-y-3 mb-8 text-sm text-gray-600">
                         <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan/60 flex-shrink-0" /> Emplacement sous hangar sec couvert</li>
                         <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan/60 flex-shrink-0" /> Zone entièrement climatisée & hors gel</li>
                         <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan/60 flex-shrink-0" /> Surveillance vidéo en continu 24h/24</li>
@@ -680,15 +680,15 @@ export function HivernageStockagePage() {
                       </ul>
                     </div>
 
-                    <div className="pt-6 border-t border-white/5">
-                      <div className="text-gray-400 text-xs mb-1">Tarif stockage mensuel direct :</div>
-                      <div className="text-3xl font-bold text-white">À partir de <span className="text-brand-cyan">120 €</span><span className="text-base text-gray-400 font-light">/mois</span> <span className="text-xs font-semibold text-gray-500">HT</span></div>
+                    <div className="pt-6 border-t border-gray-200">
+                      <div className="text-gray-600 text-xs mb-1">Tarif stockage mensuel direct :</div>
+                      <div className="text-3xl font-bold text-brand-dark">À partir de <span className="text-brand-cyan">120 €</span><span className="text-base text-gray-600 font-light">/mois</span> <span className="text-xs font-semibold text-gray-500">HT</span></div>
                       <button 
                         onClick={() => {
                           setFormData(prev => ({ ...prev, formule: 'Stockage seul' }));
                           scrollToForm();
                         }}
-                        className="mt-6 w-full bg-white/10 text-white font-bold text-xs uppercase py-4 rounded-xl tracking-wider hover:bg-white hover:text-brand-dark transition-colors border border-white/10"
+                        className="mt-6 w-full bg-brand-dark text-white font-bold text-xs uppercase py-4 rounded-xl tracking-wider hover:bg-ink-850 transition-colors"
                       >
                         Devis Stockage seul
                       </button>
@@ -699,41 +699,41 @@ export function HivernageStockagePage() {
               <div id="tarifs" className="mt-20">
                 <div className="mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Transparence de prix</span>
-                  <h3 className="text-xl md:text-2xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
+                  <h3 className="text-xl md:text-2xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
                     Tarifs hivernage & stockage de bateau — fourchettes 2025/2026
                   </h3>
                 </div>
 
                 {/* Rates Table converting to list on mobile */}
-                <div className="overflow-hidden border border-white/10 rounded-2xl bg-ink-950">
+                <div className="overflow-hidden border border-gray-200 rounded-2xl bg-white">
                   {/* Desktop version */}
                   <div className="hidden md:block">
                     <table className="w-full text-left text-sm">
-                      <thead className="bg-ink-900 text-white font-extrabold uppercase tracking-widest text-[11px] border-b border-white/10">
+                      <thead className="bg-gray-50 text-brand-dark font-extrabold uppercase tracking-widest text-[11px] border-b border-gray-200">
                         <tr>
                           <th className="py-4 px-6 text-brand-cyan">Longueur du bateau</th>
                           <th className="py-4 px-6">Hivernage Complet (Hangar Sec Inclus)</th>
                           <th className="py-4 px-6">Stockage Seul Hangar (Mensuel)</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/5 font-medium text-gray-300">
-                        <tr className="hover:bg-white/5">
-                          <td className="py-4 px-6 text-white font-bold">&lt; 5,00 Mètres</td>
+                      <tbody className="divide-y divide-gray-200 font-medium text-gray-600">
+                        <tr className="hover:bg-gray-50">
+                          <td className="py-4 px-6 text-brand-dark font-bold">&lt; 5,00 Mètres</td>
                           <td className="py-4 px-6 font-bold text-brand-cyan">Dès 690 € HT</td>
                           <td className="py-4 px-6 font-bold">120 € HT / mois</td>
                         </tr>
-                        <tr className="hover:bg-white/5">
-                          <td className="py-4 px-6 text-white font-bold">5,00 M À 6,50 M</td>
+                        <tr className="hover:bg-gray-50">
+                          <td className="py-4 px-6 text-brand-dark font-bold">5,00 M À 6,50 M</td>
                           <td className="py-4 px-6 font-bold text-brand-cyan">Dès 890 € HT</td>
                           <td className="py-4 px-6 font-bold">160 € HT / mois</td>
                         </tr>
-                        <tr className="hover:bg-white/5">
-                          <td className="py-4 px-6 text-white font-bold">6,50 M À 8,00 M</td>
+                        <tr className="hover:bg-gray-50">
+                          <td className="py-4 px-6 text-brand-dark font-bold">6,50 M À 8,00 M</td>
                           <td className="py-4 px-6 font-bold text-brand-cyan">Dès 1 190 € HT</td>
                           <td className="py-4 px-6 font-bold">210 € HT / mois</td>
                         </tr>
-                        <tr className="hover:bg-white/5">
-                          <td className="py-4 px-6 text-white font-bold">&gt; 8,00 Mètres</td>
+                        <tr className="hover:bg-gray-50">
+                          <td className="py-4 px-6 text-brand-dark font-bold">&gt; 8,00 Mètres</td>
                           <td className="py-4 px-6 font-bold text-brand-cyan">Sur Devis Personnalisé</td>
                           <td className="py-4 px-6 font-bold">Sur devis individuel</td>
                         </tr>
@@ -742,42 +742,42 @@ export function HivernageStockagePage() {
                   </div>
 
                   {/* Mobile version */}
-                  <div className="block md:hidden divide-y divide-white/5">
+                  <div className="block md:hidden divide-y divide-gray-200">
                     <div className="p-5">
-                      <h4 className="font-bold text-white text-base mb-2">Bateau &lt; 5,00 m</h4>
+                      <h4 className="font-bold text-brand-dark text-base mb-2">Bateau &lt; 5,00 m</h4>
                       <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Hivernage complet :</span>
+                        <span className="text-gray-600">Hivernage complet :</span>
                         <span className="text-brand-cyan">Dès 690 € HT</span>
                       </div>
                       <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Stockage seul :</span>
-                        <span className="text-white">120 € HT / mois</span>
+                        <span className="text-gray-600">Stockage seul :</span>
+                        <span className="text-brand-dark">120 € HT / mois</span>
                       </div>
                     </div>
                     <div className="p-5">
-                      <h4 className="font-bold text-white text-base mb-2">Bateau 5,00 m - 6,50 m</h4>
+                      <h4 className="font-bold text-brand-dark text-base mb-2">Bateau 5,00 m - 6,50 m</h4>
                       <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Hivernage complet :</span>
+                        <span className="text-gray-600">Hivernage complet :</span>
                         <span className="text-brand-cyan">Dès 890 € HT</span>
                       </div>
                       <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Stockage seul :</span>
-                        <span className="text-white">160 € HT / mois</span>
+                        <span className="text-gray-600">Stockage seul :</span>
+                        <span className="text-brand-dark">160 € HT / mois</span>
                       </div>
                     </div>
                     <div className="p-5">
-                      <h4 className="font-bold text-white text-base mb-2">Bateau 6,50 m - 8,00 m</h4>
+                      <h4 className="font-bold text-brand-dark text-base mb-2">Bateau 6,50 m - 8,00 m</h4>
                       <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Hivernage complet :</span>
+                        <span className="text-gray-600">Hivernage complet :</span>
                         <span className="text-brand-cyan">Dès 1 190 € HT</span>
                       </div>
                       <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-400">Stockage seul :</span>
-                        <span className="text-white">210 € HT / mois</span>
+                        <span className="text-gray-600">Stockage seul :</span>
+                        <span className="text-brand-dark">210 € HT / mois</span>
                       </div>
                     </div>
                     <div className="p-5">
-                      <h4 className="font-bold text-white text-base mb-2">Bateau &gt; 8,00 m</h4>
+                      <h4 className="font-bold text-brand-dark text-base mb-2">Bateau &gt; 8,00 m</h4>
                       <div className="text-xs font-bold text-brand-cyan text-center py-2 uppercase tracking-wider">
                         Tarif sur devis gratuit sous 24h
                       </div>
@@ -801,20 +801,20 @@ export function HivernageStockagePage() {
               <div className="scroll-mt-36">
                 <div className="mb-12">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Protocole certifié</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight">
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">
                     Comment se déroule l'hivernage chez MotorBoat 74
                   </h2>
                 </div>
 
                 {/* Timeline responsive */}
-                <div className="relative border-l border-white/10 ml-4 md:ml-6 space-y-12 pl-8 pb-4">
+                <div className="relative border-l border-gray-200 ml-4 md:ml-6 space-y-12 pl-8 pb-4">
                   {/* Step 1 */}
                   <div className="relative">
                     <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       1
                     </span>
-                    <h3 className="text-lg font-bold uppercase text-white">Devis gratuit 24 h</h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-relaxed">
+                    <h3 className="text-lg font-bold uppercase text-brand-dark">Devis gratuit 24 h</h3>
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
                       Remplissez notre court formulaire d'estimation. Notre pôle administratif édite pour vous une fiche tarifaire fixe et détaillée selon la dimension réelle de la coque de votre bateau.
                     </p>
                   </div>
@@ -824,8 +824,8 @@ export function HivernageStockagePage() {
                     <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       2
                     </span>
-                    <h3 className="text-lg font-bold uppercase text-white">Prise en charge personnalisée (Sept - Nov)</h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-relaxed">
+                    <h3 className="text-lg font-bold uppercase text-brand-dark">Prise en charge personnalisée (Sept - Nov)</h3>
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
                       Nous récupérons votre bateau à flot directement dans les communes du Lac d'Annecy (Veyrier, Sevrier, Talloires, Annecy-le-Vieux...) ou vous le déposez directement en concession.
                     </p>
                   </div>
@@ -835,8 +835,8 @@ export function HivernageStockagePage() {
                     <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       3
                     </span>
-                    <h3 className="text-lg font-bold uppercase text-white">Mise hors d'eau & Nettoyage de coque</h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-relaxed">
+                    <h3 className="text-lg font-bold uppercase text-brand-dark">Mise hors d'eau & Nettoyage de coque</h3>
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
                       Grutage soigné au moyen de nos sangles larges. Nettoyage haute pression hydro-gommant pour retirer tous les résidus d’algues, de coquillages et de sel calcaire sur la carène.
                     </p>
                   </div>
@@ -846,8 +846,8 @@ export function HivernageStockagePage() {
                     <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       4
                     </span>
-                    <h3 className="text-lg font-bold uppercase text-white">Hivernage moteur & électronique</h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-relaxed">
+                    <h3 className="text-lg font-bold uppercase text-brand-dark">Hivernage moteur & électronique</h3>
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
                       Vidange complète d’huile, remplacement des pièces d'usure immédiates, purge du thermostat d’eau douce de refroidissement et traitement chimique de passivation des composants sensibles.
                     </p>
                   </div>
@@ -857,8 +857,8 @@ export function HivernageStockagePage() {
                     <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       5
                     </span>
-                    <h3 className="text-lg font-bold uppercase text-white">Stockage sécurisé sous Hangar (Déc - Mars)</h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-relaxed">
+                    <h3 className="text-lg font-bold uppercase text-brand-dark">Stockage sécurisé sous Hangar (Déc - Mars)</h3>
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
                       Placement de votre unité sous notre hangar de garde de 3 000 m² à atmosphère maîtrisée, ventilé en permanence pour éviter l’humidité stagnante et la condensation de cale.
                     </p>
                   </div>
@@ -868,8 +868,8 @@ export function HivernageStockagePage() {
                     <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
                       6
                     </span>
-                    <h3 className="text-lg font-bold uppercase text-white">Remise en service & Livraison (Avr - Mai)</h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-relaxed">
+                    <h3 className="text-lg font-bold uppercase text-brand-dark">Remise en service & Livraison (Avr - Mai)</h3>
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
                       Recharge finale, remise en fluide et essai moteur dynamique en bac. Nous convoyons votre bateau pour sa livraison directe à flot au port convenu pour démarrer la saison sereinement.
                     </p>
                   </div>
@@ -880,45 +880,45 @@ export function HivernageStockagePage() {
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Visite guidée</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight">
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">
                     Un hangar sécurisé de 3 000 m² au cœur de la Haute-Savoie
                   </h2>
-                  <p className="text-sm text-gray-400 mt-4 leading-relaxed max-w-2xl">
+                  <p className="text-sm text-gray-600 mt-4 leading-relaxed max-w-2xl">
                     Notre centre technique indoor situé à Saint-Ferréol (74210), à seulement 20 minutes d'Annecy, est pensé pour accueillir les bateaux haut de gamme. Contrairement à de simples hangars agricoles poussiéreux, ce complexe moderne est totalement isolé thermiquement et ventilé.
                   </p>
                 </div>
 
                 {/* Grid 6 pictos / aspects */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center">
+                  <div className="bg-white border border-gray-200 rounded-2xl p-4 text-center">
                     <Warehouse className="w-8 h-8 text-brand-cyan mx-auto mb-2" />
-                    <span className="block text-xs font-bold text-white uppercase tracking-wider">3 000 m² isolés</span>
+                    <span className="block text-xs font-bold text-brand-dark uppercase tracking-wider">3 000 m² isolés</span>
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center">
+                  <div className="bg-white border border-gray-200 rounded-2xl p-4 text-center">
                     <Shield className="w-8 h-8 text-brand-cyan mx-auto mb-2" />
-                    <span className="block text-xs font-bold text-white uppercase tracking-wider">Alarme 24/7 Gendarmerie</span>
+                    <span className="block text-xs font-bold text-brand-dark uppercase tracking-wider">Alarme 24/7 Gendarmerie</span>
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center">
+                  <div className="bg-white border border-gray-200 rounded-2xl p-4 text-center">
                     <Clock className="w-8 h-8 text-brand-cyan mx-auto mb-2" />
-                    <span className="block text-xs font-bold text-white uppercase tracking-wider">Atmosphère ventilée</span>
+                    <span className="block text-xs font-bold text-brand-dark uppercase tracking-wider">Atmosphère ventilée</span>
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center">
+                  <div className="bg-white border border-gray-200 rounded-2xl p-4 text-center">
                     <Calendar className="w-8 h-8 text-brand-cyan mx-auto mb-2" />
-                    <span className="block text-xs font-bold text-white uppercase tracking-wider">Stockage hors gel</span>
+                    <span className="block text-xs font-bold text-brand-dark uppercase tracking-wider">Stockage hors gel</span>
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center">
+                  <div className="bg-white border border-gray-200 rounded-2xl p-4 text-center">
                     <CheckCircle className="w-8 h-8 text-brand-cyan mx-auto mb-2" />
-                    <span className="block text-xs font-bold text-white uppercase tracking-wider">Caméras HD IR</span>
+                    <span className="block text-xs font-bold text-brand-dark uppercase tracking-wider">Caméras HD IR</span>
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center">
+                  <div className="bg-white border border-gray-200 rounded-2xl p-4 text-center">
                     <Phone className="w-8 h-8 text-brand-cyan mx-auto mb-2" />
-                    <span className="block text-xs font-bold text-white uppercase tracking-wider">Accès Contrôlé</span>
+                    <span className="block text-xs font-bold text-brand-dark uppercase tracking-wider">Accès Contrôlé</span>
                   </div>
                 </div>
 
                 {/* Galerie de 4 photos du hangar */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 relative group">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 relative group">
                     <img 
                       src="/images/placeholder-boat.jpg" 
                       alt="hangar de stockage de bateaux à Annecy avec MotorBoat 74" 
@@ -928,7 +928,7 @@ export function HivernageStockagePage() {
                     />
                     <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-colors"></div>
                   </div>
-                  <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 relative group">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 relative group">
                     <img 
                       src="/images/stock-1581092160607-ee22621dd758-600.jpg" 
                       alt="bateaux neufs et d'occasion en hangar sécurisé à Annecy" 
@@ -938,7 +938,7 @@ export function HivernageStockagePage() {
                     />
                     <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-colors"></div>
                   </div>
-                  <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 relative group">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 relative group">
                     <img 
                       src="/images/stock-1621905251189-08b45d6a269e-600.jpg" 
                       alt="maintenance mécanique de moteur hors-bord en Haute-Savoie" 
@@ -948,7 +948,7 @@ export function HivernageStockagePage() {
                     />
                     <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-colors"></div>
                   </div>
-                  <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 relative group">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 relative group">
                     <img 
                       src="/images/placeholder-boat.jpg" 
                       alt="remisage technique sécurisé de bateaux" 
@@ -963,78 +963,78 @@ export function HivernageStockagePage() {
                 {/* Sous-section : comparatif intérieur vs extérieur */}
                 <div className="mt-20 mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Guide de choix</span>
-                  <h3 className="text-xl md:text-2xl font-sans font-bold uppercase text-white tracking-tight">
+                  <h3 className="text-xl md:text-2xl font-sans font-bold uppercase text-brand-dark tracking-tight">
                     Stockage intérieur ou extérieur : quelle solution choisir ?
                   </h3>
                 </div>
 
                 {/* Table converting to cards on mobile */}
-                <div className="overflow-hidden border border-white/10 rounded-2xl bg-ink-950">
+                <div className="overflow-hidden border border-gray-200 rounded-2xl bg-white">
                   {/* Desktop version (hidden on mobile) */}
                   <div className="hidden md:block">
                     <table className="w-full text-left text-sm">
-                      <thead className="bg-ink-900 text-white font-extrabold uppercase tracking-widest text-[11px] border-b border-white/10">
+                      <thead className="bg-gray-50 text-brand-dark font-extrabold uppercase tracking-widest text-[11px] border-b border-gray-200">
                         <tr>
                           <th className="py-4 px-6 text-brand-cyan">Critère d'analyse</th>
                           <th className="py-4 px-6">Hangar Intérieur (Conseillé)</th>
                           <th className="py-4 px-6">Stockage Extérieur</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/5 font-medium">
+                      <tbody className="divide-y divide-gray-200 font-medium">
                         <tr>
-                          <td className="py-4 px-6 text-white font-bold bg-white/5 mb-2">Risque de gel alpine</td>
+                          <td className="py-4 px-6 text-brand-dark font-bold bg-white mb-2">Risque de gel alpine</td>
                           <td className="py-4 px-6 text-brand-cyan"><CheckCircle className="inline w-4 h-4 mr-1.5 -mt-0.5" />Risque NUL (Hangar tempéré)</td>
-                          <td className="py-4 px-6 text-gray-400"><AlertTriangle className="inline w-4 h-4 mr-1.5 -mt-0.5" />Risque FORT (Écarts thermiques)</td>
+                          <td className="py-4 px-6 text-gray-600"><AlertTriangle className="inline w-4 h-4 mr-1.5 -mt-0.5" />Risque FORT (Écarts thermiques)</td>
                         </tr>
                         <tr>
-                          <td className="py-4 px-6 text-white font-bold bg-white/5">Condensation & Cuir</td>
+                          <td className="py-4 px-6 text-brand-dark font-bold bg-white">Condensation & Cuir</td>
                           <td className="py-4 px-6 text-brand-cyan"><CheckCircle className="inline w-4 h-4 mr-1.5 -mt-0.5" />NULLE (Flux d'air continu)</td>
-                          <td className="py-4 px-6 text-gray-400"><X className="inline w-4 h-4 mr-1.5 -mt-0.5" />OUI (Moisi tenace sous bâche)</td>
+                          <td className="py-4 px-6 text-gray-600"><X className="inline w-4 h-4 mr-1.5 -mt-0.5" />OUI (Moisi tenace sous bâche)</td>
                         </tr>
                         <tr>
-                          <td className="py-4 px-6 text-white font-bold bg-white/5">Rayonnement UV & Lune</td>
+                          <td className="py-4 px-6 text-brand-dark font-bold bg-white">Rayonnement UV & Lune</td>
                           <td className="py-4 px-6 text-brand-cyan"><CheckCircle className="inline w-4 h-4 mr-1.5 -mt-0.5" />Protection à 100% (Gelcoat intact)</td>
-                          <td className="py-4 px-6 text-gray-400"><X className="inline w-4 h-4 mr-1.5 -mt-0.5" />Ternes prématurés obligatoires</td>
+                          <td className="py-4 px-6 text-gray-600"><X className="inline w-4 h-4 mr-1.5 -mt-0.5" />Ternes prématurés obligatoires</td>
                         </tr>
                         <tr>
-                          <td className="py-4 px-6 text-white font-bold bg-white/5">Surveillance & Vol</td>
+                          <td className="py-4 px-6 text-brand-dark font-bold bg-white">Surveillance & Vol</td>
                           <td className="py-4 px-6 text-brand-cyan"><CheckCircle className="inline w-4 h-4 mr-1.5 -mt-0.5" />Alarme, caméras, local clos</td>
-                          <td className="py-4 px-6 text-gray-400"><AlertTriangle className="inline w-4 h-4 mr-1.5 -mt-0.5" />Barrières simples de parking</td>
+                          <td className="py-4 px-6 text-gray-600"><AlertTriangle className="inline w-4 h-4 mr-1.5 -mt-0.5" />Barrières simples de parking</td>
                         </tr>
                         <tr>
-                          <td className="py-4 px-6 text-white font-bold bg-white/5">Budget mensuel</td>
+                          <td className="py-4 px-6 text-brand-dark font-bold bg-white">Budget mensuel</td>
                           <td className="py-4 px-6 text-brand-cyan">Moyen à élevé selon coque</td>
                           <td className="py-4 px-6 text-brand-cyan">Économique</td>
                         </tr>
                         <tr>
-                          <td className="py-4 px-6 text-white font-bold bg-white/5 rounded-bl-2xl">Recommandé pour :</td>
+                          <td className="py-4 px-6 text-brand-dark font-bold bg-white rounded-bl-2xl">Recommandé pour :</td>
                           <td className="py-4 px-6 text-brand-cyan font-bold bg-brand-cyan/5">Bateaux de glisse récents (Nautique...), runabouts luxueux</td>
-                          <td className="py-4 px-6 text-gray-400 rounded-br-2xl">Bateaux utilitaires anciens, semi-rigides de travail</td>
+                          <td className="py-4 px-6 text-gray-600 rounded-br-2xl">Bateaux utilitaires anciens, semi-rigides de travail</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
 
                   {/* Mobile version (cards stacked, hidden on desktop) */}
-                  <div className="block md:hidden divide-y divide-white/5">
+                  <div className="block md:hidden divide-y divide-gray-200">
                     <div className="p-6">
                       <h4 className="font-bold text-brand-cyan uppercase text-xs tracking-wider mb-4">Option : Hangar Intérieur</h4>
-                      <ul className="space-y-3 font-medium text-sm text-gray-300">
+                      <ul className="space-y-3 font-medium text-sm text-gray-600">
                         <li className="flex justify-between"><span>Risque Gel :</span> <span className="text-brand-cyan font-bold">Négligeable</span></li>
                         <li className="flex justify-between"><span>Condensation :</span> <span className="text-brand-cyan font-bold">Absente (ventilé)</span></li>
                         <li className="flex justify-between"><span>Rayonnement :</span> <span className="text-brand-cyan font-bold">Protection totale</span></li>
                         <li className="flex justify-between"><span>Sécurisation :</span> <span className="text-brand-cyan font-bold">Vidéo, alarme, sous clé</span></li>
-                        <li className="flex justify-between"><span>Recommandation :</span> <span className="text-white font-bold">Bateaux récents, Nautique</span></li>
+                        <li className="flex justify-between"><span>Recommandation :</span> <span className="text-brand-dark font-bold">Bateaux récents, Nautique</span></li>
                       </ul>
                     </div>
-                    <div className="p-6 bg-brand-dark/30">
-                      <h4 className="font-bold text-gray-400 uppercase text-xs tracking-wider mb-4">Option : Stockage Extérieur</h4>
-                      <ul className="space-y-3 font-medium text-sm text-gray-400">
-                        <li className="flex justify-between"><span>Risque Gel :</span> <span className="text-gray-400 font-bold">Substantiel</span></li>
-                        <li className="flex justify-between"><span>Condensation :</span> <span className="text-gray-400 font-bold">Infiltration possible</span></li>
-                        <li className="flex justify-between"><span>Rayonnement :</span> <span className="text-gray-400">Exposition directe</span></li>
-                        <li className="flex justify-between"><span>Sécurisation :</span> <span className="text-gray-400">Simple grille extérieure</span></li>
-                        <li className="flex justify-between"><span>Recommandation :</span> <span className="text-gray-300 font-bold">Barques et remorques vides</span></li>
+                    <div className="p-6 bg-gray-100">
+                      <h4 className="font-bold text-gray-600 uppercase text-xs tracking-wider mb-4">Option : Stockage Extérieur</h4>
+                      <ul className="space-y-3 font-medium text-sm text-gray-600">
+                        <li className="flex justify-between"><span>Risque Gel :</span> <span className="text-gray-600 font-bold">Substantiel</span></li>
+                        <li className="flex justify-between"><span>Condensation :</span> <span className="text-gray-600 font-bold">Infiltration possible</span></li>
+                        <li className="flex justify-between"><span>Rayonnement :</span> <span className="text-gray-600">Exposition directe</span></li>
+                        <li className="flex justify-between"><span>Sécurisation :</span> <span className="text-gray-600">Simple grille extérieure</span></li>
+                        <li className="flex justify-between"><span>Recommandation :</span> <span className="text-gray-600 font-bold">Barques et remorques vides</span></li>
                       </ul>
                     </div>
                   </div>
@@ -1043,7 +1043,7 @@ export function HivernageStockagePage() {
                 <div className="mt-6 flex items-center justify-between bg-brand-cyan/5 border border-brand-cyan/10 p-5 rounded-2xl">
                   <div className="flex items-center gap-3">
                     <Info className="text-brand-cyan w-6 h-6 flex-shrink-0" />
-                    <p className="text-xs text-gray-300 font-medium">Vous hésitez entre l'intérieur et l'extérieur ? Notre consultant est disponible.</p>
+                    <p className="text-xs text-gray-600 font-medium">Vous hésitez entre l'intérieur et l'extérieur ? Notre consultant est disponible.</p>
                   </div>
                   <button onClick={scrollToForm} className="text-xs text-brand-cyan font-bold uppercase tracking-wider hover:underline flex items-center gap-1">
                     Nous joindre <ArrowRight className="w-3.5 h-3.5" />
@@ -1055,10 +1055,10 @@ export function HivernageStockagePage() {
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Réseau Local de lacs</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
                     Hivernage de bateau partout en Haute-Savoie et autour des lacs alpins
                   </h2>
-                  <p className="text-sm text-gray-400 mt-4 leading-relaxed">
+                  <p className="text-sm text-gray-600 mt-4 leading-relaxed">
                     Chez MotorBoat 74, nous couvrons la totalité des grands bassins nautiques de Haute-Savoie, Savoie et de l'arc lémanique. Pour assurer un maillage optimal, notre équipe assure le transport, la dépose et la récupération sur les principaux ports.
                   </p>
                 </div>
@@ -1066,52 +1066,52 @@ export function HivernageStockagePage() {
                 {/* Cities Grid - STRICT SEO RULES */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Satellites clickable with Link */}
-                  <Link to="/hivernage-thonon-les-bains" className="bg-white/5 border border-white/10 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
+                  <Link to="/hivernage-thonon-les-bains" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
-                        <h3 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Thonon-les-Bains</h3>
-                        <p className="text-xs text-gray-400 mt-1">Bassin du Lac Léman (74 & Suisse)</p>
+                        <h3 className="font-bold text-brand-dark uppercase text-sm group-hover:text-brand-cyan transition-colors">Thonon-les-Bains</h3>
+                        <p className="text-xs text-gray-600 mt-1">Bassin du Lac Léman (74 & Suisse)</p>
                       </div>
                       <ArrowRight className="text-brand-cyan w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all" />
                     </div>
                   </Link>
 
-                  <Link to="/hivernage-evian-les-bains" className="bg-white/5 border border-white/10 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
+                  <Link to="/hivernage-evian-les-bains" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
-                        <h3 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Évian-les-Bains</h3>
-                        <p className="text-xs text-gray-400 mt-1">Secteur Lémanique Est & Rive française</p>
+                        <h3 className="font-bold text-brand-dark uppercase text-sm group-hover:text-brand-cyan transition-colors">Évian-les-Bains</h3>
+                        <p className="text-xs text-gray-600 mt-1">Secteur Lémanique Est & Rive française</p>
                       </div>
                       <ArrowRight className="text-brand-cyan w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all" />
                     </div>
                   </Link>
 
-                  <Link to="/hivernage-aix-les-bains" className="bg-white/5 border border-white/10 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
+                  <Link to="/hivernage-aix-les-bains" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
-                        <h3 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Aix-les-Bains</h3>
-                        <p className="text-xs text-gray-400 mt-1">Secteur Savoie & Lac du Bourget</p>
+                        <h3 className="font-bold text-brand-dark uppercase text-sm group-hover:text-brand-cyan transition-colors">Aix-les-Bains</h3>
+                        <p className="text-xs text-gray-600 mt-1">Secteur Savoie & Lac du Bourget</p>
                       </div>
                       <ArrowRight className="text-brand-cyan w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all" />
                     </div>
                   </Link>
 
-                  <Link to="/hivernage-geneve" className="bg-white/5 border border-white/10 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
+                  <Link to="/hivernage-geneve" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
-                        <h3 className="font-bold text-white uppercase text-sm group-hover:text-brand-cyan transition-colors">Genève</h3>
-                        <p className="text-xs text-gray-400 mt-1">Confédération Suisse & Port de Genève (Leman)</p>
+                        <h3 className="font-bold text-brand-dark uppercase text-sm group-hover:text-brand-cyan transition-colors">Genève</h3>
+                        <p className="text-xs text-gray-600 mt-1">Confédération Suisse & Port de Genève (Leman)</p>
                       </div>
                       <ArrowRight className="text-brand-cyan w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all" />
                     </div>
                   </Link>
 
                   {/* STRICT DIRECTIVE: Annecy is text, no Link because this page is the Annecy Page itself! */}
-                  <div className="col-span-1 sm:col-span-2 bg-ink-900 border border-brand-cyan/20 p-6 rounded-3xl">
+                  <div className="col-span-1 sm:col-span-2 bg-gray-50 border border-brand-cyan/20 p-6 rounded-3xl">
                     <h3 className="font-bold text-base uppercase text-brand-cyan flex items-center gap-2 mb-2">
                       <MapPin className="w-4 h-4" /> Pôle Central d'Annecy (Lac d'Annecy)
                     </h3>
-                    <p className="text-xs text-gray-300 leading-relaxed font-medium">
+                    <p className="text-xs text-gray-600 leading-relaxed font-medium">
                       Cette présente page est le pôle de référence principal pour toutes les municipalités et ports d'Annecy. Nous intervenons quotidiennement sans frais d'acheminement de grutage additionnels sur les communes de <strong>Annecy</strong>, <strong>Sevrier</strong>, <strong>Saint-Jorioz</strong>, <strong>Lathuile</strong>, <strong>Doussard</strong>, <strong>Talloires</strong>, <strong>Menthon-Saint-Bernard</strong> et <strong>Veyrier-du-lac</strong>.
                     </p>
                   </div>
@@ -1122,60 +1122,60 @@ export function HivernageStockagePage() {
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Retours d'expérience</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight">
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">
                     Ce que disent les propriétaires qui nous confient leur bateau
                   </h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Review 1 */}
-                  <div className="bg-white/5 border border-white/5 p-6 rounded-2xl">
+                  <div className="bg-white border border-gray-200 p-6 rounded-2xl">
                     <div className="flex text-brand-cyan mb-3">
                       {"★★★★★".split('').map((star, i) => <Star key={i} className="w-4 h-4 fill-brand-cyan text-brand-cyan" />)}
                     </div>
-                    <p className="text-gray-300 text-xs italic leading-relaxed mb-4">
+                    <p className="text-gray-600 text-xs italic leading-relaxed mb-4">
                       "C'est la troisième année que je confie mon Super Air Nautique G23 pour l'hivernage chez MotorBoat 74. Le moteur est vidangé avec un soin exceptionnel et j'aime retrouver mon intérieur absolument sec et dépoussiéré chaque printemps. Recommandation totale !"
                     </p>
-                    <div className="text-xs font-bold text-white uppercase tracking-wider">
+                    <div className="text-xs font-bold text-brand-dark uppercase tracking-wider">
                       — Marc D. · Annecy, Nautique G23
                     </div>
                   </div>
 
                   {/* Review 2 */}
-                  <div className="bg-white/5 border border-white/5 p-6 rounded-2xl">
+                  <div className="bg-white border border-gray-200 p-6 rounded-2xl">
                     <div className="flex text-brand-cyan mb-3">
                       {"★★★★★".split('').map((star, i) => <Star key={i} className="w-4 h-4 fill-brand-cyan text-brand-cyan" />)}
                     </div>
-                    <p className="text-gray-300 text-xs italic leading-relaxed mb-4">
+                    <p className="text-gray-600 text-xs italic leading-relaxed mb-4">
                       "Un service premium très appréciable. Ils viennent récupérer mon MasterCraft directement à la place de port de Veyrier en octobre et me le remettent à l’eau nettoyé en mai. Aucun souci de remorque à gérer."
                     </p>
-                    <div className="text-xs font-bold text-white uppercase tracking-wider">
+                    <div className="text-xs font-bold text-brand-dark uppercase tracking-wider">
                       — Édouard P. · Veyrier-du-lac, MasterCraft XStar
                     </div>
                   </div>
 
                   {/* Review 3 */}
-                  <div className="bg-white/5 border border-white/5 p-6 rounded-2xl">
+                  <div className="bg-white border border-gray-200 p-6 rounded-2xl">
                     <div className="flex text-brand-cyan mb-3">
                       {"★★★★★".split('').map((star, i) => <Star key={i} className="w-4 h-4 fill-brand-cyan text-brand-cyan" />)}
                     </div>
-                    <p className="text-gray-300 text-xs italic leading-relaxed mb-4">
+                    <p className="text-gray-600 text-xs italic leading-relaxed mb-4">
                       "Leur hangar de 3000 m² à Saint-Ferréol est gigantesque et d'une propreté exemplaire. On y stocke notre bateau en toute sécurité. Le service mécanicien officiel donne une grande valeur lors de la revente de l'unité."
                     </p>
-                    <div className="text-xs font-bold text-white uppercase tracking-wider">
+                    <div className="text-xs font-bold text-brand-dark uppercase tracking-wider">
                       — Sophie B. · Sevrier, Tigé Z3
                     </div>
                   </div>
 
                   {/* Review 4 */}
-                  <div className="bg-white/5 border border-white/5 p-6 rounded-2xl">
+                  <div className="bg-white border border-gray-200 p-6 rounded-2xl">
                     <div className="flex text-brand-cyan mb-3">
                       {"★★★★★".split('').map((star, i) => <Star key={i} className="w-4 h-4 fill-brand-cyan text-brand-cyan" />)}
                     </div>
-                    <p className="text-gray-300 text-xs italic leading-relaxed mb-4">
+                    <p className="text-gray-600 text-xs italic leading-relaxed mb-4">
                       "Hivernage moteur in-board fait dans les règles de l'art par un concessionnaire Nautique officiel. C'est l'atout revente indéniable qui me donne confiance."
                     </p>
-                    <div className="text-xs font-bold text-white uppercase tracking-wider">
+                    <div className="text-xs font-bold text-brand-dark uppercase tracking-wider">
                       — Jean-Marc L. · Saint-Jorioz, Correct Craft
                     </div>
                   </div>
@@ -1186,7 +1186,7 @@ export function HivernageStockagePage() {
               <div className="scroll-mt-36">
                 <div className="mb-12">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Réponses d'experts</span>
-                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight">
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">
                     Hivernage et stockage de bateau : vos questions, nos réponses
                   </h2>
                 </div>
@@ -1198,13 +1198,13 @@ export function HivernageStockagePage() {
                     return (
                       <div 
                         key={index} 
-                        className="border border-white/10 rounded-2xl overflow-hidden bg-ink-950 transition-colors"
+                        className="border border-gray-200 rounded-2xl overflow-hidden bg-white transition-colors"
                       >
                         <button
                           onClick={() => setActiveFaq(isOpen ? null : index)}
-                          className="w-full flex items-center justify-between p-6 text-left hover:bg-white/5 transition-colors group cursor-pointer"
+                          className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors group cursor-pointer"
                         >
-                          <span className="text-base font-extrabold text-white group-hover:text-brand-cyan transition-colors uppercase tracking-tight">
+                          <span className="text-base font-extrabold text-brand-dark group-hover:text-brand-cyan transition-colors uppercase tracking-tight">
                             {faq.q}
                           </span>
                           <ChevronDown 
@@ -1218,9 +1218,9 @@ export function HivernageStockagePage() {
                               animate={{ height: 'auto', opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: 0.3 }}
-                              className="overflow-hidden bg-ink-950 border-t border-white/5"
+                              className="overflow-hidden bg-white border-t border-gray-200"
                             >
-                              <div className="p-6 text-sm text-gray-400 leading-relaxed font-light">
+                              <div className="p-6 text-sm text-gray-600 leading-relaxed font-light">
                                 {faq.a}
                               </div>
                             </motion.div>
