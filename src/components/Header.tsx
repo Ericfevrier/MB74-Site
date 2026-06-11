@@ -25,11 +25,11 @@ import {
 
 const megaMenuServices = [
   { name: "Hivernage / Stockage", desc: "Stockage sécurisé, au sec", icon: Shield, path: "/hivernage-stockage-bateau" },
-  { name: "Entretien / Réparation", desc: "Expertise technique complète", icon: Wrench, path: "#" },
-  { name: "Dépannage", desc: "24h/24h, 7j/7 durant la saison sur le Lac", icon: LifeBuoy, path: "#" },
-  { name: "Transport", desc: "En France et en Europe", icon: Package, path: "#" },
-  { name: "Sellerie", desc: "Rénovation sur-mesure", icon: Anchor, path: "#" },
-  { name: "Remorque", desc: "Pour tout type de bateau", icon: Settings, path: "#" },
+  { name: "Entretien / Réparation", desc: "Expertise technique complète", icon: Wrench, path: "/services/entretien-reparation" },
+  { name: "Dépannage", desc: "7j/7 durant la saison sur le Lac", icon: LifeBuoy, path: "/services/depannage" },
+  { name: "Transport", desc: "En France et en Europe", icon: Package, path: "/services/transport-de-bateau" },
+  { name: "Sellerie", desc: "Rénovation sur-mesure", icon: Anchor, path: "/services/sellerie-de-bateau" },
+  { name: "Remorque", desc: "Pour tout type de bateau", icon: Settings, path: "/services/remorques-de-bateau" },
 ];
 
 const megaMenuBateaux = [
@@ -77,10 +77,10 @@ export function Header() {
                 onMouseEnter={() => setActiveMenu('services')}
                 onMouseLeave={() => setActiveMenu(null)}
               >
-                <span className={`group-hover:text-brand-cyan transition-colors py-2 flex items-center gap-1.5 ${activeMenu === 'services' ? 'text-brand-cyan' : ''}`}>
+                <Link to="/services" className={`group-hover:text-brand-cyan transition-colors py-2 flex items-center gap-1.5 ${activeMenu === 'services' ? 'text-brand-cyan' : ''}`}>
                   NOS SERVICES
                   <ChevronDown size={14} className={`opacity-50 transition-transform duration-300 ${activeMenu === 'services' ? 'rotate-180 opacity-100' : ''}`} />
-                </span>
+                </Link>
               </li>
               <li 
                 className="relative cursor-pointer flex items-center h-[120px] group"

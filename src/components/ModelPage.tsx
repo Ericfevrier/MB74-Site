@@ -588,7 +588,7 @@ export function ModelPage() {
                   <MapPin className="text-brand-cyan flex-shrink-0 mt-1" size={24} />
                   <div>
                     <h3 className="font-bold text-xl uppercase tracking-wider mb-2">MotorBoat74</h3>
-                    <p className="text-gray-400">161 Allée des Edelweiss<br/>74210 Lathuile<br/>France ({modelData.departement})</p>
+                    <p className="text-gray-400">315 Rue de la Glière de Thermesay<br/>74210 Val de Chaise<br/>France ({modelData.departement})</p>
                     <p className="text-gray-400 mt-2">Intervient sur le {modelData.planDeau}, le Léman, et le lac du Bourget.</p>
                   </div>
                 </div>
@@ -610,7 +610,7 @@ export function ModelPage() {
             
             <div className="w-full lg:w-1/2 min-h-[400px]">
               {/* Using GoogleMapCustom for correct representation */}
-              <GoogleMapCustom address="Motorboat 74, Lathuile" />
+              <GoogleMapCustom />
             </div>
           </div>
         </div>

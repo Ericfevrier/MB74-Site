@@ -43,9 +43,16 @@ export function Footer() {
             <div>
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Nos services</h3>
               <ul className="space-y-3">
-                {['Hivernage / Stockage', 'Entretien / Réparation', 'Dépannage', 'Transport', 'Sellerie', 'Remorque'].map((item) => (
-                  <li key={item}>
-                    <a href="#" className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item}</a>
+                {[
+                  { name: 'Hivernage / Stockage', path: '/hivernage-stockage-bateau' },
+                  { name: 'Entretien / Réparation', path: '/services/entretien-reparation' },
+                  { name: 'Dépannage', path: '/services/depannage' },
+                  { name: 'Transport', path: '/services/transport-de-bateau' },
+                  { name: 'Sellerie', path: '/services/sellerie-de-bateau' },
+                  { name: 'Remorque', path: '/services/remorques-de-bateau' },
+                ].map((item) => (
+                  <li key={item.name}>
+                    <Link to={item.path} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
                   </li>
                 ))}
               </ul>

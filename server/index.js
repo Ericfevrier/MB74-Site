@@ -92,14 +92,20 @@ app.get('/api/health', (_req, res) => {
 
 // Formulaire de contact (page d'accueil)
 app.post('/api/contact', async (req, res) => {
-  const { nom, email, message } = req.body || {};
+  const { nom, prenom, tel, email, message, sujet } = req.body || {};
   if (!nom || !email || !message) {
     return res.status(400).json({ ok: false, error: 'Champs requis manquants.' });
   }
   try {
+    const fields = { Nom: nom };
+    if (prenom) fields['Prénom'] = prenom;
+    fields.Email = email;
+    if (tel) fields['Téléphone'] = tel;
+    if (sujet) fields.Sujet = sujet;
+    fields.Message = message;
     const r = await sendMail({
-      subject: `Nouveau message de contact — ${nom}`,
-      fields: { Nom: nom, Email: email, Message: message },
+      subject: sujet ? `Contact — ${sujet} — ${nom}` : `Nouveau message de contact — ${nom}`,
+      fields,
       replyTo: email,
     });
     res.json({ ok: true, ...r });

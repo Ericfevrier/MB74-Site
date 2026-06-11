@@ -1,8 +1,14 @@
 import React from 'react';
+import { SITE } from '../data/site';
 
-export function GoogleMapCustom() {
-  const address = "161 Allée des Edelweiss, 74210 SAINT FERREOL";
-  const encodedAddress = encodeURIComponent(address);
+interface GoogleMapCustomProps {
+  /** Adresse à afficher (défaut : NAP officiel du site). */
+  address?: string;
+}
+
+export function GoogleMapCustom({ address }: GoogleMapCustomProps = {}) {
+  const resolved = address || `${SITE.name}, ${SITE.addressStreet}, ${SITE.addressPostal} ${SITE.addressLocality}`;
+  const encodedAddress = encodeURIComponent(resolved);
   
   return (
     <div className="relative h-full w-full rounded-[3rem] overflow-hidden bg-ink-900">
@@ -21,7 +27,7 @@ export function GoogleMapCustom() {
       {/* Fallback for when API_KEY is missing in the embed URL (Google sometimes allows basic embed without key, but if not, we use the share link format) */}
       {!process.env.GOOGLE_MAPS_PLATFORM_KEY && (
         <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2791.956743124584!2d6.293298115560649!3d45.76615757910547!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47895f36e4f16b23%3A0xc345f8f9c0e3e2b2!2s161%20All%C3%A9e%20des%20Edelweiss%2C%2074210%20Saint-Ferr%C3%A9ol%2C%20France!5e0!3m2!1sfr!2sfr!4v1683984000000!5m2!1sfr!2sfr" 
+          src={`https://maps.google.com/maps?q=${encodedAddress}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
           width="100%" 
           height="100%" 
           style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.9) contrast(0.9)' }} 
