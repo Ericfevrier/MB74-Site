@@ -85,8 +85,8 @@ export function HivernageStockagePage() {
   // JSON-LD Schemas definitions
   const SITE_URL = "https://motorboat74.com";
 
-  // Note d'avis Google — REMPLACER reviewCount par le nombre réel d'avis pour activer les étoiles.
-  const GOOGLE_RATING = { value: "4.9", count: 0 };
+  // Note d'avis Google (profil Google Business, relevé le 2026-06-11).
+  const GOOGLE_RATING = { value: "4.7", count: 20 };
 
   const areaServed = [
     { "@type": "City", "name": "Annecy" },
@@ -115,8 +115,8 @@ export function HivernageStockagePage() {
     "currenciesAccepted": "EUR",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "315 Rue de la Glière de Thermesay",
-      "addressLocality": "Val de Chaise",
+      "streetAddress": "179 Allée des Edelweiss",
+      "addressLocality": "Saint-Ferréol",
       "postalCode": "74210",
       "addressRegion": "Haute-Savoie",
       "addressCountry": "FR"
@@ -127,7 +127,7 @@ export function HivernageStockagePage() {
       "longitude": 6.2933
     },
     "areaServed": areaServed,
-    "hasMap": "https://www.google.com/maps/dir/?api=1&destination=315+Rue+de+la+Gli%C3%A8re+de+Thermesay+74210+Val+de+Chaise",
+    "hasMap": "https://www.google.com/maps/dir/?api=1&destination=179+All%C3%A9e+des+Edelweiss+74210+Saint-Ferr%C3%A9ol",
     ...(GOOGLE_RATING.count > 0
       ? {
           aggregateRating: {
@@ -227,7 +227,7 @@ export function HivernageStockagePage() {
         "name": "Mon bateau est-il assuré pendant son séjour dans votre hangar ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Notre infrastructure de 3 000 m² à Val de Chaise bénéficie d'une couverture d'assurance responsabilité civile professionnelle de stockage robuste. Votre bateau doit néanmoins conserver sa propre police d'assurance tous risques contre le vol et l'incendie (condition standard marine)."
+          "text": "Notre infrastructure de 3 000 m² à Saint-Ferréol bénéficie d'une couverture d'assurance responsabilité civile professionnelle de stockage robuste. Votre bateau doit néanmoins conserver sa propre police d'assurance tous risques contre le vol et l'incendie (condition standard marine)."
         }
       },
       {
@@ -287,7 +287,7 @@ export function HivernageStockagePage() {
     },
     {
       q: "Quels types de bateaux pouvez-vous hiverner ?",
-      a: "Notre hangar de 3 000 m² à Val de Chaise accueille tout type d’unité : bateaux de wakesurf et wakeboard (Nautique, MasterCraft, Tigé, Malibu), bateaux de ski, day-cruisers, hors_bords légers, et semi-rigides de plaisance. Notre pont roulant de levage gère les unités lourdes de manière chirurgicale."
+      a: "Notre hangar de 3 000 m² à Saint-Ferréol accueille tout type d’unité : bateaux de wakesurf et wakeboard (Nautique, MasterCraft, Tigé, Malibu), bateaux de ski, day-cruisers, hors_bords légers, et semi-rigides de plaisance. Notre pont roulant de levage gère les unités lourdes de manière chirurgicale."
     },
     {
       q: "Comment préparez-vous le moteur pour l'hiver / gel ?",
@@ -335,7 +335,7 @@ export function HivernageStockagePage() {
         <link rel="canonical" href="https://motorboat74.com/hivernage-stockage-bateau" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="geo.region" content="FR-74" />
-        <meta name="geo.placename" content="Val de Chaise, Annecy, Haute-Savoie" />
+        <meta name="geo.placename" content="Saint-Ferréol, Annecy, Haute-Savoie" />
         <meta name="geo.position" content="45.7661;6.2933" />
         <meta name="ICBM" content="45.7661, 6.2933" />
         {/* Open Graph */}
@@ -447,7 +447,7 @@ export function HivernageStockagePage() {
             {/* Trust strip */}
             <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-8 gap-y-3 pt-5 border-t border-white/10 text-xs font-semibold text-gray-400">
               <span className="flex items-center gap-1.5 text-white">
-                <Star className="w-4 h-4 fill-brand-cyan text-brand-cyan" /> 4,9/5 sur Google
+                <Star className="w-4 h-4 fill-brand-cyan text-brand-cyan" /> 4,7/5 sur Google (20 avis)
               </span>
               <span className="text-white">● 600+ bateaux hivernés par an</span>
               <span className="text-white">● Concessionnaire Expert depuis plus de 10 ans</span>
@@ -462,7 +462,7 @@ export function HivernageStockagePage() {
           <div className="flex flex-wrap items-center justify-around gap-y-4 gap-x-8 text-center uppercase tracking-widest text-xs md:text-sm">
             <div className="flex items-center gap-2">
               <Star className="w-5 h-5 fill-brand-dark text-brand-dark" />
-              <span>Google 4,9/5</span>
+              <span>Google 4,7/5</span>
             </div>
             <div className="hidden sm:block text-brand-dark/40 font-bold">|</div>
             <div>
@@ -496,7 +496,7 @@ export function HivernageStockagePage() {
               {/* Définition citable */}
               <div>
                 <p className="text-lg md:text-xl text-brand-dark leading-relaxed font-medium">
-                  <strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> est le spécialiste de l'<strong>hivernage et du stockage de bateau en Haute-Savoie</strong>, basé à Val de Chaise à 20&nbsp;minutes d'Annecy.
+                  <strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> est le spécialiste de l'<strong>hivernage et du stockage de bateau en Haute-Savoie</strong>, basé à Saint-Ferréol à 20&nbsp;minutes d'Annecy.
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base">
                   L'hivernage consiste à mettre le bateau hors d'eau, purger et protéger le moteur contre le gel, puis le remiser au sec jusqu'au printemps. Notre formule complète couvre la mise hors d'eau, l'hivernage moteur certifié, le stockage en hangar isolé de 3&nbsp;000&nbsp;m² et la remise à l'eau, partout sur le Lac d'Annecy, le Lac du Bourget et le Léman.
@@ -514,7 +514,7 @@ export function HivernageStockagePage() {
               {/* Faits clés (extractibles) */}
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 content-start">
                 {[
-                  { Icon: MapPin, k: "Localisation", v: "Val de Chaise (74210), 20 min d'Annecy" },
+                  { Icon: MapPin, k: "Localisation", v: "Saint-Ferréol (74210), 20 min d'Annecy" },
                   { Icon: Warehouse, k: "Hangar", v: "3 000 m² isolé, hors-gel, sous alarme 24/7" },
                   { Icon: FileCheck, k: "À partir de", v: "690 € HT (complet) · 120 € HT/mois (stockage)" },
                   { Icon: Clock, k: "Devis", v: "Réponse sous 24 h, gratuit" },
@@ -884,7 +884,7 @@ export function HivernageStockagePage() {
                     Un hangar sécurisé de 3 000 m² au cœur de la Haute-Savoie
                   </h2>
                   <p className="text-sm text-gray-600 mt-4 leading-relaxed max-w-2xl">
-                    Notre centre technique indoor situé à Val de Chaise (74210), à seulement 20 minutes d'Annecy, est pensé pour accueillir les bateaux haut de gamme. Contrairement à de simples hangars agricoles poussiéreux, ce complexe moderne est totalement isolé thermiquement et ventilé.
+                    Notre centre technique indoor situé à Saint-Ferréol (74210), à seulement 20 minutes d'Annecy, est pensé pour accueillir les bateaux haut de gamme. Contrairement à de simples hangars agricoles poussiéreux, ce complexe moderne est totalement isolé thermiquement et ventilé.
                   </p>
                 </div>
 
@@ -1066,7 +1066,7 @@ export function HivernageStockagePage() {
                 {/* Cities Grid - STRICT SEO RULES */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Satellites clickable with Link */}
-                  <Link to="/hivernage-thonon-les-bains" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
+                  <Link to="/services/hivernage-bateaux/thonon-les-bains" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
                         <h3 className="font-bold text-brand-dark uppercase text-sm group-hover:text-brand-cyan transition-colors">Thonon-les-Bains</h3>
@@ -1076,7 +1076,7 @@ export function HivernageStockagePage() {
                     </div>
                   </Link>
 
-                  <Link to="/hivernage-evian-les-bains" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
+                  <Link to="/services/hivernage-bateaux/evian-les-bains" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
                         <h3 className="font-bold text-brand-dark uppercase text-sm group-hover:text-brand-cyan transition-colors">Évian-les-Bains</h3>
@@ -1086,7 +1086,7 @@ export function HivernageStockagePage() {
                     </div>
                   </Link>
 
-                  <Link to="/hivernage-aix-les-bains" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
+                  <Link to="/services/hivernage-bateaux/aix-les-bains" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
                         <h3 className="font-bold text-brand-dark uppercase text-sm group-hover:text-brand-cyan transition-colors">Aix-les-Bains</h3>
@@ -1096,7 +1096,7 @@ export function HivernageStockagePage() {
                     </div>
                   </Link>
 
-                  <Link to="/hivernage-geneve" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
+                  <Link to="/services/hivernage-bateaux/geneve" className="bg-white border border-gray-200 hover:border-brand-cyan/40 p-6 rounded-2xl group transition-all">
                     <div className="flex justify-between items-center">
                       <div>
                         <h3 className="font-bold text-brand-dark uppercase text-sm group-hover:text-brand-cyan transition-colors">Genève</h3>
@@ -1160,7 +1160,7 @@ export function HivernageStockagePage() {
                       {"★★★★★".split('').map((star, i) => <Star key={i} className="w-4 h-4 fill-brand-cyan text-brand-cyan" />)}
                     </div>
                     <p className="text-gray-600 text-xs italic leading-relaxed mb-4">
-                      "Leur hangar de 3000 m² à Val de Chaise est gigantesque et d'une propreté exemplaire. On y stocke notre bateau en toute sécurité. Le service mécanicien officiel donne une grande valeur lors de la revente de l'unité."
+                      "Leur hangar de 3000 m² à Saint-Ferréol est gigantesque et d'une propreté exemplaire. On y stocke notre bateau en toute sécurité. Le service mécanicien officiel donne une grande valeur lors de la revente de l'unité."
                     </p>
                     <div className="text-xs font-bold text-brand-dark uppercase tracking-wider">
                       — Sophie B. · Sevrier, Tigé Z3
