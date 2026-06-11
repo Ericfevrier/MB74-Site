@@ -39,62 +39,62 @@ export const brandsData: Record<string, BrandData> = {
     models: [
       {
         name: "G25 Paragon",
-        image: "/images/2026-p23-ext-09-11zon.jpg",
+        image: "/images/nautique/g25-paragon-1.jpg",
         description: "L'apogée du luxe et de la performance, avec des finitions artisanales et une technologie sans compromis."
       },
       {
         name: "G23 Paragon",
-        image: "/images/2026-p25-ext-16.jpg",
+        image: "/images/nautique/g23-paragon-1.jpg",
         description: "L'excellence Nautique concentrée dans le modèle le plus primé de l'industrie."
       },
       {
         name: "Super Air Nautique G25",
-        image: "/images/2026-p23-ext-09-11zon.jpg",
+        image: "/images/nautique/super-air-nautique-g25-1.jpg",
         description: "Une plateforme spacieuse offrant une performance de vague légendaire pour tout le groupe."
       },
       {
         name: "Super Air Nautique G23",
-        image: "/images/2026-p25-ext-16.jpg",
+        image: "/images/nautique/g23-paragon-2.jpg",
         description: "La référence mondiale absolue pour le wakeboard et le wakesurf."
       },
       {
         name: "Super Air Nautique G21",
-        image: "/images/2026-p23-ext-09-11zon.jpg",
+        image: "/images/nautique/super-air-nautique-g25-2.jpg",
         description: "La performance de la série G dans un format polyvalent."
       },
       {
         name: "Super Air Nautique S25",
-        image: "/images/2026-p23-ext-09-11zon.jpg",
+        image: "/images/nautique/super-air-nautique-s25-1.jpg",
         description: "La nouvelle référence en matière de design moderne et de polyvalence en grand format."
       },
       {
         name: "Super Air Nautique S23",
-        image: "/images/placeholder-boat.jpg",
+        image: "/images/nautique/super-air-nautique-s23-1.jpg",
         description: "Un mélange parfait entre tradition et modernité pour une expérience de glisse totale."
       },
       {
         name: "Super Air Nautique S21",
-        image: "/images/26723-16656744.webp",
+        image: "/images/nautique/super-air-nautique-s21-1.jpg",
         description: "Performance et style dans un format compact et agile."
       },
       {
         name: "Super Air Nautique GS24",
-        image: "/images/2026-p23-ext-09-11zon.jpg",
+        image: "/images/nautique/super-air-nautique-gs24-1.jpg",
         description: "La polyvalence multi-sports ultime pour les familles passionnées."
       },
       {
         name: "Super Air Nautique GS22",
-        image: "/images/26723-16656744.webp",
+        image: "/images/nautique/super-air-nautique-gs22-1.jpg",
         description: "Le summum de la polyvalence pour le ski, le wake et le surf."
       },
       {
         name: "Super Air Nautique GS20",
-        image: "/images/26723-16656744.webp",
+        image: "/images/nautique/super-air-nautique-gs20-1.jpg",
         description: "Toute la performance Nautique dans un format manœuvrable et polyvalent."
       },
       {
         name: "Ski Nautique",
-        image: "/images/26723-16656744.webp",
+        image: "/images/nautique/ski-nautique-1.jpg",
         description: "Le bateau de ski de compétition le plus performant jamais construit."
       }
     ],
