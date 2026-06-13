@@ -196,9 +196,9 @@ export function Header() {
               <p className="text-brand-cyan text-[10px] font-bold tracking-widest mb-1 leading-none">NOUS APPELER</p>
               <a href="tel:+33457572727" className="block text-white font-bold text-xl leading-none hover:text-brand-cyan transition-colors cursor-pointer tracking-tight">04 57 57 27 27</a>
             </div>
-            <a href="mailto:contact@motorboat74.com" className="bg-brand-cyan text-brand-dark font-bold py-4 px-8 rounded-2xl uppercase text-[11px] tracking-widest hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-brand-cyan/40 transition-all duration-300">
+            <Link to="/contact" className="bg-brand-cyan text-brand-dark font-bold py-4 px-8 rounded-2xl uppercase text-[11px] tracking-widest hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-brand-cyan/40 transition-all duration-300">
               Contactez-nous
-            </a>
+            </Link>
           </div>
 
           {/* Mobile menu button */}

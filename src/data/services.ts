@@ -7,14 +7,24 @@ export interface ServiceCard {
   title: string;
   desc?: string;
   bullets?: string[];
+  /** Clé d'icône lucide (mappée dans ServicePage) — optionnelle */
+  icon?: string;
 }
 
 export interface ServiceSection {
+  /** Petit sur-titre cyan au-dessus du H2 — optionnel */
+  eyebrow?: string;
   heading: string;
   intro?: string;
   layout: 'cards' | 'steps' | 'why' | 'list';
   items: ServiceCard[];
   cta?: { label: string; href: string };
+}
+
+/** Indicateur de confiance affiché sous le héro */
+export interface ServiceStat {
+  value: string;
+  label: string;
 }
 
 export interface ServiceFAQ {
@@ -43,6 +53,8 @@ export interface ServiceDef {
   heroIntro: string;
   heroImage: string;
   heroCtas: ServiceCTA[];
+  /** Bandeau d'indicateurs sous le héro — optionnel */
+  stats?: ServiceStat[];
   sections: ServiceSection[];
   faqs: ServiceFAQ[];
 }
@@ -65,9 +77,48 @@ export const services: ServiceDef[] = [
     heroIntro:
       'Confiez l’entretien et la réparation de votre bateau à MotorBoat74, spécialiste à Annecy et en Haute-Savoie. De la révision moteur aux travaux de carénage, en passant par la réparation d’équipements et la préparation à la saison, nous garantissons performance, sécurité et longévité à votre embarcation. Interventions rapides et soignées, sur place ou en atelier.',
     heroImage: '/images/services/entretien.webp',
-    heroCtas: [{ label: 'Contactez notre équipe', href: '#contact', primary: true }],
+    heroCtas: [
+      { label: 'Demander un devis gratuit', href: '#contact', primary: true },
+      { label: 'Nous appeler', href: `tel:${TEL}` },
+    ],
+    stats: [
+      { value: '4,9/5', label: 'Avis Google' },
+      { value: '600+', label: 'Bateaux suivis / an' },
+      { value: 'Toutes', label: 'Marques de moteurs' },
+      { value: '10 ans+', label: "D'expertise nautique" },
+    ],
     sections: [
       {
+        eyebrow: 'Préserver votre bateau',
+        heading: 'Pourquoi un entretien régulier est essentiel',
+        intro:
+          'Un bateau entretenu, c’est une navigation sereine et un investissement protégé. Un suivi régulier évite les pannes coûteuses et préserve la valeur de votre embarcation saison après saison.',
+        layout: 'why',
+        items: [
+          {
+            title: 'Sécurité à bord',
+            desc: 'Moteur, circuits et équipements contrôlés pour naviguer en toute confiance sur le lac.',
+            icon: 'shieldcheck',
+          },
+          {
+            title: 'Performance optimale',
+            desc: 'Un entretien suivi garantit puissance, fiabilité et consommation maîtrisée.',
+            icon: 'gauge',
+          },
+          {
+            title: 'Longévité du bateau',
+            desc: 'Prévenir l’usure prolonge la durée de vie de votre moteur et de votre coque.',
+            icon: 'calendarcheck',
+          },
+          {
+            title: 'Valeur de revente',
+            desc: 'Un carnet d’entretien à jour rassure les acheteurs et valorise votre bateau.',
+            icon: 'badgeeuro',
+          },
+        ],
+      },
+      {
+        eyebrow: 'Mécanique nautique',
         heading: 'Nos services d’entretien mécanique',
         intro:
           'Professionnels de la mécanique nautique, nous possédons toutes les connaissances et le matériel nécessaire à l’entretien de votre bateau. Qu’il s’agisse d’un moteur hors-bord 2 temps ou 4 temps, ou d’un moteur in-bord Z-Drive, V-Drive ou ligne d’arbre, MotorBoat74 assure un suivi complet pour une navigation en toute sécurité.',
@@ -75,31 +126,48 @@ export const services: ServiceDef[] = [
         items: [
           {
             title: 'Révision moteur et entretien',
+            icon: 'wrench',
             bullets: ['Vidange et huile', 'Contrôle des systèmes', 'Diagnostic électronique'],
           },
           {
             title: 'Réparation',
+            icon: 'settings',
             bullets: ['Remplacement de pièces', 'Réparation rapide', 'Préparation à la saison'],
           },
         ],
         cta: { label: 'Planifier mon entretien', href: '#contact' },
       },
       {
-        heading: 'Atelier carrosserie et embellissement du bateau',
+        eyebrow: 'Atelier carrosserie',
+        heading: 'Carrosserie et embellissement du bateau',
         intro:
           'Équipé d’un atelier carrosserie complet, MotorBoat74 est votre partenaire pour la réfection et l’embellissement de votre bateau. Nous prenons soin de votre navire avec précision et professionnalisme.',
         layout: 'cards',
         items: [
           {
             title: 'Travaux de carrosserie et peinture',
+            icon: 'paintbucket',
             bullets: ['Reprise gel-coat', 'Peinture et finitions esthétiques', 'Réparations structurelles'],
           },
           {
             title: 'Pose d’accastillage et personnalisation',
+            icon: 'sparkles',
             bullets: ['Pose d’accessoires', 'Amélioration esthétique et fonctionnelle du bateau'],
           },
         ],
         cta: { label: 'Demander un devis gratuit', href: '#contact' },
+      },
+      {
+        eyebrow: 'Simple et transparent',
+        heading: 'Comment se déroule votre entretien',
+        layout: 'steps',
+        items: [
+          { title: 'Prise de contact', desc: 'Vous nous décrivez votre bateau et votre besoin par téléphone ou via le formulaire.' },
+          { title: 'Diagnostic', desc: 'Nos techniciens inspectent le moteur, la coque et les équipements.' },
+          { title: 'Devis gratuit', desc: 'Vous recevez un devis clair et détaillé, sans engagement.' },
+          { title: 'Intervention', desc: 'Travaux réalisés en atelier ou sur place, avec des pièces de qualité.' },
+          { title: 'Restitution', desc: 'Contrôle final et bateau prêt à naviguer, en toute sérénité.' },
+        ],
       },
     ],
     faqs: [

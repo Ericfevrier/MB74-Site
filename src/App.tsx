@@ -18,6 +18,8 @@ const HivernageStockagePage = lazy(() =>
 const ServicesHubPage = lazy(() => import('./pages/ServicesHubPage').then((m) => ({ default: m.ServicesHubPage })));
 const ServicePage = lazy(() => import('./pages/ServicePage').then((m) => ({ default: m.ServicePage })));
 const HivernageCityPage = lazy(() => import('./pages/HivernageCityPage').then((m) => ({ default: m.HivernageCityPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })));
+const BlogHivernagePage = lazy(() => import('./pages/BlogHivernagePage').then((m) => ({ default: m.BlogHivernagePage })));
 const NotFound = lazy(() => import('./components/NotFound').then((m) => ({ default: m.NotFound })));
 const ComingSoon = lazy(() => import('./components/ComingSoon').then((m) => ({ default: m.ComingSoon })));
 
@@ -43,6 +45,8 @@ export default function App() {
               <Route path="/services" element={<ServicesHubPage />} />
               <Route path="/services/:slug" element={<ServicePage />} />
               <Route path="/services/hivernage-bateaux/:slug" element={<HivernageCityPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/blog/hivernage/hivernage-bateau-guide-complet" element={<BlogHivernagePage />} />
               <Route path="/bateaux-neufs" element={<ComingSoon title="Bateaux neufs" description="Notre sélection de bateaux neufs Nautique, MasterCraft et Tigé arrive très prochainement en ligne." />} />
               <Route path="/bateaux-occasion" element={<ComingSoon title="Bateaux d'occasion" description="Nos bateaux d'occasion certifiés et révisés seront bientôt présentés ici. Contactez-nous pour connaître les disponibilités actuelles." />} />
               <Route path="/shop" element={<ComingSoon title="Boutique" description="Notre boutique en ligne (wakeboard, ski nautique, accessoires Connelly…) ouvrira ses portes bientôt." />} />
