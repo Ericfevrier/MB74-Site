@@ -233,7 +233,7 @@ export function PartnersLocationSection() {
                          <p className="text-lg font-bold text-white uppercase tracking-tight">Motorboat 74</p>
                       </div>
                       <a 
-                        href="https://www.google.com/maps/dir/?api=1&destination=179+Allée+des+Edelweiss+74210+Saint-Ferréol"
+                        href="https://www.google.com/maps/dir/?api=1&destination=315+Rue+de+la+Glière+de+Thermesay+74210+Val+de+Chaise"
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="bg-brand-cyan text-brand-dark font-bold px-6 py-3 rounded-xl hover:scale-110 transition-transform uppercase text-[10px] tracking-widest"

@@ -6,10 +6,11 @@ export const SITE = {
   phoneHref: 'tel:+33457572727',
   email: 'contact@motorboat74.com',
   emailHref: 'mailto:contact@motorboat74.com',
-  addressStreet: '179 Allée des Edelweiss',
-  addressLocality: 'Saint-Ferréol',
+  addressStreet: '315 Rue de la Glière de Thermesay',
+  addressLocality: 'Val de Chaise',
   addressPostal: '74210',
   addressRegion: 'Haute-Savoie',
   addressCountry: 'FR',
-  geo: { lat: 45.7661, lng: 6.2933 },
+  // ⚠️ Coordonnées approximatives (secteur Marlens / Val de Chaise) — à confirmer via Google Maps.
+  geo: { lat: 45.7365, lng: 6.2772 },
 } as const;

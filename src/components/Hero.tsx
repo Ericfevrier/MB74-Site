@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export function Hero() {
   return (
@@ -31,12 +32,12 @@ export function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-6">
-              <button aria-label="Découvrir nos services" className="bg-brand-cyan text-brand-dark px-10 py-4 font-bold uppercase text-sm hover:translate-y-[-2px] hover:shadow-2xl hover:shadow-brand-cyan/40 transition-all duration-300 rounded-2xl min-h-[44px]">
+              <Link to="/services" aria-label="Découvrir nos services" className="inline-flex items-center justify-center bg-brand-cyan text-brand-dark px-10 py-4 font-bold uppercase text-sm hover:translate-y-[-2px] hover:shadow-2xl hover:shadow-brand-cyan/40 transition-all duration-300 rounded-2xl min-h-[44px]">
                 Découvrir nos services
-              </button>
-              <button aria-label="Bateaux en vente" className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-4 font-bold uppercase text-sm hover:bg-white/20 transition-all duration-300 rounded-2xl min-h-[44px]">
+              </Link>
+              <Link to="/bateaux-occasion" aria-label="Bateaux en vente" className="inline-flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-4 font-bold uppercase text-sm hover:bg-white/20 transition-all duration-300 rounded-2xl min-h-[44px]">
                 Bateaux en vente
-              </button>
+              </Link>
             </div>
           </div>
         </div>

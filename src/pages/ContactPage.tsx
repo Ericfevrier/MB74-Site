@@ -37,7 +37,7 @@ export function ContactPage() {
         <title>Contactez-nous | Motor Boat 74</title>
         <meta
           name="description"
-          content="MotorBoat74 vous accompagne pour l’achat, la vente, l’entretien ou l’hivernage de votre bateau. Contactez-nous facilement dès aujourd’hui à Annecy / Saint-Ferréol."
+          content="MotorBoat74 vous accompagne pour l’achat, la vente, l’entretien ou l’hivernage de votre bateau. Contactez-nous facilement dès aujourd’hui à Annecy / Val de Chaise."
         />
         <link rel="canonical" href={canonical} />
         <meta property="og:type" content="website" />

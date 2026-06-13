@@ -18,7 +18,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: "Où puis-je acheter un bateau Nautique en France ?",
-    answer: "Motorboat 74 est concessionnaire officiel Nautique en Haute-Savoie. Nous vous accueillons à Saint-Ferréol, près du Lac d'Annecy."
+    answer: "Motorboat 74 est concessionnaire officiel Nautique en Haute-Savoie. Nous vous accueillons au Val de Chaise, près du Lac d'Annecy."
   },
   {
     question: "Où puis-je trouver des pièces détachées et des accessoires ?",
