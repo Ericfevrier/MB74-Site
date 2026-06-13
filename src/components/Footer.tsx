@@ -75,9 +75,13 @@ export function Footer() {
             <div>
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Nos bateaux</h3>
               <ul className="space-y-3">
-                {['Bateaux neufs', 'Bateaux d\'occasion', 'Bateaux vendus'].map((item) => (
-                  <li key={item}>
-                    <a href="#" className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item}</a>
+                {[
+                  { name: 'Bateaux neufs', path: '/bateaux-neufs' },
+                  { name: "Bateaux d'occasion", path: '/bateaux-occasion' },
+                  { name: 'Bateaux vendus', path: '/bateaux-occasion' },
+                ].map((item) => (
+                  <li key={item.name}>
+                    <Link to={item.path} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -88,13 +92,13 @@ export function Footer() {
               <ul className="space-y-3 mb-10">
                 {['Wakeboard', 'Wakesurf', 'Ski Nautique', 'Kneeboard', 'Engins tractés', 'Paddle', 'Accessoires'].map((item) => (
                   <li key={item}>
-                    <a href="#" className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item}</a>
+                    <Link to="/shop" className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item}</Link>
                   </li>
                 ))}
               </ul>
               
-              <Link 
-                to="/" 
+              <Link
+                to="/contact"
                 className="inline-block bg-brand-cyan text-brand-dark font-bold px-8 py-4 rounded-xl text-[13px] uppercase tracking-widest hover:scale-105 transition-all shadow-lg shadow-brand-cyan/20"
               >
                 Contactez-nous
@@ -156,10 +160,14 @@ export function Footer() {
         {/* Footer Bottom Bar */}
         <div className="py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-wrap justify-center gap-6 md:gap-10">
-            {['Plan du site', 'Mentions légales', 'Politique de confidentialité', 'CGV Professionnels'].map((link) => (
-              <a key={link} href="#" className="text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">
-                {link}
-              </a>
+            {[
+              { name: 'Mentions légales', path: '/mentions-legales' },
+              { name: 'Politique de confidentialité', path: '/politique-de-confidentialite' },
+              { name: 'Contact', path: '/contact' },
+            ].map((link) => (
+              <Link key={link.name} to={link.path} className="text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">
+                {link.name}
+              </Link>
             ))}
           </div>
           <p className="text-[11px] font-bold uppercase tracking-widest text-white/20">

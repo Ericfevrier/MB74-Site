@@ -20,6 +20,7 @@ const ServicePage = lazy(() => import('./pages/ServicePage').then((m) => ({ defa
 const HivernageCityPage = lazy(() => import('./pages/HivernageCityPage').then((m) => ({ default: m.HivernageCityPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })));
 const BlogHivernagePage = lazy(() => import('./pages/BlogHivernagePage').then((m) => ({ default: m.BlogHivernagePage })));
+const LegalPage = lazy(() => import('./pages/LegalPage').then((m) => ({ default: m.LegalPage })));
 const NotFound = lazy(() => import('./components/NotFound').then((m) => ({ default: m.NotFound })));
 const ComingSoon = lazy(() => import('./components/ComingSoon').then((m) => ({ default: m.ComingSoon })));
 
@@ -51,6 +52,8 @@ export default function App() {
               <Route path="/bateaux-occasion" element={<ComingSoon title="Bateaux d'occasion" description="Nos bateaux d'occasion certifiés et révisés seront bientôt présentés ici. Contactez-nous pour connaître les disponibilités actuelles." />} />
               <Route path="/shop" element={<ComingSoon title="Boutique" description="Notre boutique en ligne (wakeboard, ski nautique, accessoires Connelly…) ouvrira ses portes bientôt." />} />
               <Route path="/la-team" element={<ComingSoon title="La Team" description="Faites bientôt connaissance avec l'équipe passionnée de Motor Boat 74." />} />
+              <Route path="/mentions-legales" element={<LegalPage doc="mentions" />} />
+              <Route path="/politique-de-confidentialite" element={<LegalPage doc="privacy" />} />
               <Route path="/:brandId/:modelId" element={<ModelPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
