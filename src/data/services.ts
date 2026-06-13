@@ -218,9 +218,19 @@ export const services: ServiceDef[] = [
     heroIntro:
       'Lorsque votre bateau tombe en panne sur le lac d’Annecy, chaque minute compte. MotorBoat74 comprend l’urgence de la situation et s’engage à intervenir rapidement pour vous remettre en sécurité et vous permettre de reprendre vos activités nautiques.',
     heroImage: '/images/services/depannage.webp',
-    heroCtas: [{ label: 'Appel d’urgence', href: `tel:${TEL}`, primary: true }],
+    heroCtas: [
+      { label: 'Appel d’urgence', href: `tel:${TEL}`, primary: true },
+      { label: 'Nous écrire', href: '#contact' },
+    ],
+    stats: [
+      { value: '30-60 min', label: 'Délai d’intervention' },
+      { value: '7j/7', label: 'En haute saison' },
+      { value: 'Bateau-atelier', label: 'Entièrement équipé' },
+      { value: "Lac d'Annecy", label: 'Expertise locale' },
+    ],
     sections: [
       {
+        eyebrow: 'Intervention sur l’eau',
         heading: 'Nos services de dépannage sur le Lac d’Annecy',
         intro:
           'Grâce à notre bateau-atelier entièrement équipé, nous réalisons la plupart des réparations mécaniques et électriques directement sur le lac d’Annecy. Pour les pannes plus complexes, nous assurons le remorquage vers notre atelier ou le port le plus proche, afin de remettre votre embarcation en état rapidement et en toute sécurité.',
@@ -228,6 +238,7 @@ export const services: ServiceDef[] = [
         items: [
           {
             title: 'Diagnostic et réparation mécanique',
+            icon: 'wrench',
             bullets: [
               'Moteurs hors-bord et in-bord',
               'Systèmes de propulsion et transmission',
@@ -236,6 +247,7 @@ export const services: ServiceDef[] = [
           },
           {
             title: 'Assistance en cas de panne électrique',
+            icon: 'zap',
             bullets: [
               'Vérification des batteries et alternateurs',
               'Diagnostic des systèmes électriques',
@@ -244,6 +256,7 @@ export const services: ServiceDef[] = [
           },
           {
             title: 'Remorquage et assistance sur site',
+            icon: 'ship',
             bullets: [
               'Remorquage jusqu’à notre atelier ou port',
               'Assistance pour mise à l’eau et sortie',
@@ -254,20 +267,24 @@ export const services: ServiceDef[] = [
         cta: { label: 'Contactez-nous', href: '#contact' },
       },
       {
-        heading: 'Pourquoi choisir MotorBoat74 pour votre dépannage sur le Lac d’Annecy ?',
+        eyebrow: 'Vos garanties',
+        heading: 'Pourquoi choisir MotorBoat74 pour votre dépannage ?',
         layout: 'why',
         items: [
           {
             title: 'Intervention rapide 7j/7 en saison',
             desc: 'Notre équipe se déplace rapidement pour toute panne sur le lac.',
+            icon: 'clock',
           },
           {
             title: 'Équipement complet',
             desc: 'Bateau-atelier équipé pour toutes les réparations nécessaires.',
+            icon: 'packagecheck',
           },
           {
             title: 'Expertise locale',
             desc: 'Connaissance approfondie du lac d’Annecy et de ses spécificités.',
+            icon: 'mappin',
           },
         ],
       },
@@ -311,11 +328,18 @@ export const services: ServiceDef[] = [
       'Motor Boat 74 assure le transport sécurisé de votre bateau partout en France et en Europe. Équipés de véhicules spécialisés et de remorques adaptées, nous prenons en charge votre navire pour un achat, une vente ou un déplacement en toute tranquillité.',
     heroImage: '/images/services/transport.webp',
     heroCtas: [
-      { label: 'Contactez-nous', href: '#contact', primary: true },
-      { label: 'Obtenir un devis', href: '#contact' },
+      { label: 'Obtenir un devis', href: '#contact', primary: true },
+      { label: 'Nous appeler', href: `tel:${TEL}` },
+    ],
+    stats: [
+      { value: 'France', label: '& Europe entière' },
+      { value: 'Assuré', label: 'Assurance pro' },
+      { value: 'Clé en main', label: 'De A à Z' },
+      { value: 'Toutes tailles', label: 'De bateaux' },
     ],
     sections: [
       {
+        eyebrow: 'Service clé en main',
         heading: 'Notre service de transport de bateau',
         intro:
           'Notre équipe propose un service clé en main pour tous vos besoins de transport nautique. Que ce soit pour un achat, une vente, une mise à l’eau ou un transfert entre ports, nous assurons un convoyage rapide, sécurisé et conforme aux normes. Grâce à nos remorques adaptées et à notre expérience du milieu nautique, votre bateau voyage dans les meilleures conditions, en France comme partout en Europe.',
@@ -329,6 +353,18 @@ export const services: ServiceDef[] = [
         ],
       },
       {
+        eyebrow: 'Vos garanties',
+        heading: 'Un transport sûr et sans souci',
+        layout: 'why',
+        items: [
+          { title: 'Assurance professionnelle', desc: 'Votre bateau est couvert durant le chargement, le convoyage et la livraison.', icon: 'shieldcheck' },
+          { title: 'Remorques adaptées', desc: 'Du semi-rigide au runabout, un matériel dimensionné pour chaque embarcation.', icon: 'truck' },
+          { title: 'Partout en Europe', desc: 'France, Suisse, Italie, Espagne, Allemagne… nous nous déplaçons sur demande.', icon: 'globe' },
+          { title: 'Convoyage soigné', desc: 'Arrimage minutieux et contrôle complet avant remise en main.', icon: 'packagecheck' },
+        ],
+      },
+      {
+        eyebrow: 'Étape par étape',
         heading: 'Comment se déroule le transport ?',
         layout: 'steps',
         items: [
@@ -379,11 +415,18 @@ export const services: ServiceDef[] = [
       'Que vous souhaitiez rénover l’intérieur de votre bateau ou remplacer une sellerie usée, notre équipe d’experts vous accompagne de la conception à la pose. En partenariat avec plusieurs artisans spécialisés, Motor Boat 74 réalise la confection sur mesure, la réparation et la modification de tous types de sellerie nautique.',
     heroImage: '/images/services/sellerie.webp',
     heroCtas: [
-      { label: 'Prendre rendez-vous', href: '#contact', primary: true },
-      { label: 'Devis personnalisé gratuit', href: '#contact' },
+      { label: 'Devis personnalisé gratuit', href: '#contact', primary: true },
+      { label: 'Prendre rendez-vous', href: `tel:${TEL}` },
+    ],
+    stats: [
+      { value: 'Sur mesure', label: 'Confection artisanale' },
+      { value: 'Anti-UV', label: '& anti-humidité' },
+      { value: 'Tous bateaux', label: 'Loisir au yacht' },
+      { value: 'Pose incluse', label: 'Ajustée à bord' },
     ],
     sections: [
       {
+        eyebrow: 'Savoir-faire artisanal',
         heading: 'Nos services de sellerie de bateau',
         intro:
           'Motor Boat 74 s’occupe de la confection, réparation et rénovation de votre sellerie nautique. Nous redonnons confort, style et protection à votre bateau grâce à des matériaux de qualité et un savoir-faire artisanal.',
@@ -391,16 +434,30 @@ export const services: ServiceDef[] = [
         items: [
           {
             title: 'Confection sur mesure',
+            icon: 'scissors',
             desc: 'Nous fabriquons des coussins et assises adaptés à votre bateau, entièrement personnalisables selon vos goûts en termes de coloris et de matières.',
           },
           {
             title: 'Réparation et remplacement',
+            icon: 'wrench',
             desc: 'Notre équipe répare ou remplace la sellerie abîmée, en effectuant des ajustements précis pour garantir un confort optimal et une durabilité maximale.',
           },
           {
             title: 'Rénovation complète',
+            icon: 'sparkles',
             desc: 'Nous remettons à neuf l’intérieur de votre bateau, en rénovant tous les éléments de sellerie tout en protégeant les matériaux contre l’humidité et les rayons UV.',
           },
+        ],
+      },
+      {
+        eyebrow: 'Pourquoi nous confier votre sellerie',
+        heading: 'Confort, style et durabilité',
+        layout: 'why',
+        items: [
+          { title: 'Confort retrouvé', desc: 'Des assises refaites pour profiter pleinement de vos sorties.', icon: 'sofa' },
+          { title: 'Matériaux de qualité', desc: 'Tissus marins et mousses sélectionnés pour durer dans le temps.', icon: 'award' },
+          { title: 'Protection UV & humidité', desc: 'Des finitions qui résistent au soleil alpin et aux embruns.', icon: 'sun' },
+          { title: 'Finition artisanale', desc: 'Le souci du détail d’artisans spécialisés, pour un rendu impeccable.', icon: 'sparkles' },
         ],
       },
     ],
@@ -443,14 +500,21 @@ export const services: ServiceDef[] = [
       'Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité et sérénité.',
     heroImage: '/images/services/remorques.webp',
     heroCtas: [
-      { label: 'Appelez-nous', href: `tel:${TEL}`, primary: true },
-      { label: 'Envoyer un mail', href: MAIL },
+      { label: 'Demander conseil', href: '#contact', primary: true },
+      { label: 'Appelez-nous', href: `tel:${TEL}` },
+    ],
+    stats: [
+      { value: 'Homologuées', label: 'Norme CE' },
+      { value: 'Sur mesure', label: 'Selon votre bateau' },
+      { value: 'Marques', label: 'Partenaires reconnues' },
+      { value: 'Réglage', label: '& mise à l’eau' },
     ],
     sections: [
       {
+        eyebrow: 'La remorque qu’il vous faut',
         heading: 'Trouvez la remorque idéale pour votre bateau',
         intro:
-          'Motor Boat 74 vous propose des remorques adaptées à tous types de bateaux, qu’il s’agisse de plaisance, de sport ou de modèles spécifiques. Grâce à notre réseau de marques partenaires, chaque remorque est choisie pour garantir sécurité, durabilité et confort lors du transport. Nous prenons en compte la taille de votre bateau, sa fréquence d’utilisation et vos besoins spécifiques afin de vous fournir une solution parfaitement adaptée. Notre expertise vous permet de bénéficier d’un accompagnement personnalisé pour choisir la remorque qui correspond à votre embarcation et voyager l’esprit tranquille.',
+          'Motor Boat 74 vous propose des remorques adaptées à tous types de bateaux, qu’il s’agisse de plaisance, de sport ou de modèles spécifiques. Grâce à notre réseau de marques partenaires, chaque remorque est choisie pour garantir sécurité, durabilité et confort lors du transport. Nous prenons en compte la taille de votre bateau, sa fréquence d’utilisation et vos besoins spécifiques afin de vous fournir une solution parfaitement adaptée.',
         layout: 'list',
         items: [
           { title: 'Remorques simples ou doubles essieux, freinées' },
@@ -459,6 +523,17 @@ export const services: ServiceDef[] = [
           { title: 'Réglage et mise à l’eau' },
         ],
         cta: { label: 'Une question ? Contactez-nous', href: '#contact' },
+      },
+      {
+        eyebrow: 'Voyagez l’esprit tranquille',
+        heading: 'Pourquoi choisir votre remorque chez nous',
+        layout: 'why',
+        items: [
+          { title: 'Sécurité avant tout', desc: 'Des remorques fiables et homologuées CE pour transporter sereinement.', icon: 'shieldcheck' },
+          { title: 'Parfaitement adaptée', desc: 'Dimensionnée selon la taille et le poids exact de votre bateau.', icon: 'ruler' },
+          { title: 'Marques partenaires', desc: 'Une sélection de fabricants reconnus pour leur durabilité.', icon: 'award' },
+          { title: 'Prête à l’emploi', desc: 'Réglage, contrôle et conseils de mise à l’eau inclus.', icon: 'wrench' },
+        ],
       },
     ],
     faqs: [

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   ChevronDown, Check, ArrowRight, Phone, Home,
   ShieldCheck, Gauge, CalendarCheck, BadgeEuro, Wrench, Settings, PaintBucket, Sparkles, Anchor,
+  Clock, PackageCheck, MapPin, Truck, Globe, Sofa, Award, Zap, Ruler, LifeBuoy, Ship, Scissors, Sun, Users,
 } from 'lucide-react';
 import { getService, ServiceSection, ServiceCard } from '../data/services';
 import { SITE } from '../data/site';
@@ -22,6 +23,20 @@ const CARD_ICONS: Record<string, React.ComponentType<{ size?: number; className?
   paintbucket: PaintBucket,
   sparkles: Sparkles,
   anchor: Anchor,
+  clock: Clock,
+  packagecheck: PackageCheck,
+  mappin: MapPin,
+  truck: Truck,
+  globe: Globe,
+  sofa: Sofa,
+  award: Award,
+  zap: Zap,
+  ruler: Ruler,
+  lifebuoy: LifeBuoy,
+  ship: Ship,
+  scissors: Scissors,
+  sun: Sun,
+  users: Users,
 };
 
 function isTel(href: string) {
