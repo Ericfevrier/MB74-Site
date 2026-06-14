@@ -7,6 +7,7 @@ import {
   ChevronLeft, ChevronRight, Play, Sparkles, Fuel, Settings2, Anchor, ShieldCheck,
 } from 'lucide-react';
 import { getModel, MODEL_ORDER, nautiqueModels } from '../data/nautiqueModels';
+import { usedBoatsForModel } from '../data/usedBoats';
 import { SITE } from '../data/site';
 import { ServiceContactBlock } from './services/ServiceContactBlock';
 
@@ -62,6 +63,7 @@ export function ModelPage() {
   const heroAbs = `${SITE.url}${model.hero}`;
   const others = MODEL_ORDER.filter((s) => s !== model.slug).map((s) => nautiqueModels[s]).slice(0, 4);
   const hasEquip = Boolean(model.editions || model.motorizations || model.features || model.options);
+  const occasions = usedBoatsForModel(model.slug);
 
   const anchors = [
     model.gallery.length > 1 && { id: 'galerie', label: 'Galerie' },
@@ -181,13 +183,15 @@ export function ModelPage() {
 
       {/* ===================== HERO ===================== */}
       <header className="relative overflow-hidden">
+        {/* Image plein cadre — bateau net (fondu léger, bas seulement) */}
         <div className="absolute inset-0">
-          <img src={model.hero} alt={`${fullName} ${model.year} en navigation sur le lac d'Annecy`} className="w-full h-full object-cover opacity-50" referrerPolicy="no-referrer" />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/85 to-brand-dark/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-brand-dark/30" />
+          <img src={model.hero} alt={`${fullName} ${model.year} en navigation sur le lac d'Annecy`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/35 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-brand-dark/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/35 via-transparent to-transparent" />
         </div>
-        <div className="relative max-w-6xl mx-auto px-4 lg:px-8 pt-16 lg:pt-24 pb-12 lg:pb-16">
-          <nav aria-label="Fil d’ariane" className="flex flex-wrap items-center gap-2 text-[12px] text-gray-300 mb-6">
+        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-12 min-h-[86vh] flex flex-col">
+          <nav aria-label="Fil d’ariane" className="flex flex-wrap items-center gap-2 text-[12px] text-gray-200 pt-8 [text-shadow:0_1px_10px_rgba(0,0,0,.6)]">
             <Link to="/" className="hover:text-brand-cyan flex items-center gap-1"><Home size={13} /> Accueil</Link>
             <span className="opacity-40">/</span>
             <Link to="/marque/nautique" className="hover:text-brand-cyan">Marques</Link>
@@ -196,24 +200,29 @@ export function ModelPage() {
             <span className="opacity-40">/</span>
             <span className="text-white font-semibold">{model.short}</span>
           </nav>
-          <div className="flex items-center gap-3 mb-4">
-            <span className="w-8 h-1 bg-brand-cyan rounded-full" />
-            <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{model.gamme} · Millésime {model.year}</span>
-          </div>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight leading-[1.05] text-white mb-6 max-w-4xl">
-            {fullName}
-          </h1>
-          <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mb-9">{model.tagline || model.intro[0]}</p>
-          <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-            <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:bg-white transition shadow-xl shadow-brand-cyan/20 hover:-translate-y-0.5">
-              Demander le prix <ArrowRight size={16} />
-            </a>
-            <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-2 border-2 border-white/30 text-white font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
-              <Phone size={16} /> Réserver un essai
-            </a>
-            <a href="#contact" className="inline-flex items-center justify-center gap-2 text-gray-300 font-bold uppercase tracking-widest text-sm px-6 py-4 rounded-xl hover:text-brand-cyan transition">
-              <Settings2 size={16} /> Concevez votre Nautique
-            </a>
+
+          <div className="flex-1" />
+
+          <div className="pb-12 max-w-3xl [text-shadow:0_2px_18px_rgba(0,0,0,.45)]">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-8 h-1 bg-brand-cyan rounded-full" />
+              <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{model.gamme} · Millésime {model.year}</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight leading-[1.03] text-white mb-6">
+              {fullName}
+            </h1>
+            <p className="text-gray-100 text-lg leading-relaxed max-w-2xl mb-9">{model.tagline || model.intro[0]}</p>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+              <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:bg-white transition shadow-xl shadow-brand-cyan/20 hover:-translate-y-0.5">
+                Demander le prix <ArrowRight size={16} />
+              </a>
+              <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-2 border-2 border-white/40 bg-brand-dark/20 backdrop-blur-sm text-white font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
+                <Phone size={16} /> Réserver un essai
+              </a>
+              <a href="#contact" className="inline-flex items-center justify-center gap-2 text-white font-bold uppercase tracking-widest text-sm px-6 py-4 rounded-xl hover:text-brand-cyan transition">
+                <Settings2 size={16} /> Concevez votre Nautique
+              </a>
+            </div>
           </div>
         </div>
 
@@ -250,19 +259,33 @@ export function ModelPage() {
         </div>
       </nav>
 
-      {/* ===================== PRÉSENTATION ===================== */}
+      {/* ===================== PRÉSENTATION (texte gauche / image droite) ===================== */}
       <section className="py-20 bg-brand-dark">
-        <div className="max-w-3xl mx-auto px-4 lg:px-8">
-          <SectionEyebrow label="Le bateau" />
-          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-8 leading-tight">
-            {model.short} — <span className="text-brand-cyan">l’expérience Nautique</span>
-          </h2>
-          <div className="space-y-5 text-gray-300 text-lg leading-relaxed">
-            {model.intro.map((p, i) => <p key={i}>{p}</p>)}
-            <p>
-              Le {model.short} s’inscrit dans la{' '}
-              <Link to="/marque/nautique" className="text-brand-cyan font-semibold hover:underline">gamme Super Air Nautique</Link>, que nous présentons dans notre showroom au bord du Lac d’Annecy.
-            </p>
+        <div className="max-w-6xl mx-auto px-4 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div>
+            <SectionEyebrow label="Le bateau" />
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-8 leading-tight">
+              {model.short} — <span className="text-brand-cyan">l’expérience Nautique</span>
+            </h2>
+            <div className="space-y-5 text-gray-300 text-lg leading-relaxed">
+              {model.intro.map((p, i) => <p key={i}>{p}</p>)}
+              <p>
+                Le {model.short} s’inscrit dans la{' '}
+                <Link to="/marque/nautique" className="text-brand-cyan font-semibold hover:underline">gamme Super Air Nautique</Link>, que nous présentons dans notre showroom au bord du Lac d’Annecy.
+              </p>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl" />
+            <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 shadow-2xl">
+              <img
+                src={model.gallery[1] || model.hero}
+                alt={`${fullName} — design et finitions`}
+                loading="lazy"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover aspect-[4/5]"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -494,22 +517,65 @@ export function ModelPage() {
 
       {/* ===================== OCCASIONS ===================== */}
       <section id="occasions" className={`py-20 bg-brand-dark ${sectionPad}`}>
-        <div className="max-w-5xl mx-auto px-4 lg:px-8">
-          <SectionEyebrow label="Alternative" />
-          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-6">{model.short} d’occasion</h2>
-          <div className="bg-ink-900 border border-white/10 rounded-[2rem] p-8 md:p-12">
-            <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-2xl">
-              Vous cherchez un {model.short} d’occasion ? Nos arrivages Nautique certifiés et révisés évoluent régulièrement. Contactez-nous pour connaître les disponibilités du moment, avec prix et reprise possible.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/bateaux-occasion" className="inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:bg-white transition">
-                Voir nos Nautique d’occasion <ArrowRight size={16} />
-              </Link>
-              <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-2 border-2 border-white/20 text-white font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
-                <Phone size={16} /> {SITE.phoneDisplay}
-              </a>
+        <div className="max-w-6xl mx-auto px-4 lg:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
+            <div>
+              <SectionEyebrow label="Alternative" />
+              <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white">{model.short} d’occasion</h2>
             </div>
+            <Link to="/bateaux-occasion" className="inline-flex items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
+              Toutes nos occasions Nautique <ArrowRight size={14} />
+            </Link>
           </div>
+
+          {occasions.length > 0 ? (
+            <div className="flex gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-2 -mx-4 px-4">
+              {occasions.map((b, i) => (
+                <article key={i} className="flex-shrink-0 w-[300px] md:w-[340px] snap-start bg-ink-900 border border-white/10 rounded-3xl overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img src={b.image} alt={`${b.title} ${b.year} d'occasion`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                    {b.sold && (
+                      <span className="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">Vendu</span>
+                    )}
+                    <span className="absolute top-3 right-3 bg-brand-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">{b.year}</span>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-bold text-white uppercase tracking-tight leading-tight mb-3">{b.title}</h3>
+                    <ul className="text-gray-400 text-xs space-y-1.5 mb-4">
+                      {b.capacity && <li className="flex items-center gap-2"><Users size={13} className="text-brand-cyan" /> {b.capacity}</li>}
+                      {b.power && <li className="flex items-center gap-2"><Gauge size={13} className="text-brand-cyan" /> {b.power}</li>}
+                    </ul>
+                    <p className={`font-bold text-xl mb-5 ${b.sold ? 'text-gray-500 line-through' : 'text-brand-cyan'}`}>{b.price}</p>
+                    <div className="flex gap-2">
+                      <a href={SITE.phoneHref} className="flex-1 inline-flex items-center justify-center gap-1.5 bg-brand-cyan text-brand-dark font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:bg-white transition">
+                        <Phone size={14} /> Appeler
+                      </a>
+                      <Link to={b.detailUrl || '/bateaux-occasion'} className="flex-1 inline-flex items-center justify-center gap-1.5 border border-white/20 text-white font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
+                        Détail
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-ink-900 border border-white/10 rounded-[2rem] p-8 md:p-12 text-center">
+              <p className="text-gray-300 text-lg leading-relaxed mb-2 max-w-2xl mx-auto">
+                Aucun {model.short} d’occasion n’est disponible actuellement.
+              </p>
+              <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+                Contactez-nous pour une <span className="text-white font-semibold">recherche sur mesure</span> : nous vous alertons dès qu’un modèle correspondant à vos critères arrive.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:bg-white transition">
+                  Lancer une recherche sur mesure <ArrowRight size={16} />
+                </a>
+                <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-2 border-2 border-white/20 text-white font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
+                  <Phone size={16} /> {SITE.phoneDisplay}
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

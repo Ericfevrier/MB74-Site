@@ -1031,6 +1031,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "short": "G25 Paragon",
     "fullName": "Super Air Nautique G25 Paragon",
     "tagline": "Le wakeboat le plus haut de gamme de la série Paragon : vagues de wakesurf et wakeboard de niveau pro, confort premium — à essayer sur le Lac d’Annecy.",
+    "videoId": "Ux265r3L9QA",
     "gamme": "Série Paragon",
     "year": "2026",
     "metaTitle": "Super Air Nautique G25 Paragon 2026 – Prix, Fiche technique & Essai | Motor Boat 74 Annecy",
