@@ -688,7 +688,7 @@ export function ModelPage() {
       )}
 
       {/* ===================== PRIX & CONTACT ===================== */}
-      <ServiceContactBlock subject={`${fullName} ${model.year}`} title="Recevez votre prix personnalisé" showMap />
+      <ServiceContactBlock subject={`${fullName} ${model.year}`} showMap />
 
       {/* ===================== AUTRES MODÈLES (maillage latéral) ===================== */}
       <section className="bg-ink-950 py-24 border-t border-white/10">

@@ -6,14 +6,15 @@ import { GoogleMapCustom } from '../GoogleMapCustom';
 interface ServiceContactBlockProps {
   /** Sujet pré-rempli envoyé au backend (ex. nom du service). */
   subject?: string;
-  /** Titre personnalisé (ex. "Recevez votre prix personnalisé"). */
+  /** Titre personnalisé. Par défaut : "Contactez-nous". */
   title?: string;
   /** Affiche la carte Google Maps sous les coordonnées. */
   showMap?: boolean;
 }
 
-const FIELD =
-  'w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-brand-dark placeholder:text-gray-400 focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/30 outline-none transition';
+const labelCls = 'block text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-1.5';
+const inputCls =
+  'w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-brand-dark placeholder:text-gray-400 focus:bg-white focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 outline-none transition';
 
 export function ServiceContactBlock({ subject, title, showMap }: ServiceContactBlockProps) {
   const [loading, setLoading] = useState(false);
@@ -46,116 +47,119 @@ export function ServiceContactBlock({ subject, title, showMap }: ServiceContactB
     }
   };
 
-  return (
-    <section id="contact" className="bg-brand-light py-24 scroll-mt-[120px]">
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
-        <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight text-brand-dark text-center mb-16">
-          {title ? title : <>Contactez-<span className="text-brand-cyan">nous</span></>}
-        </h2>
+  const infoRows = [
+    { icon: Phone, label: 'Téléphone', value: SITE.phoneDisplay, href: SITE.phoneHref },
+    { icon: Mail, label: 'Email', value: SITE.email, href: SITE.emailHref },
+    {
+      icon: MapPin,
+      label: 'Showroom',
+      value: `${SITE.addressStreet}, ${SITE.addressPostal} ${SITE.addressLocality}`,
+    },
+  ];
 
-        <div className="grid lg:grid-cols-2 gap-10 items-start">
+  return (
+    <section id="contact" className="bg-brand-light py-20 scroll-mt-[120px]">
+      <div className="max-w-5xl mx-auto px-4 lg:px-8">
+        {/* En-tête */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <span className="w-8 h-1 bg-brand-cyan rounded-full" />
+            <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">Contact</span>
+            <span className="w-8 h-1 bg-brand-cyan rounded-full" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark">
+            {title ? title : <>Contactez-<span className="text-brand-cyan">nous</span></>}
+          </h2>
+          <p className="text-gray-500 mt-4 max-w-xl mx-auto">
+            Une question, un projet ou une demande de devis ? Notre équipe vous répond sous 24&nbsp;h.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-5 gap-8 items-start">
           {/* Coordonnées */}
-          <div className="space-y-6">
-            <h3 className="text-xl font-bold uppercase tracking-tight text-brand-dark mb-2">
-              Informations de contact
-            </h3>
-            <ul className="space-y-4">
-              <li>
-                <a
-                  href={SITE.phoneHref}
-                  className="flex items-center gap-4 bg-white border border-gray-200 rounded-2xl p-5 shadow-lg shadow-brand-dark/5 hover:border-brand-cyan transition group"
-                >
-                  <span className="w-12 h-12 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center group-hover:bg-brand-cyan group-hover:text-brand-dark transition">
-                    <Phone size={20} />
-                  </span>
-                  <span>
-                    <span className="block text-[11px] uppercase tracking-widest font-bold text-gray-400">Téléphone</span>
-                    <span className="block font-bold text-lg text-brand-dark">{SITE.phoneDisplay}</span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <div className="flex items-center gap-4 bg-white border border-gray-200 rounded-2xl p-5 shadow-lg shadow-brand-dark/5">
-                  <span className="w-12 h-12 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center">
-                    <MapPin size={20} />
-                  </span>
-                  <span>
-                    <span className="block text-[11px] uppercase tracking-widest font-bold text-gray-400">Showroom</span>
-                    <span className="block font-bold text-brand-dark leading-tight">
-                      {SITE.addressStreet},<br />
-                      {SITE.addressPostal} {SITE.addressLocality}
+          <div className="lg:col-span-2">
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <ul className="divide-y divide-gray-100">
+                {infoRows.map((r) => {
+                  const Inner = (
+                    <span className="flex items-center gap-4 py-4 first:pt-0 last:pb-0 group">
+                      <span className="w-10 h-10 rounded-full bg-brand-cyan/10 text-brand-cyan flex items-center justify-center flex-shrink-0 transition group-hover:bg-brand-cyan group-hover:text-brand-dark">
+                        <r.icon size={17} />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400">{r.label}</span>
+                        <span className="block font-semibold text-brand-dark text-sm leading-snug">{r.value}</span>
+                      </span>
                     </span>
-                  </span>
-                </div>
-              </li>
-              <li>
-                <a
-                  href={SITE.emailHref}
-                  className="flex items-center gap-4 bg-white border border-gray-200 rounded-2xl p-5 shadow-lg shadow-brand-dark/5 hover:border-brand-cyan transition group"
-                >
-                  <span className="w-12 h-12 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center group-hover:bg-brand-cyan group-hover:text-brand-dark transition">
-                    <Mail size={20} />
-                  </span>
-                  <span>
-                    <span className="block text-[11px] uppercase tracking-widest font-bold text-gray-400">Mail</span>
-                    <span className="block font-bold text-lg text-brand-dark">{SITE.email}</span>
-                  </span>
-                </a>
-              </li>
-            </ul>
+                  );
+                  return (
+                    <li key={r.label}>
+                      {r.href ? (
+                        <a href={r.href} className="block hover:text-brand-cyan">{Inner}</a>
+                      ) : (
+                        Inner
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
 
             {showMap && (
-              <div className="mt-6 h-64 rounded-2xl overflow-hidden border border-gray-200 shadow-lg shadow-brand-dark/5">
+              <div className="mt-6 h-60 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
                 <GoogleMapCustom />
               </div>
             )}
           </div>
 
           {/* Formulaire */}
-          <div className="bg-white border border-gray-200 rounded-[2rem] p-8 lg:p-10 shadow-xl shadow-brand-dark/5">
-            <h3 className="text-xl font-bold uppercase tracking-tight text-brand-dark mb-6">Demande d’informations</h3>
+          <div className="lg:col-span-3 bg-white border border-gray-200 rounded-2xl p-6 lg:p-8 shadow-sm">
             {done ? (
-              <div className="flex flex-col items-center text-center gap-4 py-10">
-                <CheckCircle2 size={56} className="text-brand-cyan" />
-                <p className="font-bold text-lg text-brand-dark">Merci, votre message a bien été envoyé.</p>
-                <p className="text-gray-500">Notre équipe vous recontacte au plus vite.</p>
+              <div className="flex flex-col items-center text-center gap-3 py-12">
+                <CheckCircle2 size={48} className="text-brand-cyan" />
+                <p className="font-bold text-lg text-brand-dark">Message envoyé</p>
+                <p className="text-gray-500 text-sm">Merci, notre équipe vous recontacte au plus vite.</p>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="space-y-4">
+              <form onSubmit={onSubmit} className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <input name="nom" required value={data.nom} onChange={onChange} placeholder="Nom *" className={FIELD} />
-                  <input name="prenom" value={data.prenom} onChange={onChange} placeholder="Prénom" className={FIELD} />
+                  <div>
+                    <label htmlFor="cb-nom" className={labelCls}>Nom *</label>
+                    <input id="cb-nom" name="nom" required value={data.nom} onChange={onChange} className={inputCls} placeholder="Dupont" />
+                  </div>
+                  <div>
+                    <label htmlFor="cb-prenom" className={labelCls}>Prénom</label>
+                    <input id="cb-prenom" name="prenom" value={data.prenom} onChange={onChange} className={inputCls} placeholder="Jean" />
+                  </div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <input
-                    name="email"
-                    type="email"
-                    required
-                    value={data.email}
-                    onChange={onChange}
-                    placeholder="Email *"
-                    className={FIELD}
-                  />
-                  <input name="tel" value={data.tel} onChange={onChange} placeholder="Téléphone" className={FIELD} />
+                  <div>
+                    <label htmlFor="cb-email" className={labelCls}>Email *</label>
+                    <input id="cb-email" name="email" type="email" required value={data.email} onChange={onChange} className={inputCls} placeholder="jean@email.com" />
+                  </div>
+                  <div>
+                    <label htmlFor="cb-tel" className={labelCls}>Téléphone</label>
+                    <input id="cb-tel" name="tel" value={data.tel} onChange={onChange} className={inputCls} placeholder="06 12 34 56 78" />
+                  </div>
                 </div>
-                <textarea
-                  name="message"
-                  required
-                  value={data.message}
-                  onChange={onChange}
-                  placeholder="Votre message *"
-                  rows={5}
-                  className={FIELD}
-                />
+                <div>
+                  <label htmlFor="cb-message" className={labelCls}>Message *</label>
+                  <textarea id="cb-message" name="message" required value={data.message} onChange={onChange} rows={4} className={`${inputCls} resize-none`} placeholder="Votre demande…" />
+                </div>
+
                 {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
+
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm py-4 rounded-xl hover:bg-brand-dark hover:text-white transition disabled:opacity-60"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm py-3.5 rounded-lg hover:bg-brand-dark hover:text-white transition disabled:opacity-60"
                 >
                   {loading ? 'Envoi…' : 'Envoyer'}
-                  {!loading && <Send size={16} />}
+                  {!loading && <Send size={15} />}
                 </button>
+                <p className="text-[11px] text-gray-400 text-center">
+                  Vos données ne sont utilisées que pour répondre à votre demande.
+                </p>
               </form>
             )}
           </div>
