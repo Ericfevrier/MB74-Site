@@ -119,7 +119,7 @@ function SectionBlock({ section, index }: { section: ServiceSection; index: numb
   const dark = section.layout === 'why';
   return (
     <section className={dark ? 'py-24 bg-brand-dark' : index % 2 === 0 ? 'py-24 bg-brand-light' : 'py-24 bg-white'}>
-      <div className="max-w-6xl mx-auto px-4 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
         {dark ? (
           <div className="max-w-3xl mb-14">
             {section.eyebrow && (
@@ -304,7 +304,7 @@ export function ServicePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/85 to-brand-dark/40" />
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-72 -mt-72" />
         </div>
-        <div className="relative max-w-6xl mx-auto px-4 lg:px-8 py-20 lg:py-28">
+        <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-28">
           {/* Fil d'ariane */}
           <nav aria-label="Fil d’ariane" className="flex items-center gap-2 text-[12px] text-gray-300 mb-6">
             <Link to="/" className="hover:text-brand-cyan flex items-center gap-1">

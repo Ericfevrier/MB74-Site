@@ -86,7 +86,7 @@ export function ServicesSection() {
       <div className="absolute top-0 right-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -mr-48 -mt-48"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -ml-48 -mb-48"></div>
 
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8 relative z-10">
         <div className="mb-20 text-center sm:text-left">
           <div className="flex items-center justify-center sm:justify-start space-x-3 text-brand-cyan mb-4">
               <div className="w-8 h-1 bg-brand-cyan rounded-full"></div>

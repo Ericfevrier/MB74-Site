@@ -196,7 +196,7 @@ export function ModelPage() {
           <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-brand-dark/70 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/35 via-transparent to-transparent" />
         </div>
-        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-12 min-h-[86vh] flex flex-col">
+        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 min-h-[86vh] flex flex-col">
           <nav aria-label="Fil d’ariane" className="flex flex-wrap items-center gap-2 text-[12px] text-gray-200 pt-8 [text-shadow:0_1px_10px_rgba(0,0,0,.6)]">
             <Link to="/" className="hover:text-brand-cyan flex items-center gap-1"><Home size={13} /> Accueil</Link>
             <span className="opacity-40">/</span>
@@ -234,7 +234,7 @@ export function ModelPage() {
 
         {/* Barre de confiance */}
         <div className="relative border-t border-white/10 bg-brand-dark/80 backdrop-blur-sm">
-          <div className="max-w-6xl mx-auto px-4 lg:px-8 py-5 grid grid-cols-2 md:grid-cols-4 gap-y-4 text-center md:text-left">
+          <div className="max-w-[1400px] mx-auto px-4 lg:px-8 py-5 grid grid-cols-2 md:grid-cols-4 gap-y-4 text-center md:text-left">
             {[
               { Icon: ShieldCheck, t: 'Concessionnaire officiel Nautique' },
               { Icon: Anchor, t: "Showroom Lac d'Annecy" },
@@ -252,7 +252,7 @@ export function ModelPage() {
 
       {/* ===================== MENU D'ANCRAGE STICKY ===================== */}
       <nav aria-label="Sommaire de la page" className="sticky top-[120px] z-40 bg-ink-950/95 backdrop-blur-md border-y border-white/10">
-        <div className="max-w-6xl mx-auto px-2 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-2 lg:px-8">
           <ul className="flex gap-1 overflow-x-auto hide-scrollbar py-2 text-[12px] font-bold uppercase tracking-widest">
             {anchors.map((a) => (
               <li key={a.id} className="flex-shrink-0">
@@ -267,7 +267,7 @@ export function ModelPage() {
 
       {/* ===================== PRÉSENTATION (texte gauche / image droite) ===================== */}
       <section className="py-20 bg-brand-dark">
-        <div className="max-w-6xl mx-auto px-4 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
             <SectionEyebrow label="Le bateau" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-8 leading-tight">
@@ -299,7 +299,7 @@ export function ModelPage() {
       {/* ===================== GALERIE ===================== */}
       {model.gallery.length > 1 && (
         <section id="galerie" className={`py-20 bg-ink-950 ${sectionPad}`}>
-          <div className="max-w-6xl mx-auto px-4 lg:px-8">
+          <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="En images" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-10">Galerie</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -322,7 +322,7 @@ export function ModelPage() {
       {/* ===================== POINTS FORTS (alternés) ===================== */}
       {model.highlights.length > 0 && (
         <section id="points-forts" className={`py-20 bg-brand-dark ${sectionPad}`}>
-          <div className="max-w-6xl mx-auto px-4 lg:px-8">
+          <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="Conçu pour rider" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-14">Les points forts du {model.short}</h2>
             <div className="space-y-14">
@@ -391,7 +391,7 @@ export function ModelPage() {
       {/* ===================== SPÉCIFICATIONS ===================== */}
       {model.specs.length > 0 && (
         <section id="specs" className={`py-20 bg-brand-dark ${sectionPad}`}>
-          <div className="max-w-6xl mx-auto px-4 lg:px-8">
+          <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="Fiche technique" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-12">Spécifications techniques</h2>
             <div className="grid md:grid-cols-3 gap-6">
@@ -422,7 +422,7 @@ export function ModelPage() {
       {/* ===================== HISTORIQUE DES MILLÉSIMES (conditionnel) ===================== */}
       {milestones.length > 0 && (
         <section id="millesimes" className={`py-20 bg-ink-950 ${sectionPad}`}>
-          <div className="max-w-6xl mx-auto px-4 lg:px-8">
+          <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="Historique" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-5 leading-tight">
               {fullName} : <span className="text-brand-cyan">évolution par millésime</span>
@@ -492,7 +492,7 @@ export function ModelPage() {
       {/* ===================== ÉQUIPEMENTS & OPTIONS ===================== */}
       {hasEquip && (
         <section id="equipements" className={`py-20 bg-ink-950 ${sectionPad}`}>
-          <div className="max-w-6xl mx-auto px-4 lg:px-8">
+          <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="À bord" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-12">Équipements & options</h2>
 
@@ -593,7 +593,7 @@ export function ModelPage() {
 
       {/* ===================== OCCASIONS ===================== */}
       <section id="occasions" className={`py-20 bg-brand-dark ${sectionPad}`}>
-        <div className="max-w-6xl mx-auto px-4 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
             <div>
               <SectionEyebrow label="Alternative" />
@@ -692,7 +692,7 @@ export function ModelPage() {
 
       {/* ===================== AUTRES MODÈLES (maillage latéral) ===================== */}
       <section className="bg-ink-950 py-24 border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white text-center mb-12">Découvrez les autres modèles</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {others.map((o) => (

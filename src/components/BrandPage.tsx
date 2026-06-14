@@ -55,7 +55,7 @@ export function BrandPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/40 via-brand-dark/20 to-brand-dark"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
+        <div className="max-w-[1400px] mx-auto px-4 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -87,7 +87,7 @@ export function BrandPage() {
 
       {/* Brand Intro */}
       <article className="py-24 bg-brand-light">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -144,7 +144,7 @@ export function BrandPage() {
 
       {/* Models Section */}
       <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-brand-dark uppercase tracking-tight mb-4">La Gamme {brand.name}</h2>
             <div className="w-20 h-1 bg-brand-cyan mx-auto rounded-full"></div>
@@ -212,7 +212,7 @@ export function BrandPage() {
       {/* CTA Section */}
       <section className="py-24 bg-brand-dark overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-64 -mt-64"></div>
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10 text-center">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 relative z-10 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white uppercase tracking-tight mb-8">Prêt à naviguer en {brand.name} ?</h2>
           <p className="text-gray-400 text-xl max-w-2xl mx-auto mb-12">
             Contactez notre équipe d'experts pour configurer votre futur bateau ou découvrir les modèles disponibles en stock.

@@ -34,7 +34,7 @@ export function ComplementaryServices({ currentSlug }: Props) {
 
   return (
     <section className="bg-white py-24 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
         <div className="text-center mb-14 max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mb-4">
             Nos services complémentaires

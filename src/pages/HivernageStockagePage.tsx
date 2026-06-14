@@ -384,7 +384,7 @@ export function HivernageStockagePage() {
           <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-cyan/10 rounded-full blur-[150px] -mr-40 -mt-40"></div>
         </div>
 
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10 text-center lg:text-left">
+        <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10 text-center lg:text-left">
           <div className="max-w-4xl mx-auto lg:mx-0">
             {/* SEO Breadcrumb indicator */}
             <div className="inline-flex items-center gap-2 bg-brand-cyan/10 border border-brand-cyan/20 rounded-full px-4 py-1.5 mb-4 text-[12px] font-bold text-brand-cyan uppercase tracking-wider">
@@ -458,7 +458,7 @@ export function HivernageStockagePage() {
 
       {/* 2. Barre de preuve sociale (Bandeau horizontal) */}
       <section className="bg-brand-cyan text-brand-dark py-6 relative z-10 shadow-lg font-bold overflow-hidden select-none">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+        <div className="container mx-auto px-4 lg:px-8 max-w-[1400px]">
           <div className="flex flex-wrap items-center justify-around gap-y-4 gap-x-8 text-center uppercase tracking-widest text-xs md:text-sm">
             <div className="flex items-center gap-2">
               <Star className="w-5 h-5 fill-brand-dark text-brand-dark" />
@@ -483,7 +483,7 @@ export function HivernageStockagePage() {
       {/* 2bis. En bref — bloc AEO/GEO citable (faits clés extractibles) */}
       <section aria-label="L'essentiel en bref" className="py-20 bg-brand-light relative overflow-hidden border-t border-gray-200">
         <div className="absolute top-0 right-0 w-[480px] h-[480px] bg-brand-cyan/10 rounded-full blur-[120px] -mr-40 -mt-40 -z-0"></div>
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
+        <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
           <h2 className="sr-only">Hivernage et stockage de bateau à Annecy : l'essentiel</h2>
           <div className="rounded-[2rem] border border-gray-200 bg-white shadow-xl shadow-brand-dark/5 overflow-hidden">
             {/* Bandeau dossier */}
@@ -539,7 +539,7 @@ export function HivernageStockagePage() {
       <section className="py-24 bg-ink-950 relative overflow-hidden">
         {/* Subtle decorative background water elements */}
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -z-10"></div>
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
+        <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-6">
               Pourquoi l'hivernage de votre bateau est indispensable en <span className="text-brand-cyan">Haute-Savoie</span>
@@ -611,7 +611,7 @@ export function HivernageStockagePage() {
 
       {/* 📦 COMBINED WORKSPACE FOR BLOCKS 4 TO 12 + STICKY SIDEBAR FORM ON DESKTOP */}
       <section className="py-24 bg-transparent border-t border-gray-200 relative z-10">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+        <div className="container mx-auto px-4 lg:px-8 max-w-[1400px]">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             
             {/* LEFT COLUMN: Blocks 4 to 12 (occupies 2/3 space recursively) */}
@@ -1411,7 +1411,7 @@ export function HivernageStockagePage() {
 
       {/* 🛠 Bloc 14 — Services complémentaires */}
       <section className="bg-ink-950 py-16 text-gray-400 text-xs font-semibold border-t border-white/5 border-b border-white/5">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl text-center">
+        <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] text-center">
           <p className="uppercase text-brand-cyan/50 tracking-widest text-[10px] mb-6 font-bold grid">Découvrez également nos autres services</p>
           <div className="flex flex-wrap justify-center gap-8 md:gap-14">
             <Link to="/entretien-reparation" className="flex items-center gap-2 hover:text-brand-cyan transition-colors uppercase tracking-wider">

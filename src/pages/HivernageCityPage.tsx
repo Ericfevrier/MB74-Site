@@ -82,7 +82,7 @@ export function HivernageCityPage() {
           <img src={city.hero} alt={`Hivernage de bateau à ${city.city}`} className="w-full h-full object-cover opacity-40" referrerPolicy="no-referrer" />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/85 to-brand-dark/40" />
         </div>
-        <div className="relative max-w-6xl mx-auto px-4 lg:px-8 py-20 lg:py-28">
+        <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-28">
           <nav aria-label="Fil d’ariane" className="flex items-center gap-2 text-[12px] text-gray-300 mb-6">
             <Link to="/" className="hover:text-brand-cyan flex items-center gap-1"><Home size={13} /> Accueil</Link>
             <span className="opacity-40">/</span>
@@ -102,7 +102,7 @@ export function HivernageCityPage() {
 
       {/* Solutions */}
       <section className="bg-brand-light py-20">
-        <div className="max-w-6xl mx-auto px-4 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mb-12">
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mb-5">Des solutions d’hivernage adaptées à votre bateau</h2>
             <p className="text-gray-600 text-lg leading-relaxed">
@@ -123,7 +123,7 @@ export function HivernageCityPage() {
 
       {/* Pourquoi */}
       <section className="bg-brand-dark text-white py-20">
-        <div className="max-w-6xl mx-auto px-4 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mb-12">
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight mb-5">Pourquoi nous faire confiance ?</h2>
             <p className="text-gray-300 text-lg leading-relaxed">
@@ -145,7 +145,7 @@ export function HivernageCityPage() {
       {/* Zones d'intervention / ports */}
       {city.ports.length > 0 && (
         <section className="bg-brand-light py-20">
-          <div className="max-w-6xl mx-auto px-4 lg:px-8">
+          <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <div className="max-w-3xl mb-12">
               <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mb-5">
                 Nos zones d’intervention autour {city.city.startsWith('Lac') ? `du ${city.city}` : /^[AEÉÈIOUaeiouéè]/.test(city.city) ? `d’${city.city}` : `de ${city.city}`}

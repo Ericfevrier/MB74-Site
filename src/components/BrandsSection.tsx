@@ -28,7 +28,7 @@ export function BrandsSection() {
       <section className="bg-ink-850 py-20 text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[100px] -mr-64 -mt-64"></div>
         
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 relative z-10">
           
           <div className="text-center mb-12 lg:mb-20">
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
@@ -99,7 +99,7 @@ export function BrandsSection() {
       <section className="bg-brand-light py-20 text-brand-dark relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-cyan/10 rounded-full blur-[80px] -ml-40 -mb-40"></div>
         
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 text-center relative z-10">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 text-center relative z-10">
           <div className="flex flex-col items-center mb-12">
             <div className="flex items-center space-x-3 text-brand-cyan mb-4">
                 <div className="w-8 h-1 bg-brand-cyan rounded-full"></div>

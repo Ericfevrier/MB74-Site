@@ -41,7 +41,7 @@ export function PartnersLocationSection() {
   return (
     <div className="py-32 bg-transparent overflow-hidden">
       {/* Partners Section */}
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 text-center text-brand-dark mb-48">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8 text-center text-brand-dark mb-48">
         <div className="flex flex-col items-center mb-24">
           <div className="flex items-center space-x-3 text-brand-cyan mb-4">
               <div className="w-8 h-1 bg-brand-cyan rounded-full"></div>
@@ -72,7 +72,7 @@ export function PartnersLocationSection() {
       </div>
 
       {/* Location & Contact Section */}
-      <div className="max-w-7xl mx-auto px-4 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
         <div className="bg-brand-dark rounded-[3.5rem] p-12 lg:p-24 shadow-3xl relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-96 -mt-96 group-hover:bg-brand-cyan/10 transition-colors duration-1000"></div>
           

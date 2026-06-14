@@ -48,7 +48,7 @@ export function ServiceContactBlock({ subject, title, showMap }: ServiceContactB
 
   return (
     <section id="contact" className="bg-brand-light py-24 scroll-mt-[120px]">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
         <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight text-brand-dark text-center mb-16">
           {title ? title : <>Contactez-<span className="text-brand-cyan">nous</span></>}
         </h2>

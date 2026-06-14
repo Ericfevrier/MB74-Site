@@ -52,7 +52,7 @@ export function ContactPage() {
           <img src="/images/2026-p23-ext-09-11zon.jpg" alt="Motor Boat 74" className="w-full h-full object-cover opacity-35" referrerPolicy="no-referrer" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/85 via-brand-dark/85 to-brand-dark" />
         </div>
-        <div className="relative max-w-6xl mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
+        <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
           <nav aria-label="Fil d’ariane" className="flex items-center justify-center gap-2 text-[12px] text-gray-300 mb-6">
             <Link to="/" className="hover:text-brand-cyan flex items-center gap-1"><Home size={13} /> Accueil</Link>
             <span className="opacity-40">/</span>
@@ -72,7 +72,7 @@ export function ContactPage() {
 
       {/* Carte + horaires */}
       <section className="bg-white pb-24">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 grid lg:grid-cols-3 gap-8 items-stretch">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 grid lg:grid-cols-3 gap-8 items-stretch">
           <div className="lg:col-span-2 min-h-[420px] rounded-[2rem] overflow-hidden shadow-xl shadow-brand-dark/5 border border-gray-200">
             <GoogleMapCustom />
           </div>

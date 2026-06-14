@@ -103,7 +103,7 @@ export function ServicesHubPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/85 to-brand-dark" />
         </div>
-        <div className="relative max-w-6xl mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
+        <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Nos services</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mx-auto mb-12">
             Découvrez notre gamme complète de services nautiques professionnels. De la vente à l’entretien, en passant
@@ -123,7 +123,7 @@ export function ServicesHubPage() {
 
       {/* Cartes services */}
       <section className="bg-brand-light py-24">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {cards.map((c) => (
               <div
