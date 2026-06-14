@@ -431,7 +431,7 @@ export function ModelPage() {
               Le {model.short} a évolué depuis son lancement. Voici ce qui change d’une année à l’autre — utile pour situer et comparer un {model.short} d’occasion avant l’achat.
             </p>
 
-            <div className="overflow-x-auto rounded-3xl border border-white/10 mb-12">
+            <div className="overflow-x-auto rounded-3xl border border-white/10 mb-4">
               <table className="w-full text-left text-sm">
                 <thead className="bg-ink-900 text-brand-cyan uppercase tracking-widest text-[11px]">
                   <tr>
@@ -453,6 +453,17 @@ export function ModelPage() {
                 </tbody>
               </table>
             </div>
+            {milestones.some((m) => m.manualUrl) && (
+              <p className="text-gray-500 text-sm mb-12">
+                Sources : manuels propriétaires officiels Nautique —{' '}
+                {milestones.filter((m) => m.manualUrl).map((m, i, arr) => (
+                  <React.Fragment key={m.year}>
+                    <a href={m.manualUrl} target="_blank" rel="noopener noreferrer" className="text-brand-cyan hover:underline">manuel {m.year} (PDF)</a>
+                    {i < arr.length - 1 ? ', ' : '.'}
+                  </React.Fragment>
+                ))}
+              </p>
+            )}
 
             {milestones.some((m) => m.detail) && (
               <div className="space-y-8 max-w-3xl mb-12">

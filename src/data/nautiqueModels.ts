@@ -24,6 +24,8 @@ export interface Milestone {
   changes?: string;
   edition?: string;
   detail?: string;
+  /** Lien vers le manuel propriétaire officiel (source) */
+  manualUrl?: string;
 }
 
 export interface NautiqueModel {
@@ -1051,6 +1053,31 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "fullName": "Super Air Nautique G25 Paragon",
     "tagline": "Le wakeboat le plus haut de gamme de la série Paragon : vagues de wakesurf et wakeboard de niveau pro, confort premium — à essayer sur le Lac d’Annecy.",
     "videoId": "Ux265r3L9QA",
+    "milestones": [
+      {
+        "year": "2026",
+        "motorization": "PCM ZZ8S 630 ch (essence) / Yanmar 8LV 370 ch (diesel)",
+        "changes": "Édition Centennial du centenaire Nautique : logo centenaire gravé, coque exclusive « Centennial Deep Slate ».",
+        "edition": "Centennial",
+        "detail": "En 2026, le G25 Paragon est décliné en édition Centennial célébrant les 100 ans de Nautique, avec un logo centenaire gravé sur le tableau de bord et une couleur de coque exclusive « Centennial Deep Slate » (gris métallisé). Motorisations PCM ZZ8S essence ou Yanmar 8LV 370 diesel.",
+        "manualUrl": "https://nautique.blob.core.windows.net/boat-manuals/2026/2026-p-series-manual.pdf"
+      },
+      {
+        "year": "2025",
+        "motorization": "Non communiqué",
+        "changes": "Non communiqué",
+        "edition": "—",
+        "manualUrl": "https://nautique.blob.core.windows.net/boat-manuals/2025/2025-Paragon-manual.pdf"
+      },
+      {
+        "year": "2024",
+        "motorization": "Non communiqué",
+        "changes": "Première année documentée du G25 Paragon (lancement de la série Paragon). Système d’affichage LINC Panoray double écran.",
+        "edition": "—",
+        "detail": "2024 est la première année documentée du G25 Paragon : c’est le lancement de la série Paragon, positionnée au sommet de la gamme Super Air Nautique. Ce millésime dispose d’un manuel dédié au système d’affichage LINC Panoray (double écran).",
+        "manualUrl": "https://nautique.blob.core.windows.net/boat-manuals/2024/2024-Parargon-Manual.pdf"
+      }
+    ],
     "gamme": "Série Paragon",
     "year": "2026",
     "metaTitle": "Super Air Nautique G25 Paragon 2026 – Prix, Fiche technique & Essai | Motor Boat 74 Annecy",
