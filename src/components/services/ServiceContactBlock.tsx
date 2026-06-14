@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { Phone, MapPin, Mail, Send, CheckCircle2 } from 'lucide-react';
 import { SITE } from '../../data/site';
+import { GoogleMapCustom } from '../GoogleMapCustom';
 
 interface ServiceContactBlockProps {
   /** Sujet pré-rempli envoyé au backend (ex. nom du service). */
   subject?: string;
+  /** Titre personnalisé (ex. "Recevez votre prix personnalisé"). */
+  title?: string;
+  /** Affiche la carte Google Maps sous les coordonnées. */
+  showMap?: boolean;
 }
 
 const FIELD =
   'w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-brand-dark placeholder:text-gray-400 focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/30 outline-none transition';
 
-export function ServiceContactBlock({ subject }: ServiceContactBlockProps) {
+export function ServiceContactBlock({ subject, title, showMap }: ServiceContactBlockProps) {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,8 +49,8 @@ export function ServiceContactBlock({ subject }: ServiceContactBlockProps) {
   return (
     <section id="contact" className="bg-brand-light py-24 scroll-mt-[120px]">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
-        <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight text-brand-dark text-center mb-16">
-          Contactez-<span className="text-brand-cyan">nous</span>
+        <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight text-brand-dark text-center mb-16">
+          {title ? title : <>Contactez-<span className="text-brand-cyan">nous</span></>}
         </h2>
 
         <div className="grid lg:grid-cols-2 gap-10 items-start">
@@ -98,6 +103,12 @@ export function ServiceContactBlock({ subject }: ServiceContactBlockProps) {
                 </a>
               </li>
             </ul>
+
+            {showMap && (
+              <div className="mt-6 h-64 rounded-2xl overflow-hidden border border-gray-200 shadow-lg shadow-brand-dark/5">
+                <GoogleMapCustom />
+              </div>
+            )}
           </div>
 
           {/* Formulaire */}

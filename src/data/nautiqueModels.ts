@@ -9,6 +9,9 @@ export interface SpecItem { label: string; value: string; }
 export interface SpecGroup { group: string; items: SpecItem[]; }
 export interface Highlight { title: string; text: string; }
 export interface ModelFAQ { q: string; a: string; }
+export interface Motorization { name: string; fuel: string; power: string; torque: string; ratio: string; }
+export interface Edition { name: string; desc: string; }
+export interface OptionGroup { title: string; items: string[]; }
 
 export interface NautiqueModel {
   slug: string;
@@ -24,6 +27,21 @@ export interface NautiqueModel {
   specs: SpecGroup[];
   highlights: Highlight[];
   faqs: ModelFAQ[];
+  /* ----- Champs premium optionnels (page modèle enrichie, ex. G25 Paragon) ----- */
+  /** Nom marketing complet pour H1/title (défaut : name) */
+  fullName?: string;
+  /** Sous-titre héro (promesse + ancrage local) */
+  tagline?: string;
+  /** ID vidéo YouTube (embed). Laisser vide tant qu'on n'a pas l'URL vérifiée. */
+  videoId?: string;
+  /** Éditions spéciales */
+  editions?: Edition[];
+  /** Motorisations détaillées */
+  motorizations?: Motorization[];
+  /** Équipements inclus (liste 2 colonnes) */
+  features?: string[];
+  /** Options par catégorie (accordéons) */
+  options?: OptionGroup[];
 }
 
 export const MODEL_ORDER: string[] = ["g25-paragon","g23-paragon","super-air-nautique-g25","super-air-nautique-g23","super-air-nautique-g21","super-air-nautique-s25","super-air-nautique-s23","super-air-nautique-s21","super-air-nautique-gs24","super-air-nautique-gs22","super-air-nautique-gs20","ski-nautique"];
@@ -62,11 +80,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "23′ 7″ / 7,19 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "100″ / 2,54 m"
           },
           {
-            "label": "Brouillon",
+            "label": "Tirant d'eau",
             "value": "32″ / 0,81 m"
           }
         ]
@@ -185,11 +203,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "25′ 2″ / 7.67 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "100″ / 2.54 m"
           },
           {
-            "label": "Brouillon",
+            "label": "Tirant d'eau",
             "value": "31.25″ / .79 m"
           }
         ]
@@ -308,11 +326,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "27’ 2” / 8.28 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "100” / 2.54 m"
           },
           {
-            "label": "Brouillon",
+            "label": "Tirant d'eau",
             "value": "32” / .81 m"
           }
         ]
@@ -429,11 +447,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "22’ 7” / 6.88 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "100” / 2.54 m"
           },
           {
-            "label": "Brouillon",
+            "label": "Tirant d'eau",
             "value": "30” / .76 m"
           }
         ]
@@ -551,11 +569,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "24’ 7” / 7.49 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "100” / 2.54 m"
           },
           {
-            "label": "Brouillon",
+            "label": "Tirant d'eau",
             "value": "32” / .81 m"
           }
         ]
@@ -673,11 +691,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "26′ 7” / 8,10 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "100” / 2,54 m"
           },
           {
-            "label": "Brouillon",
+            "label": "Tirant d'eau",
             "value": "30 po / 0,76 m"
           }
         ]
@@ -796,11 +814,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "27’ 5” / 8.61 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "102” / 2.59 m"
           },
           {
-            "label": "Brouillon",
+            "label": "Tirant d'eau",
             "value": "31.25” / .79 m"
           }
         ]
@@ -918,11 +936,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "25′ 5″ / 7,75 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "102” / 2,59 m"
           },
           {
-            "label": "Brouillon",
+            "label": "Tirant d'eau",
             "value": "34 po / 0,86 m"
           }
         ]
@@ -1011,10 +1029,12 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "slug": "g25-paragon",
     "name": "G25 Paragon",
     "short": "G25 Paragon",
-    "gamme": "Paragon Series",
+    "fullName": "Super Air Nautique G25 Paragon",
+    "tagline": "Le wakeboat le plus haut de gamme de la série Paragon : vagues de wakesurf et wakeboard de niveau pro, confort premium — à essayer sur le Lac d’Annecy.",
+    "gamme": "Série Paragon",
     "year": "2026",
-    "metaTitle": "Nautique G25 Paragon 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez le Nautique G25 Paragon 2026 chez MotorBoat74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
+    "metaTitle": "Super Air Nautique G25 Paragon 2026 – Prix, Fiche technique & Essai | Motor Boat 74 Annecy",
+    "metaDescription": "Super Air Nautique G25 Paragon : wakeboat haut de gamme de la série Paragon. Fiche technique, prix et essai sur le Lac d’Annecy chez Motor Boat 74. Demandez votre prix.",
     "intro": [
       "Le Super Air Nautique G25 Paragon est un bateau de wake conçu pour le wakesurf et le wakeboard. Sa coque et sa conception permettent de créer des vagues modulables adaptées à différents niveaux et styles de navigation. L’aménagement intérieur privilégie le confort et la fonctionnalité, avec des matériaux de qualité et un agencement pensé pour faciliter les déplacements à bord.",
       "Pour le centenaire de Nautique, le G25 propose une édition spéciale Centennial. Cette version se distingue par des détails spécifiques, comme un logo centenaire gravé sur le tableau de bord et une couleur de coque nommée « Centennial Deep Slate », un gris métallisé avec des reflets subtils, apportant une touche d’originalité tout en restant sobre."
@@ -1040,11 +1060,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "27’ 5” / 8.61 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "102” / 2.59 m"
           },
           {
-            "label": "Brouillon",
+            "label": "Tirant d'eau",
             "value": "34.5” / .88 m"
           }
         ]
@@ -1110,6 +1130,80 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "La proue du G25 Paragon combine confort et praticité. Elle accueille jusqu’à quatre passagers avec des sièges spacieux, des porte-gobelets et des rangements astucieux. Le coussin rabattable dévoile un revêtement antidérapant pour circuler facilement, tandis que les feux LED et les badges éclairés assurent visibilité et style, de jour comme de nuit."
       }
     ],
+    "editions": [
+      {
+        "name": "Édition Centennial",
+        "desc": "Célébrant le centenaire de Nautique : logo centenaire gravé sur le tableau de bord et coque exclusive « Centennial Deep Slate », un gris métallisé aux reflets subtils."
+      },
+      {
+        "name": "Édition côtière (Coastal)",
+        "desc": "Finitions et protections renforcées pensées pour un usage en eau salée et une exposition prolongée."
+      }
+    ],
+    "motorizations": [
+      {
+        "name": "PCM ZZ8S",
+        "fuel": "Essence",
+        "power": "630 ch",
+        "torque": "665 pi-lb",
+        "ratio": "1.7:1"
+      },
+      {
+        "name": "Yanmar 8LV 370",
+        "fuel": "Diesel",
+        "power": "370 ch",
+        "torque": "595 pi-lb",
+        "ratio": "1.7:1"
+      }
+    ],
+    "features": [
+      "Nautique Surf System & Hydro-Plate (réglage de vague)",
+      "Ballast haute capacité (jusqu’à 1 542 kg)",
+      "Système audio JL Audio M6",
+      "Audio sous-marin WakeSub",
+      "Éclairage LED Chromax",
+      "Écrans tactiles LINC Panoray",
+      "Siège pilote motorisé & centre de commande Helm",
+      "Caméra arrière",
+      "Bimini et pare-soleil",
+      "Plateforme de bain & passage arrière",
+      "Feux et badges éclairés",
+      "Sellerie premium hydrofuge anti-UV"
+    ],
+    "options": [
+      {
+        "title": "Tour & racks",
+        "items": [
+          "Tour de wake télescopique motorisée",
+          "Racks à planches (board racks)",
+          "Bimini intégré à la tour"
+        ]
+      },
+      {
+        "title": "Technologiques",
+        "items": [
+          "Écrans LINC Panoray additionnels",
+          "Commande du surf system à distance",
+          "Caméras de surveillance supplémentaires"
+        ]
+      },
+      {
+        "title": "Intérieures",
+        "items": [
+          "Coloris et matières de sellerie personnalisés",
+          "Chauffage de cockpit",
+          "Pack rangements additionnels"
+        ]
+      },
+      {
+        "title": "Supplémentaires",
+        "items": [
+          "Ballast additionnel",
+          "Échelle de bain télescopique",
+          "Taud de mouillage sur mesure"
+        ]
+      }
+    ],
     "faqs": [
       {
         "q": "Quel est le prix du G25 Paragon ?",
@@ -1163,11 +1257,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "21′ 11″ / 6.68 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "94″ / 2.39 m"
           },
           {
-            "label": "Brouillon",
+            "label": "Tirant d'eau",
             "value": "21″ / 0.53 m"
           }
         ]
@@ -1279,7 +1373,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "23′ / 7,01 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "100″ / 2,54 m"
           }
         ]
@@ -1359,7 +1453,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
             "value": "21′ / 6,45 m"
           },
           {
-            "label": "Faisceau",
+            "label": "Largeur (bau)",
             "value": "100″ / 2,54 m"
           }
         ]
