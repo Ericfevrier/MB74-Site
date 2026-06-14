@@ -64,12 +64,14 @@ export function ModelPage() {
   const others = MODEL_ORDER.filter((s) => s !== model.slug).map((s) => nautiqueModels[s]).slice(0, 4);
   const hasEquip = Boolean(model.editions || model.motorizations || model.features || model.options);
   const occasions = usedBoatsForModel(model.slug);
+  const milestones = (model.milestones ?? []).slice().sort((a, b) => Number(b.year) - Number(a.year));
 
   const anchors = [
     model.gallery.length > 1 && { id: 'galerie', label: 'Galerie' },
     model.highlights.length > 0 && { id: 'points-forts', label: 'Points forts' },
     { id: 'video', label: 'Vidéo' },
     model.specs.length > 0 && { id: 'specs', label: 'Specs' },
+    milestones.length > 0 && { id: 'millesimes', label: 'Millésimes' },
     hasEquip && { id: 'equipements', label: 'Équipements' },
     { id: 'occasions', label: 'Occasions' },
     model.faqs.length > 0 && { id: 'faq', label: 'FAQ' },
@@ -101,6 +103,10 @@ export function ModelPage() {
     category: 'Wakeboat / Bateau de sport nautique',
     image: [heroAbs],
     description: model.metaDescription,
+    releaseDate: model.year,
+    ...(milestones.length
+      ? { additionalProperty: { '@type': 'PropertyValue', name: 'Millésimes documentés', value: milestones.map((m) => m.year).join(', ') } }
+      : {}),
     offers: {
       '@type': 'Offer',
       priceCurrency: 'EUR',
@@ -408,6 +414,65 @@ export function ModelPage() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ===================== HISTORIQUE DES MILLÉSIMES (conditionnel) ===================== */}
+      {milestones.length > 0 && (
+        <section id="millesimes" className={`py-20 bg-ink-950 ${sectionPad}`}>
+          <div className="max-w-6xl mx-auto px-4 lg:px-8">
+            <SectionEyebrow label="Historique" />
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-5 leading-tight">
+              {fullName} : <span className="text-brand-cyan">évolution par millésime</span>
+            </h2>
+            <p className="text-gray-300 text-lg leading-relaxed max-w-3xl mb-10">
+              Le {model.short} a évolué depuis son lancement. Voici ce qui change d’une année à l’autre — utile pour situer et comparer un {model.short} d’occasion avant l’achat.
+            </p>
+
+            <div className="overflow-x-auto rounded-3xl border border-white/10 mb-12">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-ink-900 text-brand-cyan uppercase tracking-widest text-[11px]">
+                  <tr>
+                    <th className="py-4 px-6">Année</th>
+                    <th className="py-4 px-6">Motorisation(s)</th>
+                    <th className="py-4 px-6">Évolutions / nouveautés</th>
+                    <th className="py-4 px-6">Édition spéciale</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {milestones.map((m, i) => (
+                    <tr key={i} className="text-gray-300 align-top">
+                      <td className="py-4 px-6 font-bold text-white whitespace-nowrap">{model.short} {m.year}</td>
+                      <td className="py-4 px-6">{m.motorization || 'Non communiqué'}</td>
+                      <td className="py-4 px-6">{m.changes || 'Non communiqué'}</td>
+                      <td className="py-4 px-6">{m.edition || '—'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {milestones.some((m) => m.detail) && (
+              <div className="space-y-8 max-w-3xl mb-12">
+                {milestones.filter((m) => m.detail).map((m, i) => (
+                  <div key={i}>
+                    <h3 className="font-bold text-lg uppercase tracking-tight text-white mb-2">Ce qui change en {m.year}</h3>
+                    <p className="text-gray-300 leading-relaxed">{m.detail}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Lien vers le transactionnel */}
+            <div className="bg-ink-900 border border-brand-cyan/20 rounded-[2rem] p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <p className="text-gray-200 text-lg max-w-xl">
+                Vous cherchez un <span className="text-white font-semibold">{model.short} d’occasion</span> ? Découvrez les modèles disponibles, tous millésimes confondus.
+              </p>
+              <a href="#occasions" className="flex-shrink-0 inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:bg-white transition">
+                Voir les occasions <ArrowRight size={16} />
+              </a>
             </div>
           </div>
         </section>

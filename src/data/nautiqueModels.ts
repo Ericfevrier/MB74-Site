@@ -12,6 +12,19 @@ export interface ModelFAQ { q: string; a: string; }
 export interface Motorization { name: string; fuel: string; power: string; torque: string; ratio: string; }
 export interface Edition { name: string; desc: string; }
 export interface OptionGroup { title: string; items: string[]; }
+/**
+ * Millésime documenté (section "évolution par millésime").
+ * RÈGLE : uniquement des données réelles et sourcées. Une cellule non sourcée
+ * = "Non communiqué" (jamais une valeur plausible inventée).
+ * `detail` = paragraphe "Ce qui change en [année]" (si évolution significative).
+ */
+export interface Milestone {
+  year: string;
+  motorization?: string;
+  changes?: string;
+  edition?: string;
+  detail?: string;
+}
 
 export interface NautiqueModel {
   slug: string;
@@ -42,6 +55,12 @@ export interface NautiqueModel {
   features?: string[];
   /** Options par catégorie (accordéons) */
   options?: OptionGroup[];
+  /**
+   * Historique par millésime (section "évolution par millésime").
+   * Laisser absent/vide tant qu'on n'a pas de données antérieures RÉELLES et
+   * sourcées → la section ne s'affiche pas (pas de bloc vide, pas d'invention).
+   */
+  milestones?: Milestone[];
 }
 
 export const MODEL_ORDER: string[] = ["g25-paragon","g23-paragon","super-air-nautique-g25","super-air-nautique-g23","super-air-nautique-g21","super-air-nautique-s25","super-air-nautique-s23","super-air-nautique-s21","super-air-nautique-gs24","super-air-nautique-gs22","super-air-nautique-gs20","ski-nautique"];
