@@ -196,18 +196,34 @@ export function ModelPage() {
           <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-brand-dark/70 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/35 via-transparent to-transparent" />
         </div>
+
+        {/* Badge concessionnaire officiel — haut droite (style home) */}
+        <div className="absolute top-8 right-4 md:right-8 hidden lg:flex z-20">
+          <div className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 flex items-center gap-3 shadow-2xl">
+            <span className="text-white text-[13px] font-bold tracking-[0.12em] uppercase">Concessionnaire<br />officiel</span>
+            <div className="flex items-center border-l border-white/20 pl-3">
+              <img
+                src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png"
+                alt="Nautique Boats concessionnaire officiel"
+                className="h-9 object-contain"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 min-h-[68vh] flex flex-col">
           <nav aria-label="Fil d’ariane" className="pt-8">
-            <ol className="inline-flex flex-wrap items-center gap-1 rounded-full border border-white/15 bg-brand-dark/40 backdrop-blur-md px-4 py-2 text-[12px] font-medium text-gray-300 shadow-lg shadow-black/30">
+            <ol className="inline-flex flex-wrap items-center gap-1.5 text-[11px] font-medium text-gray-400/70 [text-shadow:0_1px_8px_rgba(0,0,0,.5)]">
               <li>
-                <Link to="/" className="inline-flex items-center gap-1.5 hover:text-brand-cyan transition-colors"><Home size={13} /> Accueil</Link>
+                <Link to="/" className="inline-flex items-center gap-1 hover:text-gray-200 transition-colors"><Home size={11} /> Accueil</Link>
               </li>
-              <li aria-hidden className="text-white/25"><ChevronRight size={13} /></li>
-              <li><Link to="/marque/nautique" className="hover:text-brand-cyan transition-colors">Marques</Link></li>
-              <li aria-hidden className="text-white/25"><ChevronRight size={13} /></li>
-              <li><Link to="/marque/nautique" className="hover:text-brand-cyan transition-colors">Nautique</Link></li>
-              <li aria-hidden className="text-white/25"><ChevronRight size={13} /></li>
-              <li aria-current="page" className="text-white font-semibold">{model.short}</li>
+              <li aria-hidden className="text-white/20"><ChevronRight size={11} /></li>
+              <li><Link to="/marque/nautique" className="hover:text-gray-200 transition-colors">Marques</Link></li>
+              <li aria-hidden className="text-white/20"><ChevronRight size={11} /></li>
+              <li><Link to="/marque/nautique" className="hover:text-gray-200 transition-colors">Nautique</Link></li>
+              <li aria-hidden className="text-white/20"><ChevronRight size={11} /></li>
+              <li aria-current="page" className="text-gray-300">{model.short}</li>
             </ol>
           </nav>
 
