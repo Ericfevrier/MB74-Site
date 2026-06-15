@@ -313,18 +313,7 @@ export function ModelPage() {
               </p>
             </div>
           </div>
-          <div className="relative">
-            <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl" />
-            <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 shadow-2xl">
-              <img
-                src={model.gallery[1] || model.hero}
-                alt={`${fullName} — design et finitions`}
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover aspect-[4/5]"
-              />
-            </div>
-          </div>
+          <PresentationSlider images={model.gallery.length ? model.gallery : [model.hero]} alt={`${fullName} — design et finitions`} />
         </div>
       </section>
 
@@ -775,6 +764,58 @@ export function ModelPage() {
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
+
+function PresentationSlider({ images, alt }: { images: string[]; alt: string }) {
+  const slides = images.filter(Boolean);
+  const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (slides.length <= 1 || paused) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % slides.length), 4500);
+    return () => clearInterval(t);
+  }, [slides.length, paused]);
+
+  if (slides.length === 0) return null;
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl" />
+      <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 shadow-2xl aspect-[4/3]">
+        {slides.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt={`${alt} — vue ${i + 1}`}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            referrerPolicy="no-referrer"
+            aria-hidden={i !== idx}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${i === idx ? 'opacity-100' : 'opacity-0'}`}
+          />
+        ))}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-dark/30 to-transparent" />
+
+        {slides.length > 1 && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIdx(i)}
+                aria-label={`Afficher l’image ${i + 1}`}
+                aria-current={i === idx}
+                className={`h-2 rounded-full transition-all duration-300 ${i === idx ? 'w-7 bg-brand-cyan' : 'w-2 bg-white/50 hover:bg-white/80'}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
