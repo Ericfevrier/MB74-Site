@@ -16,7 +16,7 @@ interface ServiceContactBlockProps {
 
 const labelCls = 'block text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-1.5';
 const inputCls =
-  'w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-brand-dark placeholder:text-gray-400 focus:bg-white focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 outline-none transition';
+  'w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-dark placeholder:text-gray-400 focus:bg-white focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 outline-none transition';
 
 export function ServiceContactBlock({ subject, title, showMap, wide }: ServiceContactBlockProps) {
   const [loading, setLoading] = useState(false);
@@ -80,7 +80,7 @@ export function ServiceContactBlock({ subject, title, showMap, wide }: ServiceCo
         <div className="grid lg:grid-cols-5 gap-8 items-start">
           {/* Coordonnées */}
           <div className="lg:col-span-2">
-            <div className="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm">
+            <div className="bg-white border border-gray-200/80 rounded-3xl p-7 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]">
               <ul className="divide-y divide-gray-100">
                 {infoRows.map((r) => {
                   const Inner = (
@@ -108,14 +108,14 @@ export function ServiceContactBlock({ subject, title, showMap, wide }: ServiceCo
             </div>
 
             {showMap && (
-              <div className={`mt-6 ${wide ? 'h-72' : 'h-60'} rounded-3xl overflow-hidden border border-gray-200 shadow-sm`}>
-                <GoogleMapCustom />
+              <div className={`mt-6 ${wide ? 'h-72' : 'h-60'} rounded-3xl overflow-hidden border border-gray-200/80 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]`}>
+                <GoogleMapCustom light />
               </div>
             )}
           </div>
 
           {/* Formulaire */}
-          <div className="lg:col-span-3 bg-white border border-gray-200 rounded-3xl p-6 lg:p-8 shadow-sm">
+          <div className="lg:col-span-3 bg-white border border-gray-200/80 rounded-3xl p-6 lg:p-8 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]">
             {done ? (
               <div className="flex flex-col items-center text-center gap-3 py-12">
                 <CheckCircle2 size={48} className="text-brand-cyan" />
@@ -154,7 +154,7 @@ export function ServiceContactBlock({ subject, title, showMap, wide }: ServiceCo
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm py-3.5 rounded-lg hover:bg-brand-dark hover:text-white transition disabled:opacity-60"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm py-4 rounded-xl hover:bg-brand-dark hover:text-white transition disabled:opacity-60"
                 >
                   {loading ? 'Envoi…' : 'Envoyer'}
                   {!loading && <Send size={15} />}
