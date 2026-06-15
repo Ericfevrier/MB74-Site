@@ -690,11 +690,11 @@ export function ModelPage() {
       {/* ===================== FAQ ===================== */}
       {model.faqs.length > 0 && (
         <section id="faq" className={`py-24 bg-ink-950 ${sectionPad}`}>
-          <div className="max-w-4xl mx-auto px-6">
+          <div className="max-w-6xl mx-auto px-4 lg:px-8">
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white text-center mb-14">
               On répond à vos <span className="text-brand-cyan">questions</span>
             </h2>
-            <div className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-4 items-start">
               {model.faqs.map((faq, idx) => (
                 <div key={idx} className="bg-ink-900 rounded-2xl overflow-hidden border border-white/10">
                   <button
@@ -720,7 +720,7 @@ export function ModelPage() {
       )}
 
       {/* ===================== PRIX & CONTACT ===================== */}
-      <ServiceContactBlock subject={`${fullName} ${model.year}`} showMap />
+      <ServiceContactBlock subject={`${fullName} ${model.year}`} showMap wide />
 
       {/* ===================== AUTRES MODÈLES (maillage latéral) ===================== */}
       <section className="bg-ink-950 py-24 border-t border-white/10">
