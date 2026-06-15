@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ChevronDown, ArrowRight, Phone, Home, Ruler, Users, Gauge, Check, X,
-  ChevronLeft, ChevronRight, Play, Sparkles, Fuel, Settings2, Anchor, ShieldCheck,
+  ChevronLeft, ChevronRight, Play, Sparkles, Fuel, Settings2,
 } from 'lucide-react';
 import { getModel, MODEL_ORDER, nautiqueModels } from '../data/nautiqueModels';
 import { usedBoatsForModel } from '../data/usedBoats';
@@ -200,7 +200,7 @@ export function ModelPage() {
         {/* Badge concessionnaire officiel — haut droite (style home) */}
         <div className="absolute top-8 right-4 md:right-8 hidden lg:flex z-20">
           <div className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 flex items-center gap-3 shadow-2xl">
-            <span className="text-white text-[13px] font-bold tracking-[0.12em] uppercase">Concessionnaire<br />officiel</span>
+            <span className="text-white text-[13px] font-bold tracking-[0.12em] uppercase whitespace-nowrap">Concessionnaire officiel</span>
             <div className="flex items-center border-l border-white/20 pl-3">
               <img
                 src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png"
@@ -252,31 +252,15 @@ export function ModelPage() {
           </div>
         </div>
 
-        {/* Barre de confiance */}
-        <div className="relative border-t border-white/10 bg-brand-dark/80 backdrop-blur-sm">
-          <div className="max-w-[1400px] mx-auto px-4 lg:px-8 py-5 grid grid-cols-2 md:grid-cols-4 gap-y-4 text-center md:text-left">
-            {[
-              { Icon: ShieldCheck, t: 'Concessionnaire officiel Nautique' },
-              { Icon: Anchor, t: "Showroom Lac d'Annecy" },
-              { Icon: Play, t: 'Essai sur l’eau' },
-              { Icon: Check, t: 'Reprise & financement' },
-            ].map(({ Icon, t }, i) => (
-              <div key={i} className="flex items-center justify-center md:justify-start gap-2.5 text-xs font-semibold text-gray-300">
-                <Icon size={16} className="text-brand-cyan flex-shrink-0" />
-                <span>{t}</span>
-              </div>
-            ))}
-          </div>
-        </div>
       </header>
 
       {/* ===================== MENU D'ANCRAGE STICKY ===================== */}
-      <nav aria-label="Sommaire de la page" className="sticky top-[120px] z-40 bg-ink-950/95 backdrop-blur-md border-y border-white/10">
+      <nav aria-label="Sommaire de la page" className="sticky top-[120px] z-40 bg-brand-dark/70 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-[1400px] mx-auto px-2 lg:px-8">
-          <ul className="flex gap-1 overflow-x-auto hide-scrollbar py-2 text-[12px] font-bold uppercase tracking-widest">
+          <ul className="flex justify-start md:justify-center gap-1 overflow-x-auto hide-scrollbar py-2.5 text-[11px] font-bold uppercase tracking-[0.15em]">
             {anchors.map((a) => (
               <li key={a.id} className="flex-shrink-0">
-                <a href={`#${a.id}`} className="block px-4 py-2 rounded-lg text-gray-400 hover:text-brand-cyan hover:bg-white/5 transition-colors">
+                <a href={`#${a.id}`} className="block px-4 py-2 rounded-full text-gray-400 hover:text-brand-cyan hover:bg-white/[0.07] transition-colors">
                   {a.label}
                 </a>
               </li>
