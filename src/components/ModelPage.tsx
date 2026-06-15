@@ -257,7 +257,7 @@ export function ModelPage() {
       {/* ===================== MENU D'ANCRAGE STICKY ===================== */}
       <nav aria-label="Sommaire de la page" className="sticky top-[120px] z-40 bg-brand-dark/70 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-[1400px] mx-auto px-2 lg:px-8">
-          <ul className="flex justify-start md:justify-center gap-1 overflow-x-auto hide-scrollbar py-2.5 text-[11px] font-bold uppercase tracking-[0.15em]">
+          <ul className="flex justify-start md:justify-center gap-1 overflow-x-auto hide-scrollbar py-2.5 text-[13px] font-bold uppercase tracking-[0.15em]">
             {anchors.map((a) => (
               <li key={a.id} className="flex-shrink-0">
                 <a href={`#${a.id}`} className="block px-4 py-2 rounded-full text-gray-400 hover:text-brand-cyan hover:bg-white/[0.07] transition-colors">
