@@ -84,7 +84,7 @@ export function ServiceContactBlock({ subject, title, showMap, wide }: ServiceCo
               <ul className="divide-y divide-gray-100">
                 {infoRows.map((r) => {
                   const Inner = (
-                    <span className="flex items-center gap-4 py-4 first:pt-0 last:pb-0 group">
+                    <span className="flex items-center gap-4 py-6 first:pt-0 last:pb-0 group">
                       <span className="w-10 h-10 rounded-full bg-brand-cyan/10 text-brand-cyan flex items-center justify-center flex-shrink-0 transition group-hover:bg-brand-cyan group-hover:text-brand-dark">
                         <r.icon size={17} />
                       </span>
