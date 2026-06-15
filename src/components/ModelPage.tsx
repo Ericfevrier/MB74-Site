@@ -23,9 +23,10 @@ export function ModelPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [openOpt, setOpenOpt] = useState<number | null>(0);
+  const [activeAnchor, setActiveAnchor] = useState<string>('');
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
   }, [brandId, modelId]);
 
   const closeLb = useCallback(() => setLightbox(null), []);
@@ -43,6 +44,25 @@ export function ModelPage() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [lightbox, closeLb, stepLb]);
+
+  // Scrollspy : met en avant l'onglet de la section visible
+  useEffect(() => {
+    if (!model) return;
+    const els = Array.from(document.querySelectorAll<HTMLElement>('section[id]')).filter((el) => el.id);
+    if (els.length === 0) return;
+    const order = els.map((el) => el.id);
+    const visible = new Map<string, boolean>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) visible.set((e.target as HTMLElement).id, e.isIntersecting);
+        const current = order.find((id) => visible.get(id));
+        if (current) setActiveAnchor(current);
+      },
+      { rootMargin: '-180px 0px -65% 0px', threshold: 0 },
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [model, modelId]);
 
   if (!model) {
     if (brandId && brandId.toLowerCase() !== 'nautique') {
@@ -260,7 +280,15 @@ export function ModelPage() {
           <ul className="flex justify-start md:justify-center gap-1 overflow-x-auto hide-scrollbar py-2.5 text-[13px] font-bold uppercase tracking-[0.15em]">
             {anchors.map((a) => (
               <li key={a.id} className="flex-shrink-0">
-                <a href={`#${a.id}`} className="block px-4 py-2 rounded-full text-gray-400 hover:text-brand-cyan hover:bg-white/[0.07] transition-colors">
+                <a
+                  href={`#${a.id}`}
+                  aria-current={activeAnchor === a.id ? 'true' : undefined}
+                  className={`block px-4 py-2 rounded-full transition-colors ${
+                    activeAnchor === a.id
+                      ? 'text-brand-cyan bg-brand-cyan/10'
+                      : 'text-gray-400 hover:text-brand-cyan hover:bg-white/[0.07]'
+                  }`}
+                >
                   {a.label}
                 </a>
               </li>
