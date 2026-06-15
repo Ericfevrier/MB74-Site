@@ -196,15 +196,19 @@ export function ModelPage() {
           <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-brand-dark/70 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/35 via-transparent to-transparent" />
         </div>
-        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 min-h-[86vh] flex flex-col">
-          <nav aria-label="Fil d’ariane" className="flex flex-wrap items-center gap-2 text-[12px] text-gray-200 pt-8 [text-shadow:0_1px_10px_rgba(0,0,0,.6)]">
-            <Link to="/" className="hover:text-brand-cyan flex items-center gap-1"><Home size={13} /> Accueil</Link>
-            <span className="opacity-40">/</span>
-            <Link to="/marque/nautique" className="hover:text-brand-cyan">Marques</Link>
-            <span className="opacity-40">/</span>
-            <Link to="/marque/nautique" className="hover:text-brand-cyan">Nautique</Link>
-            <span className="opacity-40">/</span>
-            <span className="text-white font-semibold">{model.short}</span>
+        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 min-h-[68vh] flex flex-col">
+          <nav aria-label="Fil d’ariane" className="pt-8">
+            <ol className="inline-flex flex-wrap items-center gap-1 rounded-full border border-white/15 bg-brand-dark/40 backdrop-blur-md px-4 py-2 text-[12px] font-medium text-gray-300 shadow-lg shadow-black/30">
+              <li>
+                <Link to="/" className="inline-flex items-center gap-1.5 hover:text-brand-cyan transition-colors"><Home size={13} /> Accueil</Link>
+              </li>
+              <li aria-hidden className="text-white/25"><ChevronRight size={13} /></li>
+              <li><Link to="/marque/nautique" className="hover:text-brand-cyan transition-colors">Marques</Link></li>
+              <li aria-hidden className="text-white/25"><ChevronRight size={13} /></li>
+              <li><Link to="/marque/nautique" className="hover:text-brand-cyan transition-colors">Nautique</Link></li>
+              <li aria-hidden className="text-white/25"><ChevronRight size={13} /></li>
+              <li aria-current="page" className="text-white font-semibold">{model.short}</li>
+            </ol>
           </nav>
 
           <div className="flex-1" />
@@ -214,7 +218,7 @@ export function ModelPage() {
               <span className="w-8 h-1 bg-brand-cyan rounded-full" />
               <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{model.gamme} · Millésime {model.year}</span>
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight leading-[1.03] text-white mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[1.05] text-white mb-6">
               {fullName}
             </h1>
             <p className="text-gray-100 text-lg leading-relaxed max-w-2xl mb-9">{model.tagline || model.intro[0]}</p>
@@ -721,10 +725,6 @@ export function ModelPage() {
           Demander le prix <ArrowRight size={15} />
         </a>
       </div>
-      {/* Desktop : bouton flottant */}
-      <a href="#contact" className="hidden lg:inline-flex fixed bottom-6 right-6 z-50 items-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-7 py-4 rounded-2xl shadow-2xl shadow-brand-cyan/30 hover:bg-white hover:-translate-y-0.5 transition">
-        Demander le prix <ArrowRight size={16} />
-      </a>
 
       {/* ===================== LIGHTBOX ===================== */}
       <AnimatePresence>
