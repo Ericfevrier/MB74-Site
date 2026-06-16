@@ -905,6 +905,99 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "Le G25 2026 affiche une coque facettée et une proue anguleuse emblématique. Les feux d’accostage LED garantissent visibilité et sécurité, tandis que les sièges lounge avant avec rangement et enceintes JL Audio offrent confort et fonctionnalité. Le coussin de remplissage de proue facilite la circulation de l’avant vers l’arrière."
       }
     ],
+    "tagline": "Le wakeboat haut de gamme de la gamme G : vagues de wakesurf et wakeboard configurables et capacité de 19 personnes — à essayer sur le Lac d’Annecy.",
+    "editions": [
+      {
+        "name": "Édition côtière (Coastal)",
+        "desc": "Système de liaison avec anodes sacrificielles, ressorts à gaz inoxydables et composants structurels en aluminium anodisé — pensée pour un usage prolongé en eau salée (motorisation côtière requise)."
+      }
+    ],
+    "motorizations": [
+      {
+        "name": "PCM ZZ6",
+        "fuel": "Essence",
+        "power": "450 ch",
+        "torque": "465 pi-lb",
+        "ratio": "2.0:1"
+      },
+      {
+        "name": "PCM ZZ8S",
+        "fuel": "Essence",
+        "power": "630 ch",
+        "torque": "665 pi-lb",
+        "ratio": "1.7:1"
+      },
+      {
+        "name": "Yanmar 8LV",
+        "fuel": "Diesel",
+        "power": "370 ch",
+        "torque": "595 pi-lb",
+        "ratio": "1.7:1"
+      }
+    ],
+    "features": [
+      "Nautique Surf System avec WAVEPLATE & Surf Pipe",
+      "Hydro-Plate — surface de course configurable",
+      "Régulateur de vitesse GPS (Zero Off)",
+      "Ballast intégré 2 400 lb (~1 089 kg)",
+      "Système audio JL Audio M6 Elite (ampli 8 canaux, caisson 10″)",
+      "Siège arrière coulissant réversible",
+      "Plateforme MyNautique™ & passage arrière",
+      "Centre de commande Helm avec chargeur sans fil",
+      "Tour de contrôle avec caméra de surveillance",
+      "Racks wakeboard/wakesurf rotatifs",
+      "Batteries AGM & rinçage eau douce moteur",
+      "Glacière, crampons et finitions premium"
+    ],
+    "options": [
+      {
+        "title": "Tour & protection solaire",
+        "items": [
+          "Tour de contrôle à commande de vol motorisée",
+          "Racks strapless Nautique",
+          "Pare-soleils extensibles avant/arrière",
+          "Bimini trois parties avec poches surf"
+        ]
+      },
+      {
+        "title": "Technologie",
+        "items": [
+          "LINC Panoray mode rivière",
+          "Assistance de direction intégrée Nautique",
+          "Surf Select avec Surf Switch",
+          "Chargeurs magnétiques sans fil"
+        ]
+      },
+      {
+        "title": "Intérieures",
+        "items": [
+          "Pack éclairage de courtoisie personnalisé",
+          "Sièges chauffants conducteur / causeuse",
+          "Siège de barre motorisé ajustable",
+          "Table escamotable",
+          "Volant cuir à branches tandem",
+          "Coussins de remplissage proue / bain de soleil"
+        ]
+      },
+      {
+        "title": "Extérieures",
+        "items": [
+          "Échelle d’accès plateforme",
+          "Lumières sous-marines",
+          "Phender Pro (6 pare-battages)"
+        ]
+      },
+      {
+        "title": "Supplémentaires",
+        "items": [
+          "Ballast additionnel 1 200 lb",
+          "Système de gonflage (pompe à air)",
+          "Pack conformité européenne",
+          "Chauffage / dégivreur",
+          "Système de maintenance batterie"
+        ]
+      }
+    ],
     "faqs": [
       {
         "q": "Quel est le prix du Super Air Nautique G25 ?",
