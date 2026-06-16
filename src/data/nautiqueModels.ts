@@ -1092,7 +1092,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "/images/nautique/g25-paragon-2.jpg",
       "/images/nautique/g25-paragon-3.jpg",
       "/images/nautique/g25-paragon-4.jpg",
-      "/images/nautique/g25-paragon-5.jpg"
+      "/images/nautique/g25-paragon-5.jpg",
+      "/images/nautique/super-air-nautique-g25-2.jpg",
+      "/images/nautique/super-air-nautique-g25-3.jpg",
+      "/images/nautique/super-air-nautique-g25-4.jpg"
     ],
     "specs": [
       {
