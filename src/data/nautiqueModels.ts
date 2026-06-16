@@ -906,6 +906,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       }
     ],
     "tagline": "Le wakeboat haut de gamme de la gamme G : vagues de wakesurf et wakeboard configurables et capacité de 19 personnes — à essayer sur le Lac d’Annecy.",
+    "videoId": "tzJuDxNIu74",
     "editions": [
       {
         "name": "Édition côtière (Coastal)",
@@ -1118,6 +1119,80 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "title": "COQUE ET PROUE",
         "text": "L’avant du G23 Paragon est un espace à la fois confortable et pratique, pensé pour accueillir jusqu’à quatre personnes avec rangements et porte-gobelets intégrés. L’éclairage LED à la proue assure une visibilité optimale et un style unique, de jour comme de nuit. Les badges lumineux ajoutent une touche élégante pour sublimer le bateau dans l’obscurité."
+      }
+    ],
+    "tagline": "Le wakeboat haut de gamme de la série Paragon en format G23 : luxe, performance et vagues de niveau pro — à essayer sur le Lac d’Annecy.",
+    "videoId": "2xUfVxRMkhg",
+    "editions": [
+      {
+        "name": "Édition Centennial",
+        "desc": "Célébrant le centenaire de Nautique : logo centenaire gravé sur le volant et teinte exclusive « Centennial Black Metal Flake », un noir onyx profond rehaussé de paillettes dorées."
+      },
+      {
+        "name": "Édition côtière (Coastal)",
+        "desc": "Anodes sacrificielles et composants en aluminium anodisé — pensée pour un usage prolongé en eau salée (motorisation côtière requise)."
+      }
+    ],
+    "motorizations": [
+      {
+        "name": "PCM ZZ8S",
+        "fuel": "Essence",
+        "power": "630 ch",
+        "torque": "665 pi-lb",
+        "ratio": "1.7:1"
+      },
+      {
+        "name": "Yanmar 8LV",
+        "fuel": "Diesel",
+        "power": "370 ch",
+        "torque": "595 pi-lb",
+        "ratio": "1.7:1"
+      }
+    ],
+    "features": [
+      "Nautique Surf System™ avec WAVEPLATE",
+      "Ballast intégré 2 500 lb",
+      "Écrans tactiles LINC Panoray 15″ (doubles)",
+      "Système audio JL Audio M6 Studio Elite avec caissons",
+      "Assistance de direction intégrée",
+      "Éclairage LED complet (amarrage, courtoisie, sous-marin)",
+      "Siège de barre motorisé ajustable",
+      "Tour de contrôle télescopique Paragon",
+      "Caméra Nautique Awareness",
+      "Système de rinçage eau douce moteur"
+    ],
+    "options": [
+      {
+        "title": "Tour & protection solaire",
+        "items": [
+          "Racks strapless Nautique",
+          "Pare-soleils extensibles avant/arrière"
+        ]
+      },
+      {
+        "title": "Technologie",
+        "items": [
+          "LINC Panoray mode rivière",
+          "Surf Select avec Surf Switch"
+        ]
+      },
+      {
+        "title": "Intérieures",
+        "items": [
+          "Sièges chauffants conducteur / causeuse",
+          "Coussins de remplissage et oreillers",
+          "Table escamotable"
+        ]
+      },
+      {
+        "title": "Supplémentaires",
+        "items": [
+          "Pack conformité européenne (CE)",
+          "Support GoPro",
+          "Chauffage / dégivreur",
+          "Système de gonflage (pompe à air)",
+          "Ballast additionnel 1 200 lb"
+        ]
       }
     ],
     "faqs": [
@@ -1554,6 +1629,71 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "Grâce au Nautique Surf System, le G23 produit des vagues et sillages parfaitement calibrés, ajustables au niveau de chaque rider, du débutant au compétiteur."
       }
     ],
+    "tagline": "Le wakeboat le plus demandé du marché depuis plus de dix ans : vagues de wakesurf et wakeboard configurables — à essayer sur le Lac d’Annecy.",
+    "videoId": "dGoK39wEppM",
+    "editions": [
+      {
+        "name": "Édition côtière (Coastal)",
+        "desc": "Anodes sacrificielles et composants en aluminium anodisé pour un usage prolongé en eau salée. Gamme moteur de 355 à 630 ch (essence ou diesel)."
+      }
+    ],
+    "motorizations": [
+      {
+        "name": "PCM ZZ6",
+        "fuel": "Essence",
+        "power": "450 ch",
+        "torque": "465 pi-lb",
+        "ratio": "2.0:1"
+      },
+      {
+        "name": "PCM ZZ8S",
+        "fuel": "Essence",
+        "power": "630 ch",
+        "torque": "665 pi-lb",
+        "ratio": "1.7:1"
+      },
+      {
+        "name": "Yanmar 8LV",
+        "fuel": "Diesel",
+        "power": "370 ch",
+        "torque": "595 pi-lb",
+        "ratio": "1.7:1"
+      }
+    ],
+    "features": [
+      "Nautique Surf System™ avec WAVEPLATE & Surf Pipe",
+      "Ballast à remplissage rapide",
+      "Siège de poupe réversible",
+      "Intégration MyNautique™",
+      "Pare-brise sans cadre de style automobile",
+      "Siège de barre de série",
+      "Régulateur de vitesse GPS",
+      "Système de rinçage eau douce moteur"
+    ],
+    "options": [
+      {
+        "title": "Tour & racks",
+        "items": [
+          "Tour de contrôle de vol (manuelle, actionnée ou télescopique)",
+          "Racks à planches sans sangle + kit de conversion foils"
+        ]
+      },
+      {
+        "title": "Technologie",
+        "items": [
+          "Assistance de direction intégrée Nautique",
+          "Système audio JL Audio Studio Elite",
+          "Pompe à air intégrée (nouveauté 2026)"
+        ]
+      },
+      {
+        "title": "Confort & éclairage",
+        "items": [
+          "Éclairage de courtoisie amélioré",
+          "Phares de quai LED ultra-brillants"
+        ]
+      }
+    ],
     "faqs": [
       {
         "q": "Quel est le prix du Super Air Nautique G23 ?",
@@ -1632,6 +1772,71 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "title": "ADN SÉRIE G",
         "text": "Esthétique moderne, intérieur iconique et équipements premium : le G21 condense tout l'ADN de la Série G dans un format de 21 pieds plus compact et maniable."
+      }
+    ],
+    "tagline": "Le 21 pieds le plus innovant du marché : la meilleure coque de l’industrie, des vagues de niveau pro et un format maniable — à essayer sur le Lac d’Annecy.",
+    "videoId": "XY0f_ujSPSc",
+    "editions": [
+      {
+        "name": "Édition côtière (Coastal)",
+        "desc": "Anodes sacrificielles et composants en aluminium anodisé pour un usage prolongé en eau salée. Gamme moteur de 355 à 630 ch (essence ou diesel)."
+      }
+    ],
+    "motorizations": [
+      {
+        "name": "PCM ZZ6",
+        "fuel": "Essence",
+        "power": "450 ch",
+        "torque": "465 pi-lb",
+        "ratio": "2.0:1"
+      },
+      {
+        "name": "PCM ZZ8S",
+        "fuel": "Essence",
+        "power": "630 ch",
+        "torque": "665 pi-lb",
+        "ratio": "1.7:1"
+      },
+      {
+        "name": "Yanmar 8LV",
+        "fuel": "Diesel",
+        "power": "370 ch",
+        "torque": "595 pi-lb",
+        "ratio": "1.7:1"
+      }
+    ],
+    "features": [
+      "Nautique Surf System™ avec Surf Pipe",
+      "Nautique Configurable Running Surface (NCRS)",
+      "Ballast à remplissage rapide (Fast Fill)",
+      "Siège de poupe réversible",
+      "Pare-brise sans cadre",
+      "Système audio JL Audio M6 Elite (6 HP + caisson)",
+      "Écran tactile LINC Panoray 15″",
+      "Intégration MyNautique™ & recharge sans fil",
+      "Caméra Awareness"
+    ],
+    "options": [
+      {
+        "title": "Tour & direction",
+        "items": [
+          "Tour de contrôle de vol actionnée ou télescopique",
+          "Assistance de direction intégrée Nautique (thruster)"
+        ]
+      },
+      {
+        "title": "Confort & barre",
+        "items": [
+          "Siège de barre motorisé",
+          "Pare-soleils extensibles",
+          "Volant cuir à branches tandem"
+        ]
+      },
+      {
+        "title": "Supplémentaires",
+        "items": [
+          "Pompe à air intégrée (nouveauté 2026)"
+        ]
       }
     ],
     "faqs": [

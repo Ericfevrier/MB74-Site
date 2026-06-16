@@ -79,6 +79,9 @@ export function ModelPage() {
   }
 
   const fullName = model.fullName || model.name;
+  const isParagon = model.slug.includes('paragon') || model.gamme.toLowerCase().includes('paragon');
+  // H1 : "Nautique G25 Paragon" pour les Paragon, nom complet ("Super Air Nautique G25") sinon.
+  const heroTitle = isParagon ? `Nautique ${model.short}` : model.name;
   const canonical = `${SITE.url}/nautique/${model.slug}/`;
   const heroAbs = `${SITE.url}${model.hero}`;
   const others = MODEL_ORDER.filter((s) => s !== model.slug).map((s) => nautiqueModels[s]);
@@ -255,7 +258,7 @@ export function ModelPage() {
               <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{model.gamme} · Millésime {model.year}</span>
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[1.05] text-white mb-6">
-              {model.short}
+              {heroTitle}
             </h1>
             <p className="text-gray-100 text-lg leading-relaxed max-w-2xl mb-9">{model.tagline || model.intro[0]}</p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-4">
