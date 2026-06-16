@@ -306,7 +306,7 @@ export function ModelPage() {
           <div>
             <SectionEyebrow label="Le bateau" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-8 leading-tight">
-              {model.short} — <span className="text-brand-cyan">l’expérience Nautique</span>
+              {model.name} — <span className="text-brand-cyan">l’expérience Nautique</span>
             </h2>
             <div className="space-y-5 text-gray-300 text-lg leading-relaxed">
               {model.intro.map((p, i) => <p key={i}>{p}</p>)}
@@ -373,7 +373,7 @@ export function ModelPage() {
         <section id="points-forts" className={`py-20 bg-brand-dark ${sectionPad}`}>
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="Conçu pour rider" />
-            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-14">Les points forts du {model.short}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-14">Les points forts du {model.name}</h2>
             <div className="space-y-14">
               {model.highlights.map((h, i) => {
                 const img = model.gallery[(i + 1) % model.gallery.length];
@@ -409,7 +409,7 @@ export function ModelPage() {
       <section id="video" className={`py-20 bg-ink-950 ${sectionPad}`}>
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <SectionEyebrow label="En mouvement" />
-          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-10">Le {model.short} en vidéo</h2>
+          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-10">Le {model.name} en vidéo</h2>
           {model.videoId ? (
             <div className="relative w-full rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl aspect-video bg-black">
               <iframe
@@ -474,7 +474,7 @@ export function ModelPage() {
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="Historique" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-5 leading-tight">
-              {model.short} : <span className="text-brand-cyan">évolution par millésime</span>
+              {model.name} : <span className="text-brand-cyan">évolution par millésime</span>
             </h2>
             <p className="text-gray-300 text-lg leading-relaxed max-w-3xl mb-10">
               Le {model.short} a évolué depuis son lancement. Voici ce qui change d’une année à l’autre — utile pour situer et comparer un {model.short} d’occasion avant l’achat.
@@ -639,7 +639,7 @@ export function ModelPage() {
           <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
             <div>
               <SectionEyebrow label="Alternative" />
-              <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white">{model.short} d’occasion</h2>
+              <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white">{model.name} d’occasion</h2>
             </div>
             <Link to="/bateaux-occasion" className="inline-flex items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
               Toutes nos occasions Nautique <ArrowRight size={14} />
