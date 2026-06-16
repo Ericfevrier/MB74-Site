@@ -323,19 +323,44 @@ export function ModelPage() {
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="En images" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-10">Galerie</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {model.gallery.map((src, i) => (
-                <button
-                  key={i}
-                  onClick={() => setLightbox(i)}
-                  className={`group relative overflow-hidden rounded-3xl border border-white/10 ${i === 0 ? 'sm:col-span-2 lg:col-span-2 lg:row-span-2' : ''}`}
-                  aria-label={`Agrandir la photo ${i + 1} du ${fullName}`}
-                >
-                  <img src={src} alt={`${fullName} — photo ${i + 1}`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-700" />
-                  <span className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/20 transition-colors" />
-                </button>
-              ))}
-            </div>
+            {(() => {
+              const MAX = 5;
+              const visible = model.gallery.slice(0, MAX);
+              const extra = model.gallery.length - visible.length;
+              const mosaic = model.gallery.length >= MAX;
+              return (
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                  {visible.map((src, i) => {
+                    const isFirst = i === 0 && mosaic;
+                    const isLast = i === visible.length - 1;
+                    const showMore = isLast && extra > 0;
+                    return (
+                      <button
+                        key={i}
+                        onClick={() => setLightbox(i)}
+                        className={`group relative overflow-hidden rounded-3xl border border-white/10 ${isFirst ? 'row-span-2' : ''}`}
+                        aria-label={showMore ? `Voir les ${extra} photos supplémentaires du ${fullName}` : `Agrandir la photo ${i + 1} du ${fullName}`}
+                      >
+                        <img
+                          src={src}
+                          alt={`${fullName} — photo ${i + 1}`}
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          className={`w-full object-cover group-hover:scale-105 transition-transform duration-700 ${isFirst ? 'h-full' : 'aspect-[4/3]'}`}
+                        />
+                        <span className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/20 transition-colors" />
+                        {showMore && (
+                          <span className="absolute inset-0 flex flex-col items-center justify-center gap-0.5 bg-brand-dark/70 backdrop-blur-[2px] text-white group-hover:bg-brand-dark/60 transition-colors">
+                            <span className="text-4xl font-bold leading-none">+{extra}</span>
+                            <span className="text-[11px] font-bold uppercase tracking-widest text-gray-200">photos</span>
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              );
+            })()}
           </div>
         </section>
       )}
