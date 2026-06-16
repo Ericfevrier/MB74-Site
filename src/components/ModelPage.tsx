@@ -81,7 +81,7 @@ export function ModelPage() {
   const fullName = model.fullName || model.name;
   const canonical = `${SITE.url}/nautique/${model.slug}/`;
   const heroAbs = `${SITE.url}${model.hero}`;
-  const others = MODEL_ORDER.filter((s) => s !== model.slug).map((s) => nautiqueModels[s]).slice(0, 4);
+  const others = MODEL_ORDER.filter((s) => s !== model.slug).map((s) => nautiqueModels[s]);
   const hasEquip = Boolean(model.editions || model.motorizations || model.features || model.options);
   const occasions = usedBoatsForModel(model.slug);
   const milestones = (model.milestones ?? []).slice().sort((a, b) => Number(b.year) - Number(a.year));
@@ -558,30 +558,23 @@ export function ModelPage() {
 
             {model.motorizations && (
               <div className="mb-12">
-                <h3 className="font-bold text-xl uppercase tracking-tight text-white mb-5 flex items-center gap-2"><Fuel size={18} className="text-brand-cyan" /> Motorisations</h3>
-                <div className="overflow-x-auto rounded-3xl border border-white/10">
-                  <table className="w-full text-left text-sm">
-                    <thead className="bg-ink-900 text-brand-cyan uppercase tracking-widest text-[11px]">
-                      <tr>
-                        <th className="py-4 px-6">Moteur</th>
-                        <th className="py-4 px-6">Carburant</th>
-                        <th className="py-4 px-6">Puissance</th>
-                        <th className="py-4 px-6">Couple</th>
-                        <th className="py-4 px-6">Réduction</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5">
-                      {model.motorizations.map((m, i) => (
-                        <tr key={i} className="text-gray-300">
-                          <td className="py-4 px-6 font-bold text-white">{m.name}</td>
-                          <td className="py-4 px-6">{m.fuel}</td>
-                          <td className="py-4 px-6">{m.power}</td>
-                          <td className="py-4 px-6">{m.torque}</td>
-                          <td className="py-4 px-6">{m.ratio}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <h3 className="font-bold text-xl uppercase tracking-tight text-white mb-5 flex items-center gap-2"><Fuel size={18} className="text-brand-cyan" /> Moteurs disponibles</h3>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  {model.motorizations.map((m, i) => (
+                    <div key={i} className="bg-ink-900 border border-white/10 rounded-3xl p-6">
+                      <h4 className="font-bold text-lg uppercase tracking-tight text-white mb-4">{m.name}</h4>
+                      <dl className="space-y-2.5">
+                        {([['Carburant', m.fuel], ['Puissance', m.power], ['Couple', m.torque], ['Réduction', m.ratio]] as const).map(([label, value]) =>
+                          value ? (
+                            <div key={label} className="flex justify-between gap-4 border-b border-white/5 pb-2 last:border-0">
+                              <dt className="text-gray-400 text-sm">{label}</dt>
+                              <dd className="text-white font-semibold text-sm text-right">{value}</dd>
+                            </div>
+                          ) : null,
+                        )}
+                      </dl>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

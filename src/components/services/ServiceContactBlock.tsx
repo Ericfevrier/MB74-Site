@@ -80,6 +80,7 @@ export function ServiceContactBlock({ subject, title, showMap, wide }: ServiceCo
         <div className="grid lg:grid-cols-5 gap-8 items-start">
           {/* Coordonnées */}
           <div className="lg:col-span-2">
+            <h3 className="text-lg font-bold uppercase tracking-tight text-brand-dark mb-4">Informations de contact</h3>
             <div className="bg-white border border-gray-200/80 rounded-3xl p-7 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]">
               <ul className="divide-y divide-gray-100">
                 {infoRows.map((r) => {
@@ -115,7 +116,9 @@ export function ServiceContactBlock({ subject, title, showMap, wide }: ServiceCo
           </div>
 
           {/* Formulaire */}
-          <div className="lg:col-span-3 bg-white border border-gray-200/80 rounded-3xl p-6 lg:p-8 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]">
+          <div className="lg:col-span-3">
+            <h3 className="text-lg font-bold uppercase tracking-tight text-brand-dark mb-4">Demande d'informations</h3>
+            <div className="bg-white border border-gray-200/80 rounded-3xl p-6 lg:p-8 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]">
             {done ? (
               <div className="flex flex-col items-center text-center gap-3 py-12">
                 <CheckCircle2 size={48} className="text-brand-cyan" />
@@ -164,6 +167,7 @@ export function ServiceContactBlock({ subject, title, showMap, wide }: ServiceCo
                 </p>
               </form>
             )}
+            </div>
           </div>
         </div>
       </div>
