@@ -171,6 +171,77 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "À la proue du Super Air Nautique S21, le design allie performance et praticité. Le réseau lumineux d’amarrage à LED assure visibilité et style, tandis que la coque inspirée de modèles primés optimise le sillage et les vagues pour le wakeboard. La proue spacieuse offre des sièges confortables avec porte-gobelets, rangements intégrés et options son JL Audio ou coussin de proue pour se détendre. Une poubelle amovible dans la zone de passage avant facilite le maintien de l’espace propre à bord."
       }
     ],
+    "tagline": "La proue traditionnelle Nautique en 21 pieds, maniable et performante : des vagues calibrées pour toute la famille — à essayer sur le Lac d’Annecy.",
+    "videoId": "0bvzRjcWs8A",
+    "editions": [
+      {
+        "name": "Édition côtière (Coastal)",
+        "desc": "Anodes sacrificielles et composants en aluminium anodisé pour un usage prolongé en eau salée (motorisation côtière requise)."
+      }
+    ],
+    "motorizations": [
+      {
+        "name": "PCM ZZ5",
+        "fuel": "Essence",
+        "power": "355 ch",
+        "torque": "405 pi-lb",
+        "ratio": "2.0:1"
+      },
+      {
+        "name": "PCM ZZ6",
+        "fuel": "Essence",
+        "power": "450 ch",
+        "torque": "465 pi-lb",
+        "ratio": "1.7:1"
+      },
+      {
+        "name": "PCM ZZ8R",
+        "fuel": "Essence",
+        "power": "570 ch",
+        "torque": "600 pi-lb",
+        "ratio": "1.5:1"
+      },
+      {
+        "name": "Yanmar 8LV",
+        "fuel": "Diesel",
+        "power": "370 ch",
+        "torque": "595 pi-lb",
+        "ratio": "1.5:1"
+      }
+    ],
+    "features": [
+      "Plateforme de connectivité MyNautique™",
+      "Système audio JL Audio M3 Series Elite",
+      "Tour Flight Control rabattable",
+      "Écran tactile LINC Panoray 12,4″",
+      "Direction électrique",
+      "Caméra Awareness",
+      "Nautique Configurable Running Surface (NCRS)"
+    ],
+    "options": [
+      {
+        "title": "Tour & racks",
+        "items": [
+          "Tour Flight Control actionnée ou télescopique (haut-parleurs JL Audio)",
+          "Bimini avec poches surfboards",
+          "Rangements pour foils"
+        ]
+      },
+      {
+        "title": "Confort & direction",
+        "items": [
+          "Siège de poupe réversible",
+          "Aide à la direction Nautique",
+          "Télécommande stéréo au tableau arrière"
+        ]
+      },
+      {
+        "title": "Supplémentaires",
+        "items": [
+          "Système d’air comprimé intégré (nouveauté 2026)"
+        ]
+      }
+    ],
     "faqs": [
       {
         "q": "Quel est le prix du Super Air Nautique S21 ?",
@@ -292,6 +363,79 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "title": "COQUE ET PROUE",
         "text": "La proue du Super Air Nautique S23 allie confort et fonctionnalité. Les sièges avant offrent des rangements sous assise et des porte-gobelets intégrés, tandis que le coussin de proue et les enceintes JL Audio optionnelles créent un espace dédié à la détente. La coque, inspirée de designs primés, produit des sillages et des vagues optimisés pour le wakeboard et le wakesurf, avec une étrave marquée pour une allure distinctive. Le réseau de feux LED intégrés assure visibilité et sécurité lors des manœuvres, et la nouvelle poubelle amovible Bow Walk Through facilite le maintien de l’espace propre et organisé."
+      }
+    ],
+    "tagline": "L’innovation moderne et les lignes intemporelles d’une proue traditionnelle Nautique, en 23 pieds : performance pure — à essayer sur le Lac d’Annecy.",
+    "videoId": "yz29o3lYRFY",
+    "editions": [
+      {
+        "name": "Édition côtière (Coastal)",
+        "desc": "Anodes sacrificielles et composants en aluminium anodisé pour un usage prolongé en eau salée (motorisation côtière requise)."
+      }
+    ],
+    "motorizations": [
+      {
+        "name": "PCM ZZ5",
+        "fuel": "Essence",
+        "power": "355 ch",
+        "torque": "405 pi-lb",
+        "ratio": "2.0:1"
+      },
+      {
+        "name": "PCM ZZ6",
+        "fuel": "Essence",
+        "power": "450 ch",
+        "torque": "465 pi-lb",
+        "ratio": "2.0:1"
+      },
+      {
+        "name": "PCM ZZ8S",
+        "fuel": "Essence",
+        "power": "630 ch",
+        "torque": "665 pi-lb",
+        "ratio": "1.7:1"
+      },
+      {
+        "name": "Yanmar 8LV",
+        "fuel": "Diesel",
+        "power": "370 ch",
+        "torque": "595 pi-lb",
+        "ratio": "1.7:1"
+      }
+    ],
+    "features": [
+      "Tour Flight Control manuelle",
+      "Direction électrique",
+      "Écran tactile LINC Panoray",
+      "Système audio JL Audio M3 Series Premier",
+      "Siège de poupe réversible",
+      "Recharge sans fil au poste de pilotage",
+      "Miroir double position",
+      "Plateforme de bain"
+    ],
+    "options": [
+      {
+        "title": "Tour & racks",
+        "items": [
+          "Tour Flight Control articulée ou télescopique",
+          "Porte-planches + kit de conversion foils"
+        ]
+      },
+      {
+        "title": "Surf & ballast",
+        "items": [
+          "Nautique Surf System",
+          "Ballast additionnel sous plancher (1 100 lb)"
+        ]
+      },
+      {
+        "title": "Confort & audio",
+        "items": [
+          "Siège pilote articulé",
+          "Aide à la direction Nautique",
+          "Éclairage de courtoisie amélioré",
+          "Système audio JL Audio M3 Studio Elite"
+        ]
       }
     ],
     "faqs": [
@@ -417,6 +561,72 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "La proue du S25 allie style, confort et performance. Sa coque primée assure des sillages parfaits et des vagues idéales pour le wakeboard, tandis que les sièges avant spacieux et les rangements astucieux créent un espace convivial pour profiter de l’eau. Les feux d’accostage intégrés et la poubelle amovible ajoutent praticité et sécurité, pour que chaque sortie soit agréable et sans souci."
       }
     ],
+    "tagline": "Le wakeboat familial à proue traditionnelle de la série S en 25 pieds : performance, innovation et confort pour toute la famille — à essayer sur le Lac d’Annecy.",
+    "videoId": "kDoYNMB-vkc",
+    "editions": [
+      {
+        "name": "Édition côtière (Coastal)",
+        "desc": "Anodes sacrificielles et composants en aluminium anodisé pour un usage prolongé en eau salée (motorisation côtière requise)."
+      }
+    ],
+    "motorizations": [
+      {
+        "name": "PCM ZZ6",
+        "fuel": "Essence",
+        "power": "450 ch",
+        "torque": "465 pi-lb",
+        "ratio": "2.0:1"
+      },
+      {
+        "name": "PCM ZZ8S",
+        "fuel": "Essence",
+        "power": "630 ch",
+        "torque": "665 pi-lb",
+        "ratio": "1.7:1"
+      },
+      {
+        "name": "Yanmar 8LV",
+        "fuel": "Diesel",
+        "power": "370 ch",
+        "torque": "595 pi-lb",
+        "ratio": "1.7:1"
+      }
+    ],
+    "features": [
+      "Siège pilote haute performance",
+      "Direction électrique",
+      "Écran tactile LINC Panoray",
+      "Système audio JL Audio M3 Series Premier (6 HP + caisson 10″)",
+      "Recharge sans fil au poste de pilotage",
+      "Glacière intégrée au plancher",
+      "Système de ballast sous plancher",
+      "Tour Flight Control rabattable"
+    ],
+    "options": [
+      {
+        "title": "Tour & direction",
+        "items": [
+          "Tour Flight Control actionnée ou télescopique",
+          "Système Nautique Steering Assist"
+        ]
+      },
+      {
+        "title": "Confort & barre",
+        "items": [
+          "Siège de pilote actionné",
+          "Caméra Awareness",
+          "Miroir pivotant"
+        ]
+      },
+      {
+        "title": "Supplémentaires",
+        "items": [
+          "Ballast additionnel 1 500 lb",
+          "Rangements additionnels",
+          "Couverture d’amarrage"
+        ]
+      }
+    ],
     "faqs": [
       {
         "q": "Quel est le prix du Super Air Nautique S25 ?",
@@ -536,6 +746,52 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "title": "COQUE ET PROUE",
         "text": "La coque et la proue du GS20 allient confort, sécurité et praticité. Le réseau lumineux d’amarrage à LED offre visibilité et style, même par faible luminosité. Les sièges avant larges avec porte-gobelets et rangement intégré assurent confort et organisation, avec la possibilité d’ajouter des enceintes JL Audio® ou un coussin de remplissage. Une poubelle amovible dans la zone de passage facilite la gestion des déchets à bord."
+      }
+    ],
+    "tagline": "Le multisport compact 20 pieds : coque issue du Ski Nautique et de la Série G, polyvalent du wakesurf au ski — à essayer sur le Lac d’Annecy.",
+    "videoId": "axTtXV8rnSw",
+    "motorizations": [
+      {
+        "name": "PCM ZZ5",
+        "fuel": "Essence",
+        "power": "355 ch",
+        "torque": "405 pi-lb",
+        "ratio": "1.5:1"
+      },
+      {
+        "name": "PCM ZZ6",
+        "fuel": "Essence",
+        "power": "450 ch",
+        "torque": "465 pi-lb",
+        "ratio": "1.5:1"
+      }
+    ],
+    "features": [
+      "Direction électrique",
+      "Écran tactile LINC Panoray 12,4″",
+      "Système audio JL Audio M3 Series (4 haut-parleurs)",
+      "Caméra Awareness",
+      "Nautique Configurable Running Surface (NCRS)",
+      "Nautique Surf System avec WAVEPLATES"
+    ],
+    "options": [
+      {
+        "title": "Tour & surf",
+        "items": [
+          "Tour Flight Control (manuelle ou motorisée)",
+          "Enceintes de tour JL Audio M6",
+          "Bimini avec poches surf",
+          "Racks strapless pour planches",
+          "Pare-soleil étendu"
+        ]
+      },
+      {
+        "title": "Confort",
+        "items": [
+          "Éclairage de courtoisie amélioré",
+          "Recharge sans fil pour téléphone",
+          "Pompe à air intégrée"
+        ]
       }
     ],
     "faqs": [
@@ -660,6 +916,57 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "Le Super Air Nautique GS22 combine confort, praticité et sécurité à l'avant du bateau : sa proue large et spacieuse offre des sièges avant équipés de porte-gobelets et d’espaces de rangement sous les coussins, tandis que les enceintes JL Audio® en option créent un espace dédié au son et un coussin de remplissage peut compléter la zone détente. Le GS22 peut être personnalisé avec un système de feux d’accostage à LED intégré à la proue, assurant visibilité et sécurité lors des manœuvres par faible luminosité et servant également de feux de jour. Une poubelle amovible supplémentaire dans la zone de passage avant facilite l’élimination des déchets à bord, ajoutant commodité et organisation au quotidien."
       }
     ],
+    "tagline": "Le multisport le plus populaire du marché : une polyvalence totale en 22 pieds, du wakesurf au ski — à essayer sur le Lac d’Annecy.",
+    "videoId": "58diXMTE2PQ",
+    "motorizations": [
+      {
+        "name": "PCM ZZ5",
+        "fuel": "Essence",
+        "power": "355 ch",
+        "torque": "405 pi-lb",
+        "ratio": "1.5:1"
+      },
+      {
+        "name": "PCM ZZ6",
+        "fuel": "Essence",
+        "power": "450 ch",
+        "torque": "465 pi-lb",
+        "ratio": "1.5:1"
+      },
+      {
+        "name": "PCM ZZ8R",
+        "fuel": "Essence",
+        "power": "570 ch",
+        "torque": "600 pi-lb",
+        "ratio": "1.5:1"
+      }
+    ],
+    "features": [
+      "Direction électrique",
+      "Écran tactile LINC Panoray 12,4″",
+      "Système audio JL Audio M3 Series",
+      "Caméra Awareness (surveillance arrière)",
+      "Système de ballast intégré"
+    ],
+    "options": [
+      {
+        "title": "Tour & surf",
+        "items": [
+          "Tour Flight Control (manuelle ou motorisée)",
+          "Nautique Surf System®",
+          "Enceintes de tour JL Audio M6",
+          "Racks à planches sans sangle",
+          "Bimini avec poches de rangement"
+        ]
+      },
+      {
+        "title": "Direction & ballast",
+        "items": [
+          "Aide à la direction Nautique (Steering Assist)",
+          "Ballast supplémentaire (500 lb)"
+        ]
+      }
+    ],
     "faqs": [
       {
         "q": "Quel est le prix du Super Air Nautique GS22 ?",
@@ -780,6 +1087,66 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "title": "COQUE ET PROUE",
         "text": "La proue et la coque du Super Air Nautique GS24 allient confort, praticité et style avec un réseau lumineux d’amarrage LED pour une visibilité optimale de jour comme de nuit. Les sièges avant spacieux offrent porte-gobelets, rangement sous les coussins et options audio JL Audio® ou coussin de remplissage pour un espace détente complet. Une poubelle amovible Bow Walk Through facilite le maintien de la propreté à bord."
+      }
+    ],
+    "tagline": "Le multisport 24 pieds par excellence : coque inspirée du Ski Nautique et de la Série G, brillant en wakesurf, wakeboard et ski — à essayer sur le Lac d’Annecy.",
+    "videoId": "_rhJOUKBmu4",
+    "motorizations": [
+      {
+        "name": "PCM ZZ5",
+        "fuel": "Essence",
+        "power": "355 ch",
+        "torque": "405 pi-lb",
+        "ratio": "1.7:1"
+      },
+      {
+        "name": "PCM ZZ6",
+        "fuel": "Essence",
+        "power": "450 ch",
+        "torque": "465 pi-lb",
+        "ratio": "1.7:1"
+      },
+      {
+        "name": "PCM ZZ8R",
+        "fuel": "Essence",
+        "power": "570 ch",
+        "torque": "600 pi-lb",
+        "ratio": "1.7:1"
+      }
+    ],
+    "features": [
+      "Direction électrique",
+      "Écran tactile LINC Panoray 12,4″",
+      "Système audio JL Audio M3 Series (4 enceintes cockpit)",
+      "Caméra Awareness",
+      "Système de ballast sous plancher",
+      "Plateforme de bain Nauteak",
+      "Sièges avant et de tableau arrière"
+    ],
+    "options": [
+      {
+        "title": "Tour & surf",
+        "items": [
+          "Tour ski/wakeboard (standard ou motorisée)",
+          "Nautique Surf System avec WAVEPLATES",
+          "Enceintes de tour JL Audio M6",
+          "Bimini avec poches surf"
+        ]
+      },
+      {
+        "title": "Confort & direction",
+        "items": [
+          "Sièges de tableau arrière réversibles",
+          "Aide à la direction Nautique",
+          "Éclairage d’accostage"
+        ]
+      },
+      {
+        "title": "Supplémentaires",
+        "items": [
+          "Système de ballast supplémentaire",
+          "Pompe à air intégrée"
+        ]
       }
     ],
     "faqs": [
@@ -1543,6 +1910,52 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "title": "COQUE ET PROUE",
         "text": "La proue du Ski Nautique 2026 allie sécurité et praticité. La passerelle avant en NauTeak antidérapant permet un accès facile au quai et au remorquage, tandis que le rangement de la proue offre un espace spacieux et sécurisé pour votre équipement, accessible depuis le siège passager et doté d’éclairage et de surfaces antidérapantes pour protéger vos affaires."
+      }
+    ],
+    "tagline": "Le bateau de ski de référence, entièrement redessiné et allégé : précision et sillage minimal pour le slalom — à essayer sur le Lac d’Annecy.",
+    "videoId": "47Mi7ui0XFs",
+    "motorizations": [
+      {
+        "name": "PCM ZZ6",
+        "fuel": "Essence",
+        "power": "450 ch",
+        "torque": "465 pi-lb",
+        "ratio": "1.23:1"
+      },
+      {
+        "name": "PCM ZZ5",
+        "fuel": "Essence",
+        "power": "355 ch",
+        "torque": "405 pi-lb",
+        "ratio": "1.23:1"
+      }
+    ],
+    "features": [
+      "Système HydroGate® automatisé",
+      "MicroTuners® intégrés",
+      "Régulateur de vitesse GPS Zero Off®",
+      "Écran tactile LINC Panoray",
+      "Système audio JL Audio M3 Series",
+      "Cradles de ski intégrés",
+      "Sièges arrière amovibles",
+      "Miroir 360° réglable"
+    ],
+    "options": [
+      {
+        "title": "Performance",
+        "items": [
+          "Moteur PCM ZZ5 (355 ch)",
+          "Ballast supplémentaire (400 lb)"
+        ]
+      },
+      {
+        "title": "Confort & audio",
+        "items": [
+          "Bimini",
+          "Télécommande stéréo JL Audio au tableau arrière",
+          "Chargeur de téléphone sans fil",
+          "Système Phender Pro"
+        ]
       }
     ],
     "faqs": [
