@@ -69,7 +69,7 @@ export function ModelPage() {
       return (
         <div className="min-h-[60vh] flex items-center justify-center bg-brand-dark">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-white uppercase tracking-tight mb-4">Modèle en cours de création</h2>
+            <h1 className="text-2xl font-bold text-white uppercase tracking-tight mb-4">Modèle en cours de création</h1>
             <Link to="/" className="text-brand-cyan hover:underline font-bold uppercase text-sm">Retour à l'accueil</Link>
           </div>
         </div>
@@ -711,14 +711,16 @@ export function ModelPage() {
             <div className="space-y-4">
               {model.faqs.map((faq, idx) => (
                 <div key={idx} className="bg-ink-900 rounded-2xl overflow-hidden border border-white/10">
-                  <button
-                    onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                    className="w-full text-left p-6 flex items-center justify-between gap-4 font-medium text-base md:text-lg text-white hover:bg-white/5 transition-colors"
-                    aria-expanded={activeFaq === idx}
-                  >
-                    {faq.q}
-                    <ChevronDown className={`flex-shrink-0 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180 text-brand-cyan' : ''}`} />
-                  </button>
+                  <h3 className="m-0">
+                    <button
+                      onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
+                      className="w-full text-left p-6 flex items-center justify-between gap-4 font-medium text-base md:text-lg text-white hover:bg-white/5 transition-colors"
+                      aria-expanded={activeFaq === idx}
+                    >
+                      {faq.q}
+                      <ChevronDown className={`flex-shrink-0 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180 text-brand-cyan' : ''}`} />
+                    </button>
+                  </h3>
                   <AnimatePresence>
                     {activeFaq === idx && (
                       <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="px-6 pb-6 text-gray-400 leading-relaxed">
