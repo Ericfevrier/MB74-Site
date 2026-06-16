@@ -255,7 +255,7 @@ export function ModelPage() {
               <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{model.gamme} · Millésime {model.year}</span>
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[1.05] text-white mb-6">
-              {fullName}
+              {model.short}
             </h1>
             <p className="text-gray-100 text-lg leading-relaxed max-w-2xl mb-9">{model.tagline || model.intro[0]}</p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-4">
@@ -406,7 +406,7 @@ export function ModelPage() {
       <section id="video" className={`py-20 bg-ink-950 ${sectionPad}`}>
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <SectionEyebrow label="En mouvement" />
-          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-10">Le {model.short} en action</h2>
+          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-10">Le {model.short} en vidéo</h2>
           {model.videoId ? (
             <div className="relative w-full rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl aspect-video bg-black">
               <iframe
@@ -471,7 +471,7 @@ export function ModelPage() {
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="Historique" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-5 leading-tight">
-              {fullName} : <span className="text-brand-cyan">évolution par millésime</span>
+              {model.short} : <span className="text-brand-cyan">évolution par millésime</span>
             </h2>
             <p className="text-gray-300 text-lg leading-relaxed max-w-3xl mb-10">
               Le {model.short} a évolué depuis son lancement. Voici ce qui change d’une année à l’autre — utile pour situer et comparer un {model.short} d’occasion avant l’achat.
@@ -540,7 +540,7 @@ export function ModelPage() {
         <section id="equipements" className={`py-20 bg-ink-950 ${sectionPad}`}>
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="À bord" />
-            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-12">Équipements & options</h2>
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-12">Équipements et options</h2>
 
             {model.editions && (
               <div className="grid md:grid-cols-2 gap-6 mb-12">
@@ -750,7 +750,7 @@ export function ModelPage() {
                 </div>
                 <div className="p-5">
                   <span className="text-[10px] uppercase tracking-widest font-bold text-brand-cyan">{o.gamme}</span>
-                  <h3 className="font-bold text-white uppercase tracking-tight mt-1">{o.short}</h3>
+                  <h3 className="font-bold text-white uppercase tracking-tight mt-1">{o.fullName || o.name}</h3>
                   <span className="inline-flex items-center gap-1 text-xs font-bold text-gray-400 mt-3 group-hover:text-brand-cyan transition">Fiche technique <ArrowRight size={13} className="group-hover:translate-x-1 transition" /></span>
                 </div>
               </Link>
