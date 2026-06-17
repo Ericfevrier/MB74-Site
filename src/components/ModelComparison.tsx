@@ -37,6 +37,19 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
           </div>
         </div>
 
+        {/* Résumé lecture rapide */}
+        {current.summary && (
+          <motion.p
+            key={`summary-${activeCategory}`}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="max-w-3xl mx-auto text-center text-gray-600 text-base md:text-[17px] leading-relaxed mb-10"
+          >
+            {current.summary}
+          </motion.p>
+        )}
+
         {/* Comparison Table */}
         <div className="relative">
           <AnimatePresence mode="wait">

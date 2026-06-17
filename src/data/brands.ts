@@ -11,6 +11,8 @@ export interface ComparisonSpec {
 
 export interface ComparisonCategory {
   title: string;
+  /** Résumé court des différences clés, pour une lecture rapide du tableau. */
+  summary?: string;
   models: string[];
   specs: ComparisonSpec[];
 }
@@ -101,6 +103,7 @@ export const brandsData: Record<string, BrandData> = {
     comparisons: [
       {
         title: "Nautique Paragon",
+        summary: "Les deux Paragon partagent la même motorisation (PCM ZZ8S 630 ch essence ou Yanmar 8LV 370 ch diesel) et la même largeur. Le G25 Paragon est plus grand (25 vs 23 pieds), accueille jusqu'à 19 personnes (contre 16) et offre la plus grande autonomie (333 L). Le G23 Paragon, plus compact, est plus maniable et affiche le ballast maximal le plus élevé. En clair : le G25 pour les grands groupes, le G23 pour l'agilité.",
         models: ["G23 Paragon", "G25 Paragon"],
         specs: [
           { label: "Longueur total", values: ["23' 3\" / 7.09 m", "25' 3\" / 7.7 m"] },
@@ -118,6 +121,7 @@ export const brandsData: Record<string, BrandData> = {
       },
       {
         title: "Nautique G",
+        summary: "Même plateforme Série G et capacité de ballast identique pour les deux. Le G25 (25 pieds) embarque 19 personnes et 333 L de carburant pour les sorties en grand groupe ; le G23 (23 pieds), plus léger et maniable, plafonne à 16 personnes et 248 L. La largeur de coque est la même : le choix se joue donc sur la taille et la capacité d'accueil.",
         models: ["G23", "G25"],
         specs: [
           { label: "Longueur total", values: ["23' / 7.01 m", "25' / 7.62 m"] },
@@ -132,6 +136,7 @@ export const brandsData: Record<string, BrandData> = {
       },
       {
         title: "Nautique S",
+        summary: "La série S (proue traditionnelle) s'échelonne du S21, le plus court (21 pieds) et le plus léger (≈2 360 kg) donc le plus agile, jusqu'au S25 (25 pieds, ≈2 790 kg) le plus spacieux. Plus le modèle grandit, plus le poids et la capacité augmentent ; le S25 gagne aussi en largeur (102 vs 100 pouces). Format compact ou maximum de place à bord : à vous de choisir.",
         models: ["S21", "S23", "S25"],
         specs: [
           { label: "Longueur total", values: ["21' / 6.40 m", "23' / 7.01 m", "25' / 7.62 m"] },
@@ -141,6 +146,7 @@ export const brandsData: Record<string, BrandData> = {
       },
       {
         title: "Nautique GS",
+        summary: "La série GS multisport repose sur une coque hybride Ski Nautique / Série G, idéale pour passer du ski au wakesurf. Elle va du GS20 (20 pieds, compact et polyvalent) au GS24 (24 pieds, le plus spacieux, qui gagne en largeur : 102 vs 100 pouces). Le choix se fait surtout sur la taille et le nombre de passagers.",
         models: ["GS20", "GS22", "GS24"],
         specs: [
           { label: "Longueur total", values: ["20' / 6.10 m", "22' / 6.71 m", "24' / 7.32 m"] },
@@ -149,6 +155,7 @@ export const brandsData: Record<string, BrandData> = {
       },
       {
         title: "Ski Nautique",
+        summary: "Bateau de slalom dédié : une coque légère de 20 pieds, étroite (95 pouces) et entièrement redessinée, pensée pour un sillage minimal et une précision maximale en ski nautique de compétition. C'est le plus spécialisé de la gamme, à l'opposé des wakeboats polyvalents.",
         models: ["Ski Nautique"],
         specs: [
           { label: "Longueur total", values: ["20' / 6.10 m"] },
