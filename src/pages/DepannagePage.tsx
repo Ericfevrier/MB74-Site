@@ -52,7 +52,7 @@ const FAQS = [
   },
   {
     q: 'Quels types de bateaux pouvez-vous dépanner ?',
-    a: 'Tous types d’embarcations : moteurs hors-bord et in-board, runabouts, wakeboats, pneumatiques et semi-rigides. Concessionnaire officiel Nautique, nos techniciens interviennent aussi sur Malibu, MasterCraft, Tigé et la plupart des marques.',
+    a: 'Tous types d’embarcations : moteurs hors-bord et in-board, runabouts, wakeboats, pneumatiques et semi-rigides. Nos techniciens interviennent sur la plupart des marques du marché.',
   },
   {
     q: 'Proposez-vous le remorquage ?',
@@ -215,7 +215,7 @@ export function DepannagePage() {
             </h1>
 
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
-              Une panne sur l'eau&nbsp;? Chaque minute compte. Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 intervient rapidement avec un <strong className="text-brand-cyan">bateau-atelier équipé</strong> pour vous remettre en sécurité et reprendre la navigation.
+              Une panne sur l'eau&nbsp;? Chaque minute compte. En Haute-Savoie, MotorBoat 74 intervient rapidement avec un <strong className="text-brand-cyan">bateau-atelier équipé</strong> pour vous remettre en sécurité et reprendre la navigation.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">
@@ -249,7 +249,7 @@ export function DepannagePage() {
             </div>
 
             <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-8 gap-y-3 pt-5 border-t border-white/10 text-xs font-semibold text-gray-400">
-              <span className="flex items-center gap-1.5 text-white"><Star className="w-4 h-4 fill-brand-cyan text-brand-cyan" /> Concessionnaire officiel Nautique</span>
+              <span className="flex items-center gap-1.5 text-white"><Star className="w-4 h-4 fill-brand-cyan text-brand-cyan" /> Techniciens expérimentés</span>
               <span className="text-white">● Réparation à flot ou remorquage</span>
               <span className="text-white">● Toutes marques de bateaux</span>
             </div>
@@ -290,7 +290,7 @@ export function DepannagePage() {
                   { Icon: LifeBuoy, k: 'Disponibilité', v: '7j/7 en haute saison (8h–20h)' },
                   { Icon: PackageCheck, k: 'Sur l’eau', v: 'Réparation à flot (bateau-atelier)' },
                   { Icon: Ship, k: 'Si besoin', v: 'Remorquage atelier / port' },
-                  { Icon: ShieldCheck, k: 'Marques', v: 'Toutes marques · concession. Nautique' },
+                  { Icon: ShieldCheck, k: 'Marques', v: 'Toutes marques de bateaux' },
                   { Icon: MapPin, k: 'Zone', v: 'Lac d’Annecy et communes riveraines' },
                 ].map(({ Icon, k, v }) => (
                   <div key={k} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
