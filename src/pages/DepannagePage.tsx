@@ -220,9 +220,7 @@ export function DepannagePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">
               {[
-                { Icon: Clock, t: '30–60 min', d: 'Délai d’intervention moyen sur le lac d’Annecy.' },
                 { Icon: LifeBuoy, t: '7j/7', d: 'Équipe mobilisée en haute saison (8h–20h).' },
-                { Icon: PackageCheck, t: 'Bateau-atelier', d: 'Entièrement équipé pour réparer à flot.' },
                 { Icon: MapPin, t: "Lac d'Annecy", d: 'Expertise locale du plan d’eau et de ses ports.' },
               ].map(({ Icon, t, d }, i) => (
                 <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
