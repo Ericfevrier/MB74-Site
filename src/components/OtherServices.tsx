@@ -16,6 +16,7 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
 const DEDICATED: Record<string, string> = {
   depannage: '/depannage',
   'sellerie-de-bateau': '/sellerie',
+  'entretien-reparation': '/entretien-reparation',
   'hivernage-stockage-bateau': '/hivernage-stockage-bateau',
 };
 const resolvePath = (slug: string) => DEDICATED[slug] ?? `/services/${slug}`;

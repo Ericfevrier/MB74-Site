@@ -19,6 +19,7 @@ const ServicesHubPage = lazy(() => import('./pages/ServicesHubPage').then((m) =>
 const ServicePage = lazy(() => import('./pages/ServicePage').then((m) => ({ default: m.ServicePage })));
 const DepannagePage = lazy(() => import('./pages/DepannagePage').then((m) => ({ default: m.DepannagePage })));
 const SelleriePage = lazy(() => import('./pages/SelleriePage').then((m) => ({ default: m.SelleriePage })));
+const EntretienReparationPage = lazy(() => import('./pages/EntretienReparationPage').then((m) => ({ default: m.EntretienReparationPage })));
 const HivernageCityPage = lazy(() => import('./pages/HivernageCityPage').then((m) => ({ default: m.HivernageCityPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })));
 const BlogHivernagePage = lazy(() => import('./pages/BlogHivernagePage').then((m) => ({ default: m.BlogHivernagePage })));
@@ -48,6 +49,7 @@ export default function App() {
               <Route path="/services" element={<ServicesHubPage />} />
               <Route path="/depannage" element={<DepannagePage />} />
               <Route path="/sellerie" element={<SelleriePage />} />
+              <Route path="/entretien-reparation" element={<EntretienReparationPage />} />
               <Route path="/services/:slug" element={<ServicePage />} />
               <Route path="/services/hivernage-bateaux/:slug" element={<HivernageCityPage />} />
               <Route path="/contact" element={<ContactPage />} />
