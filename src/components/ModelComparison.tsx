@@ -38,6 +38,17 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
           </div>
         </div>
 
+        {/* Sous-titre de la série comparée (structure Hn) */}
+        <motion.h3
+          key={`cat-title-${activeCategory}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-brand-dark text-center mb-8"
+        >
+          {current.title}
+        </motion.h3>
+
         {/* Résumé lecture rapide */}
         {current.summary && (
           <motion.div

@@ -39,14 +39,16 @@ export function FAQSection({ brandName }: { brandName: string }) {
         <div className="space-y-4">
           {faqs.map((faq, idx) => (
             <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-lg shadow-brand-dark/5">
-              <button
-                onClick={() => setActiveIndex(activeIndex === idx ? null : idx)}
-                className="w-full text-left p-6 flex items-center justify-between font-bold text-lg uppercase tracking-tight hover:bg-gray-50 transition-colors"
-                aria-expanded={activeIndex === idx}
-              >
-                {faq.question}
-                <ChevronDown className={`transition-transform duration-300 ${activeIndex === idx ? 'rotate-180' : ''}`} />
-              </button>
+              <h3 className="m-0">
+                <button
+                  onClick={() => setActiveIndex(activeIndex === idx ? null : idx)}
+                  className="w-full text-left p-6 flex items-center justify-between font-bold text-lg uppercase tracking-tight hover:bg-gray-50 transition-colors"
+                  aria-expanded={activeIndex === idx}
+                >
+                  {faq.question}
+                  <ChevronDown className={`transition-transform duration-300 ${activeIndex === idx ? 'rotate-180' : ''}`} />
+                </button>
+              </h3>
               <AnimatePresence>
                 {activeIndex === idx && (
                   <motion.div
