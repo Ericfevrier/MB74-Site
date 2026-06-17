@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Breadcrumb } from '../components/Breadcrumb';
-import { hivernageCities, HIVERNAGE_CITY_ORDER } from '../data/hivernageCities';
 import {
   Shield,
   Wrench,
@@ -669,51 +668,6 @@ export function HivernageStockagePage() {
                     </div>
                   </div>
                 </div>
-              {/* Sous-section : Zones d'intervention (maillage local) */}
-              <div id="zones" className="mt-20">
-                <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Zones d'intervention</span>
-                  <h3 className="text-xl md:text-2xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Hivernage de bateau sur tout le bassin annécien et le Léman
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
-                    Que votre bateau soit amarré sur le <strong>lac d'Annecy</strong>, le <strong>Léman</strong>, le <strong>lac du Bourget</strong> ou ailleurs en Haute-Savoie, nous venons le récupérer directement à votre port et prenons en charge toute la logistique. Découvrez nos pages dédiées par secteur&nbsp;:
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {HIVERNAGE_CITY_ORDER.map((slug) => {
-                    const c = hivernageCities[slug];
-                    if (!c) return null;
-                    return (
-                      <Link
-                        key={slug}
-                        to={`/services/hivernage-bateaux/${slug}`}
-                        className="group flex items-center gap-3 bg-white border border-gray-200 rounded-2xl p-5 hover:border-brand-cyan hover:shadow-lg hover:shadow-brand-cyan/5 transition-all"
-                      >
-                        <span className="w-10 h-10 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center shrink-0">
-                          <MapPin className="w-5 h-5" />
-                        </span>
-                        <div className="min-w-0">
-                          <p className="font-bold text-brand-dark uppercase tracking-tight text-sm leading-tight">{c.city}</p>
-                          <p className="text-gray-500 text-xs capitalize truncate">{c.lake}</p>
-                        </div>
-                        <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-brand-cyan ml-auto transition-colors" />
-                      </Link>
-                    );
-                  })}
-                </div>
-
-                <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 bg-ink-950 text-white p-6 rounded-2xl">
-                  <div>
-                    <h4 className="font-extrabold text-base uppercase tracking-tight flex items-center gap-2"><Truck className="w-4 h-4 text-brand-cyan" /> Récupération à votre port incluse</h4>
-                    <p className="text-xs font-medium text-gray-400 mt-1">Votre commune n'est pas listée&nbsp;? Nous intervenons sur toute la Haute-Savoie et le Chablais — dites-nous où se trouve votre bateau.</p>
-                  </div>
-                  <button onClick={scrollToForm} className="bg-brand-cyan hover:bg-white text-brand-dark px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-colors whitespace-nowrap">
-                    Demander un devis
-                  </button>
-                </div>
-              </div>
               </div>
 
               {/* Bloc 5 — Process en 6 étapes (timeline visuelle) */}
