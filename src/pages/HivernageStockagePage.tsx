@@ -1111,16 +1111,16 @@ export function HivernageStockagePage() {
             {/* RIGHT COLUMN: Sticky Form (Block 13 - CTA final) */}
             <aside
               ref={formulationFormRef}
-              className="lg:col-span-1 lg:sticky lg:top-32 lg:max-h-[calc(100vh-9rem)] lg:overflow-y-auto hide-scrollbar bg-ink-950 border-2 border-brand-cyan/30 rounded-3xl p-8 shadow-3xl"
+              className="lg:col-span-1 lg:sticky lg:top-32 lg:max-h-[calc(100vh-9rem)] lg:overflow-y-auto hide-scrollbar bg-white border border-gray-200 ring-1 ring-black/[0.03] rounded-3xl p-8 shadow-xl shadow-gray-400/10"
             >
               <div className="relative">
                 {/* Decorative border accent */}
                 <div className="absolute top-0 left-0 w-2 h-16 bg-brand-cyan"></div>
                 <div className="pl-4">
-                  <h2 className="text-xl font-sans font-bold uppercase text-white tracking-tight leading-tight">
+                  <h2 className="text-xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
                     Réservez votre hivernage 2025/2026 dès aujourd'hui
                   </h2>
-                  <p className="text-xs text-gray-400 mt-2 font-medium">
+                  <p className="text-xs text-gray-500 mt-2 font-medium">
                     Complétez notre formulaire allégé en 24h. Un technicien qualifié MotorBoat 74 chiffre votre proposition sur-mesure.
                   </p>
                 </div>
@@ -1129,8 +1129,8 @@ export function HivernageStockagePage() {
               {formSubmitted ? (
                 <div className="mt-8 bg-brand-cyan/10 border border-brand-cyan/20 p-6 rounded-2xl text-center">
                   <CheckCircle className="w-12 h-12 text-brand-cyan mx-auto mb-4 animate-bounce" />
-                  <h3 className="text-white font-extrabold uppercase text-sm mb-2">Demande enregistrée avec succès !</h3>
-                  <p className="text-xs text-gray-400 leading-relaxed">
+                  <h3 className="text-brand-dark font-extrabold uppercase text-sm mb-2">Demande enregistrée avec succès !</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed">
                     Merci pour votre confiance. Notre coordinatrice technique traite vos données d’emplacement et vous adresse un devis détaillé sous 24 heures maximum de façon personnalisée.
                   </p>
                   <button 
@@ -1143,7 +1143,7 @@ export function HivernageStockagePage() {
               ) : (
                 <form onSubmit={handleFormSubmit} className="mt-8 space-y-5">
                   <div>
-                    <label htmlFor="nom" className="block text-[10px] font-bold uppercase tracking-widest text-mute mb-2">
+                    <label htmlFor="nom" className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">
                       Nom complet *
                     </label>
                     <input 
@@ -1154,12 +1154,12 @@ export function HivernageStockagePage() {
                       value={formData.nom}
                       onChange={handleInputChange}
                       placeholder="Ex : Éric Dupont"
-                      className="w-full bg-ink-900 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-brand-dark focus:bg-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 placeholder:text-gray-400 transition font-medium"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="tel" className="block text-[10px] font-bold uppercase tracking-widest text-mute mb-2">
+                    <label htmlFor="tel" className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">
                       Numéro de téléphone *
                     </label>
                     <input 
@@ -1170,12 +1170,12 @@ export function HivernageStockagePage() {
                       value={formData.tel}
                       onChange={handleInputChange}
                       placeholder="Ex : 06 12 34 56 78"
-                      className="w-full bg-ink-900 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-brand-dark focus:bg-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 placeholder:text-gray-400 transition font-medium"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-widest text-mute mb-2">
+                    <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">
                       Adresse e-mail *
                     </label>
                     <input 
@@ -1186,12 +1186,12 @@ export function HivernageStockagePage() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="Dupont@gmail.com"
-                      className="w-full bg-ink-900 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-brand-dark focus:bg-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 placeholder:text-gray-400 transition font-medium"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="modele" className="block text-[10px] font-bold uppercase tracking-widest text-mute mb-2">
+                    <label htmlFor="modele" className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">
                       Modèle & Longueur du bateau
                     </label>
                     <input 
@@ -1201,13 +1201,13 @@ export function HivernageStockagePage() {
                       value={formData.modele}
                       onChange={handleInputChange}
                       placeholder="Ex: Nautique G25 / 7,77 m"
-                      className="w-full bg-ink-900 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-cyan placeholder:text-gray-600 font-bold"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-brand-dark focus:bg-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 placeholder:text-gray-400 transition font-medium"
                     />
                   </div>
 
 
                   {formError && (
-                    <p className="text-red-400 text-xs font-bold text-center" role="alert">{formError}</p>
+                    <p className="text-red-500 text-xs font-bold text-center" role="alert">{formError}</p>
                   )}
 
                   {/* Submission Button */}
@@ -1228,7 +1228,7 @@ export function HivernageStockagePage() {
                   </button>
 
                   {/* Form trust cues */}
-                  <div className="pt-4 border-t border-white/5 text-[10px] text-gray-500 font-bold flex flex-wrap justify-between gap-y-2 uppercase">
+                  <div className="pt-4 border-t border-gray-200 text-[10px] text-gray-500 font-bold flex flex-wrap justify-between gap-y-2 uppercase">
                     <span className="flex items-center gap-1.5"><Lock className="w-3 h-3" /> Données confidentielles</span>
                     <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> Réponse sous 24 h</span>
                     <span className="flex items-center gap-1.5"><MessageCircle className="w-3 h-3" /> Devis 100% gratuit</span>
