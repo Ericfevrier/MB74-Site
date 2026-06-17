@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Phone, MapPin, Mail, Send, CheckCircle2 } from 'lucide-react';
 import { SITE } from '../../data/site';
 import { GoogleMapCustom } from '../GoogleMapCustom';
@@ -25,6 +26,7 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState({ nom: '', prenom: '', email: '', tel: '', message: '' });
+  const [consent, setConsent] = useState(false);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -33,13 +35,17 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consent) {
+      setError('Veuillez accepter la politique de confidentialité pour envoyer votre demande.');
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, sujet: subject }),
+        body: JSON.stringify({ ...data, sujet: subject, consentement: true }),
       });
       const json = await res.json();
       if (!res.ok || !json.ok) throw new Error(json.error || 'Échec de l’envoi.');
@@ -156,18 +162,37 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
                   <textarea id="cb-message" name="message" required value={data.message} onChange={onChange} rows={4} className={`${inputCls} resize-none`} placeholder="Votre demande…" />
                 </div>
 
+                {/* Consentement RGPD (obligatoire, non pré-coché) */}
+                <label htmlFor="cb-consent" className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    id="cb-consent"
+                    name="consent"
+                    type="checkbox"
+                    required
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 accent-brand-cyan focus:ring-brand-cyan/30"
+                  />
+                  <span className="text-[12px] text-gray-500 leading-snug">
+                    J’accepte que mes données soient utilisées par {SITE.name} pour traiter ma demande, conformément à la{' '}
+                    <Link to="/politique-de-confidentialite" className="text-brand-cyan font-semibold hover:underline">politique de confidentialité</Link>. *
+                  </span>
+                </label>
+
                 {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
 
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm py-4 rounded-xl hover:bg-brand-dark hover:text-white transition disabled:opacity-60"
+                  disabled={loading || !consent}
+                  className="w-full inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm py-4 rounded-xl hover:bg-brand-dark hover:text-white transition disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Envoi…' : 'Envoyer'}
                   {!loading && <Send size={15} />}
                 </button>
-                <p className="text-[11px] text-gray-400 text-center">
-                  Vos données ne sont utilisées que pour répondre à votre demande.
+                <p className="text-[11px] text-gray-400 text-center leading-relaxed">
+                  Vos données (nom, e-mail, téléphone, message) servent uniquement à traiter votre demande et ne sont jamais cédées à des tiers.
+                  Conformément au RGPD, vous disposez d’un droit d’accès, de rectification et de suppression de vos données — voir notre{' '}
+                  <Link to="/politique-de-confidentialite" className="underline hover:text-brand-cyan">politique de confidentialité</Link>.
                 </p>
               </form>
             )}
