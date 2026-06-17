@@ -226,7 +226,7 @@ export function ServicePage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
 
   // Slugs disposant d'une page dédiée (riche) → on y redirige pour éviter le contenu dupliqué.
-  const DEDICATED_PAGES: Record<string, string> = { depannage: '/depannage' };
+  const DEDICATED_PAGES: Record<string, string> = { depannage: '/depannage', 'sellerie-de-bateau': '/sellerie' };
   if (slug && DEDICATED_PAGES[slug]) return <Navigate to={DEDICATED_PAGES[slug]} replace />;
 
   if (!service) return <Navigate to="/services" replace />;
