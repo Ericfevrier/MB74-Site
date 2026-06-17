@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Home } from 'lucide-react';
 import { SITE } from '../data/site';
+import { Breadcrumb } from '../components/Breadcrumb';
 
 type Block = { h?: string; p?: string[]; ul?: string[] };
 
@@ -119,13 +119,7 @@ export function LegalPage({ doc }: { doc: 'mentions' | 'privacy' }) {
 
       <header className="bg-brand-dark text-white">
         <div className="max-w-4xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
-          <nav aria-label="Fil d’ariane" className="flex items-center gap-2 text-[12px] text-gray-300 mb-6">
-            <Link to="/" className="hover:text-brand-cyan flex items-center gap-1">
-              <Home size={13} /> Accueil
-            </Link>
-            <span className="opacity-40">/</span>
-            <span className="text-white font-semibold">{data.title}</span>
-          </nav>
+          <Breadcrumb size="sm" items={[{ label: 'Accueil', to: '/' }, { label: data.title }]} />
           <h1 className="text-3xl md:text-4xl font-bold uppercase tracking-tight leading-tight">{data.title}</h1>
           <p className="text-gray-400 text-sm mt-3">Dernière mise à jour : {data.updated}</p>
         </div>

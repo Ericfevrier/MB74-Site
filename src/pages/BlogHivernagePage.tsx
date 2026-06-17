@@ -1,8 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Home, Calendar, User, ArrowRight } from 'lucide-react';
+import { Calendar, User, ArrowRight } from 'lucide-react';
 import { SITE } from '../data/site';
+import { Breadcrumb } from '../components/Breadcrumb';
 
 const FAQS = [
   {
@@ -105,11 +106,7 @@ export function BlogHivernagePage() {
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/85 to-brand-dark" />
         </div>
         <div className="relative max-w-3xl mx-auto px-4 lg:px-8 py-20 lg:py-24">
-          <nav aria-label="Fil d’ariane" className="flex items-center gap-2 text-[12px] text-gray-300 mb-6">
-            <Link to="/" className="hover:text-brand-cyan flex items-center gap-1"><Home size={13} /> Accueil</Link>
-            <span className="opacity-40">/</span>
-            <span className="text-brand-cyan font-semibold">Hivernage</span>
-          </nav>
+          <Breadcrumb size="sm" items={[{ label: 'Accueil', to: '/' }, { label: 'Hivernage' }]} />
           <h1 className="text-3xl md:text-4xl font-bold uppercase tracking-tight leading-tight mb-6">{title}</h1>
           <div className="flex items-center gap-6 text-sm text-gray-300">
             <span className="flex items-center gap-2"><Calendar size={15} className="text-brand-cyan" /> 6 octobre 2025</span>

@@ -1,9 +1,10 @@
 import React from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Home, Phone, ArrowRight, ShipWheel, Warehouse, Wrench, Anchor, MapPin, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Phone, ArrowRight, ShipWheel, Warehouse, Wrench, Anchor, MapPin, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { getHivernageCity } from '../data/hivernageCities';
 import { SITE } from '../data/site';
+import { Breadcrumb } from '../components/Breadcrumb';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 
 const SOLUTIONS = [
@@ -83,13 +84,13 @@ export function HivernageCityPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/85 to-brand-dark/40" />
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-28">
-          <nav aria-label="Fil d’ariane" className="flex items-center gap-2 text-[12px] text-gray-300 mb-6">
-            <Link to="/" className="hover:text-brand-cyan flex items-center gap-1"><Home size={13} /> Accueil</Link>
-            <span className="opacity-40">/</span>
-            <Link to="/hivernage-stockage-bateau" className="hover:text-brand-cyan">Hivernage / Stockage</Link>
-            <span className="opacity-40">/</span>
-            <span className="text-white font-semibold">{city.city}</span>
-          </nav>
+          <Breadcrumb
+            items={[
+              { label: 'Accueil', to: '/' },
+              { label: 'Hivernage & Stockage', to: '/hivernage-stockage-bateau' },
+              { label: city.city },
+            ]}
+          />
           <span className="inline-block text-brand-cyan font-bold uppercase tracking-widest text-xs mb-4">Service local à {city.city}</span>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-tight max-w-3xl mb-6">{city.h1}</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mb-8">{city.intro}</p>

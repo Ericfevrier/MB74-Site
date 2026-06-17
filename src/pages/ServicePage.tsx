@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
+import { Breadcrumb } from '../components/Breadcrumb';
 import {
-  ChevronDown, Check, ArrowRight, Phone, Home,
+  ChevronDown, Check, ArrowRight, Phone,
   ShieldCheck, Gauge, CalendarCheck, BadgeEuro, Wrench, Settings, PaintBucket, Sparkles, Anchor,
   Clock, PackageCheck, MapPin, Truck, Globe, Sofa, Award, Zap, Ruler, LifeBuoy, Ship, Scissors, Sun, Users,
 } from 'lucide-react';
@@ -305,18 +306,13 @@ export function ServicePage() {
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-72 -mt-72" />
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-28">
-          {/* Fil d'ariane */}
-          <nav aria-label="Fil d’ariane" className="flex items-center gap-2 text-[12px] text-gray-300 mb-6">
-            <Link to="/" className="hover:text-brand-cyan flex items-center gap-1">
-              <Home size={13} /> Accueil
-            </Link>
-            <span className="opacity-40">/</span>
-            <Link to="/services" className="hover:text-brand-cyan">
-              Services
-            </Link>
-            <span className="opacity-40">/</span>
-            <span className="text-white font-semibold">{service.nav}</span>
-          </nav>
+          <Breadcrumb
+            items={[
+              { label: 'Accueil', to: '/' },
+              { label: 'Services', to: '/services' },
+              { label: service.nav },
+            ]}
+          />
           <div className="flex items-center gap-3 mb-5">
             <span className="w-10 h-1 bg-brand-cyan rounded-full" />
             <span className="text-brand-cyan font-bold uppercase tracking-[0.2em] text-xs">

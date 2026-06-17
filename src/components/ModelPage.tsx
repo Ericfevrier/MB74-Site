@@ -3,9 +3,10 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  ChevronDown, ArrowRight, Phone, Home, Ruler, Users, Gauge, Check, X,
+  ChevronDown, ArrowRight, Phone, Ruler, Users, Gauge, Check, X,
   ChevronLeft, ChevronRight, Play, Sparkles, Fuel, Settings2,
 } from 'lucide-react';
+import { Breadcrumb } from './Breadcrumb';
 import { getModel, MODEL_ORDER, nautiqueModels } from '../data/nautiqueModels';
 import { usedBoatsForModel } from '../data/usedBoats';
 import { SITE } from '../data/site';
@@ -236,19 +237,15 @@ export function ModelPage() {
         </div>
 
         <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 min-h-[68vh] flex flex-col">
-          <nav aria-label="Fil d’ariane" className="pt-8">
-            <ol className="inline-flex flex-wrap items-center gap-1.5 text-[11px] font-medium text-gray-400/70 [text-shadow:0_1px_8px_rgba(0,0,0,.5)]">
-              <li>
-                <Link to="/" className="inline-flex items-center gap-1 hover:text-gray-200 transition-colors"><Home size={11} /> Accueil</Link>
-              </li>
-              <li aria-hidden className="text-white/20"><ChevronRight size={11} /></li>
-              <li><Link to="/marque/nautique" className="hover:text-gray-200 transition-colors">Marques</Link></li>
-              <li aria-hidden className="text-white/20"><ChevronRight size={11} /></li>
-              <li><Link to="/marque/nautique" className="hover:text-gray-200 transition-colors">Nautique</Link></li>
-              <li aria-hidden className="text-white/20"><ChevronRight size={11} /></li>
-              <li aria-current="page" className="text-gray-300">{model.short}</li>
-            </ol>
-          </nav>
+          <Breadcrumb
+            className="pt-8"
+            items={[
+              { label: 'Accueil', to: '/' },
+              { label: 'Marques', to: '/marque/nautique' },
+              { label: 'Nautique', to: '/marque/nautique' },
+              { label: model.short },
+            ]}
+          />
 
           <div className="flex-1" />
 

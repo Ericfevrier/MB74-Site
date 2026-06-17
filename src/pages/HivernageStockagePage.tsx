@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
+import { Breadcrumb } from '../components/Breadcrumb';
 import {
   Shield,
   Wrench,
@@ -386,14 +387,14 @@ export function HivernageStockagePage() {
 
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10 text-center lg:text-left">
           <div className="max-w-4xl mx-auto lg:mx-0">
-            {/* SEO Breadcrumb indicator */}
-            <div className="inline-flex items-center gap-2 bg-brand-cyan/10 border border-brand-cyan/20 rounded-full px-4 py-1.5 mb-4 text-[12px] font-bold text-brand-cyan uppercase tracking-wider">
-              <span>Accueil</span>
-              <span className="opacity-40">/</span>
-              <span>Services</span>
-              <span className="opacity-40">/</span>
-              <span className="text-white">Hivernage & Stockage</span>
-            </div>
+            <Breadcrumb
+              className="mb-4"
+              items={[
+                { label: 'Accueil', to: '/' },
+                { label: 'Services', to: '/services' },
+                { label: 'Hivernage & Stockage' },
+              ]}
+            />
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
               Hivernage et stockage de bateau à <span className="text-brand-cyan">Annecy</span> <span className="text-white/90">— Hangar sécurisé 3 000 m²</span>

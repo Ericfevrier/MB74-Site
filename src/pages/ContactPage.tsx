@@ -1,8 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Home, Clock } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { SITE } from '../data/site';
+import { Breadcrumb } from '../components/Breadcrumb';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { GoogleMapCustom } from '../components/GoogleMapCustom';
 
@@ -53,11 +54,7 @@ export function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/85 via-brand-dark/85 to-brand-dark" />
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
-          <nav aria-label="Fil d’ariane" className="flex items-center justify-center gap-2 text-[12px] text-gray-300 mb-6">
-            <Link to="/" className="hover:text-brand-cyan flex items-center gap-1"><Home size={13} /> Accueil</Link>
-            <span className="opacity-40">/</span>
-            <span className="text-white font-semibold">Contact</span>
-          </nav>
+          <Breadcrumb items={[{ label: 'Accueil', to: '/' }, { label: 'Contact' }]} />
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Nous contacter</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mx-auto">
             Vous pouvez nous joindre via notre formulaire de contact ci-dessous ou par téléphone au{' '}
