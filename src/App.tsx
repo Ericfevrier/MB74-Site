@@ -17,6 +17,7 @@ const HivernageStockagePage = lazy(() =>
 );
 const ServicesHubPage = lazy(() => import('./pages/ServicesHubPage').then((m) => ({ default: m.ServicesHubPage })));
 const ServicePage = lazy(() => import('./pages/ServicePage').then((m) => ({ default: m.ServicePage })));
+const DepannagePage = lazy(() => import('./pages/DepannagePage').then((m) => ({ default: m.DepannagePage })));
 const HivernageCityPage = lazy(() => import('./pages/HivernageCityPage').then((m) => ({ default: m.HivernageCityPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })));
 const BlogHivernagePage = lazy(() => import('./pages/BlogHivernagePage').then((m) => ({ default: m.BlogHivernagePage })));
@@ -44,6 +45,7 @@ export default function App() {
               <Route path="/marque/:id" element={<BrandPage />} />
               <Route path="/hivernage-stockage-bateau" element={<HivernageStockagePage />} />
               <Route path="/services" element={<ServicesHubPage />} />
+              <Route path="/depannage" element={<DepannagePage />} />
               <Route path="/services/:slug" element={<ServicePage />} />
               <Route path="/services/hivernage-bateaux/:slug" element={<HivernageCityPage />} />
               <Route path="/contact" element={<ContactPage />} />
