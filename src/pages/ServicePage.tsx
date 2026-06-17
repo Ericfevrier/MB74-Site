@@ -225,6 +225,10 @@ export function ServicePage() {
   const service = slug ? getService(slug) : undefined;
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
 
+  // Slugs disposant d'une page dédiée (riche) → on y redirige pour éviter le contenu dupliqué.
+  const DEDICATED_PAGES: Record<string, string> = { depannage: '/depannage' };
+  if (slug && DEDICATED_PAGES[slug]) return <Navigate to={DEDICATED_PAGES[slug]} replace />;
+
   if (!service) return <Navigate to="/services" replace />;
 
   const canonical = `${SITE.url}/services/${service.slug}/`;
