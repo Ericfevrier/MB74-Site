@@ -683,7 +683,7 @@ export function HivernageStockagePage() {
                 <div className="relative border-l border-gray-200 ml-4 md:ml-6 space-y-12 pl-8 pb-4">
                   {/* Step 1 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">
                       1
                     </span>
                     <h3 className="text-lg font-bold uppercase text-brand-dark">Devis gratuit 24 h</h3>
@@ -694,7 +694,7 @@ export function HivernageStockagePage() {
 
                   {/* Step 2 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">
                       2
                     </span>
                     <h3 className="text-lg font-bold uppercase text-brand-dark">Prise en charge personnalisée (Sept - Nov)</h3>
@@ -705,7 +705,7 @@ export function HivernageStockagePage() {
 
                   {/* Step 3 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">
                       3
                     </span>
                     <h3 className="text-lg font-bold uppercase text-brand-dark">Mise hors d'eau & Nettoyage de coque</h3>
@@ -716,7 +716,7 @@ export function HivernageStockagePage() {
 
                   {/* Step 4 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">
                       4
                     </span>
                     <h3 className="text-lg font-bold uppercase text-brand-dark">Hivernage moteur & électronique</h3>
@@ -727,7 +727,7 @@ export function HivernageStockagePage() {
 
                   {/* Step 5 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">
                       5
                     </span>
                     <h3 className="text-lg font-bold uppercase text-brand-dark">Stockage sécurisé sous Hangar (Déc - Mars)</h3>
@@ -738,7 +738,7 @@ export function HivernageStockagePage() {
 
                   {/* Step 6 */}
                   <div className="relative">
-                    <span className="absolute -left-[45px] top-1 bg-brand-cyan text-brand-dark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-4 border-brand-dark">
+                    <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">
                       6
                     </span>
                     <h3 className="text-lg font-bold uppercase text-brand-dark">Remise en service & Livraison (Avr - Mai)</h3>
