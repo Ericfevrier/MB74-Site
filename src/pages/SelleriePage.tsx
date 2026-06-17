@@ -234,8 +234,6 @@ export function SelleriePage() {
               {[
                 { Icon: Ruler, t: 'Sur mesure', d: 'Confection artisanale ajustée à votre bateau.' },
                 { Icon: ShieldCheck, t: 'Anti-UV & humidité', d: 'Matériaux marins traités pour durer.' },
-                { Icon: Anchor, t: 'Tous bateaux', d: 'Du runabout de loisir au yacht.' },
-                { Icon: Sofa, t: 'Pose incluse', d: 'Installation et ajustement directement à bord.' },
               ].map(({ Icon, t, d }, i) => (
                 <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
                   <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
