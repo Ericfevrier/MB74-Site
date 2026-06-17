@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
 import { ArrowRight, Users, ChevronRight, Anchor } from 'lucide-react';
 import { brandsData } from '../data/brands';
+import { nautiqueModels } from '../data/nautiqueModels';
 import { ModelComparison } from './ModelComparison';
 import { UsedBoatsSection } from './UsedBoatsSection';
 import { FAQSection } from './FAQSection';
@@ -143,53 +144,65 @@ export function BrandPage() {
       </article>
 
       {/* Models Section */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-ink-950">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-brand-dark uppercase tracking-tight mb-4">La Gamme {brand.name}</h2>
-            <div className="w-20 h-1 bg-brand-cyan mx-auto rounded-full"></div>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="w-8 h-1 bg-brand-cyan rounded-full" />
+              <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">La gamme</span>
+              <span className="w-8 h-1 bg-brand-cyan rounded-full" />
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold text-white uppercase tracking-tight">La Gamme {brand.name}</h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {brand.models.map((model, idx) => (
-              <motion.article
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="group relative bg-brand-mist rounded-[3rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:translate-y-[-10px] flex flex-col h-full"
-              >
-                <div className="aspect-[4/3] overflow-hidden relative">
-                  <img 
-                    src={model.image} 
-                    alt={`Bateau ${model.name} vendu chez Motorboat 74`} 
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-colors"></div>
-                </div>
-                <div className="p-8 flex-1 flex flex-col">
-                  <h3 className="text-lg md:text-xl font-bold text-brand-dark uppercase tracking-tight mb-2 min-h-[3.5rem] flex items-center">
-                    {model.name}
-                  </h3>
-                  <p className="text-gray-500 text-sm mb-6 leading-relaxed flex-1">
-                    {model.description}
-                  </p>
-                  <div className="mt-auto pt-6 border-t border-gray-200">
-                    <Link to={`/${id}/${model.name.toLowerCase().replace(/\s+/g, '-')}`} className="w-full bg-brand-dark text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 group-hover:bg-brand-cyan group-hover:text-brand-dark transition-all duration-300 min-h-[44px]">
-                      Découvrir le modèle <ArrowRight size={18} />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {brand.models.map((model, idx) => {
+              const slug = model.name.toLowerCase().replace(/\s+/g, '-');
+              const gamme = nautiqueModels[slug]?.gamme;
+              return (
+                <motion.article
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: (idx % 4) * 0.08 }}
+                  className="group relative bg-ink-900 border border-white/10 rounded-3xl overflow-hidden hover:border-brand-cyan hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
+                >
+                  <div className="aspect-[4/3] overflow-hidden relative">
+                    <img
+                      src={model.image}
+                      alt={`Bateau ${model.name} vendu chez Motorboat 74`}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-transparent to-transparent" />
+                  </div>
+                  <div className="p-6 flex-1 flex flex-col">
+                    {gamme && (
+                      <span className="text-[10px] uppercase tracking-widest font-bold text-brand-cyan mb-1.5">{gamme}</span>
+                    )}
+                    <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-2 leading-tight">
+                      {model.name}
+                    </h3>
+                    <p className="text-gray-400 text-sm mb-6 leading-relaxed flex-1">
+                      {model.description}
+                    </p>
+                    <Link
+                      to={`/${id}/${slug}`}
+                      className="mt-auto inline-flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-widest text-xs py-3.5 rounded-xl group-hover:bg-brand-cyan group-hover:text-brand-dark group-hover:border-brand-cyan transition-all duration-300 min-h-[44px]"
+                    >
+                      Découvrir le modèle <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
                     </Link>
                   </div>
-                </div>
-              </motion.article>
-            ))}
+                </motion.article>
+              );
+            })}
           </div>
-          
+
           {brand.models.length === 0 && (
-            <div className="text-center py-20 bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200">
-              <p className="text-gray-400 italic">De nouveaux modèles {brand.name} arrivent bientôt...</p>
+            <div className="text-center py-20 bg-ink-900 rounded-3xl border border-dashed border-white/15">
+              <p className="text-gray-400 italic">De nouveaux modèles {brand.name} arrivent bientôt…</p>
             </div>
           )}
         </div>
