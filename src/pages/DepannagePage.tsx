@@ -218,17 +218,19 @@ export function DepannagePage() {
               Une panne sur l'eau&nbsp;? Chaque minute compte. Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 intervient rapidement avec un <strong className="text-brand-cyan">bateau-atelier équipé</strong> pour vous remettre en sécurité et reprendre la navigation.
             </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 text-left max-w-3xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">
               {[
-                { Icon: Clock, t: '30–60 min', d: 'Délai d’intervention moyen sur le lac.' },
-                { Icon: LifeBuoy, t: '7j/7', d: 'Mobilisés en haute saison.' },
+                { Icon: Clock, t: '30–60 min', d: 'Délai d’intervention moyen sur le lac d’Annecy.' },
+                { Icon: LifeBuoy, t: '7j/7', d: 'Équipe mobilisée en haute saison (8h–20h).' },
                 { Icon: PackageCheck, t: 'Bateau-atelier', d: 'Entièrement équipé pour réparer à flot.' },
-                { Icon: MapPin, t: "Lac d'Annecy", d: 'Expertise locale du plan d’eau.' },
+                { Icon: MapPin, t: "Lac d'Annecy", d: 'Expertise locale du plan d’eau et de ses ports.' },
               ].map(({ Icon, t, d }, i) => (
-                <div key={i} className="flex flex-col gap-2 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm">
-                  <Icon className="text-brand-cyan w-7 h-7" />
-                  <p className="font-bold text-white text-sm uppercase tracking-tight">{t}</p>
-                  <p className="text-xs text-gray-400 font-medium leading-snug">{d}</p>
+                <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
+                  <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="font-bold text-white text-base uppercase tracking-tight">{t}</p>
+                    <p className="text-xs text-gray-400 mt-1 font-medium">{d}</p>
+                  </div>
                 </div>
               ))}
             </div>
