@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Breadcrumb } from '../components/Breadcrumb';
+import { hivernageCities, HIVERNAGE_CITY_ORDER } from '../data/hivernageCities';
 import {
   Shield,
   Wrench,
@@ -152,13 +153,9 @@ export function HivernageStockagePage() {
     "offers": {
       "@type": "Offer",
       "priceCurrency": "EUR",
-      "price": "690",
-      "priceSpecification": {
-        "@type": "PriceSpecification",
-        "priceCurrency": "EUR",
-        "minPrice": "120",
-        "description": "À partir de 690 € HT (hivernage complet) ou 120 € HT/mois (stockage seul)."
-      }
+      "availability": "https://schema.org/InStock",
+      "url": `${SITE_URL}/hivernage-stockage-bateau`,
+      "description": "Devis personnalisé gratuit sous 24 h, selon la taille et la motorisation du bateau."
     },
     "description": "Hivernez votre bateau à Annecy et en Haute-Savoie dans un hangar sécurisé de 3 000 m². Mise hors d'eau, hivernage moteur certifié, antigel, stockage hors-gel, remise en service et livraison printanière incluses."
   };
@@ -180,7 +177,7 @@ export function HivernageStockagePage() {
         "name": "Quel est le prix moyen d'un hivernage de bateau à Annecy ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Nos forfaits débutent à 690 € HT pour l’hivernage moteur complet et à partir de 120 € HT par mois pour le stockage sécurisé sous hangar isolé. Le tarif varie selon la longueur de la coque et la motorisation (In-board / Hors-bord)."
+          "text": "Le tarif dépend de la longueur de la coque, de la motorisation (in-board / hors-bord) et de la formule choisie (hivernage complet ou stockage seul). Nous établissons un devis personnalisé et gratuit sous 24 h, sans engagement."
         }
       },
       {
@@ -284,7 +281,7 @@ export function HivernageStockagePage() {
     },
     {
       q: "Quel est le prix moyen d'un hivernage de bateau à Annecy ?",
-      a: "Nos forfaits de maintenance et hivernage technique démarrent à partir de 690 € HT. Le remisage seul sous hangar sécurisé commence à 120 € HT / mois. Le prix total dépend de la taille de votre bateau, de son équipement (ex: ballasts de wakeboard) et de son type de motorisation (Hors-Bord vs In-Board)."
+      a: "Le tarif dépend de la taille de votre bateau, de son équipement (ex : ballasts de wakeboard), de sa motorisation (hors-bord ou in-board) et de la formule retenue (hivernage complet ou stockage seul). Nous vous adressons un devis personnalisé et gratuit sous 24 h, sans engagement."
     },
     {
       q: "Quels types de bateaux pouvez-vous hiverner ?",
@@ -332,7 +329,7 @@ export function HivernageStockagePage() {
     <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
       <Helmet>
         <title>Hivernage & Stockage Bateau Annecy — Hangar 3000 m² | MB74</title>
-        <meta name="description" content="Hivernage et stockage de bateau à Annecy (Haute-Savoie) : hangar sécurisé 3 000 m², hivernage moteur certifié, antigel, remise à l'eau incluse. À partir de 690 € HT. Devis sous 24 h." />
+        <meta name="description" content="Hivernage et stockage de bateau à Annecy (Haute-Savoie) : hangar sécurisé 3 000 m², hivernage moteur certifié, antigel, remise à l'eau incluse. Devis personnalisé gratuit sous 24 h." />
         <link rel="canonical" href="https://motorboat74.com/hivernage-stockage-bateau" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="geo.region" content="FR-74" />
@@ -344,13 +341,13 @@ export function HivernageStockagePage() {
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:site_name" content="MotorBoat 74" />
         <meta property="og:title" content="Hivernage & Stockage de Bateau à Annecy — Hangar sécurisé 3 000 m²" />
-        <meta property="og:description" content="Hivernage moteur certifié, antigel, stockage hors-gel et remise à l'eau incluse sur le Lac d'Annecy. À partir de 690 € HT — devis sous 24 h." />
+        <meta property="og:description" content="Hivernage moteur certifié, antigel, stockage hors-gel et remise à l'eau incluse sur le Lac d'Annecy. Devis personnalisé gratuit sous 24 h." />
         <meta property="og:url" content="https://motorboat74.com/hivernage-stockage-bateau" />
         <meta property="og:image" content="https://motorboat74.com/images/2026-g23-perf-18.jpg" />
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Hivernage & Stockage de Bateau à Annecy — Hangar 3 000 m²" />
-        <meta name="twitter:description" content="Hivernage moteur certifié et stockage hors-gel sur le Lac d'Annecy. À partir de 690 € HT, devis sous 24 h." />
+        <meta name="twitter:description" content="Hivernage moteur certifié et stockage hors-gel sur le Lac d'Annecy. Devis personnalisé gratuit sous 24 h." />
         <meta name="twitter:image" content="https://motorboat74.com/images/2026-g23-perf-18.jpg" />
         <script type="application/ld+json">{JSON.stringify(schemaLocalBusiness)}</script>
         <script type="application/ld+json">{JSON.stringify(schemaService)}</script>
@@ -437,11 +434,11 @@ export function HivernageStockagePage() {
               >
                 Obtenir mon devis 24 h
               </button>
-              <a 
-                href="#tarifs" 
+              <a
+                href="#formules"
                 className="bg-transparent border-2 border-white/20 text-white px-10 py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-white/5 hover:border-brand-cyan transition-all duration-300 flex items-center justify-center gap-2"
               >
-                Voir les tarifs <ArrowRight className="w-4 h-4 text-brand-cyan" />
+                Voir nos formules <ArrowRight className="w-4 h-4 text-brand-cyan" />
               </a>
             </div>
 
@@ -493,7 +490,7 @@ export function HivernageStockagePage() {
                 {[
                   { Icon: MapPin, k: "Localisation", v: "Val de Chaise (74210), 20 min d'Annecy" },
                   { Icon: Warehouse, k: "Hangar", v: "3 000 m² isolé, hors-gel, sous alarme 24/7" },
-                  { Icon: FileCheck, k: "À partir de", v: "690 € HT (complet) · 120 € HT/mois (stockage)" },
+                  { Icon: Truck, k: "Transport", v: "Récupération à votre port incluse" },
                   { Icon: Clock, k: "Devis", v: "Réponse sous 24 h, gratuit" },
                   { Icon: Anchor, k: "Zones", v: "Lac d'Annecy, Bourget, Léman" },
                   { Icon: Shield, k: "Marques", v: "Toutes marques · concession. Nautique" },
@@ -626,8 +623,8 @@ export function HivernageStockagePage() {
                     </div>
 
                     <div className="pt-6 border-t border-gray-200">
-                      <div className="text-gray-600 text-xs mb-1">Prix de la tranquillité complète :</div>
-                      <div className="text-3xl font-bold text-brand-dark">À partir de <span className="text-brand-cyan">690 €</span> <span className="text-xs font-semibold text-gray-500">HT</span></div>
+                      <div className="text-gray-600 text-xs mb-1">La sérénité, clé en main :</div>
+                      <div className="text-xl font-bold text-brand-dark">Devis personnalisé <span className="text-brand-cyan">sous 24 h</span></div>
                       <button 
                         onClick={() => {
                           setFormData(prev => ({ ...prev, formule: 'Hivernage complet' }));
@@ -658,8 +655,8 @@ export function HivernageStockagePage() {
                     </div>
 
                     <div className="pt-6 border-t border-gray-200">
-                      <div className="text-gray-600 text-xs mb-1">Tarif stockage mensuel direct :</div>
-                      <div className="text-3xl font-bold text-brand-dark">À partir de <span className="text-brand-cyan">120 €</span><span className="text-base text-gray-600 font-light">/mois</span> <span className="text-xs font-semibold text-gray-500">HT</span></div>
+                      <div className="text-gray-600 text-xs mb-1">Une place au sec, sécurisée :</div>
+                      <div className="text-xl font-bold text-brand-dark">Devis personnalisé <span className="text-brand-cyan">sous 24 h</span></div>
                       <button 
                         onClick={() => {
                           setFormData(prev => ({ ...prev, formule: 'Stockage seul' }));
@@ -672,103 +669,48 @@ export function HivernageStockagePage() {
                     </div>
                   </div>
                 </div>
-              {/* Sous-section : grille tarifaire */}
-              <div id="tarifs" className="mt-20">
+              {/* Sous-section : Zones d'intervention (maillage local) */}
+              <div id="zones" className="mt-20">
                 <div className="mb-10 text-left">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Transparence de prix</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Zones d'intervention</span>
                   <h3 className="text-xl md:text-2xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Tarifs hivernage & stockage de bateau — fourchettes 2025/2026
+                    Hivernage de bateau sur tout le bassin annécien et le Léman
                   </h3>
+                  <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
+                    Que votre bateau soit amarré sur le <strong>lac d'Annecy</strong>, le <strong>Léman</strong>, le <strong>lac du Bourget</strong> ou ailleurs en Haute-Savoie, nous venons le récupérer directement à votre port et prenons en charge toute la logistique. Découvrez nos pages dédiées par secteur&nbsp;:
+                  </p>
                 </div>
 
-                {/* Rates Table converting to list on mobile */}
-                <div className="overflow-hidden border border-gray-200 rounded-2xl bg-white">
-                  {/* Desktop version */}
-                  <div className="hidden md:block">
-                    <table className="w-full text-left text-sm">
-                      <thead className="bg-gray-50 text-brand-dark font-extrabold uppercase tracking-widest text-[11px] border-b border-gray-200">
-                        <tr>
-                          <th className="py-4 px-6 text-brand-cyan">Longueur du bateau</th>
-                          <th className="py-4 px-6">Hivernage Complet (Hangar Sec Inclus)</th>
-                          <th className="py-4 px-6">Stockage Seul Hangar (Mensuel)</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200 font-medium text-gray-600">
-                        <tr className="hover:bg-gray-50">
-                          <td className="py-4 px-6 text-brand-dark font-bold">&lt; 5,00 Mètres</td>
-                          <td className="py-4 px-6 font-bold text-brand-cyan">Dès 690 € HT</td>
-                          <td className="py-4 px-6 font-bold">120 € HT / mois</td>
-                        </tr>
-                        <tr className="hover:bg-gray-50">
-                          <td className="py-4 px-6 text-brand-dark font-bold">5,00 M À 6,50 M</td>
-                          <td className="py-4 px-6 font-bold text-brand-cyan">Dès 890 € HT</td>
-                          <td className="py-4 px-6 font-bold">160 € HT / mois</td>
-                        </tr>
-                        <tr className="hover:bg-gray-50">
-                          <td className="py-4 px-6 text-brand-dark font-bold">6,50 M À 8,00 M</td>
-                          <td className="py-4 px-6 font-bold text-brand-cyan">Dès 1 190 € HT</td>
-                          <td className="py-4 px-6 font-bold">210 € HT / mois</td>
-                        </tr>
-                        <tr className="hover:bg-gray-50">
-                          <td className="py-4 px-6 text-brand-dark font-bold">&gt; 8,00 Mètres</td>
-                          <td className="py-4 px-6 font-bold text-brand-cyan">Sur Devis Personnalisé</td>
-                          <td className="py-4 px-6 font-bold">Sur devis individuel</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* Mobile version */}
-                  <div className="block md:hidden divide-y divide-gray-200">
-                    <div className="p-5">
-                      <h4 className="font-bold text-brand-dark text-base mb-2">Bateau &lt; 5,00 m</h4>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-600">Hivernage complet :</span>
-                        <span className="text-brand-cyan">Dès 690 € HT</span>
-                      </div>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-600">Stockage seul :</span>
-                        <span className="text-brand-dark">120 € HT / mois</span>
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <h4 className="font-bold text-brand-dark text-base mb-2">Bateau 5,00 m - 6,50 m</h4>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-600">Hivernage complet :</span>
-                        <span className="text-brand-cyan">Dès 890 € HT</span>
-                      </div>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-600">Stockage seul :</span>
-                        <span className="text-brand-dark">160 € HT / mois</span>
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <h4 className="font-bold text-brand-dark text-base mb-2">Bateau 6,50 m - 8,00 m</h4>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-600">Hivernage complet :</span>
-                        <span className="text-brand-cyan">Dès 1 190 € HT</span>
-                      </div>
-                      <div className="flex justify-between text-xs font-semibold py-1">
-                        <span className="text-gray-600">Stockage seul :</span>
-                        <span className="text-brand-dark">210 € HT / mois</span>
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <h4 className="font-bold text-brand-dark text-base mb-2">Bateau &gt; 8,00 m</h4>
-                      <div className="text-xs font-bold text-brand-cyan text-center py-2 uppercase tracking-wider">
-                        Tarif sur devis gratuit sous 24h
-                      </div>
-                    </div>
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {HIVERNAGE_CITY_ORDER.map((slug) => {
+                    const c = hivernageCities[slug];
+                    if (!c) return null;
+                    return (
+                      <Link
+                        key={slug}
+                        to={`/services/hivernage-bateaux/${slug}`}
+                        className="group flex items-center gap-3 bg-white border border-gray-200 rounded-2xl p-5 hover:border-brand-cyan hover:shadow-lg hover:shadow-brand-cyan/5 transition-all"
+                      >
+                        <span className="w-10 h-10 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center shrink-0">
+                          <MapPin className="w-5 h-5" />
+                        </span>
+                        <div className="min-w-0">
+                          <p className="font-bold text-brand-dark uppercase tracking-tight text-sm leading-tight">{c.city}</p>
+                          <p className="text-gray-500 text-xs capitalize truncate">{c.lake}</p>
+                        </div>
+                        <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-brand-cyan ml-auto transition-colors" />
+                      </Link>
+                    );
+                  })}
                 </div>
 
-                <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 bg-brand-cyan text-brand-dark p-6 rounded-2xl shadow-xl">
+                <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 bg-ink-950 text-white p-6 rounded-2xl">
                   <div>
-                    <h4 className="font-extrabold text-base uppercase tracking-tight flex items-center gap-2"><Star className="w-4 h-4 fill-brand-dark" /> Privilège d'Achat Nautique</h4>
-                    <p className="text-xs font-semibold text-brand-dark/85 mt-1">Vous êtes propriétaire d'un bateau de marque Nautique ? Vous bénéficiez d'une réduction de -5% automatique sur l'hivernage complet.</p>
+                    <h4 className="font-extrabold text-base uppercase tracking-tight flex items-center gap-2"><Truck className="w-4 h-4 text-brand-cyan" /> Récupération à votre port incluse</h4>
+                    <p className="text-xs font-medium text-gray-400 mt-1">Votre commune n'est pas listée&nbsp;? Nous intervenons sur toute la Haute-Savoie et le Chablais — dites-nous où se trouve votre bateau.</p>
                   </div>
-                  <button onClick={scrollToForm} className="bg-brand-dark hover:bg-ink-850 text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-colors whitespace-nowrap">
-                    En bénéficier
+                  <button onClick={scrollToForm} className="bg-brand-cyan hover:bg-white text-brand-dark px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-colors whitespace-nowrap">
+                    Demander un devis
                   </button>
                 </div>
               </div>
@@ -1309,47 +1251,6 @@ export function HivernageStockagePage() {
                     />
                   </div>
 
-                  {/* Radio selectors for formulas */}
-                  <div>
-                    <span className="block text-[10px] font-bold uppercase tracking-widest text-mute mb-3">
-                      Formule choisie *
-                    </span>
-                    <div className="space-y-2 font-bold text-sm">
-                      <label className="flex items-center gap-3 bg-ink-900 border border-white/5 hover:border-brand-cyan/20 p-3 rounded-xl cursor-pointer">
-                        <input 
-                          type="radio" 
-                          name="formule" 
-                          value="Hivernage complet" 
-                          checked={formData.formule === 'Hivernage complet'}
-                          onChange={handleInputChange}
-                          className="accent-brand-cyan h-4 w-4"
-                        />
-                        <span className="text-white text-xs">Hivernage Complet Tout-inclus</span>
-                      </label>
-                      <label className="flex items-center gap-3 bg-ink-900 border border-white/5 hover:border-brand-cyan/20 p-3 rounded-xl cursor-pointer">
-                        <input 
-                          type="radio" 
-                          name="formule" 
-                          value="Stockage seul" 
-                          checked={formData.formule === 'Stockage seul'}
-                          onChange={handleInputChange}
-                          className="accent-brand-cyan h-4 w-4"
-                        />
-                        <span className="text-white text-xs">Stockage Seul Hangar Sec</span>
-                      </label>
-                      <label className="flex items-center gap-3 bg-ink-900 border border-white/5 hover:border-brand-cyan/20 p-3 rounded-xl cursor-pointer">
-                        <input 
-                          type="radio" 
-                          name="formule" 
-                          value="Je ne sais pas" 
-                          checked={formData.formule === 'Je ne sais pas'}
-                          onChange={handleInputChange}
-                          className="accent-brand-cyan h-4 w-4"
-                        />
-                        <span className="text-white text-xs">Je ne sais pas / Besoin d'assistance</span>
-                      </label>
-                    </div>
-                  </div>
 
                   {formError && (
                     <p className="text-red-400 text-xs font-bold text-center" role="alert">{formError}</p>
