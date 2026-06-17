@@ -25,9 +25,16 @@ import {
   MessageCircle,
 } from 'lucide-react';
 
-const ZONES = [
-  'Annecy', 'Annecy-le-Vieux', 'Sevrier', 'Saint-Jorioz', 'Duingt',
-  'Doussard', 'Talloires-Montmin', 'Menthon-Saint-Bernard', 'Veyrier-du-Lac',
+const ZONES: { name: string; desc: string }[] = [
+  { name: 'Annecy', desc: 'Port de l’Évêché, Marquisats et canal du Vassé : on vous récupère au cœur de la ville comme en sortie de port.' },
+  { name: 'Annecy-le-Vieux', desc: 'Secteur de la plage et du port d’Albigny : intervention rapide sur la rive nord-est.' },
+  { name: 'Veyrier-du-Lac', desc: 'Rive est, port de Veyrier : zone passante au pied du Mont Veyrier, que nous connaissons bien.' },
+  { name: 'Menthon-Saint-Bernard', desc: 'Petit port sous le château de Menthon : un accès délicat que nous maîtrisons pour une dépose en sécurité.' },
+  { name: 'Talloires-Montmin', desc: 'Baie de Talloires et ses roselières : mouillage magnifique mais peu profond par endroits — approche prudente.' },
+  { name: 'Duingt', desc: 'Défilé et château de Duingt : passage étroit entre grand et petit lac, secteur que nous maîtrisons pour remorquer sans risque.' },
+  { name: 'Saint-Jorioz', desc: 'Grande plage et roselières de la rive ouest : intervention sur tout le secteur jusqu’à la base nautique.' },
+  { name: 'Sevrier', desc: 'Rive ouest, port de Sevrier : à quelques minutes d’Annecy, l’un de nos secteurs les plus rapides.' },
+  { name: 'Doussard', desc: 'Bout du lac et réserve naturelle : zone sud peu profonde près de l’embouchure de l’Eau Morte, où nous adaptons notre approche.' },
 ];
 
 const STEPS = [
@@ -405,13 +412,17 @@ export function DepannagePage() {
                     Notre bateau-atelier couvre l'ensemble du plan d'eau et des communes riveraines. Sur le Léman ou le lac du Bourget, contactez-nous : nous étudions chaque demande.
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-2.5">
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {ZONES.map((z) => (
-                    <span key={z} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-brand-dark text-xs font-semibold px-4 py-2 rounded-full">
-                      <MapPin className="w-3.5 h-3.5 text-brand-cyan" /> {z}
-                    </span>
+                    <div key={z.name} className="bg-white border border-gray-200 rounded-2xl p-5 flex gap-3">
+                      <MapPin className="w-4 h-4 text-brand-cyan mt-0.5 shrink-0" />
+                      <div>
+                        <dt className="font-bold text-brand-dark uppercase tracking-tight text-sm">{z.name}</dt>
+                        <dd className="text-gray-600 text-sm leading-snug mt-1">{z.desc}</dd>
+                      </div>
+                    </div>
                   ))}
-                </div>
+                </dl>
               </div>
 
               {/* FAQ */}
