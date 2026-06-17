@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Breadcrumb } from '../components/Breadcrumb';
+import { OtherServices } from '../components/OtherServices';
 import {
   Shield,
   Wrench,
@@ -29,8 +30,6 @@ import {
   Lock,
   MessageCircle,
   Truck,
-  LifeBuoy,
-  Scissors
 } from 'lucide-react';
 
 export function HivernageStockagePage() {
@@ -1241,29 +1240,8 @@ export function HivernageStockagePage() {
         </div>
       </section>
 
-      {/* 🛠 Bloc 14 — Services complémentaires */}
-      <section className="bg-ink-950 py-16 text-gray-400 text-xs font-semibold border-t border-white/5 border-b border-white/5">
-        <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] text-center">
-          <p className="uppercase text-brand-cyan/50 tracking-widest text-[10px] mb-6 font-bold grid">Découvrez également nos autres services</p>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-14">
-            <Link to="/entretien-reparation" className="flex items-center gap-2 hover:text-brand-cyan transition-colors uppercase tracking-wider">
-              <Wrench className="w-4 h-4" /> Entretien & Réparation
-            </Link>
-            <Link to="/depannage" className="flex items-center gap-2 hover:text-brand-cyan transition-colors uppercase tracking-wider">
-              <LifeBuoy className="w-4 h-4" /> Dépannage Lac d'Annecy
-            </Link>
-            <Link to="/transport" className="flex items-center gap-2 hover:text-brand-cyan transition-colors uppercase tracking-wider">
-              <Truck className="w-4 h-4" /> Transport Bateau Europe
-            </Link>
-            <Link to="/sellerie" className="flex items-center gap-2 hover:text-brand-cyan transition-colors uppercase tracking-wider">
-              <Scissors className="w-4 h-4" /> Sellerie Nautique Sur-Mesure
-            </Link>
-            <Link to="/remorque" className="flex items-center gap-2 hover:text-brand-cyan transition-colors uppercase tracking-wider">
-              <Anchor className="w-4 h-4" /> Vente de Remorques
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Nos autres services */}
+      <OtherServices currentSlug="hivernage-stockage-bateau" />
     </div>
   );
 }

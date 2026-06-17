@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { getService, ServiceSection, ServiceCard } from '../data/services';
 import { SITE } from '../data/site';
-import { ComplementaryServices } from '../components/services/ComplementaryServices';
+import { OtherServices } from '../components/OtherServices';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 
 /** Icônes optionnelles par carte (clé → composant lucide). */
@@ -389,7 +389,7 @@ export function ServicePage() {
         </div>
       </section>
 
-      <ComplementaryServices currentSlug={service.slug} />
+      <OtherServices currentSlug={service.slug} />
       <ServiceContactBlock subject={service.nav} />
     </div>
   );

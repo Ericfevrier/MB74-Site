@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Breadcrumb } from '../components/Breadcrumb';
+import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
 import {
   Sofa,
@@ -24,7 +25,6 @@ import {
   Clock,
   MessageCircle,
   Anchor,
-  Truck,
 } from 'lucide-react';
 
 const ZONES = ['Annecy', 'Aix-les-Bains', 'Thonon-les-Bains', 'Évian-les-Bains', 'Genève', 'Lac de Serre-Ponçon'];
@@ -540,23 +540,8 @@ export function SelleriePage() {
         </div>
       </section>
 
-      {/* Services complémentaires */}
-      <section className="bg-ink-950 py-16 text-gray-400 text-xs font-semibold border-t border-white/5">
-        <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] text-center">
-          <p className="uppercase text-brand-cyan/50 tracking-widest text-[10px] mb-6 font-bold">Découvrez également nos autres services</p>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-14">
-            <a href="/hivernage-stockage-bateau" className="flex items-center gap-2 hover:text-brand-cyan transition-colors uppercase tracking-wider">
-              <Anchor className="w-4 h-4" /> Hivernage & Stockage
-            </a>
-            <a href="/services/entretien-reparation" className="flex items-center gap-2 hover:text-brand-cyan transition-colors uppercase tracking-wider">
-              <Wrench className="w-4 h-4" /> Entretien & Réparation
-            </a>
-            <a href="/depannage" className="flex items-center gap-2 hover:text-brand-cyan transition-colors uppercase tracking-wider">
-              <Truck className="w-4 h-4" /> Dépannage Lac d'Annecy
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* Nos autres services */}
+      <OtherServices currentSlug="sellerie-de-bateau" />
     </div>
   );
 }
