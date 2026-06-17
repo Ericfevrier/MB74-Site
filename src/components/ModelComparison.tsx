@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Lightbulb, ArrowDown } from 'lucide-react';
 import { ComparisonCategory } from '../data/brands';
 
@@ -9,8 +8,6 @@ interface ModelComparisonProps {
 
 export function ModelComparison({ comparisons }: ModelComparisonProps) {
   const [activeCategory, setActiveCategory] = useState(0);
-
-  const current = comparisons[activeCategory];
 
   return (
     <section className="py-24 bg-white text-brand-dark overflow-hidden border-t border-gray-200">
@@ -38,53 +35,36 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
           </div>
         </div>
 
-        {/* Sous-titre de la série comparée (structure Hn) */}
-        <motion.h3
-          key={`cat-title-${activeCategory}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4 }}
-          className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-brand-dark text-center mb-8"
-        >
-          {current.title}
-        </motion.h3>
+        {/* Comparatifs par série — TOUTES les séries sont dans le DOM (h3 + tableau)
+            pour Google ; seule la série active est visible à l'écran. */}
+        {comparisons.map((cat, idx) => (
+          <div key={idx} className={idx === activeCategory ? 'block' : 'hidden'}>
+            {/* Sous-titre de la série (structure Hn) */}
+            <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-brand-dark text-center mb-8">
+              {cat.title}
+            </h3>
 
-        {/* Résumé lecture rapide */}
-        {current.summary && (
-          <motion.div
-            key={`summary-${activeCategory}`}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="max-w-5xl mx-auto mb-12"
-          >
-            <div className="relative rounded-2xl border border-brand-cyan/25 border-l-[5px] border-l-brand-cyan bg-brand-cyan/[0.06] px-7 py-6 md:px-9 md:py-7 text-left shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <Lightbulb size={16} className="text-brand-cyan" />
-                <span className="text-brand-cyan font-bold uppercase tracking-widest text-[11px]">L'essentiel à retenir</span>
+            {/* Résumé lecture rapide */}
+            {cat.summary && (
+              <div className="max-w-5xl mx-auto mb-12">
+                <div className="relative rounded-2xl border border-brand-cyan/25 border-l-[5px] border-l-brand-cyan bg-brand-cyan/[0.06] px-7 py-6 md:px-9 md:py-7 text-left shadow-sm">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Lightbulb size={16} className="text-brand-cyan" />
+                    <span className="text-brand-cyan font-bold uppercase tracking-widest text-[11px]">L'essentiel à retenir</span>
+                  </div>
+                  <p className="text-gray-700 text-base md:text-[17px] leading-relaxed">
+                    {cat.summary}
+                  </p>
+                  <p className="mt-4 flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-widest text-gray-400">
+                    Comparatif chiffré ci-dessous
+                    <ArrowDown size={13} className="text-brand-cyan" />
+                  </p>
+                </div>
               </div>
-              <p className="text-gray-700 text-base md:text-[17px] leading-relaxed">
-                {current.summary}
-              </p>
-              <p className="mt-4 flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-widest text-gray-400">
-                Comparatif chiffré ci-dessous
-                <ArrowDown size={13} className="text-brand-cyan" />
-              </p>
-            </div>
-          </motion.div>
-        )}
+            )}
 
-        {/* Comparison Table */}
-        <div className="relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCategory}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="rounded-[1.5rem] overflow-hidden shadow-xl shadow-brand-dark/5 border border-gray-200"
-            >
+            {/* Tableau */}
+            <div className="rounded-[1.5rem] overflow-hidden shadow-xl shadow-brand-dark/5 border border-gray-200">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
@@ -92,19 +72,19 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
                       <th className="py-8 px-10 font-bold uppercase tracking-widest text-[13px] min-w-[300px]">
                         Caractéristiques
                       </th>
-                      {current.models.map((model, idx) => (
-                        <th key={idx} className="py-8 px-10 font-bold uppercase tracking-widest text-[14px] text-center">
+                      {cat.models.map((model, mIdx) => (
+                        <th key={mIdx} className="py-8 px-10 font-bold uppercase tracking-widest text-[14px] text-center">
                           {model}
                         </th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {current.specs.map((spec, idx) => (
-                      <tr 
-                        key={idx} 
+                    {cat.specs.map((spec, sIdx) => (
+                      <tr
+                        key={sIdx}
                         className={`border-b border-gray-200 transition-colors ${
-                          idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                          sIdx % 2 === 0 ? 'bg-gray-50' : 'bg-white'
                         }`}
                       >
                         <td className="py-6 px-10 text-[14px] font-medium text-brand-dark">
@@ -120,9 +100,9 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
                   </tbody>
                 </table>
               </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
