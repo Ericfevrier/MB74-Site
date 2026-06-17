@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Lightbulb, ArrowDown } from 'lucide-react';
 import { ComparisonCategory } from '../data/brands';
 
 interface ModelComparisonProps {
@@ -39,15 +40,27 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
 
         {/* Résumé lecture rapide */}
         {current.summary && (
-          <motion.p
+          <motion.div
             key={`summary-${activeCategory}`}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="max-w-3xl mx-auto text-center text-gray-600 text-base md:text-[17px] leading-relaxed mb-10"
+            className="max-w-5xl mx-auto mb-12"
           >
-            {current.summary}
-          </motion.p>
+            <div className="relative rounded-2xl border border-brand-cyan/25 border-l-[5px] border-l-brand-cyan bg-brand-cyan/[0.06] px-7 py-6 md:px-9 md:py-7 text-left shadow-sm">
+              <div className="flex items-center gap-2 mb-3">
+                <Lightbulb size={16} className="text-brand-cyan" />
+                <span className="text-brand-cyan font-bold uppercase tracking-widest text-[11px]">L'essentiel à retenir</span>
+              </div>
+              <p className="text-gray-700 text-base md:text-[17px] leading-relaxed">
+                {current.summary}
+              </p>
+              <p className="mt-4 flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-widest text-gray-400">
+                Comparatif chiffré ci-dessous
+                <ArrowDown size={13} className="text-brand-cyan" />
+              </p>
+            </div>
+          </motion.div>
         )}
 
         {/* Comparison Table */}
