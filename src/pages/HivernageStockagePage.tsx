@@ -362,7 +362,7 @@ export function HivernageStockagePage() {
       <div className="lg:hidden fixed bottom-6 inset-x-0 mx-auto px-6 z-50 pointer-events-none">
         <button 
           onClick={scrollToForm}
-          className="w-full bg-brand-cyan text-brand-dark font-extrabold py-4 px-6 rounded-2xl shadow-2xl flex items-center justify-center gap-2 text-sm uppercase tracking-wider active:scale-95 transition-all pointer-events-auto border border-white/20 animate-pulse"
+          className="w-full bg-brand-cyan text-brand-dark font-extrabold py-4 px-6 rounded-2xl shadow-2xl flex items-center justify-center gap-2 text-sm uppercase tracking-wider active:scale-95 transition-all pointer-events-auto border border-white/20"
         >
           <FileCheck className="w-5 h-5" /> Devis Hivernage 24 h
         </button>
@@ -452,30 +452,6 @@ export function HivernageStockagePage() {
               </span>
               <span className="text-white">● 600+ bateaux hivernés par an</span>
               <span className="text-white">● Concessionnaire Expert depuis plus de 10 ans</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Barre de preuve sociale (Bandeau horizontal) */}
-      <section className="bg-brand-cyan text-brand-dark py-6 relative z-10 shadow-lg font-bold overflow-hidden select-none">
-        <div className="container mx-auto px-4 lg:px-8 max-w-[1400px]">
-          <div className="flex flex-wrap items-center justify-around gap-y-4 gap-x-8 text-center uppercase tracking-widest text-xs md:text-sm">
-            <div className="flex items-center gap-2">
-              <Star className="w-5 h-5 fill-brand-dark text-brand-dark" />
-              <span>Google 4,7/5</span>
-            </div>
-            <div className="hidden sm:block text-brand-dark/40 font-bold">|</div>
-            <div>
-              <span>600+ Bateaux entretenus par an</span>
-            </div>
-            <div className="hidden md:block text-brand-dark/40 font-bold">|</div>
-            <div>
-              <span>Plus de 10 ans d'expertise</span>
-            </div>
-            <div className="hidden sm:block text-brand-dark/40 font-bold">|</div>
-            <div>
-              <span>Concessionnaire Nautique officiel</span>
             </div>
           </div>
         </div>
@@ -616,7 +592,7 @@ export function HivernageStockagePage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             
             {/* LEFT COLUMN: Blocks 4 to 12 (occupies 2/3 space recursively) */}
-            <div className="lg:col-span-2 space-y-32">
+            <div className="lg:col-span-2 space-y-24">
               
               {/* Bloc 4 — Les 2 formules */}
               <div id="formules" className="scroll-mt-36">
@@ -1237,9 +1213,9 @@ export function HivernageStockagePage() {
 
 
             {/* RIGHT COLUMN: Sticky Form (Block 13 - CTA final) */}
-            <aside 
+            <aside
               ref={formulationFormRef}
-              className="lg:col-span-1 lg:sticky lg:top-36 bg-ink-950 border-2 border-brand-cyan/30 rounded-3xl p-8 shadow-3xl overflow-hidden"
+              className="lg:col-span-1 lg:sticky lg:top-32 lg:max-h-[calc(100vh-9rem)] lg:overflow-y-auto hide-scrollbar bg-ink-950 border-2 border-brand-cyan/30 rounded-3xl p-8 shadow-3xl"
             >
               <div className="relative">
                 {/* Decorative border accent */}
