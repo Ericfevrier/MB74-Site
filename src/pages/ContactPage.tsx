@@ -68,7 +68,7 @@ export function ContactPage() {
       </header>
 
       {/* Coordonnées + formulaire (réutilise le bloc partagé) */}
-      <ServiceContactBlock subject="Contact" />
+      <ServiceContactBlock subject="Contact" hideHeader />
 
       {/* Carte + horaires */}
       <section className="bg-white pb-24">

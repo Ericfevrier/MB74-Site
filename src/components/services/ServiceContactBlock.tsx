@@ -12,13 +12,15 @@ interface ServiceContactBlockProps {
   showMap?: boolean;
   /** Conteneur pleine largeur (1400px) pour s'aligner sur les pages larges (ex. page modèle). */
   wide?: boolean;
+  /** Masque l'en-tête (eyebrow + titre + sous-titre) — utile quand la page a déjà son propre hero. */
+  hideHeader?: boolean;
 }
 
 const labelCls = 'block text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-1.5';
 const inputCls =
   'w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-dark placeholder:text-gray-400 focus:bg-white focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 outline-none transition';
 
-export function ServiceContactBlock({ subject, title, showMap, wide }: ServiceContactBlockProps) {
+export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader }: ServiceContactBlockProps) {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -63,19 +65,21 @@ export function ServiceContactBlock({ subject, title, showMap, wide }: ServiceCo
     <section id="contact" className="bg-brand-light py-20 scroll-mt-[120px]">
       <div className={`${wide ? 'max-w-[1400px]' : 'max-w-5xl'} mx-auto px-4 lg:px-8`}>
         {/* En-tête */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <span className="w-8 h-1 bg-brand-cyan rounded-full" />
-            <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">Contact</span>
-            <span className="w-8 h-1 bg-brand-cyan rounded-full" />
+        {!hideHeader && (
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <span className="w-8 h-1 bg-brand-cyan rounded-full" />
+              <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">Contact</span>
+              <span className="w-8 h-1 bg-brand-cyan rounded-full" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark">
+              {title ? title : <>Contactez-<span className="text-brand-cyan">nous</span></>}
+            </h2>
+            <p className="text-gray-500 mt-4 max-w-xl mx-auto">
+              Une question, un projet ou une demande de devis ? Notre équipe vous répond sous 24&nbsp;h.
+            </p>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark">
-            {title ? title : <>Contactez-<span className="text-brand-cyan">nous</span></>}
-          </h2>
-          <p className="text-gray-500 mt-4 max-w-xl mx-auto">
-            Une question, un projet ou une demande de devis ? Notre équipe vous répond sous 24&nbsp;h.
-          </p>
-        </div>
+        )}
 
         <div className="grid lg:grid-cols-5 gap-8 items-start">
           {/* Coordonnées */}
