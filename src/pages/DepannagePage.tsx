@@ -26,15 +26,15 @@ import {
 } from 'lucide-react';
 
 const ZONES: { name: string; desc: string }[] = [
-  { name: 'Annecy', desc: 'Port de l’Évêché, Marquisats et canal du Vassé : on vous récupère au cœur de la ville comme en sortie de port.' },
-  { name: 'Annecy-le-Vieux', desc: 'Secteur de la plage et du port d’Albigny : intervention rapide sur la rive nord-est.' },
-  { name: 'Veyrier-du-Lac', desc: 'Rive est, port de Veyrier : zone passante au pied du Mont Veyrier, que nous connaissons bien.' },
-  { name: 'Menthon-Saint-Bernard', desc: 'Petit port sous le château de Menthon : un accès délicat que nous maîtrisons pour une dépose en sécurité.' },
-  { name: 'Talloires-Montmin', desc: 'Baie de Talloires et ses roselières : mouillage magnifique mais peu profond par endroits — approche prudente.' },
-  { name: 'Duingt', desc: 'Défilé et château de Duingt : passage étroit entre grand et petit lac, secteur que nous maîtrisons pour remorquer sans risque.' },
-  { name: 'Saint-Jorioz', desc: 'Grande plage et roselières de la rive ouest : intervention sur tout le secteur jusqu’à la base nautique.' },
-  { name: 'Sevrier', desc: 'Rive ouest, port de Sevrier : à quelques minutes d’Annecy, l’un de nos secteurs les plus rapides.' },
-  { name: 'Doussard', desc: 'Bout du lac et réserve naturelle : zone sud peu profonde près de l’embouchure de l’Eau Morte, où nous adaptons notre approche.' },
+  { name: 'Annecy', desc: 'Au cœur de la ville — port de l’Évêché, Marquisats et canal du Vassé : nous rejoignons votre bateau en quelques minutes pour le dépanner ou le remorquer.' },
+  { name: 'Annecy-le-Vieux', desc: 'Plage et port d’Albigny : prise en charge rapide d’une panne sur toute la rive nord-est du lac.' },
+  { name: 'Veyrier-du-Lac', desc: 'Port de Veyrier et rive est, au pied du Mont Veyrier : un secteur passant que nous connaissons parfaitement pour intervenir vite.' },
+  { name: 'Menthon-Saint-Bernard', desc: 'Petit port sous le château de Menthon, à l’accès délicat : nous y intervenons en sécurité, à flot ou par remorquage.' },
+  { name: 'Talloires-Montmin', desc: 'Baie de Talloires et ses roselières, peu profonde par endroits : nous adaptons l’approche pour vous récupérer sans risque.' },
+  { name: 'Duingt', desc: 'Défilé de Duingt, passage étroit entre grand et petit lac : un secteur que nous maîtrisons pour remorquer en toute sécurité.' },
+  { name: 'Saint-Jorioz', desc: 'Grande plage et roselières de la rive ouest : dépannage et assistance sur tout le secteur jusqu’à la base nautique.' },
+  { name: 'Sevrier', desc: 'Port de Sevrier, rive ouest : à quelques minutes de notre base, l’un de nos délais d’intervention les plus courts.' },
+  { name: 'Doussard', desc: 'Bout du lac et réserve naturelle, près de l’embouchure de l’Eau Morte : zone sud peu profonde où nous intervenons avec précaution.' },
 ];
 
 const STEPS = [
@@ -409,7 +409,7 @@ export function DepannagePage() {
                     Nous intervenons sur tout le lac d'Annecy
                   </h2>
                   <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
-                    Notre bateau-atelier couvre l'ensemble du plan d'eau et des communes riveraines. Sur le Léman ou le lac du Bourget, contactez-nous : nous étudions chaque demande.
+                    Notre bateau-atelier dépanne les bateaux sur l'ensemble du lac d'Annecy : d'<strong>Annecy</strong> à <strong>Doussard</strong>, en passant par <strong>Annecy-le-Vieux</strong>, <strong>Veyrier-du-Lac</strong>, <strong>Menthon-Saint-Bernard</strong>, <strong>Talloires-Montmin</strong>, <strong>Duingt</strong>, <strong>Saint-Jorioz</strong> et <strong>Sevrier</strong>. Sur le Léman ou le lac du Bourget, contactez-nous : nous étudions chaque demande.
                   </p>
                 </div>
                 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
