@@ -161,7 +161,7 @@ export function ModelPage() {
     mainEntity: model.faqs.map((f) => ({
       '@type': 'Question',
       name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
+      acceptedAnswer: { '@type': 'Answer', text: f.a.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') },
     })),
   };
   const schemaBreadcrumb = {
@@ -720,7 +720,7 @@ export function ModelPage() {
                   <AnimatePresence>
                     {activeFaq === idx && (
                       <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="px-6 pb-6 text-gray-400 leading-relaxed">
-                        {faq.a}
+                        {renderAnswer(faq.a)}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -841,6 +841,29 @@ function PresentationSlider({ images, alt }: { images: string[]; alt: string }) 
       </div>
     </div>
   );
+}
+
+// Convertit les liens markdown [texte](/url) d'une réponse FAQ en vrais liens (internes via <Link>).
+function renderAnswer(text: string): React.ReactNode {
+  const re = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts: React.ReactNode[] = [];
+  let last = 0;
+  let key = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) parts.push(text.slice(last, m.index));
+    const [, label, href] = m;
+    parts.push(
+      href.startsWith('/') ? (
+        <Link key={key++} to={href} className="text-brand-cyan font-semibold hover:underline">{label}</Link>
+      ) : (
+        <a key={key++} href={href} className="text-brand-cyan font-semibold hover:underline">{label}</a>
+      ),
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts;
 }
 
 function SectionEyebrow({ label }: { label: string }) {

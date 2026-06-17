@@ -258,6 +258,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Quelle est la différence entre le S21 et le S23 ?",
         "a": "La principale différence entre le S21 et le S23 réside dans la taille, la capacité et le confort. Le S23, plus grand (7 m) et pouvant accueillir jusqu’à 16 passagers, offre des vagues plus généreuses, un intérieur modulable et des finitions premium, idéal pour les groupes ou familles nombreuses. Le S21, plus compact (6,5 m) et limité à 14 passagers, reste maniable et performant, avec des options moteur variées et le Nautique Surf System, parfait pour les petits groupes ou les utilisateurs cherchant un bateau plus facile à manœuvrer et à stocker."
+      },
+      {
+        "q": "Où stocker et hiverner mon Super Air Nautique S21 ?",
+        "a": "Dans nos installations près du Lac d’Annecy. Revendeur officiel Nautique, Motor Boat 74 prend en charge l’hivernage du S21 — moteur, ballast et coque — et son stockage hors saison. Découvrez le [stockage hivernal](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -454,6 +458,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Quelle est la différence entre le S23 et le S25 ?",
         "a": "La principale différence entre le S25 et le S23 réside dans la taille, la capacité et le confort. Le S25, plus grand (7,62 m), accueille plus de passagers, dispose d’un ballast plus important et d’un intérieur spacieux pour des sorties familiales ou en groupe, tout en offrant des vagues modulables optimisées pour le wakesurf. Le S23, plus compact (7,01 m), reste très performant avec un système de vague similaire, mais dans un format plus maniable et sportif, idéal pour ceux qui recherchent un excellent compromis entre performance et taille."
+      },
+      {
+        "q": "Comment hiverner mon Super Air Nautique S23 ?",
+        "a": "Confiez votre S23 à Motor Boat 74. Concessionnaire officiel Nautique, nous assurons son hivernage complet et son stockage sécurisé en Haute-Savoie. Plus d’informations sur notre [offre d’hivernage et de stockage](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -643,6 +651,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Quelle est la différence entre le S25 et le S21 ?",
         "a": "La principale différence entre le S25 et le S21 réside dans la taille, la capacité et la puissance. Le S25, plus grand (7,62 m) et spacieux, accueille jusqu’à 16 passagers, dispose de moteurs plus puissants, d’un ballast avancé pour des vagues plus importantes, et d’équipements haut de gamme comme l’audio JL Audio et l’éclairage RGB, idéal pour les sorties en famille ou en groupe. Le S21, plus compact (6,4 m), reste performant pour le wakesurf et le wakeboard avec un ballast et des moteurs adaptés à sa taille, offrant maniabilité, économie et une excellente expérience nautique pour des groupes plus restreints."
+      },
+      {
+        "q": "Proposez-vous l’hivernage et le stockage du Super Air Nautique S25 ?",
+        "a": "Oui, c’est l’un de nos services. Concessionnaire officiel Nautique, nous hivernons le S25 près d’Annecy : préparation moteur, protection et stockage couvert jusqu’à la reprise de la navigation. Voir l’[hivernage de bateau près d’Annecy](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -810,6 +822,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Quelle est la différence entre le GS20 et le GS22 ?",
         "a": "Le GS20 mesure 6,1 m, avec moteur jusqu’à 450 ch, ballast de 1 700 lb (771 kg) et poids à vide d’environ 2 132 kg, idéal pour wakesurf, wakeboard et ski nautique, avec système Nautique Surf, surface de course configurable et MyNautique, pour 12 personnes. Le GS22, plus grand (6,7 m), propose un ballast interne de 2 400 lb, moteurs de 355 à 570 ch, plus de confort et des options supplémentaires comme siège pilote polyvalent et éclairage LED, pour une performance multi-sport étendue."
+      },
+      {
+        "q": "Comment hiverner mon Super Air Nautique GS20 en Haute-Savoie ?",
+        "a": "Motor Boat 74 s’en occupe. Concessionnaire officiel Nautique, nous réalisons l’hivernage du GS20 et son stockage sécurisé près du Lac d’Annecy. En savoir plus sur l’[hivernage & stockage](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -983,6 +999,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Quelle est la différence entre le GS22 et le GS24 ?",
         "a": "La principale différence entre le GS22 et le GS24 réside dans la taille, le ballast et le confort. Le GS24, plus grand (7,32 m) avec un ballast plus important, offre un intérieur spacieux et modulable, idéal pour les familles ou groupes plus nombreux, tout en générant des vagues plus grosses et personnalisables. Le GS22, plus compact (6,7 m), reste très polyvalent et maniable, avec un ballast suffisant pour de belles vagues, offrant un excellent compromis entre performance, confort et facilité d’usage pour les sorties multi-sports nautiques."
+      },
+      {
+        "q": "Puis-je confier l’hivernage de mon Super Air Nautique GS22 à Motor Boat 74 ?",
+        "a": "Bien sûr. En tant que revendeur officiel Nautique, nous préparons et stockons votre GS22 en Haute-Savoie pendant l’hiver, dans les règles de l’art. Détails sur notre page d’[hivernage de bateau](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -1165,6 +1185,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Quelle est la différence entre le GS24 et le GS20 ?",
         "a": "La principale différence entre le GS24 et le GS20 réside dans la taille, la capacité et le confort. Le GS24, plus grand (7,32 m), dispose d’un ballast plus important, d’un moteur plus puissant et d’un intérieur spacieux avec des sièges polyvalents, idéal pour les familles ou groupes souhaitant un bateau multi-activités performant et confortable. Le GS20, plus compact (6,1 m), reste maniable et polyvalent, avec un ballast et une motorisation adaptés à sa taille, parfait pour les sorties en groupe plus restreint tout en conservant les performances Nautique."
+      },
+      {
+        "q": "Assurez-vous l’hivernage du Super Air Nautique GS24 ?",
+        "a": "Oui. Concessionnaire officiel Nautique, Motor Boat 74 hiverne votre GS24 multisport près d’Annecy : entretien moteur, protection et stockage jusqu’au retour des beaux jours. Voir notre [service d’hivernage et stockage](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -1382,6 +1406,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Quelle est la différence entre le G25 et le G21 ?",
         "a": "La principale différence entre le G25 et le G21 réside dans la taille, la puissance et les options. Le G25 mesure 7,62 m et accueille jusqu’à 19 passagers avec des moteurs plus puissants, un ballast supplémentaire et des fonctionnalités avancées comme l’Integrated Steering Assist et des enceintes JL Audio M6 de 12 pouces, tandis que le G21, plus compact (6,4 m), est plus maniable et abordable, avec moins d’options de ballast et un équipement audio plus simple, offrant ainsi une expérience haut de gamme mais plus compacte pour le wakesurf et wakeboard."
+      },
+      {
+        "q": "Où faire hiverner mon Super Air Nautique G25 près d’Annecy ?",
+        "a": "Chez Motor Boat 74. Concessionnaire officiel Nautique, nous réalisons l’hivernage complet du G25 — moteur, ballast, coque et sellerie — et le stockons en toute sécurité hors saison. Détails sur notre page [hivernage & stockage](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -1578,6 +1606,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Quelle est la différence entre le G23 Paragon et le G25 Paragon ?",
         "a": "Le Super Air Nautique G23 Paragon et le G25 Paragon partagent une conception haut de gamme axée sur la performance, mais diffèrent principalement par leur taille, leur capacité et leurs caractéristiques spécifiques. Le G23 Paragon, long de 7,01 mètres, offre une capacité de 16 passagers et est équipé d'un moteur PCM ZZ8 de 630 ch. Il est conçu pour les passionnés recherchant une performance exceptionnelle dans un format plus compact. En revanche, le G25 Paragon, mesurant 7,62 mètres, peut accueillir jusqu'à 19 passagers et dispose également d'un moteur PCM ZZ8 de 630 ch. Sa taille accrue permet une plus grande capacité de ballast et une stabilité améliorée, idéale pour les groupes plus importants ou ceux recherchant une expérience encore plus luxueuse."
+      },
+      {
+        "q": "Comment faire hiverner mon G23 Paragon en Haute-Savoie ?",
+        "a": "Confiez-le à Motor Boat 74. En tant que revendeur officiel Nautique, nous préparons et stockons votre G23 Paragon dans nos installations près d’Annecy jusqu’au printemps. Voir notre offre d’[hivernage de bateau](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -1805,6 +1837,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Quelle est la différence entre le G25 Paragon et le reste de la gamme Paragon ?",
         "a": "Le Super Air Nautique G25 Paragon se distingue comme le modèle le plus haut de gamme de la série Paragon, offrant un moteur PCM ZZ8 de 630 ch, un ballast de grande capacité et le système Nautique Surf System pour des vagues de niveau professionnel, tout en combinant luxe, confort et équipements exclusifs tels que tour télescopique motorisée et audio JL Audio WakeSub. Comparé aux autres modèles Paragon comme le G23, il se caractérise par sa taille plus grande, sa capacité supérieure et ses innovations uniques, s’adressant à ceux qui recherchent la performance maximale et l’expérience Nautique la plus complète."
+      },
+      {
+        "q": "Proposez-vous l’hivernage du Super Air Nautique G25 Paragon ?",
+        "a": "Oui. Concessionnaire officiel Nautique, Motor Boat 74 assure l’hivernage du G25 Paragon près du Lac d’Annecy : préparation du moteur (PCM ZZ8S ou Yanmar 8LV), traitement du ballast, protection de la coque et de la sellerie, puis stockage couvert. Découvrez notre [service d’hivernage et stockage](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -1974,6 +2010,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Qu'est-ce qui rend le modèle Ski Nautique unique ?",
         "a": "Le Ski Nautique est reconnu comme la référence mondiale du ski nautique de compétition. Conçu exclusivement pour la performance, il offre une vague stable, fine et parfaitement symétrique, idéale pour le slalom, les figures et le saut. Sa coque T-Drive™ minimise la traînée et garantit une trajectoire ultra-précise, tandis que le moteur PCM ZZ6 6.2L V8 (450 ch), associé au système Zero-Off GPS, assure une vitesse constante au centième de km/h. Le poste de pilotage LINC Panoray permet de contrôler tous les paramètres de traction avec une précision professionnelle. Finitions haut de gamme, sellerie sur mesure et technologies embarquées en font un modèle à la fois sportif, élégant et exclusif, choisi par les clubs et athlètes de niveau tournoi dans le monde entier."
+      },
+      {
+        "q": "Proposez-vous l’hivernage du Ski Nautique ?",
+        "a": "Oui. Revendeur officiel Nautique, Motor Boat 74 hiverne votre Ski Nautique près d’Annecy : préparation du moteur PCM, protection de la coque et stockage hors saison. Découvrez notre [service d’hivernage](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -2119,6 +2159,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Peut-on essayer le G23 sur le lac d'Annecy ?",
         "a": "Oui, MotorBoat74 organise des essais du G23 sur le lac d'Annecy. Réservez votre créneau en nous contactant."
+      },
+      {
+        "q": "Qui peut assurer l’hivernage de mon Super Air Nautique G23 ?",
+        "a": "Motor Boat 74, concessionnaire officiel Nautique, s’en charge intégralement : mise hors d’eau, entretien moteur, vidange et stockage de votre G23 près du Lac d’Annecy. En savoir plus sur l’[hivernage de votre bateau](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -2264,6 +2308,10 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       {
         "q": "Peut-on essayer le G21 sur le lac d'Annecy ?",
         "a": "Oui, MotorBoat74 organise des essais du G21 sur le lac d'Annecy. Contactez-nous pour réserver."
+      },
+      {
+        "q": "Le stockage hivernal du Super Air Nautique G21 est-il possible chez vous ?",
+        "a": "Tout à fait. Revendeur officiel Nautique, Motor Boat 74 hiverne et stocke votre G21 dans ses installations de Haute-Savoie, avec un entretien adapté à sa motorisation. Consultez notre [service d’hivernage](/hivernage-stockage-bateau)."
       }
     ]
   }
