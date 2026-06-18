@@ -12,7 +12,7 @@ export function ContactPage() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
-    name: 'Contact — Motor Boat 74',
+    name: 'Contact, Motor Boat 74',
     url: canonical,
     mainEntity: {
       '@type': 'LocalBusiness',

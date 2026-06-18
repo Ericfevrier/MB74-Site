@@ -1,5 +1,5 @@
 /**
- * Pages locales hivernage/stockage — contenu reproduit de motorboat74.com.
+ * Pages locales hivernage/stockage, contenu reproduit de motorboat74.com.
  * NE PAS éditer à la main : régénéré via /tmp/parse-cities.mjs + script de génération.
  */
 
@@ -170,7 +170,7 @@ export const hivernageCities: Record<string, HivernageCity> = {
   "evian-les-bains": {
     "slug": "evian-les-bains",
     "localExpertise": {
-      "intro": "Sur la rive sud du Léman, Évian bénéficie d’un grand lac qui ne gèle pas — mais qui réserve d’autres pièges hivernaux.",
+      "intro": "Sur la rive sud du Léman, Évian bénéficie d’un grand lac qui ne gèle pas, mais qui réserve d’autres pièges hivernaux.",
       "facts": [
         {
           "title": "Le Léman ne gèle (presque) jamais",

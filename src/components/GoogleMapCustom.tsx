@@ -4,7 +4,7 @@ import { SITE } from '../data/site';
 interface GoogleMapCustomProps {
   /** Adresse à afficher (défaut : NAP officiel du site). */
   address?: string;
-  /** Affiche la carte en clair (sans inversion sombre) — pour les sections claires. */
+  /** Affiche la carte en clair (sans inversion sombre), pour les sections claires. */
   light?: boolean;
 }
 

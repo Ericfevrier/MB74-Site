@@ -16,7 +16,7 @@ interface BreadcrumbProps {
 }
 
 /**
- * Fil d'Ariane — design unifié « pastille cyan » (référence : page Hivernage & Stockage).
+ * Fil d'Ariane, design unifié « pastille cyan » (référence : page Hivernage & Stockage).
  * S'aligne automatiquement (gauche/centre) selon le text-align du conteneur parent.
  */
 export function Breadcrumb({ items, size = 'md', className = 'mb-6' }: BreadcrumbProps) {

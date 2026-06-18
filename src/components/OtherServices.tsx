@@ -28,7 +28,7 @@ const ALL = [
   { slug: hivernageCross.slug, title: hivernageCross.crossTitle, desc: hivernageCross.crossDesc, icon: hivernageCross.icon },
 ];
 
-/** Section « Nos autres services » — cartes visibles, partagée par toutes les pages services. */
+/** Section « Nos autres services », cartes visibles, partagée par toutes les pages services. */
 export function OtherServices({ currentSlug }: { currentSlug?: string }) {
   const items = ALL.filter((s) => s.slug !== currentSlug);
 

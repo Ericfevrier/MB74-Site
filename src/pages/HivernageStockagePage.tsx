@@ -326,7 +326,7 @@ export function HivernageStockagePage() {
   return (
     <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
       <Helmet>
-        <title>Hivernage & Stockage Bateau Annecy — Hangar 3000 m² | MB74</title>
+        <title>Hivernage & Stockage Bateau Annecy, Hangar 3000 m² | MB74</title>
         <meta name="description" content="Hivernage et stockage de bateau à Annecy (Haute-Savoie) : hangar sécurisé 3 000 m², hivernage moteur certifié, antigel, remise à l'eau incluse. Devis personnalisé gratuit sous 24 h." />
         <link rel="canonical" href="https://motorboat74.com/hivernage-stockage-bateau" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -338,13 +338,13 @@ export function HivernageStockagePage() {
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:site_name" content="MotorBoat 74" />
-        <meta property="og:title" content="Hivernage & Stockage de Bateau à Annecy — Hangar sécurisé 3 000 m²" />
+        <meta property="og:title" content="Hivernage & Stockage de Bateau à Annecy, Hangar sécurisé 3 000 m²" />
         <meta property="og:description" content="Hivernage moteur certifié, antigel, stockage hors-gel et remise à l'eau incluse sur le Lac d'Annecy. Devis personnalisé gratuit sous 24 h." />
         <meta property="og:url" content="https://motorboat74.com/hivernage-stockage-bateau" />
         <meta property="og:image" content="https://motorboat74.com/images/2026-g23-perf-18.jpg" />
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Hivernage & Stockage de Bateau à Annecy — Hangar 3 000 m²" />
+        <meta name="twitter:title" content="Hivernage & Stockage de Bateau à Annecy, Hangar 3 000 m²" />
         <meta name="twitter:description" content="Hivernage moteur certifié et stockage hors-gel sur le Lac d'Annecy. Devis personnalisé gratuit sous 24 h." />
         <meta name="twitter:image" content="https://motorboat74.com/images/2026-g23-perf-18.jpg" />
         <script type="application/ld+json">{JSON.stringify(schemaLocalBusiness)}</script>
@@ -369,7 +369,7 @@ export function HivernageStockagePage() {
         <div className="absolute inset-0 z-0">
           <img
             src="/images/2026-g23-perf-18.jpg"
-            alt="MotorBoat 74 — hivernage et stockage de bateau en Haute-Savoie, sur le Lac d'Annecy"
+            alt="MotorBoat 74, hivernage et stockage de bateau en Haute-Savoie, sur le Lac d'Annecy"
             className="w-full h-full object-cover opacity-60 scale-105"
             referrerPolicy="no-referrer"
           />
@@ -392,7 +392,7 @@ export function HivernageStockagePage() {
             />
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
-              Hivernage et stockage de bateau à <span className="text-brand-cyan">Annecy</span> <span className="text-white/90">— Hangar sécurisé 3 000 m²</span>
+              Hivernage et stockage de bateau à <span className="text-brand-cyan">Annecy</span> <span className="text-white/90">· Hangar sécurisé 3 000 m²</span>
             </h1>
 
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
@@ -452,7 +452,7 @@ export function HivernageStockagePage() {
         </div>
       </section>
 
-      {/* 2bis. En bref — bloc AEO/GEO citable (faits clés extractibles) */}
+      {/* 2bis. En bref, bloc AEO/GEO citable (faits clés extractibles) */}
       <section aria-label="L'essentiel en bref" className="py-20 bg-brand-light relative overflow-hidden border-t border-gray-200">
         <div className="absolute top-0 right-0 w-[480px] h-[480px] bg-brand-cyan/10 rounded-full blur-[120px] -mr-40 -mt-40 -z-0"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
@@ -461,7 +461,7 @@ export function HivernageStockagePage() {
             {/* Bandeau dossier */}
             <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-gray-200 bg-gray-50">
               <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref — Hivernage bateau Annecy</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref, Hivernage bateau Annecy</span>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
@@ -589,12 +589,12 @@ export function HivernageStockagePage() {
             {/* LEFT COLUMN: Blocks 4 to 12 (occupies 2/3 space recursively) */}
             <div className="lg:col-span-2 space-y-24">
               
-              {/* Bloc 4 — Les 2 formules */}
+              {/* Bloc 4, Les 2 formules */}
               <div id="formules" className="scroll-mt-36">
                 <div className="mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Offres hivernage de bateaux</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Hivernage complet ou stockage seul — deux formules adaptées
+                    Hivernage complet ou stockage seul, deux formules adaptées
                   </h2>
                 </div>
 
@@ -669,7 +669,7 @@ export function HivernageStockagePage() {
                 </div>
               </div>
 
-              {/* Bloc 5 — Process en 6 étapes (timeline visuelle) */}
+              {/* Bloc 5, Process en 6 étapes (timeline visuelle) */}
               <div className="scroll-mt-36">
                 <div className="mb-12">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Protocole certifié</span>
@@ -748,7 +748,7 @@ export function HivernageStockagePage() {
                 </div>
               </div>
 
-              {/* Bloc 6 — Le hangar 3 000 m² */}
+              {/* Bloc 6, Le hangar 3 000 m² */}
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Visite guidée</span>
@@ -923,7 +923,7 @@ export function HivernageStockagePage() {
                 </div>
               </div>
 
-              {/* Bloc 9 — Zones d'intervention (MAILLAGE INTERNE) */}
+              {/* Bloc 9, Zones d'intervention (MAILLAGE INTERNE) */}
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Réseau Local de lacs</span>
@@ -990,7 +990,7 @@ export function HivernageStockagePage() {
                 </div>
               </div>
 
-              {/* Bloc 10 — Avis clients */}
+              {/* Bloc 10, Avis clients */}
               <div className="scroll-mt-36">
                 <div className="mb-10 text-left">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Retours d'expérience</span>
@@ -1009,7 +1009,7 @@ export function HivernageStockagePage() {
                       "C'est la troisième année que je confie mon Super Air Nautique G23 pour l'hivernage chez MotorBoat 74. Le moteur est vidangé avec un soin exceptionnel et j'aime retrouver mon intérieur absolument sec et dépoussiéré chaque printemps. Recommandation totale !"
                     </p>
                     <div className="text-xs font-bold text-brand-dark uppercase tracking-wider">
-                      — Marc D. · Annecy, Nautique G23
+                     , Marc D. · Annecy, Nautique G23
                     </div>
                   </div>
 
@@ -1022,7 +1022,7 @@ export function HivernageStockagePage() {
                       "Un service premium très appréciable. Ils viennent récupérer mon MasterCraft directement à la place de port de Veyrier en octobre et me le remettent à l’eau nettoyé en mai. Aucun souci de remorque à gérer."
                     </p>
                     <div className="text-xs font-bold text-brand-dark uppercase tracking-wider">
-                      — Édouard P. · Veyrier-du-lac, MasterCraft XStar
+                     , Édouard P. · Veyrier-du-lac, MasterCraft XStar
                     </div>
                   </div>
 
@@ -1035,7 +1035,7 @@ export function HivernageStockagePage() {
                       "Leur hangar de 3000 m² à Val de Chaise est gigantesque et d'une propreté exemplaire. On y stocke notre bateau en toute sécurité. Le service mécanicien officiel donne une grande valeur lors de la revente de l'unité."
                     </p>
                     <div className="text-xs font-bold text-brand-dark uppercase tracking-wider">
-                      — Sophie B. · Sevrier, Tigé Z3
+                     , Sophie B. · Sevrier, Tigé Z3
                     </div>
                   </div>
 
@@ -1048,13 +1048,13 @@ export function HivernageStockagePage() {
                       "Hivernage moteur in-board fait dans les règles de l'art par un concessionnaire Nautique officiel. C'est l'atout revente indéniable qui me donne confiance."
                     </p>
                     <div className="text-xs font-bold text-brand-dark uppercase tracking-wider">
-                      — Jean-Marc L. · Saint-Jorioz, Correct Craft
+                     , Jean-Marc L. · Saint-Jorioz, Correct Craft
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Bloc 12 — FAQ (Schema FAQPage) */}
+              {/* Bloc 12, FAQ (Schema FAQPage) */}
               <div className="scroll-mt-36">
                 <div className="mb-12">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Réponses d'experts</span>

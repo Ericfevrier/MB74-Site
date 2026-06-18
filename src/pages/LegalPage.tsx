@@ -18,19 +18,19 @@ const MENTIONS: { title: string; updated: string; blocks: Block[] } = {
         `Le présent site est édité par ${SITE.name}.`,
         `Forme juridique et capital social : [À COMPLÉTER].`,
         `Siège social : ${FULL_ADDRESS}, ${SITE.addressRegion}, France.`,
-        `Téléphone : ${SITE.phoneDisplay} — Email : ${SITE.email}.`,
-        `SIRET : [À COMPLÉTER] — RCS : [À COMPLÉTER] — N° TVA intracommunautaire : [À COMPLÉTER].`,
+        `Téléphone : ${SITE.phoneDisplay}, Email : ${SITE.email}.`,
+        `SIRET : [À COMPLÉTER], RCS : [À COMPLÉTER], N° TVA intracommunautaire : [À COMPLÉTER].`,
       ],
     },
     {
       h: 'Directeur de la publication',
-      p: ['[À COMPLÉTER — nom du représentant légal].'],
+      p: ['[À COMPLÉTER, nom du représentant légal].'],
     },
     {
       h: 'Hébergement',
       p: [
-        'Le site est hébergé par la société o2switch — SAS au capital de 100 000 € — 222-224 Boulevard Gustave Flaubert, 63000 Clermont-Ferrand, France.',
-        'Téléphone : 04 44 44 60 40 — Site : https://www.o2switch.fr',
+        'Le site est hébergé par la société o2switch, SAS au capital de 100 000 €, 222-224 Boulevard Gustave Flaubert, 63000 Clermont-Ferrand, France.',
+        'Téléphone : 04 44 44 60 40, Site : https://www.o2switch.fr',
       ],
     },
     {
@@ -63,7 +63,7 @@ const PRIVACY: { title: string; updated: string; blocks: Block[] } = {
       h: 'Responsable du traitement',
       p: [
         `${SITE.name}, ${FULL_ADDRESS}, ${SITE.addressRegion}, est responsable du traitement des données collectées sur ce site.`,
-        `Contact : ${SITE.phoneDisplay} — ${SITE.email}.`,
+        `Contact : ${SITE.phoneDisplay}, ${SITE.email}.`,
       ],
     },
     {

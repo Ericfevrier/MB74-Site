@@ -63,7 +63,7 @@ export function BrandPage() {
             transition={{ duration: 0.8 }}
           >
             <div className="flex flex-col items-center justify-center gap-6 mb-8">
-              <h1 className="sr-only">{brand.fullName} — Concessionnaire officiel chez Motor Boat 74</h1>
+              <h1 className="sr-only">{brand.fullName}, Concessionnaire officiel chez Motor Boat 74</h1>
               <span className="bg-brand-cyan text-brand-dark px-6 py-2 rounded-full text-[12px] font-bold uppercase tracking-widest shadow-lg shadow-brand-cyan/20">
                 Concessionnaire Officiel {brand.name}
               </span>
@@ -136,7 +136,7 @@ export function BrandPage() {
               <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl" />
               <img
                 src={brand.heroImage}
-                alt={`${brand.name} — style de vie sur l'eau`}
+                alt={`${brand.name}, style de vie sur l'eau`}
                 className="relative rounded-[2.5rem] border border-white/10 shadow-2xl w-full aspect-[4/5] object-cover"
                 loading="lazy"
                 referrerPolicy="no-referrer"

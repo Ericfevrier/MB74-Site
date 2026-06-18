@@ -9,7 +9,7 @@ interface ComingSoonProps {
 }
 
 /**
- * Page « Bientôt disponible » — placeholder propre et branché sur la marque,
+ * Page « Bientôt disponible », placeholder propre et branché sur la marque,
  * en attendant le contenu réel (catalogue, boutique, équipe…).
  */
 export function ComingSoon({ title, description }: ComingSoonProps) {

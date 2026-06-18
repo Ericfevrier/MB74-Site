@@ -26,7 +26,7 @@ import {
   Anchor,
 } from 'lucide-react';
 
-const ZONES = ['Atelier — Val de Chaise', 'Annecy & lac d’Annecy', 'Lac du Bourget', 'Léman', 'Haute-Savoie'];
+const ZONES = ['Atelier, Val de Chaise', 'Annecy & lac d’Annecy', 'Lac du Bourget', 'Léman', 'Haute-Savoie'];
 
 const WHY = [
   { Icon: ShieldCheck, t: 'Sécurité à bord', d: 'Moteur, circuits et équipements contrôlés pour naviguer en toute confiance sur le lac.' },
@@ -278,7 +278,7 @@ export function EntretienReparationPage() {
           <div className="rounded-[2rem] border border-gray-200 bg-white shadow-xl shadow-brand-dark/5 overflow-hidden">
             <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-gray-200 bg-gray-50">
               <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref — Entretien bateau Annecy</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref, Entretien bateau Annecy</span>
             </div>
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               <div>

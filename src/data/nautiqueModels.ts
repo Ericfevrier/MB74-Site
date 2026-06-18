@@ -1,5 +1,5 @@
 /**
- * Catalogue Nautique — données reproduites depuis motorboat74.com.
+ * Catalogue Nautique, données reproduites depuis motorboat74.com.
  * G23 & G21 : données issues de nautique.com (overview) car le site MB74
  * n'expose que des annonces d'occasion pour ces 2 slugs.
  * NE PAS éditer à la main : régénéré via /tmp/gen-models.mjs si besoin.
@@ -171,7 +171,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "À la proue du Super Air Nautique S21, le design allie performance et praticité. Le réseau lumineux d’amarrage à LED assure visibilité et style, tandis que la coque inspirée de modèles primés optimise le sillage et les vagues pour le wakeboard. La proue spacieuse offre des sièges confortables avec porte-gobelets, rangements intégrés et options son JL Audio ou coussin de proue pour se détendre. Une poubelle amovible dans la zone de passage avant facilite le maintien de l’espace propre à bord."
       }
     ],
-    "tagline": "La proue traditionnelle Nautique en 21 pieds, maniable et performante : des vagues calibrées pour toute la famille — à essayer sur le Lac d’Annecy.",
+    "tagline": "La proue traditionnelle Nautique en 21 pieds, maniable et performante : des vagues calibrées pour toute la famille, à essayer sur le Lac d’Annecy.",
     "videoId": "0bvzRjcWs8A",
     "editions": [
       {
@@ -261,7 +261,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       },
       {
         "q": "Où stocker et hiverner mon Super Air Nautique S21 ?",
-        "a": "Dans nos installations près du Lac d’Annecy. Revendeur officiel Nautique, Motor Boat 74 prend en charge l’hivernage du S21 — moteur, ballast et coque — et son stockage hors saison. Découvrez le [stockage hivernal](/hivernage-stockage-bateau)."
+        "a": "Dans nos installations près du Lac d’Annecy. Revendeur officiel Nautique, Motor Boat 74 prend en charge l’hivernage du S21, moteur, ballast et coque, et son stockage hors saison. Découvrez le [stockage hivernal](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -369,7 +369,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "La proue du Super Air Nautique S23 allie confort et fonctionnalité. Les sièges avant offrent des rangements sous assise et des porte-gobelets intégrés, tandis que le coussin de proue et les enceintes JL Audio optionnelles créent un espace dédié à la détente. La coque, inspirée de designs primés, produit des sillages et des vagues optimisés pour le wakeboard et le wakesurf, avec une étrave marquée pour une allure distinctive. Le réseau de feux LED intégrés assure visibilité et sécurité lors des manœuvres, et la nouvelle poubelle amovible Bow Walk Through facilite le maintien de l’espace propre et organisé."
       }
     ],
-    "tagline": "L’innovation moderne et les lignes intemporelles d’une proue traditionnelle Nautique, en 23 pieds : performance pure — à essayer sur le Lac d’Annecy.",
+    "tagline": "L’innovation moderne et les lignes intemporelles d’une proue traditionnelle Nautique, en 23 pieds : performance pure, à essayer sur le Lac d’Annecy.",
     "videoId": "yz29o3lYRFY",
     "editions": [
       {
@@ -569,7 +569,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "La proue du S25 allie style, confort et performance. Sa coque primée assure des sillages parfaits et des vagues idéales pour le wakeboard, tandis que les sièges avant spacieux et les rangements astucieux créent un espace convivial pour profiter de l’eau. Les feux d’accostage intégrés et la poubelle amovible ajoutent praticité et sécurité, pour que chaque sortie soit agréable et sans souci."
       }
     ],
-    "tagline": "Le wakeboat familial à proue traditionnelle de la série S en 25 pieds : performance, innovation et confort pour toute la famille — à essayer sur le Lac d’Annecy.",
+    "tagline": "Le wakeboat familial à proue traditionnelle de la série S en 25 pieds : performance, innovation et confort pour toute la famille, à essayer sur le Lac d’Annecy.",
     "videoId": "kDoYNMB-vkc",
     "editions": [
       {
@@ -760,7 +760,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "La coque et la proue du GS20 allient confort, sécurité et praticité. Le réseau lumineux d’amarrage à LED offre visibilité et style, même par faible luminosité. Les sièges avant larges avec porte-gobelets et rangement intégré assurent confort et organisation, avec la possibilité d’ajouter des enceintes JL Audio® ou un coussin de remplissage. Une poubelle amovible dans la zone de passage facilite la gestion des déchets à bord."
       }
     ],
-    "tagline": "Le multisport compact 20 pieds : coque issue du Ski Nautique et de la Série G, polyvalent du wakesurf au ski — à essayer sur le Lac d’Annecy.",
+    "tagline": "Le multisport compact 20 pieds : coque issue du Ski Nautique et de la Série G, polyvalent du wakesurf au ski, à essayer sur le Lac d’Annecy.",
     "videoId": "axTtXV8rnSw",
     "motorizations": [
       {
@@ -932,7 +932,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "Le Super Air Nautique GS22 combine confort, praticité et sécurité à l'avant du bateau : sa proue large et spacieuse offre des sièges avant équipés de porte-gobelets et d’espaces de rangement sous les coussins, tandis que les enceintes JL Audio® en option créent un espace dédié au son et un coussin de remplissage peut compléter la zone détente. Le GS22 peut être personnalisé avec un système de feux d’accostage à LED intégré à la proue, assurant visibilité et sécurité lors des manœuvres par faible luminosité et servant également de feux de jour. Une poubelle amovible supplémentaire dans la zone de passage avant facilite l’élimination des déchets à bord, ajoutant commodité et organisation au quotidien."
       }
     ],
-    "tagline": "Le multisport le plus populaire du marché : une polyvalence totale en 22 pieds, du wakesurf au ski — à essayer sur le Lac d’Annecy.",
+    "tagline": "Le multisport le plus populaire du marché : une polyvalence totale en 22 pieds, du wakesurf au ski, à essayer sur le Lac d’Annecy.",
     "videoId": "58diXMTE2PQ",
     "motorizations": [
       {
@@ -1109,7 +1109,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "La proue et la coque du Super Air Nautique GS24 allient confort, praticité et style avec un réseau lumineux d’amarrage LED pour une visibilité optimale de jour comme de nuit. Les sièges avant spacieux offrent porte-gobelets, rangement sous les coussins et options audio JL Audio® ou coussin de remplissage pour un espace détente complet. Une poubelle amovible Bow Walk Through facilite le maintien de la propreté à bord."
       }
     ],
-    "tagline": "Le multisport 24 pieds par excellence : coque inspirée du Ski Nautique et de la Série G, brillant en wakesurf, wakeboard et ski — à essayer sur le Lac d’Annecy.",
+    "tagline": "Le multisport 24 pieds par excellence : coque inspirée du Ski Nautique et de la Série G, brillant en wakesurf, wakeboard et ski, à essayer sur le Lac d’Annecy.",
     "videoId": "_rhJOUKBmu4",
     "motorizations": [
       {
@@ -1296,12 +1296,12 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "Le G25 2026 affiche une coque facettée et une proue anguleuse emblématique. Les feux d’accostage LED garantissent visibilité et sécurité, tandis que les sièges lounge avant avec rangement et enceintes JL Audio offrent confort et fonctionnalité. Le coussin de remplissage de proue facilite la circulation de l’avant vers l’arrière."
       }
     ],
-    "tagline": "Le wakeboat haut de gamme de la gamme G : vagues de wakesurf et wakeboard configurables et capacité de 19 personnes — à essayer sur le Lac d’Annecy.",
+    "tagline": "Le wakeboat haut de gamme de la gamme G : vagues de wakesurf et wakeboard configurables et capacité de 19 personnes, à essayer sur le Lac d’Annecy.",
     "videoId": "tzJuDxNIu74",
     "editions": [
       {
         "name": "Édition côtière (Coastal)",
-        "desc": "Système de liaison avec anodes sacrificielles, ressorts à gaz inoxydables et composants structurels en aluminium anodisé — pensée pour un usage prolongé en eau salée (motorisation côtière requise)."
+        "desc": "Système de liaison avec anodes sacrificielles, ressorts à gaz inoxydables et composants structurels en aluminium anodisé, pensée pour un usage prolongé en eau salée (motorisation côtière requise)."
       }
     ],
     "motorizations": [
@@ -1329,7 +1329,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     ],
     "features": [
       "Nautique Surf System avec WAVEPLATE & Surf Pipe",
-      "Hydro-Plate — surface de course configurable",
+      "Hydro-Plate, surface de course configurable",
       "Régulateur de vitesse GPS (Zero Off)",
       "Ballast intégré 2 400 lb (~1 089 kg)",
       "Système audio JL Audio M6 Elite (ampli 8 canaux, caisson 10″)",
@@ -1409,7 +1409,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       },
       {
         "q": "Où faire hiverner mon Super Air Nautique G25 près d’Annecy ?",
-        "a": "Chez Motor Boat 74. Concessionnaire officiel Nautique, nous réalisons l’hivernage complet du G25 — moteur, ballast, coque et sellerie — et le stockons en toute sécurité hors saison. Détails sur notre page [hivernage & stockage](/hivernage-stockage-bateau)."
+        "a": "Chez Motor Boat 74. Concessionnaire officiel Nautique, nous réalisons l’hivernage complet du G25, moteur, ballast, coque et sellerie, et le stockons en toute sécurité hors saison. Détails sur notre page [hivernage & stockage](/hivernage-stockage-bateau)."
       }
     ]
   },
@@ -1516,7 +1516,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "L’avant du G23 Paragon est un espace à la fois confortable et pratique, pensé pour accueillir jusqu’à quatre personnes avec rangements et porte-gobelets intégrés. L’éclairage LED à la proue assure une visibilité optimale et un style unique, de jour comme de nuit. Les badges lumineux ajoutent une touche élégante pour sublimer le bateau dans l’obscurité."
       }
     ],
-    "tagline": "Le wakeboat haut de gamme de la série Paragon en format G23 : luxe, performance et vagues de niveau pro — à essayer sur le Lac d’Annecy.",
+    "tagline": "Le wakeboat haut de gamme de la série Paragon en format G23 : luxe, performance et vagues de niveau pro, à essayer sur le Lac d’Annecy.",
     "videoId": "2xUfVxRMkhg",
     "editions": [
       {
@@ -1525,7 +1525,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       },
       {
         "name": "Édition côtière (Coastal)",
-        "desc": "Anodes sacrificielles et composants en aluminium anodisé — pensée pour un usage prolongé en eau salée (motorisation côtière requise)."
+        "desc": "Anodes sacrificielles et composants en aluminium anodisé, pensée pour un usage prolongé en eau salée (motorisation côtière requise)."
       }
     ],
     "motorizations": [
@@ -1618,7 +1618,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "name": "G25 Paragon",
     "short": "G25 Paragon",
     "fullName": "Super Air Nautique G25 Paragon",
-    "tagline": "Le wakeboat le plus haut de gamme de la série Paragon : vagues de wakesurf et wakeboard de niveau pro, confort premium — à essayer sur le Lac d’Annecy.",
+    "tagline": "Le wakeboat le plus haut de gamme de la série Paragon : vagues de wakesurf et wakeboard de niveau pro, confort premium, à essayer sur le Lac d’Annecy.",
     "videoId": "Ux265r3L9QA",
     "milestones": [
       {
@@ -1633,14 +1633,14 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "year": "2025",
         "motorization": "Non communiqué",
         "changes": "Non communiqué",
-        "edition": "—",
+        "edition": "·",
         "manualUrl": "https://nautique.blob.core.windows.net/boat-manuals/2025/2025-Paragon-manual.pdf"
       },
       {
         "year": "2024",
         "motorization": "Non communiqué",
         "changes": "Première année documentée du G25 Paragon (lancement de la série Paragon). Système d’affichage LINC Panoray double écran.",
-        "edition": "—",
+        "edition": "·",
         "detail": "2024 est la première année documentée du G25 Paragon : c’est le lancement de la série Paragon, positionnée au sommet de la gamme Super Air Nautique. Ce millésime dispose d’un manuel dédié au système d’affichage LINC Panoray (double écran).",
         "manualUrl": "https://nautique.blob.core.windows.net/boat-manuals/2024/2024-Parargon-Manual.pdf"
       }
@@ -1948,7 +1948,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "La proue du Ski Nautique 2026 allie sécurité et praticité. La passerelle avant en NauTeak antidérapant permet un accès facile au quai et au remorquage, tandis que le rangement de la proue offre un espace spacieux et sécurisé pour votre équipement, accessible depuis le siège passager et doté d’éclairage et de surfaces antidérapantes pour protéger vos affaires."
       }
     ],
-    "tagline": "Le bateau de ski de référence, entièrement redessiné et allégé : précision et sillage minimal pour le slalom — à essayer sur le Lac d’Annecy.",
+    "tagline": "Le bateau de ski de référence, entièrement redessiné et allégé : précision et sillage minimal pour le slalom, à essayer sur le Lac d’Annecy.",
     "videoId": "47Mi7ui0XFs",
     "motorizations": [
       {
@@ -2023,7 +2023,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "short": "G23",
     "gamme": "Série G",
     "year": "2026",
-    "metaTitle": "Super Air Nautique G23 — Fiche Technique & Prix | MotorBoat74",
+    "metaTitle": "Super Air Nautique G23, Fiche Technique & Prix | MotorBoat74",
     "metaDescription": "Découvrez le Super Air Nautique G23 chez MotorBoat74, concessionnaire officiel Nautique à Annecy. Fiche technique, performances wakeboard/wakesurf et essai sur le lac d'Annecy.",
     "intro": [
       "Depuis plus de dix ans, le G23 est le wakeboat le plus recherché de l'industrie, avec le palmarès pour le prouver. Ce modèle primé est la référence absolue des riders professionnels qui veulent repousser les limites du possible sur l'eau, tout en s'adaptant aux débutants grâce à des vagues et sillages modulables selon le niveau de chacun.",
@@ -2067,7 +2067,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "items": [
           {
             "label": "Puissance maximale",
-            "value": "PCM ZZ8 — 630 CV"
+            "value": "PCM ZZ8, 630 CV"
           }
         ]
       }
@@ -2082,7 +2082,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "Grâce au Nautique Surf System, le G23 produit des vagues et sillages parfaitement calibrés, ajustables au niveau de chaque rider, du débutant au compétiteur."
       }
     ],
-    "tagline": "Le wakeboat le plus demandé du marché depuis plus de dix ans : vagues de wakesurf et wakeboard configurables — à essayer sur le Lac d’Annecy.",
+    "tagline": "Le wakeboat le plus demandé du marché depuis plus de dix ans : vagues de wakesurf et wakeboard configurables, à essayer sur le Lac d’Annecy.",
     "videoId": "dGoK39wEppM",
     "editions": [
       {
@@ -2172,7 +2172,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "short": "G21",
     "gamme": "Série G",
     "year": "2026",
-    "metaTitle": "Super Air Nautique G21 — Fiche Technique & Prix | MotorBoat74",
+    "metaTitle": "Super Air Nautique G21, Fiche Technique & Prix | MotorBoat74",
     "metaDescription": "Découvrez le Super Air Nautique G21 chez MotorBoat74, concessionnaire officiel Nautique à Annecy. Fiche technique, performances et essai sur le lac d'Annecy.",
     "intro": [
       "Le G21 confirme sa réputation de bateau de 21 pieds le plus innovant du marché. Doté de la meilleure coque de l'industrie, ce performeur primé délivre des vagues et sillages de niveau professionnel, modulables pour accueillir tous les passagers à bord.",
@@ -2216,7 +2216,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "items": [
           {
             "label": "Puissance maximale",
-            "value": "PCM ZZ8 — 630 CV"
+            "value": "PCM ZZ8, 630 CV"
           }
         ]
       }
@@ -2231,7 +2231,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
         "text": "Esthétique moderne, intérieur iconique et équipements premium : le G21 condense tout l'ADN de la Série G dans un format de 21 pieds plus compact et maniable."
       }
     ],
-    "tagline": "Le 21 pieds le plus innovant du marché : la meilleure coque de l’industrie, des vagues de niveau pro et un format maniable — à essayer sur le Lac d’Annecy.",
+    "tagline": "Le 21 pieds le plus innovant du marché : la meilleure coque de l’industrie, des vagues de niveau pro et un format maniable, à essayer sur le Lac d’Annecy.",
     "videoId": "XY0f_ujSPSc",
     "editions": [
       {

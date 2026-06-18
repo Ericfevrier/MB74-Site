@@ -29,7 +29,7 @@ export function HivernageCityPage() {
   const schemaService = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: `Hivernage et stockage de bateaux — ${city.city}`,
+    name: `Hivernage et stockage de bateaux, ${city.city}`,
     serviceType: 'Hivernage et stockage de bateau',
     description: city.metaDescription,
     areaServed: { '@type': 'Place', name: city.city },

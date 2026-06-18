@@ -234,7 +234,7 @@ export function RemorquesPage() {
           <div className="rounded-[2rem] border border-gray-200 bg-white shadow-xl shadow-brand-dark/5 overflow-hidden">
             <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-gray-200 bg-gray-50">
               <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref — Remorques bateau Annecy</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref, Remorques bateau Annecy</span>
             </div>
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               <div>
@@ -286,7 +286,7 @@ export function RemorquesPage() {
               Pourquoi choisir votre remorque <span className="text-brand-cyan">chez nous</span>
             </h2>
             <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
-              Une remorque bien choisie et bien réglée, c'est la garantie d'un transport sûr — et d'un bateau qui reste en parfait état sur la route comme à la mise à l'eau.
+              Une remorque bien choisie et bien réglée, c'est la garantie d'un transport sûr, et d'un bateau qui reste en parfait état sur la route comme à la mise à l'eau.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

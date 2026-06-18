@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
@@ -29,6 +29,15 @@ const LegalPage = lazy(() => import('./pages/LegalPage').then((m) => ({ default:
 const NotFound = lazy(() => import('./components/NotFound').then((m) => ({ default: m.NotFound })));
 const ComingSoon = lazy(() => import('./components/ComingSoon').then((m) => ({ default: m.ComingSoon })));
 
+// Remet la vue en haut à chaque changement d'URL (sinon on conserve le scroll de la page précédente).
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+  }, [pathname]);
+  return null;
+}
+
 function PageLoader() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center bg-brand-light">
@@ -40,6 +49,7 @@ function PageLoader() {
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen flex flex-col bg-brand-light">
         <Header />
         <main className="flex-1">

@@ -35,7 +35,7 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
           </div>
         </div>
 
-        {/* Comparatifs par série — TOUTES les séries sont dans le DOM (h3 + tableau)
+        {/* Comparatifs par série, TOUTES les séries sont dans le DOM (h3 + tableau)
             pour Google ; seule la série active est visible à l'écran. */}
         {comparisons.map((cat, idx) => (
           <div key={idx} className={idx === activeCategory ? 'block' : 'hidden'}>

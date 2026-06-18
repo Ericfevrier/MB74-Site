@@ -13,7 +13,7 @@ interface ServiceContactBlockProps {
   showMap?: boolean;
   /** Conteneur pleine largeur (1400px) pour s'aligner sur les pages larges (ex. page modèle). */
   wide?: boolean;
-  /** Masque l'en-tête (eyebrow + titre + sous-titre) — utile quand la page a déjà son propre hero. */
+  /** Masque l'en-tête (eyebrow + titre + sous-titre), utile quand la page a déjà son propre hero. */
   hideHeader?: boolean;
 }
 
@@ -191,7 +191,7 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
                 </button>
                 <p className="text-[11px] text-gray-400 text-center leading-relaxed">
                   Vos données (nom, e-mail, téléphone, message) servent uniquement à traiter votre demande et ne sont jamais cédées à des tiers.
-                  Conformément au RGPD, vous disposez d’un droit d’accès, de rectification et de suppression de vos données — voir notre{' '}
+                  Conformément au RGPD, vous disposez d’un droit d’accès, de rectification et de suppression de vos données, voir notre{' '}
                   <Link to="/politique-de-confidentialite" className="underline hover:text-brand-cyan">politique de confidentialité</Link>.
                 </p>
               </form>

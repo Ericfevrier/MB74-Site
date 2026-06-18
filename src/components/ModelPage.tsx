@@ -179,7 +179,7 @@ export function ModelPage() {
     ? {
         '@context': 'https://schema.org',
         '@type': 'VideoObject',
-        name: `${fullName} — vidéo`,
+        name: `${fullName}, vidéo`,
         description: `Présentation vidéo du ${fullName}.`,
         thumbnailUrl: [`https://i.ytimg.com/vi/${model.videoId}/hqdefault.jpg`],
         uploadDate: `${model.year}-01-01`,
@@ -213,7 +213,7 @@ export function ModelPage() {
 
       {/* ===================== HERO ===================== */}
       <header className="relative overflow-hidden">
-        {/* Image plein cadre — bateau net (fondu léger, bas seulement) */}
+        {/* Image plein cadre, bateau net (fondu léger, bas seulement) */}
         <div className="absolute inset-0">
           <img src={model.hero} alt={`${fullName} ${model.year} en navigation sur le lac d'Annecy`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
           <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/35 to-transparent" />
@@ -221,7 +221,7 @@ export function ModelPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/35 via-transparent to-transparent" />
         </div>
 
-        {/* Badge concessionnaire officiel — haut droite (style home) */}
+        {/* Badge concessionnaire officiel, haut droite (style home) */}
         <div className="absolute top-8 right-4 md:right-8 hidden lg:flex z-20">
           <div className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 flex items-center gap-3 shadow-2xl">
             <span className="text-white text-[13px] font-bold tracking-[0.12em] uppercase whitespace-nowrap">Concessionnaire officiel</span>
@@ -303,7 +303,7 @@ export function ModelPage() {
           <div>
             <SectionEyebrow label="Le bateau" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-8 leading-tight">
-              {model.name} — <span className="text-brand-cyan">l’expérience Nautique</span>
+              {model.name}, <span className="text-brand-cyan">l’expérience Nautique</span>
             </h2>
             <div className="space-y-5 text-gray-300 text-lg leading-relaxed">
               {model.intro.map((p, i) => <p key={i}>{p}</p>)}
@@ -313,7 +313,7 @@ export function ModelPage() {
               </p>
             </div>
           </div>
-          <PresentationSlider images={model.gallery.length ? model.gallery : [model.hero]} alt={`${fullName} — design et finitions`} />
+          <PresentationSlider images={model.gallery.length ? model.gallery : [model.hero]} alt={`${fullName}, design et finitions`} />
         </div>
       </section>
 
@@ -343,7 +343,7 @@ export function ModelPage() {
                       >
                         <img
                           src={src}
-                          alt={`${fullName} — photo ${i + 1}`}
+                          alt={`${fullName}, photo ${i + 1}`}
                           loading="lazy"
                           referrerPolicy="no-referrer"
                           className={`w-full object-cover group-hover:scale-105 transition-transform duration-700 ${isFirst ? 'h-full' : 'aspect-[4/3]'}`}
@@ -385,7 +385,7 @@ export function ModelPage() {
                     className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"
                   >
                     <div className={`overflow-hidden rounded-[2rem] border border-white/10 ${reverse ? 'lg:order-2' : ''}`}>
-                      <img src={img} alt={`${fullName} — ${h.title.toLowerCase()}`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover aspect-[16/10]" />
+                      <img src={img} alt={`${fullName}, ${h.title.toLowerCase()}`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover aspect-[16/10]" />
                     </div>
                     <div className={reverse ? 'lg:order-1' : ''}>
                       <div className="flex items-center gap-3 mb-4">
@@ -412,7 +412,7 @@ export function ModelPage() {
               <iframe
                 className="absolute inset-0 w-full h-full"
                 src={`https://www.youtube-nocookie.com/embed/${model.videoId}`}
-                title={`${fullName} — vidéo`}
+                title={`${fullName}, vidéo`}
                 loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -474,7 +474,7 @@ export function ModelPage() {
               {model.name} : <span className="text-brand-cyan">évolution par millésime</span>
             </h2>
             <p className="text-gray-300 text-lg leading-relaxed max-w-3xl mb-10">
-              Le {model.short} a évolué depuis son lancement. Voici ce qui change d’une année à l’autre — utile pour situer et comparer un {model.short} d’occasion avant l’achat.
+              Le {model.short} a évolué depuis son lancement. Voici ce qui change d’une année à l’autre, utile pour situer et comparer un {model.short} d’occasion avant l’achat.
             </p>
 
             <div className="overflow-x-auto rounded-3xl border border-white/10 mb-4">
@@ -493,7 +493,7 @@ export function ModelPage() {
                       <td className="py-4 px-6 font-bold text-white whitespace-nowrap">{model.short} {m.year}</td>
                       <td className="py-4 px-6">{m.motorization || 'Non communiqué'}</td>
                       <td className="py-4 px-6">{m.changes || 'Non communiqué'}</td>
-                      <td className="py-4 px-6">{m.edition || '—'}</td>
+                      <td className="py-4 px-6">{m.edition || '·'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -501,7 +501,7 @@ export function ModelPage() {
             </div>
             {milestones.some((m) => m.manualUrl) && (
               <p className="text-gray-500 text-sm mb-12">
-                Sources : manuels propriétaires officiels Nautique —{' '}
+                Sources : manuels propriétaires officiels Nautique ·{' '}
                 {milestones.filter((m) => m.manualUrl).map((m, i, arr) => (
                   <React.Fragment key={m.year}>
                     <a href={m.manualUrl} target="_blank" rel="noopener noreferrer" className="text-brand-cyan hover:underline">manuel {m.year} (PDF)</a>
@@ -776,7 +776,7 @@ export function ModelPage() {
             <button onClick={(e) => { e.stopPropagation(); stepLb(1); }} aria-label="Suivante" className="absolute right-3 md:right-6 w-11 h-11 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20"><ChevronRight size={24} /></button>
             <img
               src={model.gallery[lightbox]}
-              alt={`${fullName} — photo ${lightbox + 1}`}
+              alt={`${fullName}, photo ${lightbox + 1}`}
               referrerPolicy="no-referrer"
               onClick={(e) => e.stopPropagation()}
               className="max-w-full max-h-[85vh] rounded-2xl object-contain"
@@ -813,7 +813,7 @@ function PresentationSlider({ images, alt }: { images: string[]; alt: string }) 
           <img
             key={i}
             src={src}
-            alt={`${alt} — vue ${i + 1}`}
+            alt={`${alt}, vue ${i + 1}`}
             loading={i === 0 ? 'eager' : 'lazy'}
             referrerPolicy="no-referrer"
             aria-hidden={i !== idx}

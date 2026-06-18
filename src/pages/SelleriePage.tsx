@@ -223,7 +223,7 @@ export function SelleriePage() {
             />
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
-              Sellerie de bateau <span className="text-brand-cyan">sur mesure</span> <span className="text-white/90">— confection & rénovation</span>
+              Sellerie de bateau <span className="text-brand-cyan">sur mesure</span> <span className="text-white/90">· confection & rénovation</span>
             </h1>
 
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
@@ -277,7 +277,7 @@ export function SelleriePage() {
           <div className="rounded-[2rem] border border-gray-200 bg-white shadow-xl shadow-brand-dark/5 overflow-hidden">
             <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-gray-200 bg-gray-50">
               <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref — Sellerie bateau Annecy</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref, Sellerie bateau Annecy</span>
             </div>
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               <div>
@@ -329,7 +329,7 @@ export function SelleriePage() {
               Quand refaire la <span className="text-brand-cyan">sellerie</span> de son bateau&nbsp;?
             </h2>
             <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
-              Soleil alpin, embruns et usage répété fatiguent la sellerie au fil des saisons. Voici les signes qui doivent vous alerter — et la solution que nous apportons.
+              Soleil alpin, embruns et usage répété fatiguent la sellerie au fil des saisons. Voici les signes qui doivent vous alerter, et la solution que nous apportons.
             </p>
           </div>
 

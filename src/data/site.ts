@@ -1,4 +1,4 @@
-/** Coordonnées NAP officielles — source : motorboat74.com. */
+/** Coordonnées NAP officielles, source : motorboat74.com. */
 export const SITE = {
   name: 'Motor Boat 74',
   url: 'https://motorboat74.com',
@@ -11,6 +11,6 @@ export const SITE = {
   addressPostal: '74210',
   addressRegion: 'Haute-Savoie',
   addressCountry: 'FR',
-  // ⚠️ Coordonnées approximatives (secteur Marlens / Val de Chaise) — à confirmer via Google Maps.
+  // ⚠️ Coordonnées approximatives (secteur Marlens / Val de Chaise), à confirmer via Google Maps.
   geo: { lat: 45.7365, lng: 6.2772 },
 } as const;

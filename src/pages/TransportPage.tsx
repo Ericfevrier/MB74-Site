@@ -241,7 +241,7 @@ export function TransportPage() {
           <div className="rounded-[2rem] border border-gray-200 bg-white shadow-xl shadow-brand-dark/5 overflow-hidden">
             <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-gray-200 bg-gray-50">
               <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref — Transport de bateau</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref, Transport de bateau</span>
             </div>
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               <div>
@@ -357,7 +357,7 @@ export function TransportPage() {
                     De la Haute-Savoie à toute l'Europe
                   </h2>
                   <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
-                    Basés près d'Annecy, nous convoyons votre bateau depuis les lacs alpins vers n'importe quelle destination en France et en Europe — et inversement.
+                    Basés près d'Annecy, nous convoyons votre bateau depuis les lacs alpins vers n'importe quelle destination en France et en Europe, et inversement.
                   </p>
                 </div>
                 <ul role="list" className="flex flex-wrap gap-2.5">

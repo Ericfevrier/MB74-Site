@@ -26,7 +26,7 @@ export const usedBoats: UsedBoat[] = [
     title: 'Super Air Nautique G25 Paragon',
     year: '2021',
     capacity: '19 personnes',
-    power: 'PCM ZZ8 — 630 ch',
+    power: 'PCM ZZ8, 630 ch',
     price: '395 000 €',
     image: '/images/nautique/g25-paragon-2.jpg',
     sold: false,

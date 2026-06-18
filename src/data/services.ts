@@ -1,5 +1,5 @@
 /**
- * Contenu des pages services — fidèle à motorboat74.com.
+ * Contenu des pages services, fidèle à motorboat74.com.
  * Architecture data-driven : ServicePage lit ce fichier via le slug d'URL.
  */
 
@@ -7,12 +7,12 @@ export interface ServiceCard {
   title: string;
   desc?: string;
   bullets?: string[];
-  /** Clé d'icône lucide (mappée dans ServicePage) — optionnelle */
+  /** Clé d'icône lucide (mappée dans ServicePage), optionnelle */
   icon?: string;
 }
 
 export interface ServiceSection {
-  /** Petit sur-titre cyan au-dessus du H2 — optionnel */
+  /** Petit sur-titre cyan au-dessus du H2, optionnel */
   eyebrow?: string;
   heading: string;
   intro?: string;
@@ -53,7 +53,7 @@ export interface ServiceDef {
   heroIntro: string;
   heroImage: string;
   heroCtas: ServiceCTA[];
-  /** Bandeau d'indicateurs sous le héro — optionnel */
+  /** Bandeau d'indicateurs sous le héro, optionnel */
   stats?: ServiceStat[];
   sections: ServiceSection[];
   faqs: ServiceFAQ[];

@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 
 const ZONES: { name: string; desc: string }[] = [
-  { name: 'Annecy', desc: 'Au cœur de la ville — port de l’Évêché, Marquisats et canal du Vassé : nous rejoignons votre bateau en quelques minutes pour le dépanner ou le remorquer.' },
+  { name: 'Annecy', desc: 'Au cœur de la ville, port de l’Évêché, Marquisats et canal du Vassé : nous rejoignons votre bateau en quelques minutes pour le dépanner ou le remorquer.' },
   { name: 'Annecy-le-Vieux', desc: 'Plage et port d’Albigny : prise en charge rapide d’une panne sur toute la rive nord-est du lac.' },
   { name: 'Veyrier-du-Lac', desc: 'Port de Veyrier et rive est, au pied du Mont Veyrier : un secteur passant que nous connaissons parfaitement pour intervenir vite.' },
   { name: 'Menthon-Saint-Bernard', desc: 'Petit port sous le château de Menthon, à l’accès délicat : nous y intervenons en sécurité, à flot ou par remorquage.' },
@@ -42,7 +42,7 @@ const STEPS = [
   { t: 'Localisation & départ', d: 'Notre technicien localise votre embarcation et part vers vous avec le bateau-atelier équipé.' },
   { t: 'Intervention sur l’eau', d: 'Diagnostic et réparation directement à flot quand c’est possible : moteur, batterie, circuit électrique, hélice.' },
   { t: 'Remorquage si besoin', d: 'Pour une panne majeure, nous sécurisons et remorquons votre bateau jusqu’à notre atelier ou au port le plus proche.' },
-  { t: 'Remise en route', d: 'Contrôle final, vérification de sécurité et reprise de la navigation — ou prise en charge atelier pour les réparations lourdes.' },
+  { t: 'Remise en route', d: 'Contrôle final, vérification de sécurité et reprise de la navigation, ou prise en charge atelier pour les réparations lourdes.' },
 ];
 
 const BREAKDOWNS = [
@@ -97,7 +97,7 @@ export function DepannagePage() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, sujet: 'Dépannage bateau — Lac d’Annecy' }),
+        body: JSON.stringify({ ...formData, sujet: 'Dépannage bateau, Lac d’Annecy' }),
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok || (json && json.ok === false)) throw new Error('send_failed');
@@ -186,7 +186,7 @@ export function DepannagePage() {
         <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
       </Helmet>
 
-      {/* Mobile sticky CTA — appel d'urgence */}
+      {/* Mobile sticky CTA, appel d'urgence */}
       <div className="lg:hidden fixed bottom-6 inset-x-0 mx-auto px-6 z-50 pointer-events-none">
         <a
           href={SITE.phoneHref}
@@ -218,7 +218,7 @@ export function DepannagePage() {
             />
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
-              Dépannage de bateau sur le <span className="text-brand-cyan">Lac d'Annecy</span> <span className="text-white/90">— 7j/7 en saison</span>
+              Dépannage de bateau sur le <span className="text-brand-cyan">Lac d'Annecy</span> <span className="text-white/90">· 7j/7 en saison</span>
             </h1>
 
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
@@ -272,7 +272,7 @@ export function DepannagePage() {
           <div className="rounded-[2rem] border border-gray-200 bg-white shadow-xl shadow-brand-dark/5 overflow-hidden">
             <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-gray-200 bg-gray-50">
               <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref — Dépannage bateau Annecy</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref, Dépannage bateau Annecy</span>
             </div>
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               <div>
@@ -324,7 +324,7 @@ export function DepannagePage() {
               Les pannes que nous traitons en urgence sur le <span className="text-brand-cyan">lac</span>
             </h2>
             <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
-              Une immobilisation sur l'eau est toujours stressante, parfois dangereuse. Notre rôle&nbsp;: vous remettre en sécurité au plus vite, puis réparer — sur place quand c'est possible, à l'atelier pour les pannes lourdes.
+              Une immobilisation sur l'eau est toujours stressante, parfois dangereuse. Notre rôle&nbsp;: vous remettre en sécurité au plus vite, puis réparer, sur place quand c'est possible, à l'atelier pour les pannes lourdes.
             </p>
           </div>
 
@@ -478,7 +478,7 @@ export function DepannagePage() {
                   <CheckCircle className="w-12 h-12 text-brand-cyan mx-auto mb-4" />
                   <h3 className="text-brand-dark font-extrabold uppercase text-sm mb-2">Demande envoyée !</h3>
                   <p className="text-xs text-gray-500 leading-relaxed">
-                    Pour une panne en cours sur l'eau, appelez-nous sans attendre au {SITE.phoneDisplay} — nous réagissons au plus vite.
+                    Pour une panne en cours sur l'eau, appelez-nous sans attendre au {SITE.phoneDisplay}, nous réagissons au plus vite.
                   </p>
                   <button onClick={() => setFormSubmitted(false)} className="mt-6 text-xs text-brand-cyan font-bold uppercase hover:underline">
                     Envoyer une autre demande

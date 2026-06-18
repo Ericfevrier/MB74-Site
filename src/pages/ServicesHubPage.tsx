@@ -31,7 +31,7 @@ const cards: HubCard[] = [
   {
     title: 'Dépannage',
     desc: 'Dépannage bateau 7j/7 sur le Lac d’Annecy. Intervention sur panne moteur, batterie ou carburant, avec remorquage.',
-    bullets: ['Dépannage sur zone — Lac d’Annecy', 'Assistance moteur inboard / hors-bord', 'Remorquage jusqu’au port'],
+    bullets: ['Dépannage sur zone, Lac d’Annecy', 'Assistance moteur inboard / hors-bord', 'Remorquage jusqu’au port'],
     path: '/services/depannage',
     icon: LifeBuoy,
   },
