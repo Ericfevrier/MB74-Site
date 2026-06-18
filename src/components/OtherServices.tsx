@@ -17,6 +17,8 @@ const DEDICATED: Record<string, string> = {
   depannage: '/depannage',
   'sellerie-de-bateau': '/sellerie',
   'entretien-reparation': '/entretien-reparation',
+  'transport-de-bateau': '/transport',
+  'remorques-de-bateau': '/remorques',
   'hivernage-stockage-bateau': '/hivernage-stockage-bateau',
 };
 const resolvePath = (slug: string) => DEDICATED[slug] ?? `/services/${slug}`;

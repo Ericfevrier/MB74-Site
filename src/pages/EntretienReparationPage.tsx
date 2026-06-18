@@ -262,7 +262,7 @@ export function EntretienReparationPage() {
             </div>
 
             <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-8 gap-y-3 pt-5 border-t border-white/10 text-xs font-semibold text-gray-400">
-              <span className="flex items-center gap-1.5 text-white"><Star className="w-4 h-4 fill-brand-cyan text-brand-cyan" /> Plus de 10 ans d’expertise</span>
+              <span className="flex items-center gap-1.5 text-white"><Star className="w-4 h-4 fill-brand-cyan text-brand-cyan" /> Techniciens qualifiés</span>
               <span className="text-white">● Atelier mécanique & carrosserie</span>
               <span className="text-white">● Devis gratuit, sans engagement</span>
             </div>

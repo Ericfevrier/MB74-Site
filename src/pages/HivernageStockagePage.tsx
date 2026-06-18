@@ -445,8 +445,8 @@ export function HivernageStockagePage() {
               <span className="flex items-center gap-1.5 text-white">
                 <Star className="w-4 h-4 fill-brand-cyan text-brand-cyan" /> 4,7/5 sur Google (20 avis)
               </span>
-              <span className="text-white">● 600+ bateaux hivernés par an</span>
-              <span className="text-white">● Concessionnaire Expert depuis plus de 10 ans</span>
+              <span className="text-white">● Hangar sécurisé de 3 000 m²</span>
+              <span className="text-white">● Concessionnaire officiel Nautique</span>
             </div>
           </div>
         </div>
