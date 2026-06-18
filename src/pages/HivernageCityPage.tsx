@@ -143,6 +143,29 @@ export function HivernageCityPage() {
         </div>
       </section>
 
+      {/* Expertise hyper-locale */}
+      {city.localExpertise && (
+        <section className="bg-brand-light py-20 border-t border-gray-200">
+          <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
+            <div className="max-w-3xl mb-12">
+              <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs block mb-3">Notre connaissance du terrain</span>
+              <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mb-5">
+                Hivernage à {city.city} : ce que nous savons du plan d’eau
+              </h2>
+              <p className="text-gray-600 text-lg leading-relaxed">{city.localExpertise.intro}</p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-6">
+              {city.localExpertise.facts.map((f, i) => (
+                <div key={i} className="bg-white border border-gray-200 border-l-4 border-l-brand-cyan rounded-3xl p-7 shadow-lg shadow-brand-dark/5">
+                  <h3 className="font-bold text-brand-dark mb-2 leading-tight uppercase tracking-tight text-sm">{f.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{f.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Zones d'intervention / ports */}
       {city.ports.length > 0 && (
         <section className="bg-brand-light py-20">

@@ -4,6 +4,7 @@
  */
 
 export interface HivernagePort { title: string; desc: string; }
+export interface LocalFact { title: string; text: string; }
 export interface HivernageCity {
   slug: string;
   city: string;
@@ -15,6 +16,8 @@ export interface HivernageCity {
   lake: string;
   zonesIntro: string;
   ports: HivernagePort[];
+  /** Contenu d'expertise hyper-locale (climat, gel, vents, ports, contraintes du plan d'eau). */
+  localExpertise?: { intro: string; facts: LocalFact[] };
 }
 
 export const HIVERNAGE_CITY_ORDER: string[] = ["annecy","aix-les-bains","evian-les-bains","thonon-les-bains","geneve","lac-de-serre-poncon"];
@@ -22,6 +25,27 @@ export const HIVERNAGE_CITY_ORDER: string[] = ["annecy","aix-les-bains","evian-l
 export const hivernageCities: Record<string, HivernageCity> = {
   "annecy": {
     "slug": "annecy",
+    "localExpertise": {
+      "intro": "Le lac d’Annecy, l’un des plus purs d’Europe, a ses particularités que nous connaissons sur le bout des doigts.",
+      "facts": [
+        {
+          "title": "Gel localisé en fond de lac",
+          "text": "Si le grand lac gèle rarement, le Bout-du-lac (Doussard) et les zones peu profondes peuvent prendre par grand froid : on sort les bateaux avant les premières gelées de novembre."
+        },
+        {
+          "title": "La bise du nord",
+          "text": "La bise lève une houle courte sur le grand lac et malmène amarrages et taquets : autant de raisons de mettre le bateau hors d’eau avant l’hiver."
+        },
+        {
+          "title": "Tous les ports du lac",
+          "text": "Du port d’Albigny aux pontons de Sevrier, Saint-Jorioz, Duingt et Talloires, nous connaissons chaque rampe de mise à l’eau et créneau de grutage."
+        },
+        {
+          "title": "Une eau pure, des carènes préservées",
+          "text": "L’eau très propre du lac salit peu les carènes ; notre hivernage se concentre sur la protection moteur et la sellerie contre l’humidité."
+        }
+      ]
+    },
     "city": "Annecy",
     "h1": "Hivernage et stockage de bateaux à Annecy",
     "metaTitle": "Hivernage Et Stockage De Bateaux à Annecy",
@@ -83,6 +107,27 @@ export const hivernageCities: Record<string, HivernageCity> = {
   },
   "aix-les-bains": {
     "slug": "aix-les-bains",
+    "localExpertise": {
+      "intro": "Le lac du Bourget, plus grand lac naturel d’origine glaciaire de France, impose ses propres contraintes hivernales.",
+      "facts": [
+        {
+          "title": "Gel des baies par grand froid",
+          "text": "Le Bourget ne gèle pas en entier, mais ses baies abritées (Grésine, Mémard) peuvent prendre une fine couche de glace lors des vagues de froid : la mise hors d’eau s’impose."
+        },
+        {
+          "title": "Brouillards et humidité",
+          "text": "La cuvette du lac est sujette à des brouillards persistants l’hiver : un stockage intérieur ventilé évite la condensation destructrice sur la sellerie et l’électronique."
+        },
+        {
+          "title": "Grand Port, Petit Port, Mémard",
+          "text": "Nous intervenons sur les principaux ports d’Aix-les-Bains et de la rive savoyarde, avec une logistique de grutage adaptée à chaque ponton."
+        },
+        {
+          "title": "La bise dans l’axe du lac",
+          "text": "La bise s’engouffre dans l’axe nord-sud et lève une houle qui fatigue les bateaux à quai : mieux vaut sortir tôt en saison."
+        }
+      ]
+    },
     "city": "Aix-les-Bains",
     "h1": "Hivernage et stockage de bateaux à Aix-les-Bains",
     "metaTitle": "Hivernage Et Stockage De Bateaux à Aix-les-Bains",
@@ -124,6 +169,27 @@ export const hivernageCities: Record<string, HivernageCity> = {
   },
   "evian-les-bains": {
     "slug": "evian-les-bains",
+    "localExpertise": {
+      "intro": "Sur la rive sud du Léman, Évian bénéficie d’un grand lac qui ne gèle pas — mais qui réserve d’autres pièges hivernaux.",
+      "facts": [
+        {
+          "title": "Le Léman ne gèle (presque) jamais",
+          "text": "Trop vaste et profond pour geler, le Léman expose surtout vos circuits d’eau au gel nocturne et vos coques aux tempêtes : l’hivernage moteur reste indispensable."
+        },
+        {
+          "title": "La bise, reine du Léman",
+          "text": "La bise du nord-est génère de fortes vagues et des embruns qui gèlent sur les pontons : on sort le bateau avant les coups de bise d’automne."
+        },
+        {
+          "title": "Ports d’Évian et alentours",
+          "text": "Du port des Mouettes au port de la Touvière (Lugrin), nous couvrons la rive est française du Léman pour la sortie et le convoyage."
+        },
+        {
+          "title": "Eau calcaire",
+          "text": "Les dépôts calcaires du Léman marquent les carènes : notre hivernage inclut un nettoyage haute pression avant remisage."
+        }
+      ]
+    },
     "city": "Évian-les-Bains",
     "h1": "Hivernage et stockage de bateaux à Évian-les-Bains",
     "metaTitle": "Hivernage Et Stockage De Bateaux à Évian-les-Bains",
@@ -149,6 +215,27 @@ export const hivernageCities: Record<string, HivernageCity> = {
   },
   "thonon-les-bains": {
     "slug": "thonon-les-bains",
+    "localExpertise": {
+      "intro": "À Thonon, capitale du Chablais, nous connaissons les humeurs du Léman et de sa rive savoyarde.",
+      "facts": [
+        {
+          "title": "Port de Rives & port de Séchex",
+          "text": "Du port de plaisance de Rives au port de Séchex (Margencel), nous maîtrisons les accès et les créneaux de grutage de la rive thononaise."
+        },
+        {
+          "title": "La bise du Chablais",
+          "text": "La bise s’engouffre vers Thonon et lève une houle courte, redoutable pour les bateaux à quai en automne : la sortie d’eau se planifie avant les premières tempêtes."
+        },
+        {
+          "title": "Pas de gel du lac, mais des nuits froides",
+          "text": "Le Léman ne gèle pas, mais les nuits du Chablais descendent bien sous zéro : moteurs et circuits doivent être purgés et protégés à l’antigel."
+        },
+        {
+          "title": "Un front de lac qui se libère l’hiver",
+          "text": "Très fréquenté l’été, le front de lac de Thonon se vide en hiver : nous y organisons sorties et convoyages en toute fluidité."
+        }
+      ]
+    },
     "city": "Thonon-les-Bains",
     "h1": "Hivernage et stockage de bateaux à Thonon-les-Bains",
     "metaTitle": "Hivernage Et Stockage De Bateaux à Thonon-les-Bains",
@@ -170,6 +257,27 @@ export const hivernageCities: Record<string, HivernageCity> = {
   },
   "geneve": {
     "slug": "geneve",
+    "localExpertise": {
+      "intro": "Au bout du Léman, Genève et son Petit Lac concentrent vent et trafic : un secteur que nous connaissons bien.",
+      "facts": [
+        {
+          "title": "Le Petit Lac et la bise canalisée",
+          "text": "Entre Genève et Yvoire, le Petit Lac, plus étroit, canalise la bise : la houle y monte vite, mettant à l’épreuve les bateaux restés à flot."
+        },
+        {
+          "title": "Les ports genevois",
+          "text": "Du Port-Noir aux Eaux-Vives en passant par les Pâquis et Genève-Plage, nous intervenons sur la rade pour la sortie et le transfert des bateaux."
+        },
+        {
+          "title": "Logistique transfrontalière",
+          "text": "Nous organisons le convoyage entre les rives suisse et française du Léman, en gérant la logistique entre les deux pays."
+        },
+        {
+          "title": "Pas de gel du lac, gel des circuits",
+          "text": "Le lac ne gèle pas, mais l’hivernage moteur reste essentiel pour protéger les circuits d’eau des gelées matinales du bassin genevois."
+        }
+      ]
+    },
     "city": "Genève",
     "h1": "Hivernage et stockage de bateaux à Genève",
     "metaTitle": "Hivernage Et Stockage De Bateaux à Genève",
@@ -207,6 +315,27 @@ export const hivernageCities: Record<string, HivernageCity> = {
   },
   "lac-de-serre-poncon": {
     "slug": "lac-de-serre-poncon",
+    "localExpertise": {
+      "intro": "Serre-Ponçon, l’un des plus grands lacs artificiels d’Europe, a une contrainte unique : son niveau d’eau.",
+      "facts": [
+        {
+          "title": "Le marnage du barrage",
+          "text": "Lac de barrage, Serre-Ponçon voit son niveau baisser fortement en fin de saison : les bateaux doivent être sortis avant la descente du plan d’eau, sous peine de se retrouver à sec ou inaccessibles."
+        },
+        {
+          "title": "Gel d’altitude",
+          "text": "À environ 780 m d’altitude, l’hiver est rigoureux : gel franc et neige imposent une purge complète des circuits et un stockage à l’abri."
+        },
+        {
+          "title": "Ports de Savines, Chorges, Le Sauze",
+          "text": "De la baie Saint-Michel (Chorges) à Savines-le-Lac et au Sauze-du-Lac, nous connaissons les rampes et les contraintes de mise à l’eau du lac."
+        },
+        {
+          "title": "Le vent thermique",
+          "text": "Serre-Ponçon est réputé pour son vent thermique d’après-midi : en intersaison, il complique les manœuvres de sortie, que nous planifions au bon créneau."
+        }
+      ]
+    },
     "city": "Lac de Serre-Ponçon",
     "h1": "Hivernage et stockage de bateaux au Lac de Serre-Ponçon",
     "metaTitle": "Hivernage Et Stockage De Bateaux Au Lac De Serre-Ponçon",
