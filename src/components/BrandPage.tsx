@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
 import { ArrowRight, ChevronRight, ShieldCheck, Waves, Wallet, Wrench } from 'lucide-react';
 import { brandsData } from '../data/brands';
-import { nautiqueModels } from '../data/nautiqueModels';
+import { getBrandModels } from '../data/boatBrands';
 import { ModelComparison } from './ModelComparison';
 import { UsedBoatsSection } from './UsedBoatsSection';
 import { FAQSection } from './FAQSection';
@@ -169,7 +169,7 @@ export function BrandPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {brand.models.map((model, idx) => {
               const slug = model.name.toLowerCase().replace(/\s+/g, '-');
-              const gamme = nautiqueModels[slug]?.gamme;
+              const gamme = getBrandModels(id)?.models[slug]?.gamme;
               return (
                 <motion.article
                   key={idx}

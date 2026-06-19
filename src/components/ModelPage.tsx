@@ -7,7 +7,7 @@ import {
   ChevronLeft, ChevronRight, Play, Sparkles, Fuel, Settings2,
 } from 'lucide-react';
 import { Breadcrumb } from './Breadcrumb';
-import { getModel, MODEL_ORDER, nautiqueModels } from '../data/nautiqueModels';
+import { getBrandModels } from '../data/boatBrands';
 import { usedBoatsForModel } from '../data/usedBoats';
 import { SITE } from '../data/site';
 import { ServiceContactBlock } from './services/ServiceContactBlock';
@@ -20,7 +20,8 @@ const GROUP_ICON: Record<string, React.ComponentType<{ size?: number; className?
 
 export function ModelPage() {
   const { brandId, modelId } = useParams<{ brandId: string; modelId: string }>();
-  const model = modelId ? getModel(modelId) : undefined;
+  const brand = getBrandModels(brandId);
+  const model = brand && modelId ? brand.models[modelId] : undefined;
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [openOpt, setOpenOpt] = useState<number | null>(0);
@@ -65,29 +66,21 @@ export function ModelPage() {
     return () => observer.disconnect();
   }, [model, modelId]);
 
-  if (!model) {
-    if (brandId && brandId.toLowerCase() !== 'nautique') {
-      return (
-        <div className="min-h-[60vh] flex items-center justify-center bg-brand-dark">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-white uppercase tracking-tight mb-4">Modèle en cours de création</h1>
-            <Link to="/" className="text-brand-cyan hover:underline font-bold uppercase text-sm">Retour à l'accueil</Link>
-          </div>
-        </div>
-      );
-    }
-    return <Navigate to="/marque/nautique" replace />;
+  if (!model || !brand) {
+    return <Navigate to={brand ? `/marque/${brand.id}` : '/'} replace />;
   }
 
+  const brandName = brand.name;
+  const brandPath = `/marque/${brand.id}`;
   const fullName = model.fullName || model.name;
-  const isParagon = model.slug.includes('paragon') || model.gamme.toLowerCase().includes('paragon');
-  // H1 : "Nautique G25 Paragon" pour les Paragon, nom complet ("Super Air Nautique G25") sinon.
+  const isParagon = brand.id === 'nautique' && (model.slug.includes('paragon') || model.gamme.toLowerCase().includes('paragon'));
+  // H1 : "Nautique G25 Paragon" pour les Paragon Nautique, nom complet sinon.
   const heroTitle = isParagon ? `Nautique ${model.short}` : model.name;
-  const canonical = `${SITE.url}/nautique/${model.slug}/`;
-  const heroAbs = `${SITE.url}${model.hero}`;
-  const others = MODEL_ORDER.filter((s) => s !== model.slug).map((s) => nautiqueModels[s]);
+  const canonical = `${SITE.url}/${brand.id}/${model.slug}/`;
+  const heroAbs = model.hero.startsWith('http') ? model.hero : `${SITE.url}${model.hero}`;
+  const others = brand.order.filter((s) => s !== model.slug).map((s) => brand.models[s]);
   const hasEquip = Boolean(model.editions || model.motorizations || model.features || model.options);
-  const occasions = usedBoatsForModel(model.slug);
+  const occasions = brand.id === 'nautique' ? usedBoatsForModel(model.slug) : [];
   const milestones = (model.milestones ?? []).slice().sort((a, b) => Number(b.year) - Number(a.year));
 
   const anchors = [
@@ -123,7 +116,7 @@ export function ModelPage() {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: `${fullName} ${model.year}`,
-    brand: { '@type': 'Brand', name: 'Nautique' },
+    brand: { '@type': 'Brand', name: brandName },
     category: 'Wakeboat / Bateau de sport nautique',
     image: [heroAbs],
     description: model.metaDescription,
@@ -143,7 +136,7 @@ export function ModelPage() {
     '@context': 'https://schema.org',
     '@type': 'Vehicle',
     name: `${fullName} ${model.year}`,
-    brand: { '@type': 'Brand', name: 'Nautique' },
+    brand: { '@type': 'Brand', name: brandName },
     vehicleConfiguration: model.gamme,
     ...(model.motorizations && model.motorizations.length
       ? {
@@ -170,8 +163,8 @@ export function ModelPage() {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Marques', item: `${SITE.url}/marque/nautique` },
-      { '@type': 'ListItem', position: 3, name: 'Nautique', item: `${SITE.url}/marque/nautique` },
+      { '@type': 'ListItem', position: 2, name: 'Marques', item: `${SITE.url}${brandPath}` },
+      { '@type': 'ListItem', position: 3, name: brandName, item: `${SITE.url}${brandPath}` },
       { '@type': 'ListItem', position: 4, name: model.short, item: canonical },
     ],
   };
@@ -221,28 +214,30 @@ export function ModelPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/35 via-transparent to-transparent" />
         </div>
 
-        {/* Badge concessionnaire officiel, haut droite (style home) */}
-        <div className="absolute top-8 right-4 md:right-8 hidden lg:flex z-20">
-          <div className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 flex items-center gap-3 shadow-2xl">
-            <span className="text-white text-[13px] font-bold tracking-[0.12em] uppercase whitespace-nowrap">Concessionnaire officiel</span>
-            <div className="flex items-center border-l border-white/20 pl-3">
-              <img
-                src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png"
-                alt="Nautique Boats concessionnaire officiel"
-                className="h-9 object-contain"
-                referrerPolicy="no-referrer"
-              />
+        {/* Badge concessionnaire officiel, haut droite (concessionnaire agréé uniquement) */}
+        {brand.officialBadge && (
+          <div className="absolute top-8 right-4 md:right-8 hidden lg:flex z-20">
+            <div className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 flex items-center gap-3 shadow-2xl">
+              <span className="text-white text-[13px] font-bold tracking-[0.12em] uppercase whitespace-nowrap">Concessionnaire officiel</span>
+              <div className="flex items-center border-l border-white/20 pl-3">
+                <img
+                  src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png"
+                  alt={`${brandName} concessionnaire officiel`}
+                  className="h-9 object-contain"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 min-h-[68vh] flex flex-col">
           <Breadcrumb
             className="pt-8"
             items={[
               { label: 'Accueil', to: '/' },
-              { label: 'Marques', to: '/marque/nautique' },
-              { label: 'Nautique', to: '/marque/nautique' },
+              { label: 'Marques', to: brandPath },
+              { label: brandName, to: brandPath },
               { label: model.short },
             ]}
           />
@@ -266,7 +261,7 @@ export function ModelPage() {
                 <Phone size={16} /> Réserver un essai
               </a>
               <a href="#contact" className="inline-flex items-center justify-center gap-2 text-white font-bold uppercase tracking-widest text-sm px-6 py-4 rounded-xl hover:text-brand-cyan transition">
-                <Settings2 size={16} /> Concevez votre Nautique
+                <Settings2 size={16} /> Concevez votre {brandName}
               </a>
             </div>
           </div>
@@ -303,13 +298,13 @@ export function ModelPage() {
           <div>
             <SectionEyebrow label="Le bateau" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-8 leading-tight">
-              {model.name}, <span className="text-brand-cyan">l’expérience Nautique</span>
+              {model.name}, <span className="text-brand-cyan">l’expérience {brandName}</span>
             </h2>
             <div className="space-y-5 text-gray-300 text-lg leading-relaxed">
               {model.intro.map((p, i) => <p key={i}>{p}</p>)}
               <p>
-                Le {model.short} s’inscrit dans la{' '}
-                <Link to="/marque/nautique" className="text-brand-cyan font-semibold hover:underline">gamme Super Air Nautique</Link>, que nous présentons dans notre showroom au bord du Lac d’Annecy.
+                Le {model.short} fait partie de la{' '}
+                <Link to={brandPath} className="text-brand-cyan font-semibold hover:underline">gamme {brandName}</Link>, que nous présentons dans notre showroom au bord du lac d’Annecy.
               </p>
             </div>
           </div>
@@ -501,7 +496,7 @@ export function ModelPage() {
             </div>
             {milestones.some((m) => m.manualUrl) && (
               <p className="text-gray-500 text-sm mb-12">
-                Sources : manuels propriétaires officiels Nautique ·{' '}
+                Sources : manuels propriétaires officiels {brandName} ·{' '}
                 {milestones.filter((m) => m.manualUrl).map((m, i, arr) => (
                   <React.Fragment key={m.year}>
                     <a href={m.manualUrl} target="_blank" rel="noopener noreferrer" className="text-brand-cyan hover:underline">manuel {m.year} (PDF)</a>
@@ -639,7 +634,7 @@ export function ModelPage() {
               <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white">{model.name} d’occasion</h2>
             </div>
             <Link to="/bateaux-occasion" className="inline-flex items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
-              Toutes nos occasions Nautique <ArrowRight size={14} />
+              Toutes nos occasions {brandName} <ArrowRight size={14} />
             </Link>
           </div>
 
@@ -737,7 +732,7 @@ export function ModelPage() {
           <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white text-center mb-12">Découvrez les autres modèles</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {others.map((o) => (
-              <Link key={o.slug} to={`/nautique/${o.slug}`} className="group bg-ink-900 border border-white/10 rounded-3xl overflow-hidden hover:border-brand-cyan hover:-translate-y-1 transition-all">
+              <Link key={o.slug} to={`/${brand.id}/${o.slug}`} className="group bg-ink-900 border border-white/10 rounded-3xl overflow-hidden hover:border-brand-cyan hover:-translate-y-1 transition-all">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img src={o.hero} alt={`${o.fullName || o.name} ${o.year}`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
