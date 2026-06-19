@@ -13,6 +13,7 @@ import { ShowroomSection } from './ShowroomSection';
 export function BrandPage() {
   const { id } = useParams<{ id: string }>();
   const brand = id ? brandsData[id.toLowerCase()] : null;
+  const studioBrand = getBrandModels(id)?.studioImages;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -179,15 +180,15 @@ export function BrandPage() {
                   transition={{ duration: 0.5, delay: (idx % 4) * 0.08 }}
                   className="group relative bg-ink-900 border border-white/10 rounded-3xl overflow-hidden hover:border-brand-cyan hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
                 >
-                  <div className="aspect-[4/3] overflow-hidden relative">
+                  <div className={`aspect-[4/3] overflow-hidden relative ${studioBrand ? 'bg-gradient-to-b from-white to-gray-100' : ''}`}>
                     <img
                       src={model.image}
                       alt={`Bateau ${model.name} vendu chez Motorboat 74`}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className={`w-full h-full transition-transform duration-700 group-hover:scale-105 ${studioBrand ? 'object-contain p-3' : 'object-cover'}`}
                       loading="lazy"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-transparent to-transparent" />
+                    {!studioBrand && <div className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-transparent to-transparent" />}
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
                     {gamme && (

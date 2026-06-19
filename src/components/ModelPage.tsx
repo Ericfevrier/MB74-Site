@@ -73,6 +73,7 @@ export function ModelPage() {
   const brandName = brand.name;
   const brandPath = `/marque/${brand.id}`;
   const fullName = model.fullName || model.name;
+  const studio = brand.studioImages;
   const isParagon = brand.id === 'nautique' && (model.slug.includes('paragon') || model.gamme.toLowerCase().includes('paragon'));
   // H1 : "Nautique G25 Paragon" pour les Paragon Nautique, nom complet sinon.
   const heroTitle = isParagon ? `Nautique ${model.short}` : model.name;
@@ -205,52 +206,11 @@ export function ModelPage() {
       </Helmet>
 
       {/* ===================== HERO ===================== */}
-      {brand.studioImages ? (
-        /* Hero studio : texte à gauche, bateau (vue rotative) à droite sur fond neutre */
-        <header className="relative overflow-hidden bg-brand-dark">
-          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-cyan/10 rounded-full blur-[150px] -mr-40 -mt-40 pointer-events-none" />
-          <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 lg:py-10 lg:min-h-[68vh] grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <Breadcrumb
-                className="mb-8"
-                items={[
-                  { label: 'Accueil', to: '/' },
-                  { label: 'Marques', to: brandPath },
-                  { label: brandName, to: brandPath },
-                  { label: model.short },
-                ]}
-              />
-              <div className="flex items-center gap-3 mb-4">
-                <span className="w-8 h-1 bg-brand-cyan rounded-full" />
-                <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{model.gamme} · Millésime {model.year}</span>
-              </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[1.05] text-white mb-6">{heroTitle}</h1>
-              <p className="text-gray-300 text-lg leading-relaxed max-w-xl mb-9">{model.tagline || model.intro[0]}</p>
-              <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-                <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:bg-white transition shadow-xl shadow-brand-cyan/20 hover:-translate-y-0.5">
-                  Demander le prix <ArrowRight size={16} />
-                </a>
-                <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-2 border-2 border-white/40 text-white font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
-                  <Phone size={16} /> Réserver un essai
-                </a>
-              </div>
-            </div>
-            <div className="order-1 lg:order-2">
-              <RotatableBoat images={model.gallery} alt={`${fullName} ${model.year}`} />
-            </div>
-          </div>
-        </header>
-      ) : (
-      <header className="relative overflow-hidden">
-        {/* Image plein cadre, bateau net (fondu léger, bas seulement) */}
-        <div className="absolute inset-0">
-          <img src={model.hero} alt={`${fullName} ${model.year} en navigation sur le lac d'Annecy`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/35 to-transparent" />
-          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-brand-dark/70 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/35 via-transparent to-transparent" />
-        </div>
+      {/* Hero : texte à gauche, bateau à droite (vue rotative) */}
+      <header className="relative overflow-hidden bg-brand-dark">
+        <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-cyan/10 rounded-full blur-[150px] -mr-40 -mt-40 pointer-events-none" />
 
-        {/* Badge concessionnaire officiel, haut droite (concessionnaire agréé uniquement) */}
+        {/* Badge concessionnaire officiel (concessionnaire agréé uniquement) */}
         {brand.officialBadge && (
           <div className="absolute top-8 right-4 md:right-8 hidden lg:flex z-20">
             <div className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 flex items-center gap-3 shadow-2xl">
@@ -267,33 +227,28 @@ export function ModelPage() {
           </div>
         )}
 
-        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 min-h-[68vh] flex flex-col">
-          <Breadcrumb
-            className="pt-8"
-            items={[
-              { label: 'Accueil', to: '/' },
-              { label: 'Marques', to: brandPath },
-              { label: brandName, to: brandPath },
-              { label: model.short },
-            ]}
-          />
-
-          <div className="flex-1" />
-
-          <div className="pb-12 max-w-3xl [text-shadow:0_2px_18px_rgba(0,0,0,.45)]">
+        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 lg:py-10 lg:min-h-[68vh] grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="order-2 lg:order-1">
+            <Breadcrumb
+              className="mb-8"
+              items={[
+                { label: 'Accueil', to: '/' },
+                { label: 'Marques', to: brandPath },
+                { label: brandName, to: brandPath },
+                { label: model.short },
+              ]}
+            />
             <div className="flex items-center gap-3 mb-4">
               <span className="w-8 h-1 bg-brand-cyan rounded-full" />
               <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{model.gamme} · Millésime {model.year}</span>
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[1.05] text-white mb-6">
-              {heroTitle}
-            </h1>
-            <p className="text-gray-100 text-lg leading-relaxed max-w-2xl mb-9">{model.tagline || model.intro[0]}</p>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[1.05] text-white mb-6">{heroTitle}</h1>
+            <p className="text-gray-300 text-lg leading-relaxed max-w-xl mb-9">{model.tagline || model.intro[0]}</p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-4">
               <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:bg-white transition shadow-xl shadow-brand-cyan/20 hover:-translate-y-0.5">
                 Demander le prix <ArrowRight size={16} />
               </a>
-              <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-2 border-2 border-white/40 bg-brand-dark/20 backdrop-blur-sm text-white font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
+              <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-2 border-2 border-white/40 text-white font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
                 <Phone size={16} /> Réserver un essai
               </a>
               <a href="#contact" className="inline-flex items-center justify-center gap-2 text-white font-bold uppercase tracking-widest text-sm px-6 py-4 rounded-xl hover:text-brand-cyan transition">
@@ -301,10 +256,11 @@ export function ModelPage() {
               </a>
             </div>
           </div>
+          <div className="order-1 lg:order-2">
+            <RotatableBoat images={model.gallery} alt={`${fullName} ${model.year}`} studio={brand.studioImages} />
+          </div>
         </div>
-
       </header>
-      )}
 
       {/* ===================== MENU D'ANCRAGE STICKY ===================== */}
       <nav aria-label="Sommaire de la page" className="sticky top-[120px] z-40 bg-brand-dark/70 backdrop-blur-xl border-b border-white/5">
@@ -345,7 +301,7 @@ export function ModelPage() {
               </p>
             </div>
           </div>
-          <PresentationSlider images={model.gallery.length ? model.gallery : [model.hero]} alt={`${fullName}, design et finitions`} />
+          <PresentationSlider images={model.gallery.length ? model.gallery : [model.hero]} alt={`${fullName}, design et finitions`} studio={studio} />
         </div>
       </section>
 
@@ -370,7 +326,7 @@ export function ModelPage() {
                       <button
                         key={i}
                         onClick={() => setLightbox(i)}
-                        className={`group relative overflow-hidden rounded-3xl border border-white/10 ${isFirst ? 'row-span-2' : ''}`}
+                        className={`group relative overflow-hidden rounded-3xl border border-white/10 ${studio ? 'bg-gradient-to-b from-white to-gray-100' : ''} ${isFirst ? 'row-span-2' : ''}`}
                         aria-label={showMore ? `Voir les ${extra} photos supplémentaires du ${fullName}` : `Agrandir la photo ${i + 1} du ${fullName}`}
                       >
                         <img
@@ -378,7 +334,7 @@ export function ModelPage() {
                           alt={`${fullName}, photo ${i + 1}`}
                           loading="lazy"
                           referrerPolicy="no-referrer"
-                          className={`w-full object-cover group-hover:scale-105 transition-transform duration-700 ${isFirst ? 'h-full' : 'aspect-[4/3]'}`}
+                          className={`w-full group-hover:scale-105 transition-transform duration-700 ${studio ? 'object-contain p-3' : 'object-cover'} ${isFirst ? 'h-full' : 'aspect-[4/3]'}`}
                         />
                         <span className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/20 transition-colors" />
                         {showMore && (
@@ -416,8 +372,8 @@ export function ModelPage() {
                     transition={{ duration: 0.5 }}
                     className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"
                   >
-                    <div className={`overflow-hidden rounded-[2rem] border border-white/10 ${reverse ? 'lg:order-2' : ''}`}>
-                      <img src={img} alt={`${fullName}, ${h.title.toLowerCase()}`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover aspect-[16/10]" />
+                    <div className={`overflow-hidden rounded-[2rem] border border-white/10 ${studio ? 'bg-gradient-to-b from-white to-gray-100' : ''} ${reverse ? 'lg:order-2' : ''}`}>
+                      <img src={img} alt={`${fullName}, ${h.title.toLowerCase()}`} loading="lazy" referrerPolicy="no-referrer" className={`w-full h-full aspect-[16/10] ${studio ? 'object-contain p-4' : 'object-cover'}`} />
                     </div>
                     <div className={reverse ? 'lg:order-1' : ''}>
                       <div className="flex items-center gap-3 mb-4">
@@ -770,8 +726,8 @@ export function ModelPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {others.map((o) => (
               <Link key={o.slug} to={`/${brand.id}/${o.slug}`} className="group bg-ink-900 border border-white/10 rounded-3xl overflow-hidden hover:border-brand-cyan hover:-translate-y-1 transition-all">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img src={o.hero} alt={`${o.fullName || o.name} ${o.year}`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className={`aspect-[4/3] overflow-hidden ${studio ? 'bg-gradient-to-b from-white to-gray-100' : ''}`}>
+                  <img src={o.hero} alt={`${o.fullName || o.name} ${o.year}`} loading="lazy" referrerPolicy="no-referrer" className={`w-full h-full group-hover:scale-105 transition-transform duration-500 ${studio ? 'object-contain p-2' : 'object-cover'}`} />
                 </div>
                 <div className="p-5">
                   <span className="text-[10px] uppercase tracking-widest font-bold text-brand-cyan">{o.gamme}</span>
@@ -820,7 +776,7 @@ export function ModelPage() {
   );
 }
 
-function PresentationSlider({ images, alt }: { images: string[]; alt: string }) {
+function PresentationSlider({ images, alt, studio }: { images: string[]; alt: string; studio?: boolean }) {
   const slides = images.filter(Boolean);
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -840,7 +796,7 @@ function PresentationSlider({ images, alt }: { images: string[]; alt: string }) 
       onMouseLeave={() => setPaused(false)}
     >
       <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl" />
-      <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 shadow-2xl aspect-[4/3]">
+      <div className={`relative overflow-hidden rounded-[2.5rem] border border-white/10 shadow-2xl aspect-[4/3] ${studio ? 'bg-gradient-to-b from-white to-gray-100' : ''}`}>
         {slides.map((src, i) => (
           <img
             key={i}
@@ -849,10 +805,10 @@ function PresentationSlider({ images, alt }: { images: string[]; alt: string }) 
             loading={i === 0 ? 'eager' : 'lazy'}
             referrerPolicy="no-referrer"
             aria-hidden={i !== idx}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${i === idx ? 'opacity-100' : 'opacity-0'}`}
+            className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${studio ? 'object-contain p-6' : 'object-cover'} ${i === idx ? 'opacity-100' : 'opacity-0'}`}
           />
         ))}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-dark/30 to-transparent" />
+        {!studio && <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-dark/30 to-transparent" />}
 
         {slides.length > 1 && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
@@ -872,8 +828,9 @@ function PresentationSlider({ images, alt }: { images: string[]; alt: string }) 
   );
 }
 
-// Vue « rotative » du bateau : glisser horizontalement pour faire défiler les angles disponibles.
-function RotatableBoat({ images, alt }: { images: string[]; alt: string }) {
+// Vue du bateau dans le hero : glisser horizontalement pour faire défiler les angles.
+// studio = image produit affichée en entier sur fond clair ; sinon photo scénique qui remplit le cadre.
+function RotatableBoat({ images, alt, studio }: { images: string[]; alt: string; studio?: boolean }) {
   const frames = images.filter(Boolean);
   const [idx, setIdx] = useState(0);
   const drag = React.useRef<{ x: number; idx: number } | null>(null);
@@ -895,7 +852,7 @@ function RotatableBoat({ images, alt }: { images: string[]; alt: string }) {
     <div className="relative">
       <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl pointer-events-none" />
       <div
-        className={`relative rounded-[2.5rem] border border-white/10 bg-gradient-to-b from-white to-gray-100 shadow-2xl overflow-hidden aspect-[4/3] ${multi ? 'cursor-grab active:cursor-grabbing select-none touch-pan-y' : ''}`}
+        className={`relative rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden aspect-[4/3] ${studio ? 'bg-gradient-to-b from-white to-gray-100' : 'bg-ink-900'} ${multi ? 'cursor-grab active:cursor-grabbing select-none touch-pan-y' : ''}`}
         onMouseDown={multi ? (e) => start(e.clientX) : undefined}
         onMouseMove={multi ? (e) => move(e.clientX) : undefined}
         onMouseUp={multi ? end : undefined}
@@ -912,12 +869,12 @@ function RotatableBoat({ images, alt }: { images: string[]; alt: string }) {
             draggable={false}
             referrerPolicy="no-referrer"
             loading={i === 0 ? 'eager' : 'lazy'}
-            className={`absolute inset-0 w-full h-full object-contain p-6 transition-opacity duration-150 ${i === idx ? 'opacity-100' : 'opacity-0'}`}
+            className={`absolute inset-0 w-full h-full transition-opacity duration-150 ${studio ? 'object-contain p-6' : 'object-cover'} ${i === idx ? 'opacity-100' : 'opacity-0'}`}
           />
         ))}
         {multi && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-brand-dark/80 backdrop-blur-sm text-white text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full pointer-events-none">
-            <RotateCw size={13} className="text-brand-cyan" /> Glissez pour tourner
+            <RotateCw size={13} className="text-brand-cyan" /> Glissez pour {studio ? 'tourner' : 'faire défiler'}
           </div>
         )}
       </div>
