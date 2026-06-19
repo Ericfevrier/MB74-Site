@@ -8,11 +8,13 @@ export interface BrandModels {
   order: string[];
   /** Affiche le badge « Concessionnaire officiel » + logo (concessionnaire agréé uniquement). */
   officialBadge?: boolean;
+  /** Images produit sur fond neutre (studio) → hero « bateau à droite » avec vue rotative, plutôt qu'image plein cadre. */
+  studioImages?: boolean;
 }
 
 export const BRAND_MODELS: Record<string, BrandModels> = {
   nautique: { id: 'nautique', name: 'Nautique', models: nautiqueModels, order: NAUTIQUE_ORDER, officialBadge: true },
-  mastercraft: { id: 'mastercraft', name: 'MasterCraft', models: mastercraftModels, order: MASTERCRAFT_ORDER },
+  mastercraft: { id: 'mastercraft', name: 'MasterCraft', models: mastercraftModels, order: MASTERCRAFT_ORDER, studioImages: true },
 };
 
 export function getBrandModels(brandId?: string): BrandModels | undefined {

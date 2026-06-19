@@ -45,9 +45,9 @@ export function BrandPage() {
       {/* Brand Hero */}
       <section className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-brand-dark cursor-default">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="/images/2026-p23-ext-09-11zon.jpg" 
-            alt={`Bateau de la gamme ${brand.name} en navigation`} 
+          <img
+            src={brand.heroImage}
+            alt={`Bateau de la gamme ${brand.name} en navigation`}
             className="w-full h-full object-cover opacity-60 scale-105"
             fetchPriority="high"
             decoding="async"

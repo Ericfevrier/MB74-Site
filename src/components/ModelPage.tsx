@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ChevronDown, ArrowRight, Phone, Ruler, Users, Gauge, Check, X,
-  ChevronLeft, ChevronRight, Play, Sparkles, Fuel, Settings2,
+  ChevronLeft, ChevronRight, Play, Sparkles, Fuel, Settings2, RotateCw,
 } from 'lucide-react';
 import { Breadcrumb } from './Breadcrumb';
 import { getBrandModels } from '../data/boatBrands';
@@ -205,6 +205,42 @@ export function ModelPage() {
       </Helmet>
 
       {/* ===================== HERO ===================== */}
+      {brand.studioImages ? (
+        /* Hero studio : texte à gauche, bateau (vue rotative) à droite sur fond neutre */
+        <header className="relative overflow-hidden bg-brand-dark">
+          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-cyan/10 rounded-full blur-[150px] -mr-40 -mt-40 pointer-events-none" />
+          <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 lg:py-10 lg:min-h-[68vh] grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <Breadcrumb
+                className="mb-8"
+                items={[
+                  { label: 'Accueil', to: '/' },
+                  { label: 'Marques', to: brandPath },
+                  { label: brandName, to: brandPath },
+                  { label: model.short },
+                ]}
+              />
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-8 h-1 bg-brand-cyan rounded-full" />
+                <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{model.gamme} · Millésime {model.year}</span>
+              </div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[1.05] text-white mb-6">{heroTitle}</h1>
+              <p className="text-gray-300 text-lg leading-relaxed max-w-xl mb-9">{model.tagline || model.intro[0]}</p>
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+                <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:bg-white transition shadow-xl shadow-brand-cyan/20 hover:-translate-y-0.5">
+                  Demander le prix <ArrowRight size={16} />
+                </a>
+                <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-2 border-2 border-white/40 text-white font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
+                  <Phone size={16} /> Réserver un essai
+                </a>
+              </div>
+            </div>
+            <div className="order-1 lg:order-2">
+              <RotatableBoat images={model.gallery} alt={`${fullName} ${model.year}`} />
+            </div>
+          </div>
+        </header>
+      ) : (
       <header className="relative overflow-hidden">
         {/* Image plein cadre, bateau net (fondu léger, bas seulement) */}
         <div className="absolute inset-0">
@@ -268,6 +304,7 @@ export function ModelPage() {
         </div>
 
       </header>
+      )}
 
       {/* ===================== MENU D'ANCRAGE STICKY ===================== */}
       <nav aria-label="Sommaire de la page" className="sticky top-[120px] z-40 bg-brand-dark/70 backdrop-blur-xl border-b border-white/5">
@@ -828,6 +865,59 @@ function PresentationSlider({ images, alt }: { images: string[]; alt: string }) 
                 className={`h-2 rounded-full transition-all duration-300 ${i === idx ? 'w-7 bg-brand-cyan' : 'w-2 bg-white/50 hover:bg-white/80'}`}
               />
             ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Vue « rotative » du bateau : glisser horizontalement pour faire défiler les angles disponibles.
+function RotatableBoat({ images, alt }: { images: string[]; alt: string }) {
+  const frames = images.filter(Boolean);
+  const [idx, setIdx] = useState(0);
+  const drag = React.useRef<{ x: number; idx: number } | null>(null);
+  const multi = frames.length > 1;
+
+  const start = (x: number) => { drag.current = { x, idx }; };
+  const move = (x: number) => {
+    if (!drag.current || !multi) return;
+    const step = Math.round((x - drag.current.x) / 45);
+    let n = (drag.current.idx + step) % frames.length;
+    if (n < 0) n += frames.length;
+    setIdx(n);
+  };
+  const end = () => { drag.current = null; };
+
+  if (frames.length === 0) return null;
+
+  return (
+    <div className="relative">
+      <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl pointer-events-none" />
+      <div
+        className={`relative rounded-[2.5rem] border border-white/10 bg-gradient-to-b from-white to-gray-100 shadow-2xl overflow-hidden aspect-[4/3] ${multi ? 'cursor-grab active:cursor-grabbing select-none touch-pan-y' : ''}`}
+        onMouseDown={multi ? (e) => start(e.clientX) : undefined}
+        onMouseMove={multi ? (e) => move(e.clientX) : undefined}
+        onMouseUp={multi ? end : undefined}
+        onMouseLeave={multi ? end : undefined}
+        onTouchStart={multi ? (e) => start(e.touches[0].clientX) : undefined}
+        onTouchMove={multi ? (e) => move(e.touches[0].clientX) : undefined}
+        onTouchEnd={multi ? end : undefined}
+      >
+        {frames.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt={`${alt} — vue ${i + 1}`}
+            draggable={false}
+            referrerPolicy="no-referrer"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            className={`absolute inset-0 w-full h-full object-contain p-6 transition-opacity duration-150 ${i === idx ? 'opacity-100' : 'opacity-0'}`}
+          />
+        ))}
+        {multi && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-brand-dark/80 backdrop-blur-sm text-white text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full pointer-events-none">
+            <RotateCw size={13} className="text-brand-cyan" /> Glissez pour tourner
           </div>
         )}
       </div>
