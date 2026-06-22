@@ -10,34 +10,35 @@ import { UsedBoatsSection } from './UsedBoatsSection';
 import { FAQSection } from './FAQSection';
 import { ShowroomSection } from './ShowroomSection';
 
-/** Diaporama « la marque » : bateaux sous différents angles, sur fond clair (bateau entier, non rogné). */
+/** Diaporama « la marque » : belles photos des bateaux sur l'eau, sous différents angles. */
 function AngleSlider({ images, alt }: { images: string[]; alt: string }) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     if (images.length < 2) return;
-    const t = setInterval(() => setIdx((i) => (i + 1) % images.length), 2600);
+    const t = setInterval(() => setIdx((i) => (i + 1) % images.length), 3200);
     return () => clearInterval(t);
   }, [images.length]);
   return (
-    <div className="relative rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden w-full aspect-[4/3] bg-gradient-to-b from-white to-gray-100">
+    <div className="relative rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden w-full aspect-[4/3] bg-ink-900">
       {images.map((src, i) => (
         <img
           key={i}
           src={src}
           alt={`${alt} — vue ${i + 1}`}
-          className={`absolute inset-0 w-full h-full object-contain p-6 transition-opacity duration-700 ${i === idx ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === idx ? 'opacity-100' : 'opacity-0'}`}
           loading={i === 0 ? 'eager' : 'lazy'}
           referrerPolicy="no-referrer"
         />
       ))}
+      <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 via-transparent to-transparent pointer-events-none" />
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
         {images.map((_, i) => (
           <button
             key={i}
             type="button"
-            aria-label={`Voir l'angle ${i + 1}`}
+            aria-label={`Voir la photo ${i + 1}`}
             onClick={() => setIdx(i)}
-            className={`h-2 rounded-full transition-all duration-300 ${i === idx ? 'w-7 bg-brand-cyan' : 'w-2 bg-brand-dark/30 hover:bg-brand-dark/60'}`}
+            className={`h-2 rounded-full transition-all duration-300 ${i === idx ? 'w-7 bg-brand-cyan' : 'w-2 bg-white/50 hover:bg-white/80'}`}
           />
         ))}
       </div>

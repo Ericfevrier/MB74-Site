@@ -72,7 +72,7 @@ const INPUTS: MCInput[] = [
       { title: 'Poste connecté et vision 4 caméras', text: 'Double écran tactile, MasterCraft MyDrive pour piloter vague, vitesse et ballast, recharge sans fil et système de visibilité à 4 caméras facilitent la conduite comme les manœuvres en eau fréquentée, à l’image du lac d’Annecy.', img: M('dfjp4uqp/mb-helm.jpg') },
       { title: 'Tour Z100 motorisée et stern thruster', text: 'La tour Z100 électrique se replie d’un bouton (7 coloris thermolaqués) et porte un audio premium multizone. Le stern thruster rend l’accostage et les demi-tours d’une simplicité totale, jusqu’à pivoter sur place.', img: M('gqtfobxb/mb-tower.jpg') },
     ],
-    gallery: [M('kvdnbx1v/mb-wake.jpg'), M('1ffnh1pj/experience.webp'), M('dfjp4uqp/mb-helm.jpg'), M('gqtfobxb/mb-tower.jpg'), M('l0hoybog/audio.webp')],
+    gallery: [M('0zadabm5/mb-1-3.jpg'), M('kvdnbx1v/mb-wake.jpg'), M('1ffnh1pj/experience.webp'), M('dfjp4uqp/mb-helm.jpg'), M('gqtfobxb/mb-tower.jpg'), M('l0hoybog/audio.webp')],
   },
   {
     slug: 'xstar-25', short: 'XStar 25', series: 'xstar',
@@ -94,7 +94,7 @@ const INPUTS: MCInput[] = [
       { title: 'Technologie et stern thruster', text: 'Double écran, MyDrive, recharge sans fil et vision 4 caméras équipent le poste. Le stern thruster offre une maniabilité totale malgré la taille, précieux à quai et dans les zones de mouillage.', img: M('r2yhcx52/mb-helm.jpg') },
       { title: 'Tour Z100 et audio 7 zones', text: 'Tour Z100 motorisée avec racks de surf XL (7 coloris) et système audio premium à 7 zones (10 HP intérieurs, 6 caissons, 8 HP de tour) pour une ambiance enveloppante à l’arrêt comme en surf.', img: M('jnkmgh1i/mb-tower.jpg') },
     ],
-    gallery: [M('q10fv4v3/mb-surf.jpg'), M('1ffnh1pj/experience.webp'), M('r2yhcx52/mb-helm.jpg'), M('jnkmgh1i/mb-tower.jpg'), M('l0hoybog/audio.webp')],
+    gallery: [M('fm3nab5i/mb-1-4.jpg'), M('q10fv4v3/mb-surf.jpg'), M('1ffnh1pj/experience.webp'), M('r2yhcx52/mb-helm.jpg'), M('jnkmgh1i/mb-tower.jpg'), M('l0hoybog/audio.webp')],
   },
   {
     slug: 'x24', short: 'X24', series: 'x',
@@ -116,7 +116,7 @@ const INPUTS: MCInput[] = [
       { title: 'Le X Helm et vision 4 caméras', text: 'Double écran numérique, MasterCraft MyDrive et système 4 caméras (option) réunissent toutes les fonctions du bateau et de la vague sous la main, pour une conduite intuitive et sûre.', img: M('yjihkkze/mb-the-x-helm_.webp') },
       { title: 'Tour Z9 et audio Meridian', text: 'Tour Z9 motorisée de série (repliable d’un bouton) et système audio SoundStage signé Meridian : un son plus puissant, plus net et réparti par zones.', img: M('1ldn00uo/mb-z9-tower.webp') },
     ],
-    gallery: [M('1ffnh1pj/experience.webp'), M('bpwhydey/mb-comfort.jpg'), M('yjihkkze/mb-the-x-helm_.webp'), M('1ldn00uo/mb-z9-tower.webp'), M('gujfi152/mb-dual-rear-compartments_.webp'), M('hdwpbrqc/mb-sound-that-stands-out_.webp')],
+    gallery: [M('cwehmhdl/mb-2-3.webp'), M('1ffnh1pj/experience.webp'), M('bpwhydey/mb-comfort.jpg'), M('yjihkkze/mb-the-x-helm_.webp'), M('1ldn00uo/mb-z9-tower.webp'), M('gujfi152/mb-dual-rear-compartments_.webp'), M('hdwpbrqc/mb-sound-that-stands-out_.webp')],
   },
   {
     slug: 'x23', short: 'X23', series: 'x',
@@ -138,7 +138,7 @@ const INPUTS: MCInput[] = [
       { title: 'Le X Helm numérique', text: 'Double écran, MyDrive, recharge sans fil et démarrage sans clé centralisent la conduite ; le système 4 caméras en option sécurise manœuvres et accostage.', img: M('nbfpn1ex/mb-the-x-helm.webp') },
       { title: 'Tour Z9 et compartiments planches', text: 'Tour Z9 motorisée (7 coloris) et doubles compartiments arrière transportent le matériel à l’abri, complétés par l’audio SoundStage accordé sur mesure.', img: M('zb4j3f4j/m-bz9-tower.webp') },
     ],
-    gallery: [M('1ffnh1pj/experience.webp'), M('aqwmjqvv/mb-comfort-3.webp'), M('nbfpn1ex/mb-the-x-helm.webp'), M('zb4j3f4j/m-bz9-tower.webp'), M('o1wad2ji/mb-dual-rear-compartments.webp'), M('hd3pjopr/mb-sound-that-stands-out.webp')],
+    gallery: [M('oneinmeq/mb-gal-1.webp'), M('1ffnh1pj/experience.webp'), M('aqwmjqvv/mb-comfort-3.webp'), M('nbfpn1ex/mb-the-x-helm.webp'), M('zb4j3f4j/m-bz9-tower.webp'), M('o1wad2ji/mb-dual-rear-compartments.webp'), M('hd3pjopr/mb-sound-that-stands-out.webp')],
   },
   {
     slug: 'x22', short: 'X22', series: 'x',
@@ -182,7 +182,7 @@ const INPUTS: MCInput[] = [
       { title: 'Poste redessiné, entrée sans clé (2026)', text: 'Pour 2026, poste de pilotage redessiné, écran tactile 12 pouces et entrée sans clé : la conduite la plus moderne de la série XT, intuitive dès la première sortie.', img: M('rtmdo3ck/mb-dash.jpg') },
       { title: '7 coloris de tour et audio multizone', text: 'Tour disponible en 7 coloris thermolaqués et système SoundStage multizone de série, avec de nombreux packs d’options pour personnaliser sièges, technologie et performance.', img: M('pcybxiky/mb-towers-1.jpg') },
     ],
-    gallery: [M('qioj30vg/mb-wakes.jpg'), M('5zjmq3q1/mb-comfort-1.jpg'), M('rtmdo3ck/mb-dash.jpg'), M('pcybxiky/mb-towers-1.jpg'), M('fd3htkrw/mb-audio-1.jpg')],
+    gallery: [M('kinb2meu/mb-2-3.jpg'), M('qioj30vg/mb-wakes.jpg'), M('5zjmq3q1/mb-comfort-1.jpg'), M('rtmdo3ck/mb-dash.jpg'), M('pcybxiky/mb-towers-1.jpg'), M('fd3htkrw/mb-audio-1.jpg')],
   },
   {
     slug: 'xt23', short: 'XT23', series: 'xt',
@@ -204,7 +204,7 @@ const INPUTS: MCInput[] = [
       { title: 'Dash 12 pouces et MyDrive', text: 'Écran tactile 12 pouces avec MasterCraft MyDrive pour un contrôle simple et immédiat des fonctions du bateau et des réglages de vague.', img: M('0z2pza3o/mb-dash_.jpg') },
       { title: 'Audio SoundStage et tours', text: 'Système MasterCraft SoundStage immersif et tours personnalisables : la signature sonore et esthétique de la série XT.', img: M('xoxnz225/mb-towers.jpg') },
     ],
-    gallery: [M('1ffnh1pj/experience.webp'), M('pyycicbo/mb-comfort.jpg'), M('0z2pza3o/mb-dash_.jpg'), M('xoxnz225/mb-towers.jpg'), M('fi0fl2su/mb-audio.jpg')],
+    gallery: [M('m20l1ob4/mb-driving.jpg'), M('1ffnh1pj/experience.webp'), M('pyycicbo/mb-comfort.jpg'), M('0z2pza3o/mb-dash_.jpg'), M('xoxnz225/mb-towers.jpg'), M('fi0fl2su/mb-audio.jpg')],
   },
   {
     slug: 'xt22', short: 'XT22', series: 'xt',
@@ -226,7 +226,7 @@ const INPUTS: MCInput[] = [
       { title: 'Écran tactile 12 pouces', text: 'Dash moderne à écran tactile 12 pouces et MyDrive : réglages de vague et fonctions du bateau accessibles d’un geste.', img: M('ik4oe1d1/mb-dash.jpg') },
       { title: 'Tours et racks personnalisables', text: 'Tours personnalisables (coloris thermolaqués) avec racks à serrage et système SoundStage de série, pour un bateau à votre image.', img: M('yyqibvkd/mb-towers-1.jpg') },
     ],
-    gallery: [M('x41jg5iy/mb-wakes-waves.jpg'), M('u4cl5vqm/mb-comfort-1.jpg'), M('ik4oe1d1/mb-dash.jpg'), M('yyqibvkd/mb-towers-1.jpg'), M('l5ufpk2d/mb-audio-1.jpg')],
+    gallery: [M('0p4bxnoq/mb-3-3.jpg'), M('x41jg5iy/mb-wakes-waves.jpg'), M('u4cl5vqm/mb-comfort-1.jpg'), M('ik4oe1d1/mb-dash.jpg'), M('yyqibvkd/mb-towers-1.jpg'), M('l5ufpk2d/mb-audio-1.jpg')],
   },
   {
     slug: 'xt22t', short: 'XT22T', series: 'xt',
@@ -248,7 +248,7 @@ const INPUTS: MCInput[] = [
       { title: 'Dash 12 pouces et siège hydraulique', text: 'Écran tactile 12 pouces, commandes regroupées et siège de pilotage à élévation hydraulique ; stern thruster et DockStar disponibles pour des manœuvres faciles à quai.', img: M('mfwftufz/mb-dash.jpg') },
       { title: 'Tours personnalisables et audio', text: 'Tours en coloris thermolaqués et système SoundStage accordé sur mesure pour personnaliser le bateau et l’ambiance sonore.', img: M('ebippwjw/mb-towers-1.jpg') },
     ],
-    gallery: [M('imgfhca3/mb-wakes-waves.jpg'), M('uozjp1qt/mb-comfort-1.jpg'), M('mfwftufz/mb-dash.jpg'), M('ebippwjw/mb-towers-1.jpg'), M('fbajucqv/mbaudio.jpg')],
+    gallery: [M('1wehzsnp/mb-3-3.jpg'), M('imgfhca3/mb-wakes-waves.jpg'), M('uozjp1qt/mb-comfort-1.jpg'), M('mfwftufz/mb-dash.jpg'), M('ebippwjw/mb-towers-1.jpg'), M('fbajucqv/mbaudio.jpg')],
   },
   {
     slug: 'xt20', short: 'XT20', series: 'xt',
@@ -270,7 +270,7 @@ const INPUTS: MCInput[] = [
       { title: 'Écran tactile 12 pouces et MyDrive', text: 'Dash épuré, écran tactile 12 pouces, recharge sans fil et démarrage sans clé rendent la prise en main immédiate, même pour un primo-accédant.', img: M('zx5ii0ge/mb-dash.jpg') },
       { title: 'Tour repliable et audio SoundStage', text: 'Tour personnalisable et système MasterCraft SoundStage de série pour la musique à bord, avec options sièges chauffants et marche de bain escamotable.', img: M('xd1dkz0f/mb-tower.jpg') },
     ],
-    gallery: [M('1ffnh1pj/experience.webp'), M('vrjhuwgg/mb-comfort-1.jpg'), M('zx5ii0ge/mb-dash.jpg'), M('xd1dkz0f/mb-tower.jpg'), M('0pgdx1da/mb-audio-1.jpg')],
+    gallery: [M('1d2asqo0/mb-1-3.jpg'), M('1ffnh1pj/experience.webp'), M('vrjhuwgg/mb-comfort-1.jpg'), M('zx5ii0ge/mb-dash.jpg'), M('xd1dkz0f/mb-tower.jpg'), M('0pgdx1da/mb-audio-1.jpg')],
   },
   {
     slug: 'nxt24', short: 'NXT24', series: 'nxt',
@@ -292,7 +292,7 @@ const INPUTS: MCInput[] = [
       { title: 'Dash NXT et entrée sans clé', text: 'Interface NXT, recharge sans fil au poste et entrée sans clé : confort d’usage moderne et prise en main immédiate, idéal pour un premier wakeboat haut de gamme.', img: M('vwolw0hj/mb-dash.webp') },
       { title: 'Tours thermolaquées, RGB et audio', text: 'Tours thermolaquées, éclairage RGB et système SoundStage à son directionnel, accordé pour chaque place à bord, pour le style et l’ambiance de série.', img: M('qnejsuj4/mb-tower-1.webp') },
     ],
-    gallery: [M('jwlowzkc/mb-wave.webp'), M('x05ft24z/mb-comfort-1.webp'), M('vwolw0hj/mb-dash.webp'), M('qnejsuj4/mb-tower-1.webp'), M('rlppuhyt/mb-audio.png'), M('2s2b1mmc/mb-tower-2.webp')],
+    gallery: [M('escgkxei/mb-1-1.webp'), M('jwlowzkc/mb-wave.webp'), M('x05ft24z/mb-comfort-1.webp'), M('vwolw0hj/mb-dash.webp'), M('qnejsuj4/mb-tower-1.webp'), M('rlppuhyt/mb-audio.png'), M('2s2b1mmc/mb-tower-2.webp')],
   },
   {
     slug: 'nxt23', short: 'NXT23', series: 'nxt',
@@ -314,7 +314,7 @@ const INPUTS: MCInput[] = [
       { title: 'Dash NXT 7 pouces et recharge sans fil', text: 'Interface NXT à écran 7 pouces, recharge sans fil au poste et au cockpit et entrée sans clé : la technologie utile, simplement.', img: M('cqrfnet2/mb-dash.webp') },
       { title: 'Tour et audio à son directionnel', text: 'Tour thermolaquée et système SoundStage à son directionnel, accordé pour chaque place à bord, avec éclairage RGB de série.', img: M('ae5fcqjx/mb-tower-1.webp') },
     ],
-    gallery: [M('ky5egq4q/mb-wake-and-waves.webp'), M('zeepckhv/mb-comfort-1.webp'), M('cqrfnet2/mb-dash.webp'), M('ae5fcqjx/mb-tower-1.webp'), M('wj3fvw4e/mb-audio-1.webp')],
+    gallery: [M('2kul0ct5/mb-1-1.webp'), M('ky5egq4q/mb-wake-and-waves.webp'), M('zeepckhv/mb-comfort-1.webp'), M('cqrfnet2/mb-dash.webp'), M('ae5fcqjx/mb-tower-1.webp'), M('wj3fvw4e/mb-audio-1.webp')],
   },
   {
     slug: 'nxt22', short: 'NXT22', series: 'nxt',
@@ -335,7 +335,7 @@ const INPUTS: MCInput[] = [
       { title: 'Éclairage RGB et audio SoundStage', text: 'Éclairage RGB, entrée sans clé et système SoundStage de série apportent confort moderne et ambiance à bord, de jour comme en soirée.', img: M('5gpf3q3f/mb-audio.webp') },
       { title: 'Tours thermolaquées et finitions', text: 'Vinyles montés en gamme et tours thermolaquées soignent le style : un wakeboat accessible mais bien équipé, facile à posséder.', img: M('rzedldul/mb-tower.webp') },
     ],
-    gallery: [M('dszf242b/mb-wakes-and-waves.jpg'), M('ah0pfuma/mb-comfort.webp'), M('5gpf3q3f/mb-audio.webp'), M('rzedldul/mb-tower.webp')],
+    gallery: [M('vtzbitju/mb-1.webp'), M('dszf242b/mb-wakes-and-waves.jpg'), M('ah0pfuma/mb-comfort.webp'), M('5gpf3q3f/mb-audio.webp'), M('rzedldul/mb-tower.webp')],
   },
   {
     slug: 'nxt20', short: 'NXT20', series: 'nxt',
@@ -357,7 +357,7 @@ const INPUTS: MCInput[] = [
       { title: 'Dash NXT et démarrage sans clé', text: 'Interface NXT claire, démarrage sans clé et recharge sans fil (option) : une prise en main immédiate pour les familles et les nouveaux propriétaires.', img: M('a1uiwopj/mb-dash_.webp') },
       { title: 'Tour repliable et audio SoundStage', text: 'Tour thermolaquée et système SoundStage de série pour la musique à bord, dans un bateau MasterCraft pensé pour durer.', img: M('0fobaicu/mb-tower.webp') },
     ],
-    gallery: [M('gy0n5oav/mb-wake.webp'), M('phvc5fb5/mb-comfort.webp'), M('a1uiwopj/mb-dash_.webp'), M('0fobaicu/mb-tower.webp'), M('l0hoybog/audio.webp')],
+    gallery: [M('4bykamyl/mb-1.webp'), M('gy0n5oav/mb-wake.webp'), M('phvc5fb5/mb-comfort.webp'), M('a1uiwopj/mb-dash_.webp'), M('0fobaicu/mb-tower.webp'), M('l0hoybog/audio.webp')],
   },
   {
     slug: 'prostar', short: 'ProStar', series: 'prostar',
