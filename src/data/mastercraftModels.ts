@@ -58,7 +58,7 @@ const INPUTS: MCInput[] = [
     seats: '16 personnes', ballast: '3 775 lbs / 1 712 kg', fuel: '86 gal / 325 L', weight: '7 600 lbs / 3 447 kg',
     engines: [ENGINE.sc630, ENGINE.gdi440, ENGINE.ho380, ENGINE.mpi373],
     intro: 'Référence du wakesurf depuis près de 30 ans, le XStar 23 réunit la proue pickle-fork iconique, des vagues de classe mondiale et des finitions premium. Une évolution 2026 plus raffinée, toujours animée par le moteur le plus puissant du marché.',
-    tagline: 'Le fleuron wakesurf de MasterCraft : vagues de classe mondiale et luxe absolu, à essayer sur le lac d’Annecy.',
+    tagline: 'Wakeboat haut de gamme de 7,19 m pour 16 personnes, animé par le moteur le plus puissant du marché (Ilmor 630 ch) : une vague de wakesurf de classe mondiale, réglable au rider près. Conseil, essai et reprise chez Motor Boat 74, au bord du lac d’Annecy.',
     features: [
       'Tour Z100 motorisée et repliable, 7 coloris thermolaqués',
       'Système de vague SurfStar et ballast de série de 3 775 lbs',
@@ -80,7 +80,7 @@ const INPUTS: MCInput[] = [
     seats: '18 personnes', ballast: '3 975 lbs / 1 803 kg', fuel: '86 gal / 325 L', weight: '8 400 lbs / 3 810 kg',
     engines: [ENGINE.sc630, ENGINE.gdi440, ENGINE.ho380, ENGINE.mpi373],
     intro: 'La version XL du fleuron : le XStar 25 offre plus de place (18 personnes), une coque affinée, un ballast optimisé et un stern thruster pour une maniabilité totale. La même performance qui a remporté des titres mondiaux, en plus spacieux.',
-    tagline: 'Le wakeboat haut de gamme XL : 18 places, stern thruster et vagues de compétition, à essayer sur le lac d’Annecy.',
+    tagline: 'Le wakeboat XL de la gamme : 7,80 m, 18 places et stern thruster pour une maniabilité totale, avec des vagues de compétition signées SurfStar. À découvrir et essayer chez Motor Boat 74, près du lac d’Annecy.',
     features: [
       'Tour Z100 motorisée avec racks de surf XL, 7 coloris',
       'Ballast haute capacité (jusqu’à 4 050 lbs) pour des vagues pro',
@@ -102,7 +102,7 @@ const INPUTS: MCInput[] = [
     seats: '17 personnes', ballast: '4 050 lbs / 1 837 kg', fuel: '86 gal / 326 L', weight: '7 200 lbs / 3 266 kg',
     engines: [ENGINE.gdi440, ENGINE.sc630],
     intro: 'Le plus grand de la série X, entièrement redessiné pour 2026 : espace maximal, ballast renforcé pour des vagues puissantes et de doubles compartiments arrière. Precision With Presence à son sommet.',
-    tagline: 'Le X le plus grand et le mieux doté : espace, ballast renforcé et vagues puissantes, à essayer sur le lac d’Annecy.',
+    tagline: 'Le plus grand des X (7,39 m, 17 places) : 4 050 lbs de ballast et une coque 2026 repensée pour la vague la plus puissante de la série. Conseil, essai et reprise chez Motor Boat 74, au bord du lac d’Annecy.',
     features: [
       'Coque entièrement repensée pour 2026',
       'Système SurfStar pour une vague plus grande et plus propre',
@@ -124,7 +124,7 @@ const INPUTS: MCInput[] = [
     seats: '16 personnes', ballast: '3 800 lbs / 1 724 kg', fuel: '76 gal / 288 L', weight: '7 100 lbs / 3 221 kg',
     engines: [ENGINE.gdi440, ENGINE.sc630],
     intro: 'Le X au volume intérieur accru : assises plus profondes et plus enveloppantes, rangements généreux et la précision de comportement de la série X. Le juste équilibre entre espace et agilité.',
-    tagline: 'Le X équilibré : volume intérieur, confort et précision de la série X, à essayer sur le lac d’Annecy.',
+    tagline: 'Wakeboat polyvalent de 6,99 m pour 16 personnes : le X au volume intérieur accru, aussi précis derrière le bateau que confortable à bord. Essai sur le lac d’Annecy chez Motor Boat 74.',
     features: [
       'Tour Z9 motorisée, 7 coloris',
       'Tableau arrière iconique avec banquettes surdimensionnées et rangement planches intégré',
@@ -146,7 +146,7 @@ const INPUTS: MCInput[] = [
     seats: '15 personnes', ballast: '3 800 lbs / 1 724 kg', fuel: '76 gal / 288 L', weight: '6 950 lbs / 3 152 kg',
     engines: [ENGINE.gdi440, ENGINE.sc630],
     intro: 'Précision et présence dans un format compact et réactif. Coque profilée à carreaux sculptés, le X22 est idéal pour les riders qui cherchent un comportement vif et des vagues franches via SurfStar.',
-    tagline: 'Le X compact et réactif : maniabilité et vagues franches, à essayer sur le lac d’Annecy.',
+    tagline: 'Le X compact et réactif (6,78 m, 15 places) : vague franche via SurfStar et comportement vif, idéal pour rider avec précision. À essayer chez Motor Boat 74, concessionnaire près du lac d’Annecy.',
     features: [
       'Tour Z9 motorisée repliable',
       'Surface de course redessinée associée au système SurfStar',
@@ -168,7 +168,7 @@ const INPUTS: MCInput[] = [
     seats: '17 personnes', ballast: '3 700 lbs / 1 678 kg', fuel: '92 gal / 348 L', weight: '5 694 lbs / 2 583 kg',
     engines: [ENGINE.ho380, ENGINE.gdi440],
     intro: 'Le fleuron de la série XT : capacité et façonnage de vague maximaux, équipements premium et toute la polyvalence XT. Le surf-boat familial le plus spacieux de la gamme.',
-    tagline: 'Le XT le plus grand : capacité et vagues maximales pour toute la famille, à essayer sur le lac d’Annecy.',
+    tagline: 'Le surf-boat familial le plus spacieux de la série XT : 7,32 m, 17 places et 109 ft³ de rangement pour de longues journées sur l’eau. Conseil et essai chez Motor Boat 74, au bord du lac d’Annecy.',
     features: [
       'Le plus grand de la série XT (17 places, 109 ft³ de rangement)',
       'Poste de pilotage redessiné, écran tactile 12 pouces et entrée sans clé (2026)',
@@ -190,7 +190,7 @@ const INPUTS: MCInput[] = [
     seats: '16 personnes', ballast: '3 450 lbs / 1 565 kg', fuel: '79 gal / 299 L', weight: '5 250 lbs / 2 381 kg',
     engines: [ENGINE.ho380, ENGINE.gdi440],
     intro: 'Plateforme étendue et équipements premium pour les passionnés : le XT23 combine espace, confort et vagues de classe mondiale dans un format polyvalent.',
-    tagline: 'Le XT spacieux et premium : confort et vagues de classe mondiale, à essayer sur le lac d’Annecy.',
+    tagline: 'Surf-boat polyvalent de 7,11 m pour 16 personnes : plateforme premium et vagues de classe mondiale, à l’aise du débutant au rider confirmé. Essai sur le lac d’Annecy chez Motor Boat 74.',
     features: [
       'Système SurfStar pour des vagues personnalisables',
       'Audio MasterCraft SoundStage',
@@ -212,7 +212,7 @@ const INPUTS: MCInput[] = [
     seats: '16 personnes', ballast: '3 500 lbs / 1 588 kg', fuel: '79 gal / 299 L', weight: '5 485 lbs / 2 488 kg',
     engines: [ENGINE.ho380, ENGINE.gdi440],
     intro: 'Le XT22 équilibre performance et capacité familiale : un surf-boat polyvalent, facile à vivre, avec le système SurfStar et le moteur Ilmor 5.3L GDI HO de 380 ch.',
-    tagline: 'Le XT équilibré : performance et capacité familiale, à essayer sur le lac d’Annecy.',
+    tagline: 'Le XT équilibré (6,81 m, 16 places) : SurfStar, passage de tableau et confort familial pour tout faire sur l’eau. À découvrir et essayer chez Motor Boat 74, près du lac d’Annecy.',
     features: [
       'Système SurfStar à ballast personnalisable',
       'Audio SoundStage de série',
@@ -234,7 +234,7 @@ const INPUTS: MCInput[] = [
     seats: '14 personnes', ballast: '3 020 lbs / 1 370 kg', fuel: '79 gal / 299 L', weight: '5 275 lbs / 2 393 kg',
     engines: [ENGINE.ho380, ENGINE.gdi440],
     intro: 'La variante à proue pickle-fork de la série XT : une esthétique moderne et distinctive, plus d’espace à la proue et toute la polyvalence du XT.',
-    tagline: 'Le XT à proue pickle-fork : style moderne et proue spacieuse, à essayer sur le lac d’Annecy.',
+    tagline: 'Le XT à proue pickle-fork (6,65 m, 14 places) : style moderne, carré avant spacieux et vagues nettes signées SurfStar. Essai et conseil chez Motor Boat 74, au bord du lac d’Annecy.',
     features: [
       'Proue pickle-fork au style moderne',
       'Système SurfStar pour des vagues nettes et constantes',
@@ -256,7 +256,7 @@ const INPUTS: MCInput[] = [
     seats: '12 personnes', ballast: '2 950 lbs / 1 338 kg', fuel: '45 gal / 170 L', weight: '5 100 lbs / 2 313 kg',
     engines: [ENGINE.ho380, ENGINE.gdi440],
     intro: 'Le surf-boat compact et polyvalent de la série XT : maniable et accessible, parfait pour débuter ou naviguer sur des plans d’eau plus petits, sans renoncer aux vagues SurfStar.',
-    tagline: 'Le XT compact et maniable : idéal pour débuter, à essayer sur le lac d’Annecy.',
+    tagline: 'Le surf-boat compact et accessible (6,10 m, 12 places) : maniable, facile à tracter, idéal pour débuter sans renoncer aux vagues SurfStar. À essayer chez Motor Boat 74, près du lac d’Annecy.',
     features: [
       'Format compact, facile à tracter et à stocker',
       'Système de vague SurfStar',
@@ -278,7 +278,7 @@ const INPUTS: MCInput[] = [
     seats: '16 personnes', ballast: '3 300 lbs / 1 497 kg', fuel: '65 gal / 246 L', weight: '5 000 lbs / 2 268 kg',
     engines: [ENGINE.ho380, ENGINE.gdi440],
     intro: 'Le fleuron de la série NXT : capacité maximale et performances premium, avec l’option du moteur 6.2L GDI. Toute la technologie MasterCraft dans une série accessible.',
-    tagline: 'Le NXT le plus grand : capacité maximale et option 6.2L, à essayer sur le lac d’Annecy.',
+    tagline: 'Le plus grand des NXT (7,32 m, 16 places, 103 ft³ de rangement) : tout le savoir-faire MasterCraft dans une série accessible, avec l’option moteur 6.2L. Conseil, essai et reprise chez Motor Boat 74, près du lac d’Annecy.',
     features: [
       'Le plus grand de la série NXT (16 places, 103 ft³ de rangement)',
       'Sellerie plissée premium, tours thermolaquées, éclairage RGB, entrée sans clé',
@@ -300,7 +300,7 @@ const INPUTS: MCInput[] = [
     seats: '16 personnes', ballast: '3 130 lbs / 1 420 kg', fuel: '65 gal / 246 L', weight: '5 030 lbs / 2 282 kg',
     engines: [ENGINE.ho380, ENGINE.gdi440],
     intro: 'Capacité étendue et ballast accru pour des vagues franches à tous les niveaux. Le NXT23 peut recevoir le moteur 6.2L GDI de 440 ch pour plus de punch.',
-    tagline: 'Le NXT polyvalent : capacité étendue et option 6.2L, à essayer sur le lac d’Annecy.',
+    tagline: 'Wakeboat accessible de 7,01 m pour 16 personnes, avec l’option moteur 6.2L pour plus de punch : des vagues franches à tous les niveaux. Essai sur le lac d’Annecy chez Motor Boat 74.',
     features: [
       'Système SurfStar de série',
       'Éclairage RGB, entrée sans clé et recharge sans fil (poste et cockpit)',
@@ -322,7 +322,7 @@ const INPUTS: MCInput[] = [
     seats: '14 personnes', ballast: '3 000 lbs / 1 361 kg', fuel: '49 gal / 186 L', weight: '4 760 lbs / 2 159 kg',
     engines: [ENGINE.ho380],
     intro: 'Le NXT22 équilibre performance et confort avec un ballast renforcé : un wakeboat accessible et polyvalent, parfait pour la famille et les premières sessions de surf.',
-    tagline: 'Le NXT équilibré : ballast renforcé et polyvalence, à essayer sur le lac d’Annecy.',
+    tagline: 'Le NXT équilibré (6,71 m, 14 places) : ballast renforcé pour des vagues constantes et un rangement record, simple à vivre. À essayer chez Motor Boat 74, concessionnaire près du lac d’Annecy.',
     features: [
       'Système SurfStar et ballast généreux pour des vagues constantes',
       'Rangement planches parmi les plus vastes de sa catégorie',
@@ -343,7 +343,7 @@ const INPUTS: MCInput[] = [
     seats: '11 personnes', ballast: '1 770 lbs / 803 kg', fuel: '47 gal / 178 L', weight: '3 965 lbs / 1 799 kg',
     engines: [ENGINE.ho380],
     intro: 'L’entrée dans l’univers MasterCraft dans un format 20 pieds maniable : le NXT20 rend le wakesurf et le wakeboard accessibles, avec la qualité de construction de la marque.',
-    tagline: 'Le NXT compact : l’accès à MasterCraft en 20 pieds, à essayer sur le lac d’Annecy.',
+    tagline: 'L’accès à l’univers MasterCraft en 20 pieds (6,10 m, 11 places) : maniable, facile à tracter et à stocker, pour découvrir le wakesurf. Conseil et essai chez Motor Boat 74, au bord du lac d’Annecy.',
     features: [
       'Profil compact, facile à tracter, stocker et manœuvrer',
       'Système de vague SurfStar',
@@ -365,7 +365,7 @@ const INPUTS: MCInput[] = [
     seats: '7 personnes', fuel: '30 gal / 113 L', weight: '3 300 lbs / 1 497 kg',
     engines: [ENGINE.ho380, ENGINE.gdi440, ENGINE.mpi373, ENGINE.sc630],
     intro: 'La référence absolue du ski nautique : le ProStar produit le sillage le plus plat du marché et un suivi laser-précis grâce à ses quatre ailettes. Pensé pour les skieurs d’aujourd’hui et de demain.',
-    tagline: 'Le bateau de ski nautique de référence : sillage le plus plat du marché, à essayer sur le lac d’Annecy.',
+    tagline: 'La référence du ski nautique de compétition : 6,10 m, le sillage le plus plat du marché et un suivi laser grâce à ses quatre ailettes. À découvrir et essayer chez Motor Boat 74, près du lac d’Annecy.',
     features: [
       'Sillage le plus propre et constant du marché, éclaboussures minimales',
       'Système quatre ailettes propriétaire pour un suivi laser-précis',
@@ -386,6 +386,13 @@ const INPUTS: MCInput[] = [
 const SERIES_NAME: Record<Series, string> = {
   xstar: 'Série XStar', x: 'Série X', xt: 'Série XT', nxt: 'Série NXT', prostar: 'ProStar',
 };
+
+const SERIES_TYPE: Record<Series, string> = {
+  xstar: 'wakeboat haut de gamme', x: 'wakeboat', xt: 'surf-boat', nxt: 'wakeboat', prostar: 'bateau de ski nautique',
+};
+
+/** Longueur métrique seule (ex. « 7,39 m ») extraite de « 24' 3" / 7,39 m ». */
+const metric = (length: string) => length.split('/').pop()!.trim();
 
 function buildFaqs(short: string, series: Series): ModelFAQ[] {
   return [
@@ -418,7 +425,7 @@ function build(i: MCInput): NautiqueModel {
     gamme: SERIES_NAME[i.series],
     year: '2026',
     metaTitle: `MasterCraft ${i.short} 2026 - Fiche technique et prix | Motor Boat 74`,
-    metaDescription: `Découvrez le MasterCraft ${i.short} 2026 chez Motor Boat 74, près du lac d’Annecy. ${i.tagline}`,
+    metaDescription: `MasterCraft ${i.short} 2026 : ${SERIES_TYPE[i.series]} de ${metric(i.length)} pour ${i.seats}, moteur ${primary.name} (${primary.power}). Prix, fiche technique et essai sur le lac d’Annecy chez Motor Boat 74.`,
     intro: [i.intro],
     tagline: i.tagline,
     hero: i.gallery[0],
