@@ -71,7 +71,7 @@ interface MCInput {
   tagline: string;
 }
 
-const M = (s: string) => `https://mastercraft.com/media/${s}`;
+const M = (s: string) => `https://www.mastercraft.com/media/${s}`;
 
 const INPUTS: MCInput[] = [
   {
