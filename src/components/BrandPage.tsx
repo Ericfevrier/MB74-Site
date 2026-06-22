@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
@@ -10,10 +10,45 @@ import { UsedBoatsSection } from './UsedBoatsSection';
 import { FAQSection } from './FAQSection';
 import { ShowroomSection } from './ShowroomSection';
 
+/** Diaporama « la marque » : bateaux sous différents angles, sur fond clair (bateau entier, non rogné). */
+function AngleSlider({ images, alt }: { images: string[]; alt: string }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    if (images.length < 2) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % images.length), 2600);
+    return () => clearInterval(t);
+  }, [images.length]);
+  return (
+    <div className="relative rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden w-full aspect-[4/3] bg-gradient-to-b from-white to-gray-100">
+      {images.map((src, i) => (
+        <img
+          key={i}
+          src={src}
+          alt={`${alt} — vue ${i + 1}`}
+          className={`absolute inset-0 w-full h-full object-contain p-6 transition-opacity duration-700 ${i === idx ? 'opacity-100' : 'opacity-0'}`}
+          loading={i === 0 ? 'eager' : 'lazy'}
+          referrerPolicy="no-referrer"
+        />
+      ))}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            aria-label={`Voir l'angle ${i + 1}`}
+            onClick={() => setIdx(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${i === idx ? 'w-7 bg-brand-cyan' : 'w-2 bg-brand-dark/30 hover:bg-brand-dark/60'}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function BrandPage() {
   const { id } = useParams<{ id: string }>();
   const brand = id ? brandsData[id.toLowerCase()] : null;
-  const studioBrand = getBrandModels(id)?.studioImages;
+  const catalogStudio = getBrandModels(id)?.catalogStudio;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -135,13 +170,17 @@ export function BrandPage() {
               className="relative"
             >
               <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl" />
-              <img
-                src={brand.heroImage}
-                alt={`${brand.name}, style de vie sur l'eau`}
-                className="relative rounded-[2.5rem] border border-white/10 shadow-2xl w-full aspect-[4/5] object-cover"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-              />
+              {brand.introImages && brand.introImages.length > 0 ? (
+                <AngleSlider images={brand.introImages} alt={`${brand.name}, vues sous différents angles`} />
+              ) : (
+                <img
+                  src={brand.heroImage}
+                  alt={`${brand.name}, style de vie sur l'eau`}
+                  className="relative rounded-[2.5rem] border border-white/10 shadow-2xl w-full aspect-[4/5] object-cover"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+              )}
               {brand.models.length > 0 && (
                 <div className="absolute -bottom-6 -left-6 bg-brand-cyan text-brand-dark px-8 py-6 rounded-[1.5rem] shadow-2xl hidden md:block">
                   <p className="text-4xl font-bold mb-1 tracking-tighter leading-none">{brand.models.length}</p>
@@ -180,15 +219,15 @@ export function BrandPage() {
                   transition={{ duration: 0.5, delay: (idx % 4) * 0.08 }}
                   className="group relative bg-ink-900 border border-white/10 rounded-3xl overflow-hidden hover:border-brand-cyan hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
                 >
-                  <div className={`aspect-[4/3] overflow-hidden relative ${studioBrand ? 'bg-gradient-to-b from-white to-gray-100' : ''}`}>
+                  <div className={`aspect-[4/3] overflow-hidden relative ${catalogStudio ? 'bg-gradient-to-b from-white to-gray-100' : ''}`}>
                     <img
                       src={model.image}
                       alt={`Bateau ${model.name} vendu chez Motorboat 74`}
-                      className={`w-full h-full transition-transform duration-700 group-hover:scale-105 ${studioBrand ? 'object-contain p-3' : 'object-cover'}`}
+                      className={`w-full h-full transition-transform duration-700 group-hover:scale-105 ${catalogStudio ? 'object-contain p-3' : 'object-cover'}`}
                       loading="lazy"
                       referrerPolicy="no-referrer"
                     />
-                    {!studioBrand && <div className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-transparent to-transparent" />}
+                    {!catalogStudio && <div className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-transparent to-transparent" />}
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
                     {gamme && (

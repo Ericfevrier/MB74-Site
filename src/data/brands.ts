@@ -27,6 +27,8 @@ export interface BrandData {
   tagline: string;
   models: BoatModel[];
   comparisons?: ComparisonCategory[];
+  /** Visuels « la marque » : bateaux sous différents angles, affichés en diaporama dans la 2e section (sinon heroImage). */
+  introImages?: string[];
 }
 
 export const brandsData: Record<string, BrandData> = {
@@ -169,8 +171,16 @@ export const brandsData: Record<string, BrandData> = {
     name: "Mastercraft",
     fullName: "MasterCraft Boats",
     logo: "/images/mcft-70e1d427.png",
-    heroImage: "https://www.mastercraft.com/media/0zpbp3rq/xstar.webp",
-    tagline: "Held to a Higher Standard",
+    heroImage: "https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp",
+    tagline: "Une exigence sans compromis",
+    introImages: [
+      "https://www.mastercraft.com/media/uszo0uud/x24_26_quarter_dab_hero-3.webp",
+      "https://www.mastercraft.com/media/nf3bfcfw/x24_26_profile.webp",
+      "https://www.mastercraft.com/media/wyhbvprg/x24_26_top.webp",
+      "https://www.mastercraft.com/media/toaj4ntn/xstar25_26_profile_hero.webp",
+      "https://www.mastercraft.com/media/exukm11d/xt24_26_profile.webp",
+      "https://www.mastercraft.com/media/xphguh4f/my26_x22_hero_top.webp",
+    ],
     description: "MasterCraft conçoit et fabrique aux États-Unis des wakeboats et bateaux de ski nautique de référence depuis 1968, plébiscités par les riders professionnels et les familles exigeantes. Chaque modèle est animé par un moteur Ilmor (jusqu'au 6.2L suralimenté de 630 ch, le plus puissant des towboats) et un système de vague SurfStar pour des vagues et sillages calibrés au rider près.\n\nDe la série NXT, accessible et polyvalente, aux séries XT et X, jusqu'au fleuron XStar et au ski-boat ProStar, la gamme MasterCraft couvre tous les usages : wakesurf, wakeboard, ski nautique et sorties en famille. Construction premium, finitions soignées et technologies de pointe (SoundStage, stern thruster, écrans tactiles) font la signature de la marque.\n\nMotor Boat 74 vous accompagne dans le choix du modèle MasterCraft idéal, avec essai sur le lac d'Annecy, financement, reprise, entretien et hivernage.",
     models: [
       { name: "XStar 23", image: "https://www.mastercraft.com/media/toqfdw11/xstar23_26_front_hero-2-1.webp", description: "Le fleuron luxe de MasterCraft : proue pickle-fork iconique, vagues de classe mondiale (SurfStar) et finitions premium. Jusqu'à 16 personnes." },

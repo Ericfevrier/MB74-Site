@@ -10,11 +10,13 @@ export interface BrandModels {
   officialBadge?: boolean;
   /** Images produit sur fond neutre (studio) → hero « bateau à droite » avec vue rotative, plutôt qu'image plein cadre. */
   studioImages?: boolean;
+  /** Catalogue (page marque) : visuels produit sur fond neutre → cartes « gamme » avec bateau entier non rogné (object-contain). */
+  catalogStudio?: boolean;
 }
 
 export const BRAND_MODELS: Record<string, BrandModels> = {
   nautique: { id: 'nautique', name: 'Nautique', models: nautiqueModels, order: NAUTIQUE_ORDER, officialBadge: true },
-  mastercraft: { id: 'mastercraft', name: 'MasterCraft', models: mastercraftModels, order: MASTERCRAFT_ORDER },
+  mastercraft: { id: 'mastercraft', name: 'MasterCraft', models: mastercraftModels, order: MASTERCRAFT_ORDER, catalogStudio: true },
 };
 
 export function getBrandModels(brandId?: string): BrandModels | undefined {
