@@ -14,7 +14,7 @@ export interface BrandModels {
 
 export const BRAND_MODELS: Record<string, BrandModels> = {
   nautique: { id: 'nautique', name: 'Nautique', models: nautiqueModels, order: NAUTIQUE_ORDER, officialBadge: true },
-  mastercraft: { id: 'mastercraft', name: 'MasterCraft', models: mastercraftModels, order: MASTERCRAFT_ORDER, studioImages: true },
+  mastercraft: { id: 'mastercraft', name: 'MasterCraft', models: mastercraftModels, order: MASTERCRAFT_ORDER },
 };
 
 export function getBrandModels(brandId?: string): BrandModels | undefined {
