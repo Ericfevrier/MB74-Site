@@ -73,6 +73,8 @@ interface MCInput {
   intro: string;
   tagline: string;
   features: string[];
+  /** Images illustrant les 4 points forts de la série (même ordre que HIGHLIGHTS). */
+  highlightImages: string[];
 }
 
 const M = (s: string) => `https://www.mastercraft.com/media/${s}`;
@@ -93,6 +95,7 @@ const INPUTS: MCInput[] = [
       'Système de visibilité 4 caméras et double écran tactile au poste de pilotage',
       'Proue pickle-fork signature, recharge sans fil et MasterCraft MyDrive',
     ],
+    highlightImages: [M('kvdnbx1v/mb-wake.jpg'), M('1ffnh1pj/experience.webp'), M('gqtfobxb/mb-tower.jpg'), M('dfjp4uqp/mb-helm.jpg')],
   },
   {
     slug: 'xstar-25', short: 'XStar 25', series: 'xstar',
@@ -109,6 +112,7 @@ const INPUTS: MCInput[] = [
       'Audio premium : 10 HP intérieurs, 6 caissons, 8 HP de tour, 7 zones',
       'Cockpit XL 18 places avec glacière et tiroir de rangement intégrés',
     ],
+    highlightImages: [M('q10fv4v3/mb-surf.jpg'), M('1ffnh1pj/experience.webp'), M('jnkmgh1i/mb-tower.jpg'), M('r2yhcx52/mb-helm.jpg')],
   },
   {
     slug: 'x24', short: 'X24', series: 'x',
@@ -125,6 +129,7 @@ const INPUTS: MCInput[] = [
       'Tour Z9 motorisée de série',
       'Audio MasterCraft SoundStage signé Meridian, multizone',
     ],
+    highlightImages: [M('1ffnh1pj/experience.webp'), M('yjihkkze/mb-the-x-helm_.webp'), M('gujfi152/mb-dual-rear-compartments_.webp'), M('hdwpbrqc/mb-sound-that-stands-out_.webp')],
   },
   {
     slug: 'x23', short: 'X23', series: 'x',
@@ -141,6 +146,7 @@ const INPUTS: MCInput[] = [
       'Recharge sans fil et démarrage sans clé',
       'Système 4 caméras en option',
     ],
+    highlightImages: [M('1ffnh1pj/experience.webp'), M('nbfpn1ex/mb-the-x-helm.webp'), M('o1wad2ji/mb-dual-rear-compartments.webp'), M('hd3pjopr/mb-sound-that-stands-out.webp')],
   },
   {
     slug: 'x22', short: 'X22', series: 'x',
@@ -157,6 +163,7 @@ const INPUTS: MCInput[] = [
       'Audio SoundStage et écrans X Dash',
       'Système 4 caméras en option',
     ],
+    highlightImages: [M('0zrehkiw/mb-built-for-better-waves.jpg'), M('2f0kc232/mb-the-x-helm.jpg'), M('zfajv4lg/mb-dual-rear-compartments.jpg'), M('qrlatp2m/mb-sound-that-stands-out.jpg')],
   },
   {
     slug: 'xt24', short: 'XT24', series: 'xt',
@@ -173,6 +180,7 @@ const INPUTS: MCInput[] = [
       'Audio SoundStage multizone de série',
       '7 coloris thermolaqués et nombreux packs d’options',
     ],
+    highlightImages: [M('qioj30vg/mb-wakes.jpg'), M('5zjmq3q1/mb-comfort-1.jpg'), M('pcybxiky/mb-towers-1.jpg'), M('rtmdo3ck/mb-dash.jpg')],
   },
   {
     slug: 'xt23', short: 'XT23', series: 'xt',
@@ -189,6 +197,7 @@ const INPUTS: MCInput[] = [
       '16 places et 108 ft³ de rangement',
       'Design moderne au comportement orienté vague',
     ],
+    highlightImages: [M('1ffnh1pj/experience.webp'), M('pyycicbo/mb-comfort.jpg'), M('xoxnz225/mb-towers.jpg'), M('0z2pza3o/mb-dash_.jpg')],
   },
   {
     slug: 'xt22', short: 'XT22', series: 'xt',
@@ -205,6 +214,7 @@ const INPUTS: MCInput[] = [
       'Tours personnalisables (coloris thermolaqués) et racks à serrage',
       'Écran tactile 12 pouces',
     ],
+    highlightImages: [M('x41jg5iy/mb-wakes-waves.jpg'), M('u4cl5vqm/mb-comfort-1.jpg'), M('yyqibvkd/mb-towers-1.jpg'), M('ik4oe1d1/mb-dash.jpg')],
   },
   {
     slug: 'xt22t', short: 'XT22T', series: 'xt',
@@ -221,6 +231,7 @@ const INPUTS: MCInput[] = [
       'Écran tactile 12 pouces et siège de pilotage à élévation hydraulique',
       'Stern thruster et DockStar disponibles',
     ],
+    highlightImages: [M('imgfhca3/mb-wakes-waves.jpg'), M('uozjp1qt/mb-comfort-1.jpg'), M('ebippwjw/mb-towers-1.jpg'), M('mfwftufz/mb-dash.jpg')],
   },
   {
     slug: 'xt20', short: 'XT20', series: 'xt',
@@ -237,6 +248,7 @@ const INPUTS: MCInput[] = [
       'Audio MasterCraft SoundStage de série',
       '93 ft³ de rangement, banquette arrière avec dossiers',
     ],
+    highlightImages: [M('1ffnh1pj/experience.webp'), M('vrjhuwgg/mb-comfort-1.jpg'), M('xd1dkz0f/mb-tower.jpg'), M('zx5ii0ge/mb-dash.jpg')],
   },
   {
     slug: 'nxt24', short: 'NXT24', series: 'nxt',
@@ -253,6 +265,7 @@ const INPUTS: MCInput[] = [
       'Audio MasterCraft SoundStage à son directionnel',
       'Recharge sans fil au poste de pilotage',
     ],
+    highlightImages: [M('jwlowzkc/mb-wave.webp'), M('qnejsuj4/mb-tower-1.webp'), M('x05ft24z/mb-comfort-1.webp'), M('vwolw0hj/mb-dash.webp')],
   },
   {
     slug: 'nxt23', short: 'NXT23', series: 'nxt',
@@ -269,6 +282,7 @@ const INPUTS: MCInput[] = [
       'Sellerie premium et 99 ft³ de rangement',
       'Dash NXT avec écran 7 pouces',
     ],
+    highlightImages: [M('ky5egq4q/mb-wake-and-waves.webp'), M('ae5fcqjx/mb-tower-1.webp'), M('zeepckhv/mb-comfort-1.webp'), M('cqrfnet2/mb-dash.webp')],
   },
   {
     slug: 'nxt22', short: 'NXT22', series: 'nxt',
@@ -284,6 +298,7 @@ const INPUTS: MCInput[] = [
       'Éclairage RGB, entrée sans clé et audio SoundStage de série',
       'Sellerie plissée et tours thermolaquées',
     ],
+    highlightImages: [M('dszf242b/mb-wakes-and-waves.jpg'), M('rzedldul/mb-tower.webp'), M('ah0pfuma/mb-comfort.webp'), M('5gpf3q3f/mb-audio.webp')],
   },
   {
     slug: 'nxt20', short: 'NXT20', series: 'nxt',
@@ -300,6 +315,7 @@ const INPUTS: MCInput[] = [
       'Rangement planches généreux, racks à serrage de série',
       'Recharge sans fil au poste et au cockpit (option)',
     ],
+    highlightImages: [M('gy0n5oav/mb-wake.webp'), M('0fobaicu/mb-tower.webp'), M('phvc5fb5/mb-comfort.webp'), M('a1uiwopj/mb-dash_.webp')],
   },
   {
     slug: 'prostar', short: 'ProStar', series: 'prostar',
@@ -316,6 +332,7 @@ const INPUTS: MCInput[] = [
       'Capot moteur redessiné pour le flux d’air et la réduction du bruit',
       'Assises modulables, siège de juge réversible et sellerie CoolFeel en option',
     ],
+    highlightImages: [M('szgbgc4i/wake_desktop.jpg'), M('utimf5tj/tracking_desktop.jpg'), M('c5hjo5in/comfort_desktop.jpg'), M('3vvlwuyb/four-fins-resized.jpg')],
   },
 ];
 
@@ -388,6 +405,7 @@ function build(i: MCInput): NautiqueModel {
       },
     ],
     highlights: HIGHLIGHTS[i.series],
+    highlightImages: i.highlightImages,
     features: i.features,
     motorizations: i.engines,
     faqs: buildFaqs(i.short, i.series),

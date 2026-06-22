@@ -361,7 +361,9 @@ export function ModelPage() {
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-14">Les points forts du {model.name}</h2>
             <div className="space-y-14">
               {model.highlights.map((h, i) => {
-                const img = model.gallery[(i + 1) % model.gallery.length];
+                const hImg = model.highlightImages?.[i];
+                const img = hImg || model.gallery[(i + 1) % model.gallery.length];
+                const lifestyle = hImg ? true : !studio;
                 const reverse = i % 2 === 1;
                 return (
                   <motion.div
@@ -372,8 +374,8 @@ export function ModelPage() {
                     transition={{ duration: 0.5 }}
                     className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"
                   >
-                    <div className={`overflow-hidden rounded-[2rem] border border-white/10 ${studio ? 'bg-gradient-to-b from-white to-gray-100' : ''} ${reverse ? 'lg:order-2' : ''}`}>
-                      <img src={img} alt={`${fullName}, ${h.title.toLowerCase()}`} loading="lazy" referrerPolicy="no-referrer" className={`w-full h-full aspect-[16/10] ${studio ? 'object-contain p-4' : 'object-cover'}`} />
+                    <div className={`overflow-hidden rounded-[2rem] border border-white/10 ${!lifestyle ? 'bg-gradient-to-b from-white to-gray-100' : ''} ${reverse ? 'lg:order-2' : ''}`}>
+                      <img src={img} alt={`${fullName}, ${h.title.toLowerCase()}`} loading="lazy" referrerPolicy="no-referrer" className={`w-full h-full aspect-[16/10] ${lifestyle ? 'object-cover' : 'object-contain p-4'}`} />
                     </div>
                     <div className={reverse ? 'lg:order-1' : ''}>
                       <div className="flex items-center gap-3 mb-4">

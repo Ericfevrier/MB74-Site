@@ -41,6 +41,12 @@ export interface NautiqueModel {
   gallery: string[];
   specs: SpecGroup[];
   highlights: Highlight[];
+  /**
+   * Image illustrant chaque point fort (même index que `highlights`).
+   * Une chaîne vide = retombe sur une image de la galerie. Si absent, la section
+   * « Points forts » pioche dans `gallery`. Photos d'ambiance (rendu object-cover).
+   */
+  highlightImages?: string[];
   faqs: ModelFAQ[];
   /* ----- Champs premium optionnels (page modèle enrichie, ex. G25 Paragon) ----- */
   /** Nom marketing complet pour H1/title (défaut : name) */
