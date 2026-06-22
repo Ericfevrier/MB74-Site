@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ChevronDown, ArrowRight, Phone, Ruler, Users, Gauge, Check, X,
-  ChevronLeft, ChevronRight, Play, Sparkles, Fuel, Settings2, RotateCw,
+  ChevronLeft, ChevronRight, Play, Sparkles, Fuel, Settings2,
 } from 'lucide-react';
 import { Breadcrumb } from './Breadcrumb';
 import { getBrandModels } from '../data/boatBrands';
@@ -874,11 +874,6 @@ function RotatableBoat({ images, alt, studio }: { images: string[]; alt: string;
             className={`absolute inset-0 w-full h-full transition-opacity duration-150 ${studio ? 'object-contain p-6' : 'object-cover'} ${i === idx ? 'opacity-100' : 'opacity-0'}`}
           />
         ))}
-        {multi && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-brand-dark/80 backdrop-blur-sm text-white text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full pointer-events-none">
-            <RotateCw size={13} className="text-brand-cyan" /> Glissez pour {studio ? 'tourner' : 'faire défiler'}
-          </div>
-        )}
       </div>
     </div>
   );
