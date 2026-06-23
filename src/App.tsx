@@ -33,6 +33,7 @@ const BateauxNeufsPage = lazy(() => import('./pages/BateauxNeufsPage').then((m) 
 const BateauxOccasionPage = lazy(() => import('./pages/BateauxOccasionPage').then((m) => ({ default: m.BateauxOccasionPage })));
 const BateauxVenduPage = lazy(() => import('./pages/BateauxVenduPage').then((m) => ({ default: m.BateauxVenduPage })));
 const OccasionDetailPage = lazy(() => import('./pages/OccasionDetailPage').then((m) => ({ default: m.OccasionDetailPage })));
+const TeamPage = lazy(() => import('./pages/TeamPage').then((m) => ({ default: m.TeamPage })));
 
 // Remet la vue en haut à chaque changement d'URL (sinon on conserve le scroll de la page précédente).
 function ScrollToTop() {
@@ -82,7 +83,7 @@ export default function App() {
               <Route path="/bateaux-neufs" element={<Navigate to="/bateaux/neufs" replace />} />
               <Route path="/bateaux-occasion" element={<Navigate to="/bateaux/occasion" replace />} />
               <Route path="/shop" element={<ComingSoon title="Boutique" description="Notre boutique en ligne (wakeboard, ski nautique, accessoires Connelly…) ouvrira ses portes bientôt." />} />
-              <Route path="/la-team" element={<ComingSoon title="La Team" description="Faites bientôt connaissance avec l'équipe passionnée de Motor Boat 74." />} />
+              <Route path="/la-team" element={<TeamPage />} />
               <Route path="/mentions-legales" element={<LegalPage doc="mentions" />} />
               <Route path="/politique-de-confidentialite" element={<LegalPage doc="privacy" />} />
               <Route path="/:brandId/:modelId" element={<ModelPage />} />
