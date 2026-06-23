@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ArrowRight, Users, Gauge, Clock, Calendar } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { soldUsedBoats } from '../data/usedBoats';
+import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 
 const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
@@ -63,25 +64,7 @@ export function BateauxVenduPage() {
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {boats.map((b) => (
-              <article key={b.slug} className="group bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-lg shadow-brand-dark/5 flex flex-col">
-                <Link to={`/bateaux/occasion/${b.slug}`} className="block aspect-[4/3] overflow-hidden bg-ink-900 relative">
-                  <img src={b.image} alt={`${b.title} ${b.year} (vendu)`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
-                  <span className="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">Vendu</span>
-                  <span className="absolute top-3 right-3 bg-brand-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">{b.year}</span>
-                </Link>
-                <div className="p-6 flex-1 flex flex-col">
-                  <h2 className="text-lg font-bold text-brand-dark uppercase tracking-tight mb-3 leading-tight">{b.title}</h2>
-                  <ul className="text-gray-500 text-xs space-y-1.5 mb-5">
-                    {b.year && <li className="flex items-center gap-2"><Calendar size={13} className="text-brand-cyan" /> Millésime {b.year}</li>}
-                    {b.capacity && <li className="flex items-center gap-2"><Users size={13} className="text-brand-cyan" /> {b.capacity}</li>}
-                    {b.power && <li className="flex items-center gap-2"><Gauge size={13} className="text-brand-cyan" /> {b.power}</li>}
-                    {b.hours && <li className="flex items-center gap-2"><Clock size={13} className="text-brand-cyan" /> {b.hours}</li>}
-                  </ul>
-                  <Link to={`/bateaux/occasion/${b.slug}`} className="mt-auto inline-flex items-center justify-center gap-2 border border-gray-200 text-brand-dark font-bold uppercase tracking-widest text-[11px] py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
-                    Voir le détail <ArrowRight size={13} />
-                  </Link>
-                </div>
-              </article>
+              <UsedBoatCard key={b.slug} boat={b} variant="sold" />
             ))}
           </div>
         </div>

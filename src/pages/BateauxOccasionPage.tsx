@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ArrowRight, Users, Gauge, Clock, Phone, ShieldCheck, Wallet, Wrench } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Wallet, Wrench } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { availableUsedBoats, soldUsedBoats } from '../data/usedBoats';
+import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 
@@ -81,30 +82,7 @@ export function BateauxOccasionPage() {
           {boats.length > 0 ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
               {boats.map((b) => (
-                <article key={b.slug} className="group bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-lg shadow-brand-dark/5 hover:border-brand-cyan hover:-translate-y-1.5 transition-all flex flex-col">
-                  <Link to={`/bateaux/occasion/${b.slug}`} className="block aspect-[4/3] overflow-hidden bg-ink-900 relative">
-                    <img src={b.image} alt={`${b.title} ${b.year} d’occasion`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                    {b.sold && <span className="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">Vendu</span>}
-                    <span className="absolute top-3 right-3 bg-brand-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">{b.year}</span>
-                  </Link>
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h2 className="text-lg font-bold text-brand-dark uppercase tracking-tight mb-3 leading-tight">{b.title}</h2>
-                    <ul className="text-gray-500 text-xs space-y-1.5 mb-4">
-                      {b.capacity && <li className="flex items-center gap-2"><Users size={13} className="text-brand-cyan" /> {b.capacity}</li>}
-                      {b.power && <li className="flex items-center gap-2"><Gauge size={13} className="text-brand-cyan" /> {b.power}</li>}
-                      {b.hours && <li className="flex items-center gap-2"><Clock size={13} className="text-brand-cyan" /> {b.hours}</li>}
-                    </ul>
-                    <p className={`font-bold text-xl mb-5 ${b.sold ? 'text-gray-400 line-through' : 'text-brand-cyan'}`}>{b.price}</p>
-                    <div className="mt-auto flex gap-2">
-                      <a href={SITE.phoneHref} className="flex-1 inline-flex items-center justify-center gap-1.5 bg-brand-cyan text-brand-dark font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:bg-brand-dark hover:text-white transition">
-                        <Phone size={14} /> Appeler
-                      </a>
-                      <Link to={`/bateaux/occasion/${b.slug}`} className="flex-1 inline-flex items-center justify-center gap-1.5 border border-gray-200 text-brand-dark font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
-                        Détail <ArrowRight size={13} />
-                      </Link>
-                    </div>
-                  </div>
-                </article>
+                <UsedBoatCard key={b.slug} boat={b} variant="available" />
               ))}
             </div>
           ) : (
