@@ -628,7 +628,7 @@ export function ModelPage() {
               <SectionEyebrow label="Alternative" />
               <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white">{model.name} d’occasion</h2>
             </div>
-            <Link to="/bateaux-occasion" className="inline-flex items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
+            <Link to="/bateaux/occasion" className="inline-flex items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
               Toutes nos occasions {brandName} <ArrowRight size={14} />
             </Link>
           </div>
@@ -655,7 +655,7 @@ export function ModelPage() {
                       <a href={SITE.phoneHref} className="flex-1 inline-flex items-center justify-center gap-1.5 bg-brand-cyan text-brand-dark font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:bg-white transition">
                         <Phone size={14} /> Appeler
                       </a>
-                      <Link to={b.detailUrl || '/bateaux-occasion'} className="flex-1 inline-flex items-center justify-center gap-1.5 border border-white/20 text-white font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
+                      <Link to={`/bateaux/occasion/${b.slug}`} className="flex-1 inline-flex items-center justify-center gap-1.5 border border-white/20 text-white font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
                         Détail
                       </Link>
                     </div>

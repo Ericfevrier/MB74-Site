@@ -33,8 +33,9 @@ const megaMenuServices = [
 ];
 
 const megaMenuBateaux = [
-  { name: "Bateaux neufs", desc: "Les dernières nouveautés", icon: Compass, path: "/bateaux-neufs" },
-  { name: "Bateau occasion", desc: "Certifiés et révisés", icon: Gauge, path: "/bateaux-occasion" },
+  { name: "Tous nos bateaux", desc: "Neufs et occasion", icon: Anchor, path: "/bateaux" },
+  { name: "Bateaux neufs", desc: "Les dernières nouveautés", icon: Compass, path: "/bateaux/neufs" },
+  { name: "Bateau occasion", desc: "Certifiés et révisés", icon: Gauge, path: "/bateaux/occasion" },
 ];
 
 const megaMenuMarques = [

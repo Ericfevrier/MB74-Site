@@ -4,7 +4,7 @@
  */
 
 import React, { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
@@ -28,6 +28,10 @@ const BlogHivernagePage = lazy(() => import('./pages/BlogHivernagePage').then((m
 const LegalPage = lazy(() => import('./pages/LegalPage').then((m) => ({ default: m.LegalPage })));
 const NotFound = lazy(() => import('./components/NotFound').then((m) => ({ default: m.NotFound })));
 const ComingSoon = lazy(() => import('./components/ComingSoon').then((m) => ({ default: m.ComingSoon })));
+const BateauxHubPage = lazy(() => import('./pages/BateauxHubPage').then((m) => ({ default: m.BateauxHubPage })));
+const BateauxNeufsPage = lazy(() => import('./pages/BateauxNeufsPage').then((m) => ({ default: m.BateauxNeufsPage })));
+const BateauxOccasionPage = lazy(() => import('./pages/BateauxOccasionPage').then((m) => ({ default: m.BateauxOccasionPage })));
+const OccasionDetailPage = lazy(() => import('./pages/OccasionDetailPage').then((m) => ({ default: m.OccasionDetailPage })));
 
 // Remet la vue en haut à chaque changement d'URL (sinon on conserve le scroll de la page précédente).
 function ScrollToTop() {
@@ -68,8 +72,13 @@ export default function App() {
               <Route path="/services/hivernage-bateaux/:slug" element={<HivernageCityPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/blog/hivernage/hivernage-bateau-guide-complet" element={<BlogHivernagePage />} />
-              <Route path="/bateaux-neufs" element={<ComingSoon title="Bateaux neufs" description="Notre sélection de bateaux neufs Nautique, MasterCraft et Tigé arrive très prochainement en ligne." />} />
-              <Route path="/bateaux-occasion" element={<ComingSoon title="Bateaux d'occasion" description="Nos bateaux d'occasion certifiés et révisés seront bientôt présentés ici. Contactez-nous pour connaître les disponibilités actuelles." />} />
+              <Route path="/bateaux" element={<BateauxHubPage />} />
+              <Route path="/bateaux/neufs" element={<BateauxNeufsPage />} />
+              <Route path="/bateaux/occasion" element={<BateauxOccasionPage />} />
+              <Route path="/bateaux/occasion/:slug" element={<OccasionDetailPage />} />
+              {/* Anciennes URLs plates → redirection vers la nouvelle arborescence (301 à doubler côté serveur) */}
+              <Route path="/bateaux-neufs" element={<Navigate to="/bateaux/neufs" replace />} />
+              <Route path="/bateaux-occasion" element={<Navigate to="/bateaux/occasion" replace />} />
               <Route path="/shop" element={<ComingSoon title="Boutique" description="Notre boutique en ligne (wakeboard, ski nautique, accessoires Connelly…) ouvrira ses portes bientôt." />} />
               <Route path="/la-team" element={<ComingSoon title="La Team" description="Faites bientôt connaissance avec l'équipe passionnée de Motor Boat 74." />} />
               <Route path="/mentions-legales" element={<LegalPage doc="mentions" />} />

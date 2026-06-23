@@ -76,9 +76,9 @@ export function Footer() {
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Nos bateaux</h3>
               <ul className="space-y-3">
                 {[
-                  { name: 'Bateaux neufs', path: '/bateaux-neufs' },
-                  { name: "Bateaux d'occasion", path: '/bateaux-occasion' },
-                  { name: 'Bateaux vendus', path: '/bateaux-occasion' },
+                  { name: 'Tous nos bateaux', path: '/bateaux' },
+                  { name: 'Bateaux neufs', path: '/bateaux/neufs' },
+                  { name: "Bateaux d'occasion", path: '/bateaux/occasion' },
                 ].map((item) => (
                   <li key={item.name}>
                     <Link to={item.path} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
