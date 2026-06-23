@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Users, Gauge, Clock, Phone, ShieldCheck, Wallet, Wrench } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
-import { allUsedBoats } from '../data/usedBoats';
+import { availableUsedBoats, soldUsedBoats } from '../data/usedBoats';
 import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 
@@ -12,7 +12,8 @@ const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
 
 export function BateauxOccasionPage() {
   const canonical = `${SITE.url}/bateaux/occasion/`;
-  const boats = allUsedBoats();
+  const boats = availableUsedBoats();
+  const soldCount = soldUsedBoats().length;
 
   const schema = [
     {
@@ -145,6 +146,23 @@ export function BateauxOccasionPage() {
           </div>
         </div>
       </section>
+
+      {/* Déjà vendus (preuve sociale) */}
+      {soldCount > 0 && (
+        <section className="bg-brand-dark py-14">
+          <div className="max-w-[1400px] mx-auto px-4 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+            <div>
+              <h2 className="text-2xl font-bold uppercase tracking-tight text-white mb-2">Nos bateaux déjà vendus</h2>
+              <p className="text-gray-400 max-w-2xl">
+                Découvrez les bateaux récemment vendus par Motor Boat 74. Un modèle similaire vous intéresse ? Nous lançons une recherche pour vous.
+              </p>
+            </div>
+            <Link to="/bateaux/vendu" className="flex-shrink-0 inline-flex items-center gap-2 border border-white/20 text-white font-bold uppercase tracking-widest text-xs px-7 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
+              Voir les bateaux vendus <ArrowRight size={15} />
+            </Link>
+          </div>
+        </section>
+      )}
 
       <ShowroomSection />
       <ServiceContactBlock subject="Bateau d’occasion" title="Une occasion en vue ?" showMap />

@@ -79,6 +79,7 @@ export function Footer() {
                   { name: 'Tous nos bateaux', path: '/bateaux' },
                   { name: 'Bateaux neufs', path: '/bateaux/neufs' },
                   { name: "Bateaux d'occasion", path: '/bateaux/occasion' },
+                  { name: 'Bateaux vendus', path: '/bateaux/vendu' },
                 ].map((item) => (
                   <li key={item.name}>
                     <Link to={item.path} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>

@@ -6,7 +6,7 @@ import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { brandsData } from '../data/brands';
 import { BRAND_MODELS } from '../data/boatBrands';
-import { allUsedBoats } from '../data/usedBoats';
+import { availableUsedBoats } from '../data/usedBoats';
 import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 
@@ -35,7 +35,7 @@ const faqs = [
 
 export function BateauxHubPage() {
   const canonical = `${SITE.url}/bateaux/`;
-  const usedCount = allUsedBoats().length;
+  const usedCount = availableUsedBoats().length;
   const newCount = BRAND_IDS.reduce((n, id) => n + (BRAND_MODELS[id]?.order.length || 0), 0);
 
   const schema = [

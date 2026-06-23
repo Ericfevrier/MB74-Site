@@ -207,9 +207,19 @@ export const usedBoats: UsedBoat[] = [
   },
 ];
 
-/** Toutes les occasions visibles (catalogue /bateaux/occasion). */
+/** Toutes les occasions (disponibles + vendues). */
 export function allUsedBoats(): UsedBoat[] {
   return usedBoats;
+}
+
+/** Occasions disponibles à la vente (catalogue indexable /bateaux/occasion). */
+export function availableUsedBoats(): UsedBoat[] {
+  return usedBoats.filter((b) => !b.sold);
+}
+
+/** Bateaux vendus (archive « preuve sociale » /bateaux/vendu, en noindex). */
+export function soldUsedBoats(): UsedBoat[] {
+  return usedBoats.filter((b) => b.sold);
 }
 
 /** Occasions rattachées à un modèle donné (carrousel fiche modèle). */

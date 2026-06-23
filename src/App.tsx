@@ -31,6 +31,7 @@ const ComingSoon = lazy(() => import('./components/ComingSoon').then((m) => ({ d
 const BateauxHubPage = lazy(() => import('./pages/BateauxHubPage').then((m) => ({ default: m.BateauxHubPage })));
 const BateauxNeufsPage = lazy(() => import('./pages/BateauxNeufsPage').then((m) => ({ default: m.BateauxNeufsPage })));
 const BateauxOccasionPage = lazy(() => import('./pages/BateauxOccasionPage').then((m) => ({ default: m.BateauxOccasionPage })));
+const BateauxVenduPage = lazy(() => import('./pages/BateauxVenduPage').then((m) => ({ default: m.BateauxVenduPage })));
 const OccasionDetailPage = lazy(() => import('./pages/OccasionDetailPage').then((m) => ({ default: m.OccasionDetailPage })));
 
 // Remet la vue en haut à chaque changement d'URL (sinon on conserve le scroll de la page précédente).
@@ -76,6 +77,7 @@ export default function App() {
               <Route path="/bateaux/neufs" element={<BateauxNeufsPage />} />
               <Route path="/bateaux/occasion" element={<BateauxOccasionPage />} />
               <Route path="/bateaux/occasion/:slug" element={<OccasionDetailPage />} />
+              <Route path="/bateaux/vendu" element={<BateauxVenduPage />} />
               {/* Anciennes URLs plates → redirection vers la nouvelle arborescence (301 à doubler côté serveur) */}
               <Route path="/bateaux-neufs" element={<Navigate to="/bateaux/neufs" replace />} />
               <Route path="/bateaux-occasion" element={<Navigate to="/bateaux/occasion" replace />} />
