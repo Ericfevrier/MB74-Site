@@ -33,7 +33,6 @@ const megaMenuServices = [
 ];
 
 const megaMenuBateaux = [
-  { name: "Tous nos bateaux", desc: "Neufs et occasion", icon: Anchor, path: "/bateaux" },
   { name: "Bateaux neufs", desc: "Les dernières nouveautés", icon: Compass, path: "/bateaux/neufs" },
   { name: "Bateau occasion", desc: "Certifiés et révisés", icon: Gauge, path: "/bateaux/occasion" },
 ];
@@ -88,10 +87,10 @@ export function Header() {
                 onMouseEnter={() => setActiveMenu('bateaux')}
                 onMouseLeave={() => setActiveMenu(null)}
               >
-                <span className={`group-hover:text-brand-cyan transition-colors py-2 flex items-center gap-1.5 ${activeMenu === 'bateaux' ? 'text-brand-cyan' : ''}`}>
+                <Link to="/bateaux" className={`group-hover:text-brand-cyan transition-colors py-2 flex items-center gap-1.5 ${activeMenu === 'bateaux' ? 'text-brand-cyan' : ''}`}>
                   BATEAUX
                   <ChevronDown size={14} className={`opacity-50 transition-transform duration-300 ${activeMenu === 'bateaux' ? 'rotate-180 opacity-100' : ''}`} />
-                </span>
+                </Link>
               </li>
               <li 
                 className="relative cursor-pointer flex items-center h-[120px] group"
@@ -269,7 +268,7 @@ export function Header() {
             </div>
 
             <div className="space-y-6 pt-4 border-t border-white/5">
-              <span className="uppercase text-[10px] tracking-widest font-bold text-brand-cyan/40 px-2 block">CATALOGUES</span>
+              <Link to="/bateaux" onClick={() => setIsMobileMenuOpen(false)} className="uppercase text-[10px] tracking-widest font-bold text-brand-cyan/60 hover:text-brand-cyan px-2 block">Tous nos bateaux</Link>
               <div className="grid grid-cols-1 gap-3">
                 {megaMenuBateaux.map((item, idx) => (
                   <Link key={idx} to={item.path} onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 px-6 py-4 hover:bg-white/5 transition-all rounded-2xl border border-white/5 text-gray-200">
