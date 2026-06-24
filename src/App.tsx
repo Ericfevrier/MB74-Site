@@ -27,13 +27,13 @@ const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ defa
 const BlogHivernagePage = lazy(() => import('./pages/BlogHivernagePage').then((m) => ({ default: m.BlogHivernagePage })));
 const LegalPage = lazy(() => import('./pages/LegalPage').then((m) => ({ default: m.LegalPage })));
 const NotFound = lazy(() => import('./components/NotFound').then((m) => ({ default: m.NotFound })));
-const ComingSoon = lazy(() => import('./components/ComingSoon').then((m) => ({ default: m.ComingSoon })));
 const BateauxHubPage = lazy(() => import('./pages/BateauxHubPage').then((m) => ({ default: m.BateauxHubPage })));
 const BateauxNeufsPage = lazy(() => import('./pages/BateauxNeufsPage').then((m) => ({ default: m.BateauxNeufsPage })));
 const BateauxOccasionPage = lazy(() => import('./pages/BateauxOccasionPage').then((m) => ({ default: m.BateauxOccasionPage })));
 const BateauxVenduPage = lazy(() => import('./pages/BateauxVenduPage').then((m) => ({ default: m.BateauxVenduPage })));
 const OccasionDetailPage = lazy(() => import('./pages/OccasionDetailPage').then((m) => ({ default: m.OccasionDetailPage })));
 const TeamPage = lazy(() => import('./pages/TeamPage').then((m) => ({ default: m.TeamPage })));
+const BlogHubPage = lazy(() => import('./pages/BlogHubPage').then((m) => ({ default: m.BlogHubPage })));
 
 // Remet la vue en haut à chaque changement d'URL (sinon on conserve le scroll de la page précédente).
 function ScrollToTop() {
@@ -82,7 +82,9 @@ export default function App() {
               {/* Anciennes URLs plates → redirection vers la nouvelle arborescence (301 à doubler côté serveur) */}
               <Route path="/bateaux-neufs" element={<Navigate to="/bateaux/neufs" replace />} />
               <Route path="/bateaux-occasion" element={<Navigate to="/bateaux/occasion" replace />} />
-              <Route path="/shop" element={<ComingSoon title="Boutique" description="Notre boutique en ligne (wakeboard, ski nautique, accessoires Connelly…) ouvrira ses portes bientôt." />} />
+              <Route path="/blog" element={<BlogHubPage />} />
+              {/* Ancien onglet boutique supprimé → redirection vers le blog */}
+              <Route path="/shop" element={<Navigate to="/blog" replace />} />
               <Route path="/la-team" element={<TeamPage />} />
               <Route path="/mentions-legales" element={<LegalPage doc="mentions" />} />
               <Route path="/politique-de-confidentialite" element={<LegalPage doc="privacy" />} />

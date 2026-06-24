@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Youtube, Linkedin, Phone } from 'lucide-react';
+import { BLOG_CATEGORIES } from '../data/blog';
 
 export function Footer() {
   return (
@@ -89,11 +90,14 @@ export function Footer() {
             </div>
 
             <div>
-              <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Shop</h3>
+              <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Blog</h3>
               <ul className="space-y-3 mb-10">
-                {['Wakeboard', 'Wakesurf', 'Ski Nautique', 'Kneeboard', 'Engins tractés', 'Paddle', 'Accessoires'].map((item) => (
-                  <li key={item}>
-                    <Link to="/shop" className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item}</Link>
+                <li>
+                  <Link to="/blog" className="hover:text-brand-cyan transition-colors text-[14px] font-medium">Tous les articles</Link>
+                </li>
+                {BLOG_CATEGORIES.map((c) => (
+                  <li key={c.slug}>
+                    <Link to="/blog" className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{c.name}</Link>
                   </li>
                 ))}
               </ul>

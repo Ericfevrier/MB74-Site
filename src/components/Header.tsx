@@ -13,7 +13,6 @@ import {
   Settings,
   Shield,
   LifeBuoy,
-  ShoppingBag,
   History,
   Users,
   Compass,
@@ -102,7 +101,7 @@ export function Header() {
                   <ChevronDown size={14} className={`opacity-50 transition-transform duration-300 ${activeMenu === 'marques' ? 'rotate-180 opacity-100' : ''}`} />
                 </span>
               </li>
-              {[{ name: "Shop", path: "/shop" }, { name: "La Team", path: "/la-team" }].map((item) => (
+              {[{ name: "Blog", path: "/blog" }, { name: "La Team", path: "/la-team" }].map((item) => (
                 <li key={item.name} className="h-[120px] flex items-center">
                   <Link to={item.path} className="hover:text-brand-cyan transition-colors uppercase py-2">
                     {item.name}
@@ -280,7 +279,7 @@ export function Header() {
             </div>
 
             <div className="flex flex-col gap-2 pt-4 border-t border-white/5">
-              {[{ name: "La Team", path: "/la-team" }, { name: "Boutique", path: "/shop" }].map((item) => (
+              {[{ name: "La Team", path: "/la-team" }, { name: "Blog", path: "/blog" }].map((item) => (
                 <Link key={item.name} to={item.path} onClick={() => setIsMobileMenuOpen(false)} className="uppercase tracking-widest font-bold hover:text-brand-cyan text-xl py-4 px-4 transition-all">
                   {item.name}
                 </Link>
