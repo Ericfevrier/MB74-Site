@@ -42,11 +42,11 @@ export function FAQSection({ brandName }: { brandName: string }) {
               <h3 className="m-0">
                 <button
                   onClick={() => setActiveIndex(activeIndex === idx ? null : idx)}
-                  className="w-full text-left p-6 flex items-center justify-between font-bold text-lg uppercase tracking-tight hover:bg-gray-50 transition-colors"
+                  className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 font-bold text-base sm:text-lg uppercase tracking-tight hover:bg-gray-50 transition-colors"
                   aria-expanded={activeIndex === idx}
                 >
                   {faq.question}
-                  <ChevronDown className={`transition-transform duration-300 ${activeIndex === idx ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={20} className={`flex-shrink-0 transition-transform duration-300 ${activeIndex === idx ? 'rotate-180' : ''}`} />
                 </button>
               </h3>
               <AnimatePresence>

@@ -39,10 +39,10 @@ export function PartnersLocationSection() {
   };
 
   return (
-    <div className="py-32 bg-transparent overflow-hidden">
+    <div className="py-20 md:py-32 bg-transparent overflow-hidden">
       {/* Partners Section */}
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-8 text-center text-brand-dark mb-48">
-        <div className="flex flex-col items-center mb-24">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8 text-center text-brand-dark mb-24 md:mb-48">
+        <div className="flex flex-col items-center mb-16 md:mb-24">
           <div className="flex items-center space-x-3 text-brand-cyan mb-4">
               <div className="w-8 h-1 bg-brand-cyan rounded-full"></div>
               <span className="uppercase tracking-widest font-bold text-[15px]">Partenaires & Réseau</span>
@@ -73,12 +73,12 @@ export function PartnersLocationSection() {
 
       {/* Location & Contact Section */}
       <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
-        <div className="bg-brand-dark rounded-[3.5rem] p-12 lg:p-24 shadow-3xl relative overflow-hidden group">
+        <div className="bg-brand-dark rounded-[2rem] sm:rounded-[3.5rem] p-6 sm:p-12 lg:p-24 shadow-3xl relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-96 -mt-96 group-hover:bg-brand-cyan/10 transition-colors duration-1000"></div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 relative z-10 text-white">
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 relative z-10 text-white">
             {/* Contact Info & Form */}
-            <div className="space-y-16">
+            <div className="space-y-10 md:space-y-16">
                <div className="space-y-6">
                   <div className="flex items-center space-x-3 text-brand-cyan mb-4">
                     <div className="w-8 h-1 bg-brand-cyan rounded-full"></div>
@@ -222,12 +222,12 @@ export function PartnersLocationSection() {
                   </h3>
                 </div>
 
-                <div className="relative flex-1 min-h-[500px]">
+                <div className="relative flex-1 min-h-[420px] sm:min-h-[500px]">
                   <div className="absolute -inset-8 bg-brand-cyan/10 rounded-[4rem] blur-3xl group-hover:bg-brand-cyan/20 transition-colors duration-1000"></div>
-                  <div className="h-full w-full bg-ink-900 rounded-[3rem] overflow-hidden relative shadow-3xl border-8 border-white/5 transition-all duration-700 hover:scale-[1.01]">
+                  <div className="h-full w-full bg-ink-900 rounded-[2rem] sm:rounded-[3rem] overflow-hidden relative shadow-3xl border-4 sm:border-8 border-white/5 transition-all duration-700 hover:scale-[1.01]">
                     <GoogleMapCustom />
-                    
-                    <div className="absolute bottom-8 left-8 right-8 bg-brand-dark/90 backdrop-blur-2xl p-8 rounded-[2rem] border border-white/10 flex items-center justify-between shadow-2xl z-20">
+
+                    <div className="absolute bottom-4 left-4 right-4 sm:bottom-8 sm:left-8 sm:right-8 bg-brand-dark/90 backdrop-blur-2xl p-5 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10 flex items-center justify-between gap-3 shadow-2xl z-20">
                       <div>
                          <p className="text-[10px] font-bold uppercase tracking-widest text-brand-cyan mb-1 leading-none">Chantier Nautique</p>
                          <p className="text-lg font-bold text-white uppercase tracking-tight">Motorboat 74</p>

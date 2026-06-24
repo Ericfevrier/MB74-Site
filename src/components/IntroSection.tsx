@@ -3,9 +3,9 @@ import { Info } from 'lucide-react';
 
 export function IntroSection() {
   return (
-    <section className="pt-24 pb-12 bg-transparent overflow-hidden">
+    <section className="pt-16 md:pt-24 pb-12 bg-transparent overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center mb-10">
           
           {/* Left Column - Text */}
           <div className="flex flex-col gap-8 relative">
