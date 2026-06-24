@@ -1,9 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Calendar, User, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { SITE } from '../data/site';
-import { Breadcrumb } from '../components/Breadcrumb';
+import { ArticleLayout, TocItem, InternalLink } from '../components/blog/ArticleLayout';
 
 const FAQS = [
   {
@@ -50,9 +50,27 @@ const Tip = ({ label, children }: { label: string; children: React.ReactNode }) 
 );
 
 export function BlogHivernagePage() {
-  const canonical = `${SITE.url}/blog/hivernage/hivernage-bateau-guide-complet/`;
+  const path = '/blog/hivernage/hivernage-bateau-guide-complet';
+  const canonical = `${SITE.url}${path}/`;
   const title = 'Hivernage bateau : le guide complet pour bien préparer votre bateau';
   const hero = '/images/hivernage/annecy.jpg';
+  const author = "L'équipe Motor Boat 74";
+
+  const toc: TocItem[] = [
+    { id: 'preparer', label: 'Préparer le bateau avant l’hivernage' },
+    { id: 'methode', label: 'Choisir la méthode d’hivernage' },
+    { id: 'entretien-hiver', label: 'Entretien pendant l’hiver' },
+    { id: 'par-type', label: 'Conseils selon le type de bateau' },
+    { id: 'faq', label: 'FAQ – Questions fréquentes' },
+    { id: 'conclusion', label: 'L’essentiel à retenir' },
+  ];
+
+  const internalLinks: InternalLink[] = [
+    { label: 'Hivernage & stockage', to: '/hivernage-stockage-bateau', hint: 'Notre service clé en main' },
+    { label: 'Entretien & réparation', to: '/entretien-reparation', hint: 'Révision moteur et coque' },
+    { label: 'Transport de bateau', to: '/transport' },
+    { label: 'Bateaux d’occasion', to: '/bateaux/occasion' },
+  ];
 
   const schemaArticle = {
     '@context': 'https://schema.org',
@@ -61,7 +79,7 @@ export function BlogHivernagePage() {
     image: `${SITE.url}${hero}`,
     datePublished: '2025-10-06',
     dateModified: '2025-10-06',
-    author: { '@type': 'Person', name: 'Eric' },
+    author: { '@type': 'Organization', name: author },
     publisher: {
       '@type': 'Organization',
       name: SITE.name,
@@ -85,7 +103,7 @@ export function BlogHivernagePage() {
   };
 
   return (
-    <div className="bg-white">
+    <>
       <Helmet>
         <title>Hivernage bateau : le guide complet | Motor Boat 74</title>
         <meta name="description" content="Le guide complet de l'hivernage de bateau : préparation de la coque et du moteur, méthodes de stockage, entretien hivernal et conseils par type de bateau." />
@@ -99,29 +117,23 @@ export function BlogHivernagePage() {
         <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
       </Helmet>
 
-      {/* Hero */}
-      <header className="relative bg-brand-dark text-white overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={hero} alt={title} className="w-full h-full object-cover opacity-35" referrerPolicy="no-referrer" />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/85 to-brand-dark" />
-        </div>
-        <div className="relative max-w-3xl mx-auto px-4 lg:px-8 py-20 lg:py-24">
-          <Breadcrumb size="sm" items={[{ label: 'Accueil', to: '/' }, { label: 'Hivernage' }]} />
-          <h1 className="text-3xl md:text-4xl font-bold uppercase tracking-tight leading-tight mb-6">{title}</h1>
-          <div className="flex items-center gap-6 text-sm text-gray-300">
-            <span className="flex items-center gap-2"><Calendar size={15} className="text-brand-cyan" /> 6 octobre 2025</span>
-            <span className="flex items-center gap-2"><User size={15} className="text-brand-cyan" /> Eric</span>
-          </div>
-        </div>
-      </header>
-
-      {/* Article */}
-      <article className="max-w-3xl mx-auto px-4 lg:px-8 py-16">
+      <ArticleLayout
+        slug="hivernage-bateau-guide-complet"
+        path={path}
+        title={title}
+        category="hivernage"
+        date="2025-10-06"
+        author={author}
+        readingTime="12 min"
+        hero={hero}
+        toc={toc}
+        internalLinks={internalLinks}
+      >
         <P>L'hiver arrive, et il est essentiel de préparer correctement votre bateau pour éviter les dommages causés par le gel, l'humidité ou l'usure. Un hivernage bien réalisé permet de protéger la coque, le moteur et les équipements, et de retrouver votre embarcation en parfait état au printemps.</P>
         <P>Que vous ayez un hors-bord, un voilier ou un semi-rigide, certaines étapes sont indispensables : nettoyage, vidange du moteur, protection des batteries et des systèmes électroniques, et choix d'un stockage adapté. Chaque action compte pour prolonger la durée de vie de votre bateau et éviter des réparations coûteuses.</P>
         <P>Dans ce guide complet, vous trouverez toutes les étapes pour hiverner votre bateau en toute sécurité, des conseils pratiques adaptés à chaque type d'embarcation, ainsi que des astuces pour préparer sa remise à l'eau au printemps.</P>
 
-        <H2>Préparer le bateau avant l'hivernage</H2>
+        <H2 id="preparer">Préparer le bateau avant l'hivernage</H2>
         <P>Avant de stocker votre embarcation pour l'hiver, il est essentiel de la préparer correctement. Cette étape garantit que la coque, le moteur et tous les équipements restent en parfait état, tout en facilitant la remise à l'eau au printemps. Voici les points clés à respecter.</P>
         <H3>1. Nettoyage de la coque et du pont</H3>
         <P>Un nettoyage complet est indispensable pour protéger votre navire de la corrosion et des dépôts. Rincez soigneusement la coque et le pont à l'eau douce pour éliminer sel, algues et dépôts calcaires. Utilisez un savon spécifique, adapté aux coques en polyester, aluminium ou bois, afin de ne pas abîmer le gelcoat ou la peinture.</P>
@@ -151,7 +163,7 @@ export function BlogHivernagePage() {
           </table>
         </div>
 
-        <H2>Choisir la méthode d'hivernage</H2>
+        <H2 id="methode">Choisir la méthode d'hivernage</H2>
         <P>Le choix de la méthode dépend de la taille de votre bateau, de votre budget et du niveau de protection souhaité. Chaque solution présente des avantages et des contraintes qu'il est important de connaître.</P>
         <H3>Hivernage en hangar couvert</H3>
         <P>L'hivernage en hangar couvert offre la protection maximale contre les intempéries, le gel et l'humidité. C'est la solution la plus sûre, particulièrement pour les embarcations de grande taille ou coûteuses.</P>
@@ -186,7 +198,7 @@ export function BlogHivernagePage() {
           </table>
         </div>
 
-        <H2>Entretien pendant l'hiver</H2>
+        <H2 id="entretien-hiver">Entretien pendant l'hiver</H2>
         <P>Même après avoir préparé votre bateau et choisi la méthode d'hivernage, un suivi régulier pendant l'hiver est essentiel pour prévenir l'apparition de problèmes et garantir que le bateau sera prêt dès le printemps.</P>
         <H3>Vérification de la coque et du pont</H3>
         <UL items={[
@@ -207,7 +219,7 @@ export function BlogHivernagePage() {
           'Graissage des pièces mobiles pour éviter grippage.',
         ]} />
 
-        <H2>Nos conseils selon le type de bateau</H2>
+        <H2 id="par-type">Nos conseils selon le type de bateau</H2>
         <P>Chaque type de bateau présente des besoins particuliers. Hors-bord, inboard, voilier ou semi-rigide, la préparation doit être adaptée pour éviter les dommages liés au gel, à l'humidité ou à l'usure.</P>
         <H3>Bateaux hors-bord</H3>
         <UL items={[
@@ -237,7 +249,7 @@ export function BlogHivernagePage() {
           'Nettoyage complet de la coque, du pont et des flotteurs ; vérification des valves.',
         ]} />
 
-        <H2>FAQ – Questions fréquentes</H2>
+        <H2 id="faq">FAQ – Questions fréquentes</H2>
         <div className="space-y-5 mt-6">
           {FAQS.map((f, i) => (
             <div key={i} className="bg-brand-light border border-gray-200 rounded-2xl p-6">
@@ -247,7 +259,7 @@ export function BlogHivernagePage() {
           ))}
         </div>
 
-        <H2>Maintenant vous savez tout !</H2>
+        <H2 id="conclusion">Maintenant vous savez tout !</H2>
         <P>Hiverner correctement son bateau implique plusieurs étapes essentielles : préparer la coque et le pont, entretenir le moteur, protéger les batteries et l'électronique, choisir la méthode d'hivernage adaptée et assurer un suivi régulier pendant l'hiver. Chaque geste contribue à préserver la longévité de votre bateau et à éviter des réparations coûteuses au printemps.</P>
         <P>Un hivernage bien réalisé, qu'il soit à sec, en hangar ou à flot, vous garantit de retrouver votre embarcation en parfait état dès le retour des beaux jours.</P>
 
@@ -259,7 +271,7 @@ export function BlogHivernagePage() {
             Découvrir notre service d'hivernage <ArrowRight size={16} />
           </Link>
         </div>
-      </article>
-    </div>
+      </ArticleLayout>
+    </>
   );
 }
