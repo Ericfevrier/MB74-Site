@@ -113,17 +113,17 @@ export function Header() {
             onMouseEnter={() => activeMenu && setActiveMenu(activeMenu)}
             onMouseLeave={() => setActiveMenu(null)}
           >
-            <div className={`bg-brand-dark/98 backdrop-blur-2xl border border-white/10 rounded-b-[2.5rem] shadow-3xl p-10 relative overflow-hidden transition-all duration-500 ${activeMenu === 'marques' ? 'w-full px-12' : 'w-[850px] rounded-[2.5rem] mt-2'}`}>
+            <div className={`bg-brand-dark/98 backdrop-blur-2xl border border-white/10 rounded-b-[2.5rem] shadow-3xl p-10 relative overflow-hidden transition-all duration-500 ${activeMenu === 'marques' ? 'w-auto rounded-[2.5rem] mt-2' : 'w-[850px] rounded-[2.5rem] mt-2'}`}>
               <div className="absolute top-0 inset-x-0 h-1 bg-brand-cyan"></div>
               
               {activeMenu === 'marques' && (
-                <div className="max-w-xl mx-auto grid grid-cols-2 gap-6 justify-center">
+                <div className="flex gap-6 justify-center">
                   {megaMenuMarques.map((item, i) => (
                     <Link 
                       key={i} 
                       to={`/marque/${item.name.toLowerCase()}`} 
                       onClick={() => setActiveMenu(null)}
-                      className="flex flex-col items-center justify-center gap-6 group/item hover:bg-white/5 px-2 py-6 rounded-3xl transition-all border border-transparent hover:border-white/10"
+                      className="w-44 flex flex-col items-center justify-center gap-6 group/item hover:bg-white/5 px-2 py-6 rounded-3xl transition-all border border-transparent hover:border-white/10"
                     >
                       <div className="h-16 flex items-center justify-center w-full px-4">
                         <img 
@@ -198,8 +198,8 @@ export function Header() {
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center gap-4">
-             <a href="tel:+33457572727" className="bg-brand-cyan text-brand-dark px-5 py-2.5 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:brightness-110 active:scale-95 transition-all">
-              Appeler
+             <a href="tel:+33457572727" className="bg-brand-cyan text-brand-dark px-5 py-2.5 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:brightness-110 active:scale-95 transition-all whitespace-nowrap">
+              Nous appeler
             </a>
             <button aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={`p-3 rounded-xl border transition-all active:scale-95 ${isMobileMenuOpen ? 'bg-brand-cyan text-brand-dark border-brand-cyan' : 'text-white bg-white/10 border-white/15 hover:bg-brand-cyan hover:text-brand-dark hover:border-brand-cyan'}`}>
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
