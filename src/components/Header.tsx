@@ -36,14 +36,10 @@ const megaMenuBateaux = [
   { name: "Bateau occasion", desc: "Certifiés et révisés", icon: Gauge, path: "/bateaux/occasion" },
 ];
 
+// Marques affichées dans le menu (réduit à Nautique + Mastercraft pour le moment).
 const megaMenuMarques = [
   { name: "Nautique", logo: "/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png" },
   { name: "Mastercraft", logo: "/images/mcft-70e1d427.png" },
-  { name: "Tigé", logo: "/images/tigeboats-logo-black-orange-logo.jpg" },
-  { name: "Centurion", logo: "/images/centurion-boats-logo-png-seeklogo-387911.png" },
-  { name: "Supra", logo: "/images/311-3118902-supra-logo-png-transparent-supra-boats-logo-png.png" },
-  { name: "Moomba", logo: "/images/moomba-roo-logo-bf-vrq-x3v.jpg" },
-  { name: "Axis", logo: "/images/header-logo.png" }
 ];
 
 export function Header() {
@@ -121,7 +117,7 @@ export function Header() {
               <div className="absolute top-0 inset-x-0 h-1 bg-brand-cyan"></div>
               
               {activeMenu === 'marques' && (
-                <div className="max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 justify-center">
+                <div className="max-w-xl mx-auto grid grid-cols-2 gap-6 justify-center">
                   {megaMenuMarques.map((item, i) => (
                     <Link 
                       key={i} 
