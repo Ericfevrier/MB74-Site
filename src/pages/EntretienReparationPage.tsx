@@ -26,7 +26,7 @@ import {
   Anchor,
 } from 'lucide-react';
 
-const ZONES = ['Atelier, Val de Chaise', 'Annecy & lac d’Annecy', 'Lac du Bourget', 'Léman', 'Haute-Savoie'];
+const ZONES = ['Atelier, Saint-Ferréol', 'Annecy & lac d’Annecy', 'Lac du Bourget', 'Léman', 'Haute-Savoie'];
 
 const WHY = [
   { Icon: ShieldCheck, t: 'Sécurité à bord', d: 'Moteur, circuits et équipements contrôlés pour naviguer en toute confiance sur le lac.' },
@@ -407,7 +407,7 @@ export function EntretienReparationPage() {
                     En atelier près d'Annecy ou sur place
                   </h2>
                   <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
-                    Notre atelier est situé à Val de Chaise, à 20 minutes d'Annecy. Nous intervenons aussi directement sur votre bateau, autour du lac d'Annecy, du Léman, du lac du Bourget et dans toute la Haute-Savoie.
+                    Notre atelier est situé à Saint-Ferréol, à 20 minutes d'Annecy. Nous intervenons aussi directement sur votre bateau, autour du lac d'Annecy, du Léman, du lac du Bourget et dans toute la Haute-Savoie.
                   </p>
                 </div>
                 <ul role="list" className="flex flex-wrap gap-2.5">
