@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight, Check } from 'lucide-react';
 
 interface ServiceItem {
   title: string;
@@ -102,66 +103,76 @@ export function ServicesSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {servicesData.map((service, index) => (
-            <article 
-              key={index} 
-              className={`bg-white rounded-[2rem] shadow-xl shadow-brand-dark/5 overflow-hidden flex flex-col group transition-all duration-500 hover:translate-y-[-10px] hover:shadow-2xl hover:shadow-brand-cyan/10 border border-white relative ${service.span}`}
+            <article
+              key={index}
+              className={`bg-white rounded-[2rem] overflow-hidden flex flex-col group border border-gray-200/70 ring-1 ring-black/[0.02] shadow-[0_18px_50px_-26px_rgba(15,23,42,0.4)] hover:shadow-[0_34px_70px_-30px_rgba(6,190,252,0.4)] hover:-translate-y-2 transition-all duration-500 relative ${service.span}`}
             >
-              <div className="relative h-64 overflow-hidden">
-                <img 
-                  src={service.img} 
-                  alt={service.title} 
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              <div className="relative h-52 sm:h-64 overflow-hidden">
+                <img
+                  src={service.img}
+                  alt={service.title}
+                  className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-[1.08]"
                   loading="lazy"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-transparent opacity-60"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-brand-dark/15 to-transparent"></div>
+                {/* Badge numéro */}
+                <span className="absolute top-4 left-4 w-11 h-11 rounded-2xl bg-brand-dark/60 backdrop-blur-md border border-white/20 text-white font-bold text-sm flex items-center justify-center shadow-lg" aria-hidden="true">
+                  0{index + 1}
+                </span>
+                {/* Titre en surimpression */}
+                <h3 className="absolute bottom-4 left-5 right-5 text-white text-lg sm:text-xl font-bold uppercase tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+                  {service.title}
+                </h3>
               </div>
-              
-              <div className="p-5 sm:p-8 flex-1 flex flex-col relative">
-                <div className="flex items-start gap-4 mb-4">
-                    <span className="text-brand-cyan/20 text-[13px] font-bold leading-none" aria-hidden="true">0{index + 1}</span>
-                    <h3 className="text-xl font-bold text-brand-dark group-hover:text-brand-cyan transition-colors uppercase tracking-tight leading-tight">
-                        {service.title}
-                    </h3>
-                </div>
-                <div className="text-gray-500 mb-6 flex-1 text-base leading-relaxed space-y-4">
+
+              <div className="p-6 sm:p-8 flex-1 flex flex-col">
+                <div className="text-gray-500 mb-6 flex-1 text-[15px] leading-relaxed space-y-3">
                   {service.desc.split('\n').map((paragraph, i) => (
                     <p key={i}>{paragraph}</p>
                   ))}
                 </div>
 
                 {service.list && (
-                  <ul className="mb-6 space-y-2 text-sm text-brand-dark/80 font-medium">
+                  <ul className="mb-7 grid gap-2.5 text-sm text-brand-dark/80 font-medium">
                     {service.list.map((item, i) => (
-                      <li key={i} className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan"></div>
+                      <li key={i} className="flex items-center gap-2.5">
+                        <span className="flex-shrink-0 w-5 h-5 rounded-full bg-brand-cyan/15 text-brand-cyan flex items-center justify-center">
+                          <Check size={12} strokeWidth={3} />
+                        </span>
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 )}
-                
-                <div className="flex flex-wrap gap-2 mt-auto">
+
+                <div className="flex flex-wrap gap-2.5 mt-auto pt-2">
                   {service.buttons.map((btn, i) => {
                     const target =
                       service.links?.[btn] ?? (btn === "EN SAVOIR PLUS" ? service.link : undefined);
-                    const cls =
-                      "inline-flex items-center bg-brand-dark text-white font-bold text-[10px] px-6 py-3 rounded-xl uppercase tracking-widest hover:bg-brand-cyan hover:text-brand-dark transition-all shadow-lg shadow-brand-dark/10";
+                    const primary = i === 0;
+                    const cls = `group/btn inline-flex items-center gap-2 font-bold text-[11px] px-6 py-3.5 rounded-xl uppercase tracking-widest transition-all ${
+                      primary
+                        ? "bg-brand-cyan text-brand-dark hover:bg-brand-dark hover:text-white shadow-lg shadow-brand-cyan/25"
+                        : "bg-brand-dark text-white hover:bg-brand-cyan hover:text-brand-dark shadow-lg shadow-brand-dark/10"
+                    }`;
+                    const content = (
+                      <>
+                        {btn}
+                        <ArrowRight size={14} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                      </>
+                    );
                     return target ? (
-                      <Link key={i} to={target} className={cls}>
-                        {btn}
-                      </Link>
+                      <Link key={i} to={target} className={cls}>{content}</Link>
                     ) : (
-                      <a key={i} href="#" className={cls}>
-                        {btn}
-                      </a>
+                      <a key={i} href="#" className={cls}>{content}</a>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Bottom accent */}
-               <div className="absolute bottom-0 left-0 w-full h-1 bg-brand-cyan opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              {/* Bottom accent animé */}
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-brand-cyan origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
             </article>
           ))}
         </div>
