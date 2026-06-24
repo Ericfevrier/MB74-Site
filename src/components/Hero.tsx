@@ -22,7 +22,7 @@ export function Hero() {
               <span className="uppercase tracking-[0.15em] sm:tracking-[0.3em] font-bold text-[11px] sm:text-[15px]">Expert Nautique Haute-Savoie</span>
             </div>
             
-            <h1 className="text-white font-bold uppercase text-[clamp(1.75rem,6vw,3.375rem)] leading-tight mb-5 tracking-tight text-balance">
+            <h1 className="text-white font-bold uppercase text-[clamp(1.75rem,5vw,2.75rem)] leading-[1.1] mb-5 tracking-tight">
               <span className="block">Concessionnaire nautique</span>
               <span className="text-brand-cyan block">haute-savoie</span>
             </h1>
