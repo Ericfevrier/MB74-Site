@@ -224,7 +224,10 @@ export function Header() {
             </a>
             
             <div className="space-y-6">
-              <span className="uppercase text-[10px] tracking-widest font-bold text-brand-cyan/40 px-2 block">SERVICES</span>
+              <div className="flex items-center gap-2.5 px-2">
+                <span className="w-6 h-0.5 bg-brand-cyan rounded-full" />
+                <span className="uppercase text-sm tracking-widest font-bold text-brand-cyan">Services</span>
+              </div>
               <div className="grid grid-cols-1 gap-3">
                 {megaMenuServices.map((item, idx) => (
                   <Link 
@@ -243,7 +246,10 @@ export function Header() {
             </div>
 
             <div className="space-y-6 pt-4 border-t border-white/5">
-              <span className="uppercase text-[10px] tracking-widest font-bold text-brand-cyan/40 px-2 block">MARQUES</span>
+              <div className="flex items-center gap-2.5 px-2">
+                <span className="w-6 h-0.5 bg-brand-cyan rounded-full" />
+                <span className="uppercase text-sm tracking-widest font-bold text-brand-cyan">Marques</span>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 {megaMenuMarques.map((item, idx) => (
                   <Link 
@@ -267,7 +273,10 @@ export function Header() {
             </div>
 
             <div className="space-y-6 pt-4 border-t border-white/5">
-              <Link to="/bateaux" onClick={() => setIsMobileMenuOpen(false)} className="uppercase text-[10px] tracking-widest font-bold text-brand-cyan/60 hover:text-brand-cyan px-2 block">Tous nos bateaux</Link>
+              <Link to="/bateaux" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2.5 px-2 group">
+                <span className="w-6 h-0.5 bg-brand-cyan rounded-full" />
+                <span className="uppercase text-sm tracking-widest font-bold text-brand-cyan group-hover:text-white transition-colors">Tous nos bateaux</span>
+              </Link>
               <div className="grid grid-cols-1 gap-3">
                 {megaMenuBateaux.map((item, idx) => (
                   <Link key={idx} to={item.path} onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-3 px-6 py-4 hover:bg-white/5 transition-all rounded-2xl border border-white/5 text-gray-200">
