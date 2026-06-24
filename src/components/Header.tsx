@@ -56,10 +56,10 @@ export function Header() {
         <div className="flex items-center justify-between">
           
           {/* Logo Area */}
-          <Link to="/" className="flex items-center space-x-4 flex-shrink-0 cursor-pointer group ml-[-15px]">            <img 
-              src="/images/logo-transprent.png" 
-              alt="Motorboat 74" 
-              className="h-[100px] w-[100px] object-contain transition-transform group-hover:scale-105 duration-300"
+          <Link to="/" className="flex items-center space-x-3 sm:space-x-4 flex-shrink-0 cursor-pointer group ml-0 lg:ml-[-15px]">            <img
+              src="/images/logo-transprent.png"
+              alt="Motorboat 74"
+              className="h-16 w-16 lg:h-[100px] lg:w-[100px] object-contain transition-transform group-hover:scale-105 duration-300"
               referrerPolicy="no-referrer"
             />
             <div className="text-white hidden sm:block">
@@ -205,7 +205,7 @@ export function Header() {
              <a href="tel:+33457572727" className="bg-brand-cyan text-brand-dark px-5 py-2.5 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:brightness-110 active:scale-95 transition-all">
               Appeler
             </a>
-            <button aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white hover:text-brand-cyan p-2 bg-white/5 rounded-xl transition-all">
+            <button aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={`p-3 rounded-xl border transition-all active:scale-95 ${isMobileMenuOpen ? 'bg-brand-cyan text-brand-dark border-brand-cyan' : 'text-white bg-white/10 border-white/15 hover:bg-brand-cyan hover:text-brand-dark hover:border-brand-cyan'}`}>
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -214,7 +214,7 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-brand-dark/98 backdrop-blur-2xl border-t border-brand-cyan/20 absolute top-full left-0 w-full shadow-2xl h-[calc(100vh-120px)] overflow-y-auto z-50">
+        <div className="lg:hidden bg-ink-950 border-t-2 border-brand-cyan/40 absolute top-full left-0 w-full shadow-2xl h-[calc(100vh-120px)] overflow-y-auto overscroll-contain z-50">
           <nav aria-label="Menu principal mobile" className="flex flex-col py-8 px-6 gap-10">
             <a href="tel:+33457572727" className="flex items-center gap-3 font-bold text-brand-cyan justify-center pb-8 border-b border-white/5">
               <div className="bg-brand-cyan/10 p-3 rounded-xl">

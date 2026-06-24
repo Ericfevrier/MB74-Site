@@ -16,7 +16,7 @@ export function Hero() {
       
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-brand-dark/70 via-brand-dark/30 to-transparent flex items-center">
         <div className="w-full px-4 md:px-12">
-          <div className="max-w-3xl" style={{ marginTop: '75px', paddingLeft: '5px' }}>
+          <div className="max-w-3xl mt-6 sm:mt-[75px] pl-[5px]">
             <div className="flex items-center space-x-3 text-brand-cyan mb-3">
               <div className="w-12 h-0.5 bg-brand-cyan rounded-full"></div>
               <span className="uppercase tracking-[0.3em] font-bold text-[15px]">Expert Nautique Haute-Savoie</span>
