@@ -113,22 +113,23 @@ export function TeamPage() {
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mt-2">Une équipe à votre service</h2>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-7">
+          <div className="grid sm:grid-cols-2 gap-7">
             {team.map((m) => (
               <article
                 key={m.name}
-                className="group flex flex-col sm:flex-row gap-0 sm:gap-6 bg-white border border-gray-200/70 rounded-[1.75rem] overflow-hidden shadow-[0_12px_40px_-18px_rgba(15,23,42,0.35)] ring-1 ring-black/[0.02] hover:-translate-y-1 transition-all duration-300"
+                className="group flex flex-col bg-white border border-gray-200/70 rounded-[1.75rem] overflow-hidden shadow-[0_12px_40px_-18px_rgba(15,23,42,0.35)] ring-1 ring-black/[0.02] hover:-translate-y-1 transition-all duration-300"
               >
-                <div className="sm:w-52 flex-shrink-0 aspect-[4/5] sm:aspect-auto overflow-hidden bg-ink-900">
+                {/* Photo entière (object-contain) sur fond neutre, jamais rognée */}
+                <div className="h-72 sm:h-80 bg-gradient-to-b from-gray-100 to-gray-50 flex items-center justify-center overflow-hidden">
                   <img
                     src={m.image}
                     alt={`${m.name}, ${m.role.toLowerCase()} chez Motor Boat 74`}
                     loading="lazy"
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="max-w-full max-h-full w-auto h-auto object-contain group-hover:scale-[1.03] transition-transform duration-700"
                   />
                 </div>
-                <div className="p-7 flex flex-col justify-center">
+                <div className="p-7 flex flex-col flex-1">
                   <h3 className="text-2xl font-bold uppercase tracking-tight text-brand-dark leading-none">{m.name}</h3>
                   <span className="inline-block text-brand-cyan font-bold uppercase tracking-widest text-[11px] mt-2 mb-4">{m.role}</span>
                   <p className="text-gray-600 leading-relaxed text-[15px]">{m.bio}</p>
