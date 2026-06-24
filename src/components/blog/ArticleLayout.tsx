@@ -270,9 +270,9 @@ export function ArticleLayout({
       {/* Corps : sidebar gauche + article */}
       <div className="max-w-[1480px] mx-auto px-5 sm:px-7 lg:px-10 xl:px-14 py-12 lg:py-16">
         <div className="lg:grid lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-10 xl:gap-14">
-          {/* Sidebar (desktop) — sticky avec scroll interne pour ne jamais être coupée */}
+          {/* Sidebar (desktop) — défile naturellement avec la page (ni épinglée, ni scrollable) */}
           <aside className="hidden lg:block">
-            <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto overscroll-contain space-y-5 pr-2 pb-4 [scrollbar-width:thin] [scrollbar-color:rgb(203_213_225)_transparent]">
+            <div className="space-y-5">
               {toc.length > 0 && <SommaireCard />}
               <LinksCard />
               <RelatedCard />
