@@ -117,7 +117,7 @@ export function ServicesSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-transparent opacity-60"></div>
               </div>
               
-              <div className="p-8 flex-1 flex flex-col relative">
+              <div className="p-5 sm:p-8 flex-1 flex flex-col relative">
                 <div className="flex items-start gap-4 mb-4">
                     <span className="text-brand-cyan/20 text-[13px] font-bold leading-none" aria-hidden="true">0{index + 1}</span>
                     <h3 className="text-xl font-bold text-brand-dark group-hover:text-brand-cyan transition-colors uppercase tracking-tight leading-tight">

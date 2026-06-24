@@ -68,7 +68,7 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
   ];
 
   return (
-    <section id="contact" className="bg-brand-light py-20 scroll-mt-[120px]">
+    <section id="contact" className="bg-brand-light py-20 scroll-mt-20 lg:scroll-mt-[120px]">
       <div className={`${wide ? 'max-w-[1400px]' : 'max-w-5xl'} mx-auto px-4 lg:px-8`}>
         {/* En-tête */}
         {!hideHeader && (

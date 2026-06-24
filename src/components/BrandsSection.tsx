@@ -112,7 +112,7 @@ export function BrandsSection() {
               <img 
                 src="/images/connelly-white-logo.webp"
                 alt="Connelly Logo distributeur France"
-                className="w-[280px] md:w-[339.758px] h-auto md:h-[52px] object-contain -ml-[30px] brightness-0"
+                className="w-[280px] md:w-[339.758px] h-auto md:h-[52px] object-contain ml-0 sm:-ml-[30px] brightness-0"
                 referrerPolicy="no-referrer"
                 loading="lazy"
               />
@@ -133,14 +133,14 @@ export function BrandsSection() {
             <button 
               aria-label="Faire défiler à gauche"
               onClick={() => scroll('left')}
-              className="absolute -left-12 lg:-left-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white border border-gray-200 text-brand-dark flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 hover:scale-110 active:scale-95 invisible sm:visible"
+              className="absolute left-2 xl:-left-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white border border-gray-200 text-brand-dark flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 hover:scale-110 active:scale-95 invisible sm:visible"
             >
               <ChevronLeft size={24} />
             </button>
             <button 
               aria-label="Faire défiler à droite"
               onClick={() => scroll('right')}
-              className="absolute -right-12 lg:-right-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white border border-gray-200 text-brand-dark flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 hover:scale-110 active:scale-95 invisible sm:visible"
+              className="absolute right-2 xl:-right-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white border border-gray-200 text-brand-dark flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 hover:scale-110 active:scale-95 invisible sm:visible"
             >
               <ChevronRight size={24} />
             </button>

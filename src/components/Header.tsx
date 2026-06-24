@@ -51,7 +51,7 @@ export function Header() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   return (
-    <header className="bg-brand-dark/95 backdrop-blur-md text-white sticky top-0 z-[100] h-[120px] flex items-center shadow-2xl border-b border-white/5">
+    <header className="bg-brand-dark/95 backdrop-blur-md text-white sticky top-0 z-[100] h-20 lg:h-[120px] flex items-center shadow-2xl border-b border-white/5">
       <div className="w-full px-4 lg:pl-6 lg:pr-12">
         <div className="flex items-center justify-between">
           
@@ -214,7 +214,7 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-ink-950 border-t-2 border-brand-cyan/40 absolute top-full left-0 w-full shadow-2xl h-[calc(100vh-120px)] overflow-y-auto overscroll-contain z-50">
+        <div className="lg:hidden bg-ink-950 border-t-2 border-brand-cyan/40 absolute top-full left-0 w-full shadow-2xl h-[calc(100vh-80px)] overflow-y-auto overscroll-contain z-50">
           <nav aria-label="Menu principal mobile" className="flex flex-col py-8 px-6 gap-10">
             <a href="tel:+33457572727" className="flex items-center gap-3 font-bold text-brand-cyan justify-center pb-8 border-b border-white/5">
               <div className="bg-brand-cyan/10 p-3 rounded-xl">

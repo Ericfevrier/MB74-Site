@@ -16,10 +16,10 @@ export function Hero() {
       
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-brand-dark/70 via-brand-dark/30 to-transparent flex items-center">
         <div className="w-full px-4 md:px-12">
-          <div className="max-w-3xl mt-6 sm:mt-[75px] pl-[5px]">
+          <div className="max-w-3xl mt-6 sm:mt-10 md:mt-[75px] pl-[5px]">
             <div className="flex items-center space-x-3 text-brand-cyan mb-3">
               <div className="w-12 h-0.5 bg-brand-cyan rounded-full"></div>
-              <span className="uppercase tracking-[0.3em] font-bold text-[15px]">Expert Nautique Haute-Savoie</span>
+              <span className="uppercase tracking-[0.15em] sm:tracking-[0.3em] font-bold text-[11px] sm:text-[15px]">Expert Nautique Haute-Savoie</span>
             </div>
             
             <h1 className="text-white font-bold uppercase text-[clamp(1.75rem,6vw,3.375rem)] leading-tight mb-5 tracking-tight text-balance">
@@ -32,10 +32,10 @@ export function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-6">
-              <Link to="/services" aria-label="Découvrir nos services" className="inline-flex items-center justify-center bg-brand-cyan text-brand-dark px-10 py-4 font-bold uppercase text-sm hover:translate-y-[-2px] hover:shadow-2xl hover:shadow-brand-cyan/40 transition-all duration-300 rounded-2xl min-h-[44px]">
+              <Link to="/services" aria-label="Découvrir nos services" className="inline-flex items-center justify-center bg-brand-cyan text-brand-dark px-6 sm:px-10 py-4 font-bold uppercase text-sm hover:translate-y-[-2px] hover:shadow-2xl hover:shadow-brand-cyan/40 transition-all duration-300 rounded-2xl min-h-[44px]">
                 Découvrir nos services
               </Link>
-              <Link to="/bateaux-occasion" aria-label="Bateaux en vente" className="inline-flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-4 font-bold uppercase text-sm hover:bg-white/20 transition-all duration-300 rounded-2xl min-h-[44px]">
+              <Link to="/bateaux-occasion" aria-label="Bateaux en vente" className="inline-flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 sm:px-10 py-4 font-bold uppercase text-sm hover:bg-white/20 transition-all duration-300 rounded-2xl min-h-[44px]">
                 Bateaux en vente
               </Link>
             </div>

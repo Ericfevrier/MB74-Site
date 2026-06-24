@@ -141,7 +141,7 @@ export function Footer() {
                 'Ski Nautique'
               ].map((model) => (
                 <li key={model}>
-                  <Link to={`/marque/nautique`} className="hover:text-brand-cyan transition-colors text-[13px] font-medium whitespace-nowrap">
+                  <Link to={`/marque/nautique`} className="hover:text-brand-cyan transition-colors text-[13px] font-medium lg:whitespace-nowrap">
                     {model}
                   </Link>
                 </li>
@@ -163,7 +163,7 @@ export function Footer() {
         </div>
         
         {/* Footer Bottom Bar */}
-        <div className="py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="pt-8 pb-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-wrap justify-center gap-6 md:gap-10">
             {[
               { name: 'Mentions légales', path: '/mentions-legales' },

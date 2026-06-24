@@ -263,7 +263,7 @@ export function ModelPage() {
       </header>
 
       {/* ===================== MENU D'ANCRAGE STICKY ===================== */}
-      <nav aria-label="Sommaire de la page" className="sticky top-[120px] z-40 bg-brand-dark/70 backdrop-blur-xl border-b border-white/5">
+      <nav aria-label="Sommaire de la page" className="sticky top-20 lg:top-[120px] z-40 bg-brand-dark/70 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-[1400px] mx-auto px-2 lg:px-8">
           <ul className="flex justify-start md:justify-center gap-1 overflow-x-auto hide-scrollbar py-2.5 text-[13px] font-bold uppercase tracking-[0.15em]">
             {anchors.map((a) => (

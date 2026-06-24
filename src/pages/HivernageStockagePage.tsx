@@ -364,7 +364,7 @@ export function HivernageStockagePage() {
       </div>
 
       {/* 1. Hero Section */}
-      <section className="relative min-h-[calc(100svh-120px)] flex items-center justify-center pt-8 pb-10 overflow-hidden bg-brand-dark">
+      <section className="relative min-h-[calc(100svh-80px)] lg:min-h-[calc(100svh-120px)] flex items-center justify-center pt-8 pb-10 overflow-hidden bg-brand-dark">
         {/* Background photo of mountain lake setting */}
         <div className="absolute inset-0 z-0">
           <img

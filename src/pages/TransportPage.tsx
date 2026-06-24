@@ -186,7 +186,7 @@ export function TransportPage() {
       </div>
 
       {/* Hero */}
-      <section className="relative min-h-[calc(100svh-120px)] flex items-center justify-center pt-8 pb-10 overflow-hidden bg-brand-dark">
+      <section className="relative min-h-[calc(100svh-80px)] lg:min-h-[calc(100svh-120px)] flex items-center justify-center pt-8 pb-10 overflow-hidden bg-brand-dark">
         <div className="absolute inset-0 z-0">
           <img src="/images/services/transport.webp" alt="Transport de bateau en France et en Europe par Motor Boat 74" className="w-full h-full object-cover opacity-60 scale-105" referrerPolicy="no-referrer" />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/70 to-transparent"></div>

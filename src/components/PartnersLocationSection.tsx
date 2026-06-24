@@ -52,21 +52,21 @@ export function PartnersLocationSection() {
           </h2>
         </div>
 
-        <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40">
+        <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-12 md:gap-24 opacity-40">
            <div className="flex items-center gap-2 grayscale hover:grayscale-0 transition-all hover:opacity-100 cursor-pointer">
-              <span className="text-2xl font-bold italic tracking-tighter">NAUTIQUE</span>
+              <span className="text-lg sm:text-2xl font-bold italic tracking-tighter">NAUTIQUE</span>
            </div>
            <div className="flex items-center gap-2 grayscale hover:grayscale-0 transition-all hover:opacity-100 cursor-pointer">
-              <span className="text-2xl font-bold italic tracking-tighter">CONNELLY</span>
+              <span className="text-lg sm:text-2xl font-bold italic tracking-tighter">CONNELLY</span>
            </div>
            <div className="flex items-center gap-2 grayscale hover:grayscale-0 transition-all hover:opacity-100 cursor-pointer">
-              <span className="text-2xl font-bold border-2 border-brand-dark px-2 leading-none">VANCLAES</span>
+              <span className="text-lg sm:text-2xl font-bold border-2 border-brand-dark px-2 leading-none">VANCLAES</span>
            </div>
            <div className="flex items-center gap-2 grayscale hover:grayscale-0 transition-all hover:opacity-100 cursor-pointer">
-              <span className="text-2xl font-bold tracking-tight">PCM Marine</span>
+              <span className="text-lg sm:text-2xl font-bold tracking-tight">PCM Marine</span>
            </div>
            <div className="flex items-center gap-2 grayscale hover:grayscale-0 transition-all hover:opacity-100 cursor-pointer">
-              <span className="text-3xl font-bold italic tracking-tight text-blue-900 border-b-4 border-green-500">SPORTS SERVICE</span>
+              <span className="text-xl sm:text-3xl font-bold italic tracking-tight text-blue-900 border-b-4 border-green-500">SPORTS SERVICE</span>
            </div>
         </div>
       </div>
