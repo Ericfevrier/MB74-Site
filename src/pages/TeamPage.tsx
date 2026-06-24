@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
-import { ShowroomSection } from '../components/ShowroomSection';
 
 const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
 
@@ -164,8 +163,6 @@ export function TeamPage() {
           </div>
         </div>
       </section>
-
-      <ShowroomSection />
     </div>
   );
 }
