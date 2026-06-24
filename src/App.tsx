@@ -86,6 +86,7 @@ export default function App() {
               <Route path="/la-team" element={<TeamPage />} />
               <Route path="/mentions-legales" element={<LegalPage doc="mentions" />} />
               <Route path="/politique-de-confidentialite" element={<LegalPage doc="privacy" />} />
+              <Route path="/cgv-pro" element={<LegalPage doc="cgv" />} />
               <Route path="/:brandId/:modelId" element={<ModelPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

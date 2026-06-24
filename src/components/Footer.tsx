@@ -164,6 +164,7 @@ export function Footer() {
             {[
               { name: 'Mentions légales', path: '/mentions-legales' },
               { name: 'Politique de confidentialité', path: '/politique-de-confidentialite' },
+              { name: 'CGV Pro', path: '/cgv-pro' },
               { name: 'Contact', path: '/contact' },
             ].map((link) => (
               <Link key={link.name} to={link.path} className="text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">
