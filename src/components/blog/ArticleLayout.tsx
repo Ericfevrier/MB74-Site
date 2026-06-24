@@ -200,26 +200,38 @@ export function ArticleLayout({
       </div>
     ) : null;
 
-  const RelatedCard = () =>
+  const RelatedSection = () =>
     related.length ? (
-      <div className={`${cardClass} p-5`}>
-        <SectionLabel icon={BookOpen}>À lire aussi</SectionLabel>
-        <ul className="space-y-4">
+      <section className="mt-14 lg:mt-16 border-t border-gray-200/70 pt-12">
+        <div className="flex items-center gap-2 mb-8">
+          <BookOpen size={16} className="text-brand-cyan" />
+          <h2 className="text-2xl font-bold uppercase tracking-tight text-brand-dark">À lire aussi</h2>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {related.map((a) => (
-            <li key={a.slug}>
-              <Link to={a.path} className="group flex gap-3 items-start">
-                <span className="flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden bg-ink-900">
-                  <img src={a.image} alt={a.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-[10px] font-bold uppercase tracking-widest text-brand-cyan mb-1">{categoryName(a.category)}</span>
-                  <span className="block text-[13px] font-semibold text-brand-dark leading-snug group-hover:text-brand-cyan transition-colors line-clamp-3">{a.title}</span>
+            <article
+              key={a.slug}
+              className="group bg-white border border-gray-200/70 rounded-[1.5rem] overflow-hidden shadow-[0_12px_40px_-22px_rgba(15,23,42,0.35)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
+            >
+              <Link to={a.path} className="block relative aspect-[16/10] overflow-hidden bg-ink-900">
+                <img src={a.image} alt={a.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <span className="absolute top-3 left-3 bg-brand-cyan text-brand-dark text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">
+                  {categoryName(a.category)}
                 </span>
               </Link>
-            </li>
+              <div className="p-6 flex flex-col flex-1">
+                <h3 className="text-base font-bold text-brand-dark leading-snug mb-2">
+                  <Link to={a.path} className="hover:text-brand-cyan transition-colors">{a.title}</Link>
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed mb-4 flex-1 line-clamp-3">{a.excerpt}</p>
+                <Link to={a.path} className="inline-flex items-center gap-2 text-brand-dark font-bold uppercase tracking-widest text-xs hover:text-brand-cyan transition mt-auto">
+                  Lire l’article <ChevronRight size={15} />
+                </Link>
+              </div>
+            </article>
           ))}
-        </ul>
-      </div>
+        </div>
+      </section>
     ) : null;
 
   const CtaCard = () => (
@@ -275,7 +287,6 @@ export function ArticleLayout({
             <div className="sticky top-36 space-y-5">
               {toc.length > 0 && <SommaireCard />}
               <LinksCard />
-              <RelatedCard />
               <CtaCard />
               <Link to="/blog" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-brand-dark transition px-1">
                 <ArrowLeft size={14} /> Tous les articles
@@ -302,15 +313,17 @@ export function ArticleLayout({
               {children}
             </article>
 
-            {/* Maillage interne + autres lectures (mobile) */}
+            {/* Maillage interne + CTA (mobile) */}
             <div className="lg:hidden mt-8 space-y-6">
               <LinksCard />
-              <RelatedCard />
               <CtaCard />
             </div>
 
+            {/* À lire aussi : section sous l'article */}
+            <RelatedSection />
+
             {/* Pied d'article : retour + partage */}
-            <div className="mt-10 flex flex-wrap items-center justify-between gap-4 px-1">
+            <div className="mt-12 pt-8 border-t border-gray-200/70 flex flex-wrap items-center justify-between gap-4 px-1">
               <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-brand-dark transition">
                 <ArrowLeft size={15} /> Retour au blog
               </Link>
