@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
+import { GoogleMapCustom } from '../components/GoogleMapCustom';
 
 const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
 
@@ -160,6 +161,26 @@ export function TeamPage() {
             <a href={SITE.phoneHref} className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
               <Phone size={16} /> {SITE.phoneDisplay}
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Où nous trouver : map + showroom (sans le bloc de texte « Visitez notre showroom ») */}
+      <section className="bg-brand-dark pb-24">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="h-[400px] rounded-3xl overflow-hidden shadow-2xl">
+              <GoogleMapCustom />
+            </div>
+            <div className="h-[400px] rounded-3xl overflow-hidden shadow-2xl">
+              <img
+                src="/images/img-20230924-wa0017-1-11zon-11zon-e1727707593371-11zon.webp"
+                alt="Showroom Motor Boat 74 au bord du lac d’Annecy"
+                className="w-full h-full object-cover"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+              />
+            </div>
           </div>
         </div>
       </section>
