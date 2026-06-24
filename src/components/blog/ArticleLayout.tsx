@@ -272,7 +272,7 @@ export function ArticleLayout({
         <div className="lg:grid lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-10 xl:gap-14">
           {/* Sidebar (desktop) — sticky : suit le scroll, sans scrollbar interne ni découpe */}
           <aside className="hidden lg:block">
-            <div className="sticky top-28 space-y-5">
+            <div className="sticky top-36 space-y-5">
               {toc.length > 0 && <SommaireCard />}
               <LinksCard />
               <RelatedCard />
