@@ -251,7 +251,8 @@ export function ArticleLayout({
           <img src={hero} alt={title} className="w-full h-full object-cover opacity-30" referrerPolicy="no-referrer" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/85 to-brand-dark" />
         </div>
-        <div className="relative max-w-3xl mx-auto px-4 lg:px-8 py-20 lg:py-24">
+        <div className="relative max-w-[1480px] mx-auto px-5 sm:px-7 lg:px-10 xl:px-14 py-20 lg:py-24">
+          <div className="max-w-3xl">
           <Breadcrumb size="sm" items={[{ label: 'Accueil', to: '/' }, { label: 'Blog', to: '/blog' }, { label: categoryName(category) }]} />
           <span className="inline-block bg-brand-cyan text-brand-dark text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mt-4 mb-5">
             {categoryName(category)}
@@ -262,15 +263,16 @@ export function ArticleLayout({
             <span className="flex items-center gap-2"><User size={15} className="text-brand-cyan" /> {author}</span>
             {readingTime && <span className="flex items-center gap-2"><Clock size={15} className="text-brand-cyan" /> {readingTime} de lecture</span>}
           </div>
+          </div>
         </div>
       </header>
 
       {/* Corps : sidebar gauche + article */}
-      <div className="max-w-[1180px] mx-auto px-4 lg:px-8 py-12 lg:py-16">
-        <div className="lg:grid lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-12 xl:gap-16">
-          {/* Sidebar (desktop) */}
+      <div className="max-w-[1480px] mx-auto px-5 sm:px-7 lg:px-10 xl:px-14 py-12 lg:py-16">
+        <div className="lg:grid lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-10 xl:gap-14">
+          {/* Sidebar (desktop) — sticky avec scroll interne pour ne jamais être coupée */}
           <aside className="hidden lg:block">
-            <div className="sticky top-24 space-y-6">
+            <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto overscroll-contain space-y-5 pr-2 pb-4 [scrollbar-width:thin] [scrollbar-color:rgb(203_213_225)_transparent]">
               {toc.length > 0 && <SommaireCard />}
               <LinksCard />
               <RelatedCard />
@@ -296,7 +298,7 @@ export function ArticleLayout({
               </details>
             )}
 
-            <article className="max-w-3xl bg-white rounded-[1.75rem] border border-gray-200/70 shadow-[0_12px_50px_-28px_rgba(15,23,42,0.3)] p-6 sm:p-10 lg:p-12">
+            <article className="bg-white rounded-[1.75rem] border border-gray-200/70 shadow-[0_12px_50px_-28px_rgba(15,23,42,0.3)] p-6 sm:p-10 lg:p-12 xl:px-16">
               {children}
             </article>
 
@@ -308,7 +310,7 @@ export function ArticleLayout({
             </div>
 
             {/* Pied d'article : retour + partage */}
-            <div className="max-w-3xl mt-10 flex flex-wrap items-center justify-between gap-4 px-1">
+            <div className="mt-10 flex flex-wrap items-center justify-between gap-4 px-1">
               <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-brand-dark transition">
                 <ArrowLeft size={15} /> Retour au blog
               </Link>
