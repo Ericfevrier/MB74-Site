@@ -13,6 +13,8 @@ interface Member {
   role: string;
   bio: string;
   image: string;
+  /** Point de cadrage (object-position) pour garder le sujet dans le format portrait. */
+  pos?: string;
 }
 
 const team: Member[] = [
@@ -21,24 +23,28 @@ const team: Member[] = [
     role: 'Dirigeant',
     bio: "Bordelais de naissance, je suis né dans le monde du bateau. Mon grand-père pêcheur sur le bassin d'Arcachon, mon père mécanicien aujourd'hui retraité m'ont transmis la passion de la mécanique, du bateau et du ski nautique, que j'ai pratiqué à haut niveau : multiple champion de France et d'Europe jusqu'à la catégorie Open. Vice-président du Club de Ski Nautique d'Annecy Sévrier, j'ai créé Motor Boat 74 en 2023.",
     image: 'https://motorboat74.com/wp-content/uploads/elementor/thumbs/Wave-Studio-X-Motor-Boat-74-85-sur-121-scaled-rfkk9r4vuvsamtdqi8msbc4op5d73c9ewy0r2i859s.png',
+    pos: 'object-[72%_35%]',
   },
   {
     name: 'Marine',
     role: 'Assistante de direction & communication',
     bio: "Amoureuse des sports aquatiques, je baigne dans le monde du nautisme depuis l'enfance. Après un début de carrière en tant qu'hôtesse de l'air, je me suis formée au marketing digital et à la communication. J'ai rejoint Motor Boat 74 pour mettre mon expérience à votre service.",
     image: 'https://motorboat74.com/wp-content/uploads/2025/12/44-KIM_4220-scaled.jpg',
+    pos: 'object-[50%_30%]',
   },
   {
     name: 'Pierre-Louis',
     role: 'Responsable mécanique',
     bio: "Passionné de mécanique, et surtout de grosses cylindrées, depuis mon plus jeune âge, cela fait bientôt 10 ans que je travaille chez les professionnels du nautisme autour du lac d'Annecy, en Haute-Savoie.",
     image: 'https://motorboat74.com/wp-content/uploads/2025/12/Wave-Studio-X-Motor-Boat-74-89-sur-121-scaled.png',
+    pos: 'object-[50%_30%]',
   },
   {
     name: 'Jean-Baptiste',
     role: 'Responsable carrosserie',
     bio: "Natif de la région, je fais partie de l'équipe atelier de Motor Boat 74. J'assure la préparation des bateaux : nettoyage approfondi, préparation avant livraison, contrôle des équipements et finitions impeccables. Je suis aussi spécialisé dans les réparations et la carrosserie des bateaux.",
     image: 'https://motorboat74.com/wp-content/uploads/2025/12/Wave-Studio-X-Motor-Boat-74-42-sur-121-scaled.png',
+    pos: 'object-center',
   },
 ];
 
@@ -117,19 +123,19 @@ export function TeamPage() {
             {team.map((m) => (
               <article
                 key={m.name}
-                className="group flex flex-col bg-white border border-gray-200/70 rounded-[1.75rem] overflow-hidden shadow-[0_12px_40px_-18px_rgba(15,23,42,0.35)] ring-1 ring-black/[0.02] hover:-translate-y-1 transition-all duration-300"
+                className="group flex flex-col sm:flex-row bg-white border border-gray-200/70 rounded-[1.75rem] overflow-hidden shadow-[0_12px_40px_-18px_rgba(15,23,42,0.35)] ring-1 ring-black/[0.02] hover:-translate-y-1 transition-all duration-300"
               >
-                {/* Photo entière (object-contain) sur fond neutre, jamais rognée */}
-                <div className="h-72 sm:h-80 bg-gradient-to-b from-gray-100 to-gray-50 flex items-center justify-center overflow-hidden">
+                {/* Photo portrait, format uniforme pour toute l'équipe */}
+                <div className="sm:w-56 flex-shrink-0 aspect-[4/5] sm:aspect-auto overflow-hidden bg-ink-900">
                   <img
                     src={m.image}
                     alt={`${m.name}, ${m.role.toLowerCase()} chez Motor Boat 74`}
                     loading="lazy"
                     referrerPolicy="no-referrer"
-                    className="max-w-full max-h-full w-auto h-auto object-contain group-hover:scale-[1.03] transition-transform duration-700"
+                    className={`w-full h-full object-cover ${m.pos || 'object-center'} group-hover:scale-105 transition-transform duration-700`}
                   />
                 </div>
-                <div className="p-7 flex flex-col flex-1">
+                <div className="p-7 flex flex-col justify-center">
                   <h3 className="text-2xl font-bold uppercase tracking-tight text-brand-dark leading-none">{m.name}</h3>
                   <span className="inline-block text-brand-cyan font-bold uppercase tracking-widest text-[11px] mt-2 mb-4">{m.role}</span>
                   <p className="text-gray-600 leading-relaxed text-[15px]">{m.bio}</p>
