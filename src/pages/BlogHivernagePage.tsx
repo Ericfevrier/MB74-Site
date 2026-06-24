@@ -68,6 +68,7 @@ export function BlogHivernagePage() {
   const internalLinks: InternalLink[] = [
     { label: 'Hivernage & stockage', to: '/hivernage-stockage-bateau', hint: 'Notre service clé en main' },
     { label: 'Entretien & réparation', to: '/entretien-reparation', hint: 'Révision moteur et coque' },
+    { label: 'Sellerie marine', to: '/sellerie', hint: 'Réfection des assises' },
     { label: 'Transport de bateau', to: '/transport' },
     { label: 'Bateaux d’occasion', to: '/bateaux/occasion' },
   ];
@@ -138,9 +139,11 @@ export function BlogHivernagePage() {
         <H3>1. Nettoyage de la coque et du pont</H3>
         <P>Un nettoyage complet est indispensable pour protéger votre navire de la corrosion et des dépôts. Rincez soigneusement la coque et le pont à l'eau douce pour éliminer sel, algues et dépôts calcaires. Utilisez un savon spécifique, adapté aux coques en polyester, aluminium ou bois, afin de ne pas abîmer le gelcoat ou la peinture.</P>
         <P>Profitez de cette étape pour inspecter la surface : fissures, éclats ou signes d'osmose doivent être réparés avant l'hiver. Si votre navire est équipé d'un traitement antifouling, vérifiez son état et renouvelez la couche si nécessaire.</P>
+        <P>N'oubliez pas l'intérieur : sièges, bains de soleil et moquettes se nettoient à l'eau douce avant d'appliquer un protecteur adapté, qui évite moisissures et craquelures pendant les mois humides. Si une assise est fatiguée ou décolorée, l'hiver est le bon moment pour la confier à notre atelier de <Link to="/sellerie" className="text-brand-cyan font-semibold hover:underline">sellerie marine</Link>, la remise à neuf étant plus rapide hors saison.</P>
         <H3>2. Entretien et vidange du moteur</H3>
         <P>Le moteur est la partie la plus sensible aux dommages liés à l'hiver. Commencez par vidanger l'huile et remplacer les filtres pour éviter que l'huile usagée ne dégrade les composants internes. Protégez ensuite le circuit de refroidissement avec un antigel adapté à votre type de moteur : hors-bord ou inboard.</P>
         <P>Il est également recommandé d'ajouter un stabilisateur de carburant pour éviter l'oxydation et la formation de dépôts dans le réservoir. Vérifiez les bougies, l'hélice, les anodes et les visseries. Graissez les axes et pièces mobiles pour éviter corrosion et grippage.</P>
+        <P>L'arrêt hivernal est aussi le moment idéal pour traiter ce qui a été remis à plus tard pendant la saison. Un bruit suspect, une surchauffe ou une vibration repérés à l'automne se règlent au calme : planifier une <Link to="/entretien-reparation" className="text-brand-cyan font-semibold hover:underline">révision moteur et coque</Link> avant le remisage vous évite l'attente et l'indisponibilité au plus fort du printemps, quand les ateliers sont saturés.</P>
         <Tip label="Petit rappel technique">Les anodes sacrificielles sont des pièces métalliques qui se corrodent à la place des composants sensibles, protégeant ainsi la structure du bateau contre l'oxydation.</Tip>
         <H3>3. Batteries et systèmes électroniques</H3>
         <P>Les batteries et équipements électroniques sont particulièrement vulnérables à l'humidité et aux températures basses. Retirez les batteries et stockez-les dans un endroit sec et tempéré, idéalement sur un chargeur flottant pour maintenir leur charge. Débranchez tous les instruments électroniques et systèmes de navigation pour les protéger de l'humidité.</P>
@@ -166,7 +169,7 @@ export function BlogHivernagePage() {
         <H2 id="methode">Choisir la méthode d'hivernage</H2>
         <P>Le choix de la méthode dépend de la taille de votre bateau, de votre budget et du niveau de protection souhaité. Chaque solution présente des avantages et des contraintes qu'il est important de connaître.</P>
         <H3>Hivernage en hangar couvert</H3>
-        <P>L'hivernage en hangar couvert offre la protection maximale contre les intempéries, le gel et l'humidité. C'est la solution la plus sûre, particulièrement pour les embarcations de grande taille ou coûteuses.</P>
+        <P>L'hivernage en hangar couvert offre la protection maximale contre les intempéries, le gel et l'humidité. C'est la solution la plus sûre, particulièrement pour les embarcations de grande taille ou coûteuses. C'est précisément la formule de notre <Link to="/hivernage-stockage-bateau" className="text-brand-cyan font-semibold hover:underline">service d'hivernage et de stockage</Link> : hangar sécurisé, préparation moteur et coque, et si besoin <Link to="/transport" className="text-brand-cyan font-semibold hover:underline">transport du bateau</Link> depuis votre ponton jusqu'à l'atelier.</P>
         <UL items={[
           'Avantages : bateau à l\'abri de la neige, du vent et du gel ; entretien facilité à sec ; sécurité renforcée (accès contrôlé, vidéosurveillance).',
           'Points à surveiller : budget plus élevé que l\'extérieur ; disponibilité parfois limitée selon la région.',
@@ -261,7 +264,7 @@ export function BlogHivernagePage() {
 
         <H2 id="conclusion">Maintenant vous savez tout !</H2>
         <P>Hiverner correctement son bateau implique plusieurs étapes essentielles : préparer la coque et le pont, entretenir le moteur, protéger les batteries et l'électronique, choisir la méthode d'hivernage adaptée et assurer un suivi régulier pendant l'hiver. Chaque geste contribue à préserver la longévité de votre bateau et à éviter des réparations coûteuses au printemps.</P>
-        <P>Un hivernage bien réalisé, qu'il soit à sec, en hangar ou à flot, vous garantit de retrouver votre embarcation en parfait état dès le retour des beaux jours.</P>
+        <P>Un hivernage bien réalisé, qu'il soit à sec, en hangar ou à flot, vous garantit de retrouver votre embarcation en parfait état dès le retour des beaux jours. Et si la trêve hivernale vous donne envie de changer d'embarcation, c'est aussi la meilleure période pour parcourir nos <Link to="/bateaux/occasion" className="text-brand-cyan font-semibold hover:underline">bateaux d'occasion</Link>, révisés et garantis par nos ateliers, et préparer la saison prochaine sereinement.</P>
 
         {/* CTA */}
         <div className="bg-brand-dark text-white rounded-[2rem] p-8 mt-12 text-center">
