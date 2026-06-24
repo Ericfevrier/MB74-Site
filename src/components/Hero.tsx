@@ -22,12 +22,12 @@ export function Hero() {
               <span className="uppercase tracking-[0.3em] font-bold text-[15px]">Expert Nautique Haute-Savoie</span>
             </div>
             
-            <h1 className="text-white font-bold uppercase text-[32px] md:text-[54px] leading-tight mb-5 tracking-tight">
-              <span className="block whitespace-nowrap">Concessionnaire nautique</span>
+            <h1 className="text-white font-bold uppercase text-[clamp(1.75rem,6vw,3.375rem)] leading-tight mb-5 tracking-tight text-balance">
+              <span className="block">Concessionnaire nautique</span>
               <span className="text-brand-cyan block">haute-savoie</span>
             </h1>
-            
-            <p className="text-gray-300 text-[17px] max-w-xl leading-relaxed font-normal mb-[25px]">
+
+            <p className="text-gray-300 text-[clamp(0.95rem,2.5vw,1.0625rem)] max-w-xl leading-relaxed font-normal mb-[25px]">
               Vente, entretien et hivernage de bateaux d'exception sur le lac d'Annecy et en Haute-Savoie.
             </p>
             

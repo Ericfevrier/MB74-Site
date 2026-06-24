@@ -36,6 +36,26 @@ body {
   @apply font-sans antialiased text-gray-900 bg-white;
 }
 
+/*
+ * Garde-fou responsive global.
+ * `overflow-x: clip` empêche tout défilement horizontal parasite (blobs décoratifs,
+ * éléments en débordement) SANS casser `position: sticky` (contrairement à overflow:hidden/auto).
+ */
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+/* Médias fluides par défaut : jamais plus larges que leur conteneur.
+   (les utilitaires Tailwind h-full / h-[..] gardent la priorité sur la hauteur ;
+   svg/canvas exclus pour ne pas affecter les icônes dimensionnées par attributs) */
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+
 @layer utilities {
   .hide-scrollbar {
     -ms-overflow-style: none;
