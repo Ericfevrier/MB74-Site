@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Youtube, Linkedin, Phone } from 'lucide-react';
-import { BLOG_CATEGORIES } from '../data/blog';
 
 export function Footer() {
   return (
@@ -78,7 +77,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 3: Bateaux, Shop & Contact */}
+          {/* Column 3: Bateaux */}
           <div className="space-y-12">
             <div>
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Nos bateaux</h3>
@@ -95,76 +94,60 @@ export function Footer() {
                 ))}
               </ul>
             </div>
-
-            <div>
-              <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Blog</h3>
-              <ul className="space-y-3 mb-10">
-                <li>
-                  <Link to="/blog" className="hover:text-brand-cyan transition-colors text-[14px] font-medium">Tous les articles</Link>
-                </li>
-                {BLOG_CATEGORIES.map((c) => (
-                  <li key={c.slug}>
-                    <Link to="/blog" className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{c.name}</Link>
-                  </li>
-                ))}
-              </ul>
-              
-              <Link
-                to="/contact"
-                className="inline-block bg-brand-cyan text-brand-dark font-bold px-8 py-4 rounded-xl text-[13px] uppercase tracking-widest hover:scale-105 transition-all shadow-lg shadow-brand-cyan/20"
-              >
-                Contactez-nous
-              </Link>
-            </div>
           </div>
 
-          {/* Column 4: Nautique & Social */}
+          {/* Column 4: Marques, réseaux & contact */}
           <div className="space-y-8">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="bg-red-600 w-10 h-10 rounded-lg flex items-center justify-center p-1.5 shadow-lg">
-                <img 
-                  src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png" 
-                  alt="Nautique" 
-                  className="w-full h-full object-contain brightness-0 invert"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <h3 className="text-white text-3xl font-bold tracking-tighter uppercase italic">NAUTIQUE</h3>
-            </div>
-
-            <ul className="space-y-2">
-              {[
-                'Super Air Nautique G25 Paragon',
-                'Super Air Nautique G23 Paragon',
-                'Super Air Nautique G25',
-                'Super Air Nautique G23',
-                'Super Air Nautique G21',
-                'Super Air Nautique S25',
-                'Super Air Nautique S23',
-                'Super Air Nautique S21',
-                'Super Air Nautique GS24',
-                'Super Air Nautique GS22',
-                'Super Air Nautique GS20',
-                'Ski Nautique'
-              ].map((model) => (
-                <li key={model}>
-                  <Link to={`/marque/nautique`} className="hover:text-brand-cyan transition-colors text-[13px] font-medium lg:whitespace-nowrap">
-                    {model}
+            <div>
+              <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Marques</h3>
+              <div className="space-y-3">
+                {[
+                  { name: 'Nautique', slug: 'nautique', logo: '/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png' },
+                  { name: 'MasterCraft', slug: 'mastercraft', logo: '/images/mcft-70e1d427.png' },
+                ].map((b) => (
+                  <Link
+                    key={b.slug}
+                    to={`/marque/${b.slug}`}
+                    className="group flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-3 transition-colors"
+                  >
+                    <span className="w-16 h-12 bg-white rounded-xl flex items-center justify-center p-2 flex-shrink-0">
+                      <img src={b.logo} alt={`Logo ${b.name}`} className="max-w-full max-h-full object-contain" referrerPolicy="no-referrer" />
+                    </span>
+                    <span className="text-white font-bold uppercase tracking-tight group-hover:text-brand-cyan transition-colors">{b.name}</span>
                   </Link>
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex items-center gap-6 pt-6 border-t border-white/5">
-               {[Instagram, Facebook, Youtube, Linkedin].map((Icon, i) => {
-                  const labels = ['Instagram', 'Facebook', 'Youtube', 'Linkedin'];
-                  return (
-                    <a key={i} href="#" aria-label={`Suivez-nous sur ${labels[i]}`} className="text-white/40 hover:text-brand-cyan transition-colors">
-                      <Icon size={20} />
-                    </a>
-                  );
-               })}
+                ))}
+              </div>
             </div>
+
+            <div>
+              <h3 className="text-white text-sm font-bold uppercase tracking-widest mb-4">Suivez-nous</h3>
+              <div className="flex items-center gap-3">
+                {[
+                  { Icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/motorboat_74/' },
+                  { Icon: Facebook, label: 'Facebook', href: 'https://www.facebook.com/motorboat74/' },
+                  { Icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/@MotorBoat74' },
+                  { Icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/company/motor-boat-74/' },
+                ].map(({ Icon, label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Suivez-nous sur ${label}`}
+                    className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-brand-dark hover:bg-brand-cyan hover:border-brand-cyan transition-all"
+                  >
+                    <Icon size={18} />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold px-8 py-4 rounded-xl text-[13px] uppercase tracking-widest hover:bg-white transition-all shadow-lg shadow-brand-cyan/20"
+            >
+              <Phone size={15} /> Contactez-nous
+            </Link>
           </div>
 
         </div>
