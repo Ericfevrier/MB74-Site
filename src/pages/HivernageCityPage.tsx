@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Phone, ArrowRight, ShipWheel, Warehouse, Wrench, Anchor, MapPin, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Phone, ArrowRight, ShipWheel, Warehouse, Wrench, Anchor, MapPin, ShieldCheck, CheckCircle2, Sofa, Truck, Caravan, LifeBuoy } from 'lucide-react';
 import { getHivernageCity } from '../data/hivernageCities';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
@@ -25,6 +25,28 @@ export function HivernageCityPage() {
     { icon: ShieldCheck, title: 'Sécurité maximale', desc: 'Nos locaux sont sous vidéosurveillance toute l’année.' },
     { icon: CheckCircle2, title: 'Service complet', desc: "De la sortie de l'eau à la remise à l'eau." },
   ];
+
+  // Préposition correcte selon la ville (d'Annecy, de Genève, du Lac de Serre-Ponçon…).
+  const dePlace = city.city.startsWith('Lac')
+    ? `du ${city.city}`
+    : /^[AEÉÈIOUaeiouéè]/.test(city.city)
+      ? `d’${city.city}`
+      : `de ${city.city}`;
+  const isAnnecy = city.slug === 'annecy';
+  const isFar = city.slug === 'lac-de-serre-poncon';
+
+  // Maillage interne : autres services contextualisés à la zone.
+  // Dépannage uniquement pour Annecy (spécifique au lac) ; Serre-Ponçon (trop éloigné) → transport seul.
+  const SERVICES_LOCAUX = [
+    { key: 'entretien', icon: Wrench, name: 'Entretien & réparation', to: '/entretien-reparation', desc: `Révision moteur, mécanique et réparations toutes marques pour les bateaux ${dePlace}.` },
+    { key: 'sellerie', icon: Sofa, name: 'Sellerie marine', to: '/sellerie', desc: 'Réfection, réparation et personnalisation de sellerie nautique sur mesure.' },
+    { key: 'transport', icon: Truck, name: 'Transport de bateau', to: '/transport', desc: `Transport sécurisé de votre bateau ${dePlace} vers notre atelier ou votre lieu de mise à l’eau.` },
+    { key: 'remorques', icon: Caravan, name: 'Remorques', to: '/remorques', desc: `Vente et conseil de remorques adaptées à votre bateau, autour ${dePlace}.` },
+    { key: 'depannage', icon: LifeBuoy, name: 'Dépannage sur le lac', to: '/depannage', desc: 'Intervention rapide 7j/7 et remorquage en cas de panne sur le lac d’Annecy.', annecyOnly: true },
+  ];
+  const otherServices = isFar
+    ? SERVICES_LOCAUX.filter((s) => s.key === 'transport')
+    : SERVICES_LOCAUX.filter((s) => !s.annecyOnly || isAnnecy);
 
   const schemaService = {
     '@context': 'https://schema.org',
@@ -190,6 +212,37 @@ export function HivernageCityPage() {
           </div>
         </section>
       )}
+
+      {/* Nos autres services dans la zone (maillage interne local) */}
+      <section className="bg-brand-dark text-white py-20 border-t border-white/5">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
+          <div className="max-w-3xl mb-12">
+            <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs block mb-3">Une prise en charge complète</span>
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight mb-5">Nos autres services autour {dePlace}</h2>
+            <p className="text-gray-300 text-lg leading-relaxed">
+              Au-delà de l’hivernage, Motor Boat 74 accompagne les propriétaires {dePlace} sur tout le cycle de vie de leur bateau, de l’entretien à la revente.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {otherServices.map((s) => (
+              <Link
+                key={s.key}
+                to={s.to}
+                className="group bg-white/5 border border-white/10 rounded-3xl p-7 hover:bg-white/[0.08] hover:border-brand-cyan/40 transition-all"
+              >
+                <span className="w-12 h-12 rounded-2xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-5 group-hover:bg-brand-cyan group-hover:text-brand-dark transition-colors">
+                  <s.icon size={22} />
+                </span>
+                <h3 className="font-bold text-lg mb-2 group-hover:text-brand-cyan transition-colors">{s.name}</h3>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">{s.desc}</p>
+                <span className="inline-flex items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs">
+                  En savoir plus <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <ServiceContactBlock subject={`Hivernage ${city.city}`} />
     </div>
