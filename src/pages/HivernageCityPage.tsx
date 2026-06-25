@@ -204,7 +204,7 @@ export function HivernageCityPage() {
             </div>
             {/* Carte des zones d'intervention : 1 pin cyan par zone, nom au survol, auto-zoom */}
             {zones.length > 0 && (
-              <div className="mb-10 h-[380px] sm:h-[460px] rounded-[2rem] overflow-hidden border border-white/10 ring-1 ring-black/5 shadow-2xl shadow-brand-dark/10 bg-ink-900">
+              <div className="mb-10 h-[380px] sm:h-[460px] rounded-[2rem] overflow-hidden border border-gray-200 ring-1 ring-black/5 shadow-xl shadow-brand-dark/5 bg-[#e8eef2]">
                 <ZonesMap zones={zones} ariaLabel={`Carte des zones d'intervention autour ${dePlace}`} />
               </div>
             )}

@@ -66,9 +66,9 @@ iframe {
   }
 }
 
-/* ===== Carte Leaflet "zones d'intervention" — harmonisée au site (sombre + cyan) ===== */
+/* ===== Carte Leaflet "zones d'intervention" — tuiles claires (Voyager) + pins cyan ===== */
 .leaflet-container {
-  background: #1a1a1a;
+  background: #e8eef2;
   font-family: inherit;
 }
 /* Pin cyan avec halo */
@@ -104,18 +104,18 @@ iframe {
 }
 /* Contrôles de zoom au style du site */
 .leaflet-bar a {
-  background: #2f2d2d;
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.12);
+  background: #fff;
+  color: #2f2d2d;
+  border-color: rgba(15, 23, 42, 0.1);
 }
 .leaflet-bar a:hover {
   background: #06befc;
   color: #2f2d2d;
 }
 .leaflet-control-attribution {
-  background: rgba(18, 18, 18, 0.7) !important;
-  color: #9ca3af !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: #6b7280 !important;
 }
 .leaflet-control-attribution a {
-  color: #06befc !important;
+  color: #0284a8 !important;
 }

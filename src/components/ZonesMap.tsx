@@ -20,7 +20,7 @@ export function ZonesMap({ zones, ariaLabel }: { zones: Zone[]; ariaLabel?: stri
       zoomControl: true,
     });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap, &copy; CARTO',
       subdomains: 'abcd',
       maxZoom: 19,
