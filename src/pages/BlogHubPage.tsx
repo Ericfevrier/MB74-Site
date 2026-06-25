@@ -49,7 +49,7 @@ export function BlogHubPage() {
   return (
     <div className="bg-brand-light">
       <Helmet>
-        <title>Blog | Conseils & actualités nautiques | {SITE.name}</title>
+        <title>{`Blog | Conseils & actualités nautiques | ${SITE.name}`}</title>
         <meta
           name="description"
           content="Le blog de Motor Boat 74 : guides d’entretien et d’hivernage, comparatifs, actualités Nautique et MasterCraft, conseils d’achat et de revente, près du lac d’Annecy."

@@ -77,7 +77,7 @@ export function BrandPage() {
   return (
     <div className="bg-brand-light">
       <Helmet>
-        <title>{brand.fullName} | {role} {brand.name} | Motorboat 74</title>
+        <title>{`${brand.fullName} | ${role} ${brand.name} | Motorboat 74`}</title>
         <meta name="description" content={`Découvrez la gamme ${brand.name}. ${brand.description.substring(0, 100)}...`} />
         <link rel="canonical" href={`https://motorboat74.com/marque/${id}`} />
       </Helmet>

@@ -198,7 +198,7 @@ export function LegalPage({ doc }: { doc: 'mentions' | 'privacy' | 'cgv' }) {
   return (
     <div className="bg-white">
       <Helmet>
-        <title>{data.title} | {SITE.name}</title>
+        <title>{`${data.title} | ${SITE.name}`}</title>
         <meta name="description" content={`${data.title} de ${SITE.name}.`} />
         <link rel="canonical" href={`${SITE.url}/${slug}/`} />
         <meta name="robots" content="index, follow" />

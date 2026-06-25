@@ -20,7 +20,7 @@ export function ComingSoon({ title, description }: ComingSoonProps) {
   return (
     <section className="min-h-[70vh] flex items-center justify-center bg-brand-dark text-white px-4 py-24 relative overflow-hidden">
       <Helmet>
-        <title>{title} | Motorboat 74</title>
+        <title>{`${title} | Motorboat 74`}</title>
         <meta name="robots" content="noindex" />
       </Helmet>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] -ml-64 -mb-64"></div>
