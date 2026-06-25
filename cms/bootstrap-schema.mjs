@@ -8,7 +8,8 @@
  */
 const URL = process.env.DIRECTUS_URL || 'http://localhost:8055';
 const EMAIL = process.env.ADMIN_EMAIL || 'admin@motorboat74.com';
-const PASSWORD = process.env.ADMIN_PASSWORD || 'sMIiYvYVW7n0';
+const PASSWORD = process.env.ADMIN_PASSWORD; // jamais en dur — charger cms/.env
+if (!PASSWORD) { console.error('ADMIN_PASSWORD manquant. Lancer avec les variables de cms/.env (voir cms/README.md).'); process.exit(1); }
 
 const login = async () => {
   const r = await fetch(`${URL}/auth/login`, {
@@ -115,7 +116,8 @@ const run = async () => {
   const existing = (await api('/collections')).data.map((c) => c.collection);
   for (const def of collections) {
     if (existing.includes(def.collection)) { console.log(`= ${def.collection} (déjà présent, ignoré)`); continue; }
-    await api('/collections', 'POST', def);
+    // schema:{} => collection adossée à une vraie table (sinon Directus crée un "dossier")
+    await api('/collections', 'POST', { schema: {}, ...def });
     console.log(`+ ${def.collection} créée (${def.fields.length} champs)`);
   }
   console.log('\nSchéma prêt. Admin : ' + URL);

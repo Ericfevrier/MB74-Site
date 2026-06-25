@@ -16,6 +16,16 @@ Première connexion = ADMIN_EMAIL / ADMIN_PASSWORD du .env.
 On crée ensuite les collections de [CONTENT-MODEL.md](./CONTENT-MODEL.md), puis on
 exporte le schéma (`directus schema snapshot ./snapshot.yml`) pour le versionner.
 
+## Scripts (schéma + import)
+Les scripts lisent les identifiants depuis l'environnement (jamais en dur).
+Charger `cms/.env` avant de les lancer :
+```bash
+cd cms
+export $(grep -v '^#' .env | xargs)        # charge ADMIN_EMAIL / ADMIN_PASSWORD / DIRECTUS_URL
+node bootstrap-schema.mjs                   # crée les collections (idempotent)
+npx tsx import-data.ts                      # importe le contenu de src/data/*
+```
+
 ## 2. Migration du contenu existant
 Les données aujourd'hui en dur (`src/data/*.ts`) seront importées dans Directus via un
 script d'amorçage (collections used_boats, boat_models, hivernage_cities, blog…).
