@@ -22,6 +22,8 @@ export interface BrandData {
   name: string;
   fullName: string;
   logo: string;
+  /** Statut commercial affiché (ex. "Concessionnaire officiel", "Importateur officiel"). Défaut : "Concessionnaire officiel". */
+  role?: string;
   heroImage: string;
   description: string;
   tagline: string;
@@ -37,6 +39,7 @@ export const brandsData: Record<string, BrandData> = {
     name: "Nautique",
     fullName: "Nautique",
     logo: "/images/nautique-web-logo-white.png",
+    role: "Concessionnaire officiel",
     heroImage: "/images/2026-p23-ext-09-11zon.jpg",
     tagline: "L'excellence sur l'eau depuis 1925",
     description: "MotorBoat74 vous propose une sélection haut de gamme de bateaux Nautique, spécialement conçus pour le ski nautique, le wakeboard et le wakesurf. Ces bateaux se démarquent par une construction robuste, des matériaux premium et une finition irréprochable.\n\nChaque modèle est pensé pour offrir des sensations de glisse exceptionnelles, une navigation fluide et une ergonomie parfaite à bord. Que vous soyez rider expérimenté ou que vous souhaitiez profiter de moments en famille sur l’eau, la gamme Nautique répond à toutes les envies.\n\nEn tant que concessionnaire officiel, nous vous accompagnons à chaque étape : conseil, choix du modèle, options, financement… avec un seul objectif : trouver le bateau parfaitement adapté à vos besoins et votre style de navigation.",
@@ -171,6 +174,7 @@ export const brandsData: Record<string, BrandData> = {
     name: "Mastercraft",
     fullName: "MasterCraft Boats",
     logo: "/images/mcft-70e1d427.png",
+    role: "Importateur officiel",
     heroImage: "https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp",
     tagline: "Une exigence sans compromis",
     introImages: [

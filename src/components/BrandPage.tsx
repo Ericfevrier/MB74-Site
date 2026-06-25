@@ -72,10 +72,12 @@ export function BrandPage() {
     );
   }
 
+  const role = brand.role || 'Concessionnaire officiel';
+
   return (
     <div className="bg-brand-light">
       <Helmet>
-        <title>{brand.fullName} | Concessionnaire {brand.name} | Motorboat 74</title>
+        <title>{brand.fullName} | {role} {brand.name} | Motorboat 74</title>
         <meta name="description" content={`Découvrez la gamme ${brand.name}. ${brand.description.substring(0, 100)}...`} />
         <link rel="canonical" href={`https://motorboat74.com/marque/${id}`} />
       </Helmet>
@@ -100,14 +102,14 @@ export function BrandPage() {
             transition={{ duration: 0.8 }}
           >
             <div className="flex flex-col items-center justify-center gap-6 mb-8">
-              <h1 className="sr-only">{brand.fullName}, Concessionnaire officiel chez Motor Boat 74</h1>
+              <h1 className="sr-only">{brand.fullName}, {role} chez Motor Boat 74</h1>
               <span className="bg-brand-cyan text-brand-dark px-6 py-2 rounded-full text-[12px] font-bold uppercase tracking-widest shadow-lg shadow-brand-cyan/20">
-                Concessionnaire Officiel {brand.name}
+                {role} {brand.name}
               </span>
               <div className="h-20 md:h-28 flex items-center justify-center">
-                <img 
-                  src="/images/nautique-web-logo-white.png" 
-                  alt={`Logo ${brand.name}, concessionnaire autorisé`} 
+                <img
+                  src={brand.logo}
+                  alt={`Logo ${brand.name}`}
                   className="max-h-full max-w-[250px] md:max-w-[350px] object-contain"
                   fetchPriority="high"
                   referrerPolicy="no-referrer"
@@ -145,7 +147,7 @@ export function BrandPage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { Icon: ShieldCheck, t: 'Concessionnaire officiel', d: `Revendeur agréé ${brand.name} en Haute-Savoie.` },
+                  { Icon: ShieldCheck, t: role, d: `${role} ${brand.name} en Haute-Savoie.` },
                   { Icon: Waves, t: 'Essai sur l’eau', d: 'Testez le modèle sur le Lac d’Annecy ou le Léman.' },
                   { Icon: Wallet, t: 'Reprise & financement', d: 'Des solutions sur mesure pour votre achat.' },
                   { Icon: Wrench, t: 'Hivernage & entretien', d: 'Stockage et SAV assurés par nos experts.' },
