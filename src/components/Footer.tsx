@@ -93,7 +93,7 @@ export function Footer() {
           <div className="col-span-2 lg:col-span-3 space-y-8">
             <div>
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Marques</h3>
-              <div className="space-y-3">
+              <div className="space-y-5">
                 {[
                   { name: 'Nautique', slug: 'nautique', logo: '/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png' },
                   { name: 'MasterCraft', slug: 'mastercraft', logo: '/images/mcft-70e1d427.png' },
@@ -101,11 +101,9 @@ export function Footer() {
                   <Link
                     key={b.slug}
                     to={`/marque/${b.slug}`}
-                    className="group flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-3 transition-colors"
+                    className="group flex items-center gap-4"
                   >
-                    <span className="w-16 h-12 bg-white rounded-xl flex items-center justify-center p-2 flex-shrink-0">
-                      <img src={b.logo} alt={`Logo ${b.name}`} className="max-w-full max-h-full object-contain" referrerPolicy="no-referrer" />
-                    </span>
+                    <img src={b.logo} alt={`Logo ${b.name}`} className="h-11 w-auto max-w-[68px] object-contain opacity-90 group-hover:opacity-100 transition" referrerPolicy="no-referrer" />
                     <span className="text-white font-bold uppercase tracking-tight group-hover:text-brand-cyan transition-colors">{b.name}</span>
                   </Link>
                 ))}
