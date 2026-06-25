@@ -6,24 +6,22 @@ export function Footer() {
   return (
     <footer className="bg-ink-850 text-gray-400 pt-20">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 mb-20">
-          
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-10 mb-20">
+
           {/* Column 1: Info & Image */}
-          <div className="space-y-8">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full border-2 border-white/10 flex items-center justify-center p-2">
-                <img 
-                  src="/images/logo-transprent.png" 
-                  alt="MB74 Logo" 
-                  className="w-full h-full object-contain brightness-0 invert"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <h2 className="text-white text-2xl font-bold uppercase tracking-tight leading-none">
-                MOTOR BOAT 74
+          <div className="col-span-2 lg:col-span-3 space-y-8">
+            <div className="flex items-center gap-3">
+              <img
+                src="/images/logo-transprent.png"
+                alt="Motor Boat 74"
+                className="h-16 w-16 object-contain flex-shrink-0"
+                referrerPolicy="no-referrer"
+              />
+              <h2 className="text-white text-2xl font-bold uppercase tracking-tight leading-none whitespace-nowrap">
+                Motor Boat 74
               </h2>
             </div>
-            
+
             <p className="text-sm leading-relaxed text-gray-300 font-medium">
               Motorboat74, concessionnaire officiel de la marque Nautique et importateur de Connelly Ski en Haute-Savoie, est spécialisé dans la vente, l'hivernage et l'entretien de bateaux à moteur. Nous vous accompagnons dans tous vos projets nautiques sur le Lac d'Annecy et ses environs.
             </p>
@@ -38,66 +36,63 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Services & Zones */}
-          <div className="space-y-12">
-            <div>
-              <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Nos services</h3>
-              <ul className="space-y-3">
-                {[
-                  { name: 'Hivernage / Stockage', path: '/hivernage-stockage-bateau' },
-                  { name: 'Entretien / Réparation', path: '/services/entretien-reparation' },
-                  { name: 'Dépannage', path: '/services/depannage' },
-                  { name: 'Transport', path: '/services/transport-de-bateau' },
-                  { name: 'Sellerie', path: '/services/sellerie-de-bateau' },
-                  { name: 'Remorque', path: '/services/remorques-de-bateau' },
-                ].map((item) => (
-                  <li key={item.name}>
-                    <Link to={item.path} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Zones d'interventions</h3>
-              <ul className="space-y-3">
-                {[
-                  { name: 'Annecy', slug: 'annecy' },
-                  { name: 'Aix-les-Bains', slug: 'aix-les-bains' },
-                  { name: 'Thonon-les-Bains', slug: 'thonon-les-bains' },
-                  { name: 'Évian-les-Bains', slug: 'evian-les-bains' },
-                  { name: 'Genève', slug: 'geneve' },
-                  { name: 'Lac de Serre-Ponçon', slug: 'lac-de-serre-poncon' },
-                ].map((item) => (
-                  <li key={item.slug}>
-                    <Link to={`/services/hivernage-bateaux/${item.slug}`} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Column 2: Services */}
+          <div className="col-span-1 lg:col-span-2">
+            <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Nos services</h3>
+            <ul className="space-y-3">
+              {[
+                { name: 'Hivernage / Stockage', path: '/hivernage-stockage-bateau' },
+                { name: 'Entretien / Réparation', path: '/services/entretien-reparation' },
+                { name: 'Dépannage', path: '/services/depannage' },
+                { name: 'Transport', path: '/services/transport-de-bateau' },
+                { name: 'Sellerie', path: '/services/sellerie-de-bateau' },
+                { name: 'Remorque', path: '/services/remorques-de-bateau' },
+              ].map((item) => (
+                <li key={item.name}>
+                  <Link to={item.path} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Column 3: Bateaux */}
-          <div className="space-y-12">
-            <div>
-              <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Nos bateaux</h3>
-              <ul className="space-y-3">
-                {[
-                  { name: 'Tous nos bateaux', path: '/bateaux' },
-                  { name: 'Bateaux neufs', path: '/bateaux/neufs' },
-                  { name: "Bateaux d'occasion", path: '/bateaux/occasion' },
-                  { name: 'Bateaux vendus', path: '/bateaux/vendu' },
-                ].map((item) => (
-                  <li key={item.name}>
-                    <Link to={item.path} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="col-span-1 lg:col-span-2">
+            <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Nos bateaux</h3>
+            <ul className="space-y-3">
+              {[
+                { name: 'Tous nos bateaux', path: '/bateaux' },
+                { name: 'Bateaux neufs', path: '/bateaux/neufs' },
+                { name: "Bateaux d'occasion", path: '/bateaux/occasion' },
+                { name: 'Bateaux vendus', path: '/bateaux/vendu' },
+              ].map((item) => (
+                <li key={item.name}>
+                  <Link to={item.path} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Column 4: Marques, réseaux & contact */}
-          <div className="space-y-8">
+          {/* Column 4: Zones d'interventions */}
+          <div className="col-span-1 lg:col-span-3">
+            <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Zones d'interventions</h3>
+            <ul className="space-y-3">
+              {[
+                { name: 'Annecy', slug: 'annecy' },
+                { name: 'Aix-les-Bains', slug: 'aix-les-bains' },
+                { name: 'Thonon-les-Bains', slug: 'thonon-les-bains' },
+                { name: 'Évian-les-Bains', slug: 'evian-les-bains' },
+                { name: 'Genève', slug: 'geneve' },
+                { name: 'Lac de Serre-Ponçon', slug: 'lac-de-serre-poncon' },
+              ].map((item) => (
+                <li key={item.slug}>
+                  <Link to={`/services/hivernage-bateaux/${item.slug}`} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 5: Marques, réseaux & contact */}
+          <div className="col-span-2 lg:col-span-2 space-y-8">
             <div>
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Marques</h3>
               <div className="space-y-3">
