@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Zones non destinées à l'indexation
+Disallow: /api/
+Disallow: /bateaux/vendu
+
+Sitemap: https://motorboat74.com/sitemap.xml

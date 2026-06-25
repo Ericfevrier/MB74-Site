@@ -294,14 +294,16 @@ export function Header() {
             </div>
 
             <div className="flex items-center justify-around gap-4 mt-4 pt-12 border-t border-white/5 text-gray-400">
-              {[Instagram, Facebook, Youtube, Linkedin].map((Icon, i) => {
-                  const labels = ['Instagram', 'Facebook', 'Youtube', 'Linkedin'];
-                  return (
-                    <a key={i} href="#" aria-label={`Nous suivre sur ${labels[i]}`} className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:text-brand-cyan transition-all hover:scale-110">
-                      <Icon size={24} />
-                    </a>
-                  );
-              })}
+              {[
+                { Icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/motorboat_74/' },
+                { Icon: Facebook, label: 'Facebook', href: 'https://www.facebook.com/motorboat74/' },
+                { Icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/@MotorBoat74' },
+                { Icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/company/motor-boat-74/' },
+              ].map(({ Icon, label, href }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`Nous suivre sur ${label}`} className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:text-brand-cyan transition-all hover:scale-110">
+                  <Icon size={24} />
+                </a>
+              ))}
             </div>
           </nav>
         </div>

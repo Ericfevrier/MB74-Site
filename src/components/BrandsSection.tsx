@@ -151,9 +151,9 @@ export function BrandsSection() {
               className="flex gap-6 md:gap-8 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4 px-4 -mx-4"
             >
               {categories.map((sport, idx) => (
-                <a 
-                  key={idx} 
-                  href="#" 
+                <Link
+                  key={idx}
+                  to="/contact"
                   className="relative group/card overflow-hidden block aspect-[4/5] rounded-[2rem] shadow-2xl transition-all duration-500 hover:translate-y-[-10px] hover:shadow-brand-cyan/20 flex-shrink-0 w-[240px] md:w-[300px] snap-center lg:snap-start"
                 >
                   <img 
@@ -173,14 +173,14 @@ export function BrandsSection() {
                       <ArrowRight size={18} />
                     </div>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
 
-          <a href="#" className="px-12 py-5 border-2 border-brand-cyan text-brand-cyan font-bold text-sm uppercase tracking-widest rounded-2xl hover:bg-brand-cyan hover:text-brand-dark transition-all duration-500 shadow-xl shadow-brand-cyan/10">
+          <Link to="/contact" className="px-12 py-5 border-2 border-brand-cyan text-brand-cyan font-bold text-sm uppercase tracking-widest rounded-2xl hover:bg-brand-cyan hover:text-brand-dark transition-all duration-500 shadow-xl shadow-brand-cyan/10">
             DÉCOUVRIR LE CATALOGUE COMPLET
-          </a>
+          </Link>
         </div>
       </section>
     </>
