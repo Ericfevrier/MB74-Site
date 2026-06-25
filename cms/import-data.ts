@@ -63,8 +63,8 @@ const run = async () => {
   await clear('brands');
   await insert('brands', ['nautique', 'mastercraft'].map((id, i) => {
     const b: any = brandsData[id];
-    return { brand_id: id, name: b.name, role: b.role || '', logo: b.logo, hero_image: b.heroImage,
-      tagline: b.tagline, description: b.description, hero_wordmark: !!b.heroWordmark, sort: i + 1 };
+    return { brand_id: id, name: b.name, full_name: b.fullName || b.name, role: b.role || '', logo: b.logo,
+      hero_image: b.heroImage, tagline: b.tagline, description: b.description, hero_wordmark: !!b.heroWordmark, sort: i + 1 };
   }));
 
   // boat_models
@@ -98,7 +98,7 @@ const run = async () => {
   await clear('hivernage_cities');
   await insert('hivernage_cities', HIVERNAGE_CITY_ORDER.map((slug) => {
     const c: any = hivernageCities[slug];
-    return { slug, city: c.city, lake: c.lake, h1: c.h1, intro: c.intro, zones_intro: c.zonesIntro,
+    return { slug, city: c.city, lake: c.lake, h1: c.h1, hero: c.hero || '', intro: c.intro, zones_intro: c.zonesIntro,
       ports: c.ports || [], local_expertise: c.localExpertise || null, zones: HIVERNAGE_ZONES[slug] || [],
       seo_title: c.metaTitle || '', seo_description: c.metaDescription || '', status: 'published' };
   }));

@@ -1,3 +1,5 @@
+import { GENERATED_BRANDS } from './generated/brands';
+
 export interface BoatModel {
   name: string;
   image: string;
@@ -36,7 +38,7 @@ export interface BrandData {
   introImages?: string[];
 }
 
-export const brandsData: Record<string, BrandData> = {
+const STATIC_BRANDS_DATA: Record<string, BrandData> = {
   nautique: {
     id: "nautique",
     name: "Nautique",
@@ -320,3 +322,28 @@ export const brandsData: Record<string, BrandData> = {
     models: []
   }
 };
+
+/** Fusion : le CMS surcharge les champs éditoriaux ; le code garde le structurel (modèles, comparatifs, introImages…). */
+function mergeBrands(base: Record<string, BrandData>, editorial: unknown[]): Record<string, BrandData> {
+  if (!editorial || !editorial.length) return base;
+  const ne = (v: unknown) => v !== undefined && v !== null && v !== '';
+  const out: Record<string, BrandData> = { ...base };
+  for (const e of editorial as any[]) {
+    const b = out[e.brand_id];
+    if (!b) continue;
+    out[e.brand_id] = {
+      ...b,
+      ...(ne(e.name) ? { name: e.name } : {}),
+      ...(ne(e.full_name) ? { fullName: e.full_name } : {}),
+      ...(ne(e.role) ? { role: e.role } : {}),
+      ...(ne(e.logo) ? { logo: e.logo } : {}),
+      ...(ne(e.hero_image) ? { heroImage: e.hero_image } : {}),
+      ...(ne(e.tagline) ? { tagline: e.tagline } : {}),
+      ...(ne(e.description) ? { description: e.description } : {}),
+      heroWordmark: !!e.hero_wordmark,
+    };
+  }
+  return out;
+}
+
+export const brandsData: Record<string, BrandData> = mergeBrands(STATIC_BRANDS_DATA, GENERATED_BRANDS);

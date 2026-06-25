@@ -66,7 +66,7 @@ const collections = [
   },
   {
     collection: 'brands', meta: { icon: 'sailing', note: 'Marques (Nautique, MasterCraft…)' },
-    fields: [pk(), str('brand_id', { unique: true }), str('name'), str('role'), str('logo'), str('hero_image'),
+    fields: [pk(), str('brand_id', { unique: true }), str('name'), str('full_name'), str('role'), str('logo'), str('hero_image'),
       str('tagline'), text('description'), bool('hero_wordmark', false), int('sort')],
   },
   {
@@ -83,7 +83,7 @@ const collections = [
   },
   {
     collection: 'hivernage_cities', meta: { icon: 'place', note: 'Pages locales hivernage par ville' },
-    fields: [pk(), str('slug', { unique: true }), str('city'), str('lake'), str('h1'), text('intro'),
+    fields: [pk(), str('slug', { unique: true }), str('city'), str('lake'), str('h1'), str('hero'), text('intro'),
       text('zones_intro'), json('ports'), json('local_expertise'), json('zones'), ...seo(), status()],
   },
   {

@@ -1,5 +1,34 @@
 import { NautiqueModel, nautiqueModels, MODEL_ORDER as NAUTIQUE_ORDER } from './nautiqueModels';
 import { mastercraftModels, MASTERCRAFT_ORDER } from './mastercraftModels';
+import { GENERATED_MODELS } from './generated/boat-models';
+
+/**
+ * Fusion CMS : surcharge le sous-ensemble éditorial d'un modèle (nom, intro, galerie,
+ * specs, points forts, FAQ, SEO) en gardant tout le structurel du code (hero, jalons, options…).
+ */
+function mergeModels(brandId: string, base: Record<string, NautiqueModel>): Record<string, NautiqueModel> {
+  if (!Array.isArray(GENERATED_MODELS) || !GENERATED_MODELS.length) return base;
+  const ne = (v: unknown) =>
+    v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && v.length === 0);
+  const out: Record<string, NautiqueModel> = { ...base };
+  for (const e of GENERATED_MODELS as any[]) {
+    if (e.brand !== brandId || !out[e.slug]) continue;
+    out[e.slug] = {
+      ...out[e.slug],
+      ...(ne(e.name) ? { name: e.name } : {}),
+      ...(ne(e.short) ? { short: e.short } : {}),
+      ...(ne(e.tagline) ? { tagline: e.tagline } : {}),
+      ...(ne(e.intro) ? { intro: e.intro } : {}),
+      ...(ne(e.gallery) ? { gallery: e.gallery } : {}),
+      ...(ne(e.specs) ? { specs: e.specs } : {}),
+      ...(ne(e.highlights) ? { highlights: e.highlights } : {}),
+      ...(ne(e.faqs) ? { faqs: e.faqs } : {}),
+      ...(ne(e.seo_title) ? { metaTitle: e.seo_title } : {}),
+      ...(ne(e.seo_description) ? { metaDescription: e.seo_description } : {}),
+    } as NautiqueModel;
+  }
+  return out;
+}
 
 export interface BrandModels {
   id: string;
@@ -15,8 +44,8 @@ export interface BrandModels {
 }
 
 export const BRAND_MODELS: Record<string, BrandModels> = {
-  nautique: { id: 'nautique', name: 'Nautique', models: nautiqueModels, order: NAUTIQUE_ORDER, officialBadge: true },
-  mastercraft: { id: 'mastercraft', name: 'MasterCraft', models: mastercraftModels, order: MASTERCRAFT_ORDER },
+  nautique: { id: 'nautique', name: 'Nautique', models: mergeModels('nautique', nautiqueModels), order: NAUTIQUE_ORDER, officialBadge: true },
+  mastercraft: { id: 'mastercraft', name: 'MasterCraft', models: mergeModels('mastercraft', mastercraftModels), order: MASTERCRAFT_ORDER },
 };
 
 export function getBrandModels(brandId?: string): BrandModels | undefined {

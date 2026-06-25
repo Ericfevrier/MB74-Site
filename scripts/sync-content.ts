@@ -9,7 +9,7 @@
 import { writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
-import { cmsLogin, fetchUsedBoats, fetchBlogArticles, fetchBlogCategories, fetchSettings, type CmsConfig } from '../src/lib/cms';
+import { cmsLogin, fetchUsedBoats, fetchBlogArticles, fetchBlogCategories, fetchSettings, fetchBrands, fetchCities, fetchModels, type CmsConfig } from '../src/lib/cms';
 
 const URL = process.env.CMS_URL;
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -47,7 +47,16 @@ const run = async () => {
   const settings = await fetchSettings(cfg);
   writeGeneratedMulti('site.ts', { GENERATED_SITE: settings });
 
-  console.log(`sync-content : ${usedBoats.length} occasions, ${articles.length} articles, ${categories.length} catégories, réglages — importés du CMS.`);
+  const brands = await fetchBrands(cfg);
+  writeGenerated('brands.ts', 'GENERATED_BRANDS', brands);
+
+  const cities = await fetchCities(cfg);
+  writeGenerated('hivernage-cities.ts', 'GENERATED_CITIES', cities);
+
+  const models = await fetchModels(cfg);
+  writeGenerated('boat-models.ts', 'GENERATED_MODELS', models);
+
+  console.log(`sync-content : ${usedBoats.length} occasions, ${articles.length} articles, ${categories.length} catégories, ${brands.length} marques, ${cities.length} villes, ${models.length} modèles, réglages — importés du CMS.`);
 };
 
 run().catch((e) => {

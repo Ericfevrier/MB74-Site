@@ -1,7 +1,9 @@
 /**
  * Pages locales hivernage/stockage, contenu reproduit de motorboat74.com.
  * NE PAS éditer à la main : régénéré via /tmp/parse-cities.mjs + script de génération.
+ * SOURCE : contenu CMS généré au build s'il existe (override complet), sinon le statique.
  */
+import { GENERATED_CITIES } from './generated/hivernage-cities';
 
 export interface HivernagePort { title: string; desc: string; }
 export interface LocalFact { title: string; text: string; }
@@ -22,7 +24,7 @@ export interface HivernageCity {
 
 export const HIVERNAGE_CITY_ORDER: string[] = ["annecy","aix-les-bains","evian-les-bains","thonon-les-bains","geneve","lac-de-serre-poncon"];
 
-export const hivernageCities: Record<string, HivernageCity> = {
+const STATIC_CITIES: Record<string, HivernageCity> = {
   "annecy": {
     "slug": "annecy",
     "localExpertise": {
@@ -368,6 +370,12 @@ export const hivernageCities: Record<string, HivernageCity> = {
     ]
   }
 };
+
+/** Source effective : CMS (override complet) si généré, sinon statique. */
+export const hivernageCities: Record<string, HivernageCity> =
+  Array.isArray(GENERATED_CITIES) && GENERATED_CITIES.length
+    ? Object.fromEntries((GENERATED_CITIES as HivernageCity[]).map((c) => [c.slug, c]))
+    : STATIC_CITIES;
 
 export function getHivernageCity(slug: string): HivernageCity | undefined {
   return hivernageCities[slug];

@@ -5,6 +5,7 @@
  */
 import type { UsedBoat } from '../data/usedBoats';
 import type { BlogArticle, BlogCategory } from '../data/blog';
+import type { HivernageCity } from './../data/hivernageCities';
 
 export interface CmsConfig {
   url: string;
@@ -95,4 +96,40 @@ export function mapSettings(r: Record<string, any>) {
 export async function fetchSettings(cfg: CmsConfig) {
   const r = await cmsFetch<Record<string, any>>(cfg, "/items/settings");
   return mapSettings(r);
+}
+
+// ---------- Marques (champs éditoriaux uniquement — le code garde le structurel) ----------
+export interface BrandEditorial {
+  brand_id: string; name: string; full_name: string; role: string; logo: string;
+  hero_image: string; tagline: string; description: string; hero_wordmark: boolean;
+}
+export async function fetchBrands(cfg: CmsConfig): Promise<BrandEditorial[]> {
+  return cmsFetch<BrandEditorial[]>(cfg,
+    "/items/brands?limit=-1&fields=brand_id,name,full_name,role,logo,hero_image,tagline,description,hero_wordmark");
+}
+
+// ---------- Pages villes (override complet -> HivernageCity) ----------
+export function mapCity(r: Record<string, any>): HivernageCity {
+  return {
+    slug: r.slug, city: r.city, lake: r.lake, h1: r.h1, hero: r.hero,
+    metaTitle: r.seo_title, metaDescription: r.seo_description,
+    intro: r.intro, zonesIntro: r.zones_intro,
+    ports: r.ports || [], localExpertise: r.local_expertise || undefined,
+  };
+}
+export async function fetchCities(cfg: CmsConfig): Promise<HivernageCity[]> {
+  const rows = await cmsFetch<Record<string, any>[]>(cfg,
+    "/items/hivernage_cities?limit=-1&filter[status][_eq]=published&fields=slug,city,lake,h1,hero,intro,zones_intro,ports,local_expertise,seo_title,seo_description");
+  return rows.map(mapCity);
+}
+
+// ---------- Modèles (sous-ensemble éditorial ; le code garde specs profondes/hero/etc.) ----------
+export interface ModelEditorial {
+  brand: string; slug: string; name: string; short: string; tagline: string;
+  intro: unknown; gallery: unknown; specs: unknown; highlights: unknown; faqs: unknown;
+  seo_title: string; seo_description: string;
+}
+export async function fetchModels(cfg: CmsConfig): Promise<ModelEditorial[]> {
+  return cmsFetch<ModelEditorial[]>(cfg,
+    "/items/boat_models?limit=-1&filter[status][_eq]=published&fields=brand,slug,name,short,tagline,intro,gallery,specs,highlights,faqs,seo_title,seo_description");
 }
