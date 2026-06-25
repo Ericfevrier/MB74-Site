@@ -5,7 +5,7 @@ import { SITE } from '../data/site';
 import { UsedBoat } from '../data/usedBoats';
 import { getBrandModels } from '../data/boatBrands';
 
-const BRAND_LABEL: Record<string, string> = { heyday: 'Heyday' };
+const BRAND_LABEL: Record<string, string> = { heyday: 'Heyday', malibu: 'Malibu' };
 
 function brandName(brandId: string): string {
   return getBrandModels(brandId)?.name || BRAND_LABEL[brandId] || brandId;

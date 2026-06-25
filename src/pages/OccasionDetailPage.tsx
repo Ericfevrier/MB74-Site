@@ -28,7 +28,7 @@ export function OccasionDetailPage() {
   }
 
   const brand = getBrandModels(boat.brandId);
-  const brandName = brand?.name || (boat.brandId === 'heyday' ? 'Heyday' : undefined);
+  const brandName = brand?.name || (boat.brandId === 'heyday' ? 'Heyday' : boat.brandId === 'malibu' ? 'Malibu' : undefined);
   const model = brand?.models[boat.modelSlug];
   const modelPath = model ? `/${boat.brandId}/${model.slug}` : undefined;
   const gallery = boat.gallery && boat.gallery.length ? boat.gallery : [boat.image];
