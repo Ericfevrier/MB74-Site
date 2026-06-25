@@ -42,6 +42,8 @@ export interface UsedBoat {
 }
 
 const T = (s: string) => `https://motorboat74.com/wp-content/uploads/elementor/thumbs/${s}`;
+/** Image originale pleine résolution (haute netteté), ex. F('2025/09/photo.jpg'). */
+const F = (s: string) => `https://motorboat74.com/wp-content/uploads/${s}`;
 
 export const usedBoats: UsedBoat[] = [
   // ---------- Disponibles ----------
@@ -218,11 +220,12 @@ export const usedBoats: UsedBoat[] = [
     location: "Lac d'Annecy",
     price: '133 000 €',
     priceValue: 133000,
-    image: T('Super-Air-Nautique-S21.3-1-scaled-rbmwjgobifo6cs9kg47oct3n73xgu5c291wqmyt6r4.jpg'),
+    image: F('2025/09/Super-Air-Nautique-S21.1-1-scaled.jpg'),
     gallery: [
-      T('Super-Air-Nautique-S21.3-1-scaled-rbmwjgobifo6cs9kg47oct3n73xgu5c291wqmyt6r4.jpg'),
-      T('Super-Air-Nautique-S21.2-1-scaled-rbmwj95lzrdvrwkho0ynsuzyg0yj4ki7k0ousr4c4w.jpg'),
-      T('Super-Air-Nautique-S21.4-1-scaled-rbmwjo7113ygxnyn87gowr7by6wejq5wy34mh6i1dc.jpg'),
+      F('2025/09/Super-Air-Nautique-S21.1-1-scaled.jpg'),
+      F('2025/09/Super-Air-Nautique-S21.2-1-scaled.jpg'),
+      F('2025/09/Super-Air-Nautique-S21.3-1-scaled.jpg'),
+      F('2025/09/Super-Air-Nautique-S21.4-1-scaled.jpg'),
     ],
     description:
       "Super Air Nautique S21 de 2023, compact et performant. Moteur PCM ZR4 6.0L de 400 ch, 769 heures, réservoir 246 L.",
@@ -245,11 +248,12 @@ export const usedBoats: UsedBoat[] = [
     location: "Lac d'Annecy",
     price: '125 000 €',
     priceValue: 125000,
-    image: T('MALIBU-23-LSV.9-rbigt3cxdrujw4zykhkghw6uz2rr6crjnd4hj4xw8g.webp'),
+    image: F('2025/09/MALIBU-23-LSV.1.webp'),
     gallery: [
-      T('MALIBU-23-LSV.9-rbigt3cxdrujw4zykhkghw6uz2rr6crjnd4hj4xw8g.webp'),
-      T('MALIBU-23-LSV.10-rbigt58lrfx4jcx89idpmvps5uihlqz0bmfghov3w0.webp'),
-      T('MALIBU-23-LSV.5-rbigst0palgecfez8v3k8gssfu6ptomhxxy593d84w.webp'),
+      F('2025/09/MALIBU-23-LSV.1.webp'),
+      F('2025/09/MALIBU-23-LSV.2.webp'),
+      F('2025/09/MALIBU-23-LSV.3.webp'),
+      F('2025/09/MALIBU-23-LSV.9.webp'),
     ],
     description:
       "Malibu 23 LSV de 2021, wakeboat polyvalent et familial. Moteur essence de 410 ch, 1 450 heures.",
@@ -274,11 +278,11 @@ export const usedBoats: UsedBoat[] = [
     location: "Lac d'Annecy",
     price: '89 500 €',
     priceValue: 89500,
-    image: T('MASTERCRAFT_PROSTAR-190_2021.1-rbih1i0yifcvqksbh4ebsrta95by0w544z6u28h4kw.webp'),
+    image: F('2025/09/MASTERCRAFT_PROSTAR-190_2021.1.webp'),
     gallery: [
-      T('MASTERCRAFT_PROSTAR-190_2021.1-rbih1i0yifcvqksbh4ebsrta95by0w544z6u28h4kw.webp'),
-      T('MASTERCRAFT_PROSTAR-190_2021.2-rbih1iysp9e626qybmsyd9kquj7b8l8uh3ubjifqeo.webp'),
-      T('MASTERCRAFT_PROSTAR-190_2021.3-rbih1lsb9ri110muv60u2qv4motevok1hhsrzcbjw0.webp'),
+      F('2025/09/MASTERCRAFT_PROSTAR-190_2021.1.webp'),
+      F('2025/09/MASTERCRAFT_PROSTAR-190_2021.2.webp'),
+      F('2025/09/MASTERCRAFT_PROSTAR-190_2021.3.webp'),
     ],
     description:
       "MasterCraft ProStar 190 de 2021, ski-boat de référence. Moteur Ilmor 6.2L de 460 ch, seulement 250 heures.",
@@ -302,7 +306,13 @@ export const usedBoats: UsedBoat[] = [
     location: "Lac d'Annecy",
     price: '62 000 €',
     priceValue: 62000,
-    image: T('imgi_8_4-scaled_5_11zon-ra5gfmjqtt83ernvyponcb07voa3y0to53bg1mx84w.jpg'),
+    image: F('2025/08/imgi_8_4-scaled_5_11zon.jpg'),
+    gallery: [
+      F('2025/08/imgi_8_4-scaled_5_11zon.jpg'),
+      F('2025/08/imgi_3_IMG_1972-scaled_1_11zon.jpg'),
+      F('2025/08/imgi_4_IMG_1975_3_11zon-scaled_2_11zon.jpg'),
+      F('2025/08/imgi_5_IMG_1977_1_11zon-scaled_4_11zon.jpg'),
+    ],
     description:
       "MasterCraft X-35 de 2009 en excellent état. Moteur essence de 400 ch, 350 heures. Bateau spacieux et bien équipé.",
     sold: true,
@@ -320,11 +330,12 @@ export const usedBoats: UsedBoat[] = [
     location: "Lac d'Annecy",
     price: '62 500 €',
     priceValue: 62500,
-    image: T('imgi_7_2-scaled_9_11zon-raacny3rhq4e506ll2x4rc6l8txhgjc72kd23w4uwg.jpg'),
+    image: F('2025/08/imgi_7_2-scaled_9_11zon.jpg'),
     gallery: [
-      T('imgi_7_2-scaled_9_11zon-raacny3rhq4e506ll2x4rc6l8txhgjc72kd23w4uwg.jpg'),
-      T('imgi_8_IMG-20241114-WA0016_4_11zon-raacob9i5emenjnhg8lwq8v1k84mgasfsdhutrlchc.jpg'),
-      T('imgi_5_IMG-20241114-WA0015_3_11zon-raacod56j2ozarkr59f5v8dyqzvcvozwgmstsbik4w.jpg'),
+      F('2025/08/imgi_7_2-scaled_9_11zon.jpg'),
+      F('2025/08/imgi_8_IMG-20241114-WA0016_4_11zon.jpg'),
+      F('2025/08/imgi_5_IMG-20241114-WA0015_3_11zon.jpg'),
+      F('2025/08/imgi_4_IMG-20241114-WA0011_2_11zon.jpg'),
     ],
     description:
       "MasterCraft X-25 de 2014 en bon état, grande capacité (16 personnes). Moteur Ilmor 6.0L de 400 ch, 180 heures seulement.",
@@ -343,7 +354,12 @@ export const usedBoats: UsedBoat[] = [
     location: "Lac d'Annecy",
     price: '49 898 €',
     priceValue: 49898,
-    image: T('imgi_3_IMG_1972-scaled_1_11zon-ra5gf7ibsgni909qej6m8esudic8iv5yr0vod7jiwg.jpg'),
+    image: F('2025/08/imgi_6_IMG_1970_2_11zon-scaled_3_11zon.jpg'),
+    gallery: [
+      F('2025/08/imgi_6_IMG_1970_2_11zon-scaled_3_11zon.jpg'),
+      F('2025/08/imgi_5_IMG_1977_1_11zon-scaled_4_11zon.jpg'),
+      F('2025/08/imgi_4_IMG_1975_3_11zon-scaled_2_11zon.jpg'),
+    ],
     description:
       "MasterCraft X35 de 2011. Moteur Ilmor 6.2L de 430 ch, 690 heures.",
     sold: true,
@@ -361,11 +377,12 @@ export const usedBoats: UsedBoat[] = [
     location: "Lac d'Annecy",
     price: '59 500 €',
     priceValue: 59500,
-    image: T('imgi_7_IMG-20250604-WA0002_1_11zon-scaled_11zon-ra5dccflpww0wpazrm0p5dxo3grqo11o6aw0obx4s0.jpg'),
+    image: F('2025/08/imgi_7_IMG-20250604-WA0002_1_11zon-scaled_11zon.jpg'),
     gallery: [
-      T('imgi_7_IMG-20250604-WA0002_1_11zon-scaled_11zon-ra5dccflpww0wpazrm0p5dxo3grqo11o6aw0obx4s0.jpg'),
-      T('imgi_3_IMG-20250604-WA0003-scaled_11zon-ra5dc4ww78lqbtlwzirolftzcdssyg7th9o4u48a5s.jpg'),
-      T('imgi_4_IMG-20250604-WA0006_11zon-ra5dc8o8ykqvm9ggdke6vevtpxa9t8mqtsa2r82pgw.jpg'),
+      F('2025/08/imgi_7_IMG-20250604-WA0002_1_11zon-scaled_11zon.jpg'),
+      F('2025/08/imgi_3_IMG-20250604-WA0003-scaled_11zon.jpg'),
+      F('2025/08/imgi_4_IMG-20250604-WA0006_11zon.jpg'),
+      F('2025/08/imgi_5_IMG-20250604-WA0004_11zon.jpg'),
     ],
     description:
       "MasterCraft ProStar de 2016, ski-boat compact et précis. Moteur Ilmor 6.2L, 262 heures.",
