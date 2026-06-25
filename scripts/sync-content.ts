@@ -9,15 +9,21 @@
 import { writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
-import { cmsLogin, fetchUsedBoats, type CmsConfig } from '../src/lib/cms';
+import { cmsLogin, fetchUsedBoats, fetchBlogArticles, fetchBlogCategories, fetchSettings, type CmsConfig } from '../src/lib/cms';
 
 const URL = process.env.CMS_URL;
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-const writeGenerated = (file: string, exportName: string, data: unknown) => {
+const HEADER = `/* AUTO-GÉNÉRÉ par scripts/sync-content.ts — NE PAS ÉDITER À LA MAIN. */\n`;
+const writeGenerated = (file: string, exportName: string, data: unknown) =>
+  writeGeneratedMulti(file, { [exportName]: data });
+
+const writeGeneratedMulti = (file: string, exports: Record<string, unknown>) => {
   const out = resolve(root, 'src/data/generated', file);
-  const header = `/* AUTO-GÉNÉRÉ par scripts/sync-content.ts — NE PAS ÉDITER À LA MAIN. */\n`;
-  writeFileSync(out, `${header}export const ${exportName} = ${JSON.stringify(data, null, 2)};\n`, 'utf8');
+  const body = Object.entries(exports)
+    .map(([name, data]) => `export const ${name} = ${JSON.stringify(data, null, 2)};`)
+    .join('\n\n');
+  writeFileSync(out, `${HEADER}${body}\n`, 'utf8');
 };
 
 const run = async () => {
@@ -33,7 +39,15 @@ const run = async () => {
 
   const usedBoats = await fetchUsedBoats(cfg);
   writeGenerated('used-boats.ts', 'GENERATED_USED_BOATS', usedBoats);
-  console.log(`sync-content : ${usedBoats.length} occasions importées du CMS.`);
+
+  const articles = await fetchBlogArticles(cfg);
+  const categories = await fetchBlogCategories(cfg);
+  writeGeneratedMulti('blog.ts', { GENERATED_BLOG_ARTICLES: articles, GENERATED_BLOG_CATEGORIES: categories });
+
+  const settings = await fetchSettings(cfg);
+  writeGeneratedMulti('site.ts', { GENERATED_SITE: settings });
+
+  console.log(`sync-content : ${usedBoats.length} occasions, ${articles.length} articles, ${categories.length} catégories, réglages — importés du CMS.`);
 };
 
 run().catch((e) => {

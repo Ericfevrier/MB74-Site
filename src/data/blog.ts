@@ -2,7 +2,10 @@
  * Données du blog Motor Boat 74.
  * Les catégories reprennent celles du site actuel (motorboat74.com/blog).
  * Les articles publiés sont reliés à leur page dédiée.
+ *
+ * SOURCE : contenu CMS généré au build s'il existe, sinon le statique (repli).
  */
+import { GENERATED_BLOG_ARTICLES, GENERATED_BLOG_CATEGORIES } from './generated/blog';
 
 export interface BlogCategory {
   slug: string;
@@ -21,7 +24,7 @@ export interface BlogArticle {
   readingTime?: string;
 }
 
-export const BLOG_CATEGORIES: BlogCategory[] = [
+const STATIC_BLOG_CATEGORIES: BlogCategory[] = [
   { slug: 'achat-vente', name: 'Achat / Vente' },
   { slug: 'actualite-nautique', name: 'Actualité nautique' },
   { slug: 'comparatifs', name: 'Comparatifs' },
@@ -32,7 +35,7 @@ export const BLOG_CATEGORIES: BlogCategory[] = [
   { slug: 'nautique', name: 'Nautique' },
 ];
 
-export const BLOG_ARTICLES: BlogArticle[] = [
+const STATIC_BLOG_ARTICLES: BlogArticle[] = [
   {
     slug: 'hivernage-bateau-guide-complet',
     path: '/blog/hivernage/hivernage-bateau-guide-complet',
@@ -45,6 +48,15 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     readingTime: '12 min',
   },
 ];
+
+// Source effective : CMS si généré, sinon statique.
+export const BLOG_CATEGORIES: BlogCategory[] = GENERATED_BLOG_CATEGORIES.length
+  ? (GENERATED_BLOG_CATEGORIES as unknown as BlogCategory[])
+  : STATIC_BLOG_CATEGORIES;
+
+export const BLOG_ARTICLES: BlogArticle[] = GENERATED_BLOG_ARTICLES.length
+  ? (GENERATED_BLOG_ARTICLES as unknown as BlogArticle[])
+  : STATIC_BLOG_ARTICLES;
 
 export const categoryName = (slug: string): string =>
   BLOG_CATEGORIES.find((c) => c.slug === slug)?.name ?? slug;

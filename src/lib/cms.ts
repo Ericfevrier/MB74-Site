@@ -4,6 +4,7 @@
  * (build → process.env.CMS_URL ; navigateur → import.meta.env.VITE_CMS_URL).
  */
 import type { UsedBoat } from '../data/usedBoats';
+import type { BlogArticle, BlogCategory } from '../data/blog';
 
 export interface CmsConfig {
   url: string;
@@ -61,4 +62,37 @@ export async function fetchUsedBoats(cfg: CmsConfig): Promise<UsedBoat[]> {
     "/items/used_boats?limit=-1&filter[status][_eq]=published&fields=slug,model_slug,brand,title,year,capacity,power,hours,length,location,price,price_value,image,gallery,description,highlights,sold",
   );
   return rows.map(mapUsedBoat);
+}
+
+// ---------- Blog ----------
+export function mapBlogArticle(r: Record<string, any>): BlogArticle {
+  return { slug: r.slug, path: r.path, title: r.title, excerpt: r.excerpt, category: r.category,
+    date: r.date, image: r.image, readingTime: r.reading_time || undefined };
+}
+export function mapBlogCategory(r: Record<string, any>): BlogCategory {
+  return { slug: r.slug, name: r.name };
+}
+export async function fetchBlogArticles(cfg: CmsConfig): Promise<BlogArticle[]> {
+  const rows = await cmsFetch<Record<string, any>[]>(cfg,
+    "/items/blog_articles?limit=-1&filter[status][_eq]=published&sort=-date&fields=slug,path,title,excerpt,category,date,image,reading_time");
+  return rows.map(mapBlogArticle);
+}
+export async function fetchBlogCategories(cfg: CmsConfig): Promise<BlogCategory[]> {
+  const rows = await cmsFetch<Record<string, any>[]>(cfg, "/items/blog_categories?limit=-1&fields=slug,name");
+  return rows.map(mapBlogCategory);
+}
+
+// ---------- Settings (NAP / SEO globaux) ----------
+export function mapSettings(r: Record<string, any>) {
+  return {
+    name: r.site_name, url: r.url, phoneDisplay: r.phone_display, phoneHref: r.phone_href,
+    email: r.email, emailHref: `mailto:${r.email}`,
+    addressStreet: r.address_street, addressLocality: r.address_locality, addressPostal: r.address_postal,
+    addressRegion: r.address_region, addressCountry: r.address_country,
+    geo: { lat: r.geo_lat, lng: r.geo_lng },
+  };
+}
+export async function fetchSettings(cfg: CmsConfig) {
+  const r = await cmsFetch<Record<string, any>>(cfg, "/items/settings");
+  return mapSettings(r);
 }
