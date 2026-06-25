@@ -37,9 +37,10 @@ const megaMenuBateaux = [
 ];
 
 // Marques affichées dans le menu (réduit à Nautique + Mastercraft pour le moment).
+// crop = recadrer sur l'emblème (logo Nautique = emblème + wordmark, on ne garde que l'emblème).
 const megaMenuMarques = [
-  { name: "Nautique", logo: "/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png" },
-  { name: "Mastercraft", logo: "/images/mcft-70e1d427.png" },
+  { name: "Nautique", logo: "/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png", crop: true },
+  { name: "Mastercraft", logo: "/images/mcft-70e1d427.png", crop: false },
 ];
 
 export function Header() {
@@ -127,12 +128,18 @@ export function Header() {
                       className="w-44 flex items-center justify-center group/item hover:bg-white/5 px-4 py-8 rounded-3xl transition-all border border-transparent hover:border-white/10"
                     >
                       <div className="h-16 flex items-center justify-center w-full px-4">
-                        <img
-                          src={item.logo}
-                          alt={`Logo ${item.name}`}
-                          className="max-h-full max-w-full object-contain opacity-80 group-hover/item:opacity-100 group-hover/item:scale-105 transition-all duration-300"
-                          referrerPolicy="no-referrer"
-                        />
+                        {item.crop ? (
+                          <span className="h-16 w-16 overflow-hidden flex items-center justify-center opacity-80 group-hover/item:opacity-100 group-hover/item:scale-105 transition-all duration-300">
+                            <img src={item.logo} alt={`Logo ${item.name}`} className="h-full w-full object-cover object-left" referrerPolicy="no-referrer" />
+                          </span>
+                        ) : (
+                          <img
+                            src={item.logo}
+                            alt={`Logo ${item.name}`}
+                            className="max-h-full max-w-full object-contain opacity-80 group-hover/item:opacity-100 group-hover/item:scale-105 transition-all duration-300"
+                            referrerPolicy="no-referrer"
+                          />
+                        )}
                       </div>
                     </Link>
                   ))}
@@ -256,12 +263,18 @@ export function Header() {
                     className="flex items-center justify-center p-5 hover:bg-white/5 transition-all rounded-2xl border border-white/5"
                   >
                     <div className="h-10 flex items-center justify-center w-full">
-                      <img
-                        src={item.logo}
-                        alt={`Logo ${item.name}`}
-                        className="max-h-full max-w-full object-contain opacity-80"
-                        referrerPolicy="no-referrer"
-                      />
+                      {item.crop ? (
+                        <span className="h-10 w-10 overflow-hidden flex items-center justify-center opacity-80">
+                          <img src={item.logo} alt={`Logo ${item.name}`} className="h-full w-full object-cover object-left" referrerPolicy="no-referrer" />
+                        </span>
+                      ) : (
+                        <img
+                          src={item.logo}
+                          alt={`Logo ${item.name}`}
+                          className="max-h-full max-w-full object-contain opacity-80"
+                          referrerPolicy="no-referrer"
+                        />
+                      )}
                     </div>
                   </Link>
                 ))}
