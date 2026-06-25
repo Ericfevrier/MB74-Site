@@ -6,7 +6,8 @@ import { getHivernageCity } from '../data/hivernageCities';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
-import { GoogleMapCustom } from '../components/GoogleMapCustom';
+import { ZonesMap } from '../components/ZonesMap';
+import { getZones } from '../data/hivernageZones';
 
 const SOLUTIONS = [
   { icon: ShipWheel, title: "Sortie de l'eau et essai avant stockage", desc: 'Notre équipe se déplace pour réaliser la sortie de votre bateau dans les meilleures conditions.' },
@@ -48,6 +49,8 @@ export function HivernageCityPage() {
   const otherServices = isFar
     ? SERVICES_LOCAUX.filter((s) => s.key === 'transport')
     : SERVICES_LOCAUX.filter((s) => !s.annecyOnly || isAnnecy);
+
+  const zones = getZones(city.slug);
 
   const schemaService = {
     '@context': 'https://schema.org',
@@ -199,10 +202,12 @@ export function HivernageCityPage() {
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed">{city.zonesIntro}</p>
             </div>
-            {/* Carte des ports / zones du plan d'eau (points visualisés via recherche Google Maps) */}
-            <div className="mb-10 h-[360px] sm:h-[440px] rounded-[2rem] overflow-hidden border border-gray-200 shadow-lg shadow-brand-dark/5">
-              <GoogleMapCustom address={`Ports, ${city.lake}`} light />
-            </div>
+            {/* Carte des zones d'intervention : 1 pin cyan par zone, nom au survol, auto-zoom */}
+            {zones.length > 0 && (
+              <div className="mb-10 h-[380px] sm:h-[460px] rounded-[2rem] overflow-hidden border border-white/10 ring-1 ring-black/5 shadow-2xl shadow-brand-dark/10 bg-ink-900">
+                <ZonesMap zones={zones} ariaLabel={`Carte des zones d'intervention autour ${dePlace}`} />
+              </div>
+            )}
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {city.ports.map((p, i) => (
                 <div key={i} className="bg-white border border-gray-200 rounded-3xl p-7 shadow-lg shadow-brand-dark/5">
