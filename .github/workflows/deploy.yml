@@ -1,0 +1,74 @@
+name: Build & Deploy (statique prerendu)
+
+# - Push sur `main`  -> déploie sur STAGING (preprod). On ne touche pas à la prod.
+# - Déclenchement manuel "Deploy production" -> déploie sur la PROD (quand prêt à remplacer WordPress).
+# - repository_dispatch (type: rebuild) -> permet à Directus de relancer un build à la publication.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Cible de déploiement"
+        required: true
+        default: staging
+        type: choice
+        options: [staging, production]
+  repository_dispatch:
+    types: [rebuild]
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      # Chromium pour le prerender (puppeteer)
+      - name: Install Chromium (puppeteer)
+        run: npx puppeteer browsers install chrome
+
+      - name: Build statique + prerender
+        env:
+          # Si le CMS est en ligne, le contenu est tiré depuis Directus ; sinon repli statique.
+          CMS_URL: ${{ secrets.CMS_URL }}
+          CMS_TOKEN: ${{ secrets.CMS_TOKEN }}
+        run: npm run build:static
+
+      - name: Choisir la cible
+        id: target
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.target }}" = "production" ]; then
+            echo "path=${{ secrets.PROD_PATH }}" >> "$GITHUB_OUTPUT"
+            echo "env=PRODUCTION" >> "$GITHUB_OUTPUT"
+          else
+            echo "path=${{ secrets.STAGING_PATH }}" >> "$GITHUB_OUTPUT"
+            echo "env=STAGING" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Charger la clé SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Déploiement rsync vers o2switch (${{ steps.target.outputs.env }})
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+          rsync -az --delete \
+            --exclude='.well-known' --exclude='cgi-bin' --exclude='.htpasswd' \
+            -e "ssh -p ${{ secrets.SSH_PORT }}" \
+            dist/ \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ steps.target.outputs.path }}/"
