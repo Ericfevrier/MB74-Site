@@ -6,7 +6,11 @@
  * Données reproduites depuis motorboat74.com/bateaux/occasion (inventaire réel).
  * Images hotlinkées depuis le site actuel (wp-content). Vider ce tableau quand il
  * n'y a pas de stock → les pages affichent un message « aucune occasion ».
+ *
+ * SOURCE : si le CMS a généré du contenu au build (GENERATED_USED_BOATS non vide),
+ * il prime ; sinon on utilise le tableau statique ci-dessous (repli, zéro régression).
  */
+import { GENERATED_USED_BOATS } from './generated/used-boats';
 
 export interface UsedBoat {
   /** Slug unique de la fiche détail : /bateaux/occasion/[slug] */
@@ -45,7 +49,7 @@ const T = (s: string) => `https://motorboat74.com/wp-content/uploads/elementor/t
 /** Image originale pleine résolution (haute netteté), ex. F('2025/09/photo.jpg'). */
 const F = (s: string) => `https://motorboat74.com/wp-content/uploads/${s}`;
 
-export const usedBoats: UsedBoat[] = [
+const STATIC_USED_BOATS: UsedBoat[] = [
   // ---------- Disponibles ----------
   {
     slug: 'heyday-wt-surf-2020',
@@ -389,6 +393,13 @@ export const usedBoats: UsedBoat[] = [
     sold: true,
   },
 ];
+
+/**
+ * Source effective : contenu CMS généré au build s'il existe, sinon le statique.
+ */
+export const usedBoats: UsedBoat[] = GENERATED_USED_BOATS.length
+  ? (GENERATED_USED_BOATS as unknown as UsedBoat[])
+  : STATIC_USED_BOATS;
 
 /** Toutes les occasions (disponibles + vendues). */
 export function allUsedBoats(): UsedBoat[] {
