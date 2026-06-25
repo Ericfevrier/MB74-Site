@@ -6,6 +6,7 @@ import { getHivernageCity } from '../data/hivernageCities';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
+import { GoogleMapCustom } from '../components/GoogleMapCustom';
 
 const SOLUTIONS = [
   { icon: ShipWheel, title: "Sortie de l'eau et essai avant stockage", desc: 'Notre équipe se déplace pour réaliser la sortie de votre bateau dans les meilleures conditions.' },
@@ -197,6 +198,10 @@ export function HivernageCityPage() {
                 Nos zones d’intervention autour {city.city.startsWith('Lac') ? `du ${city.city}` : /^[AEÉÈIOUaeiouéè]/.test(city.city) ? `d’${city.city}` : `de ${city.city}`}
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed">{city.zonesIntro}</p>
+            </div>
+            {/* Carte des ports / zones du plan d'eau (points visualisés via recherche Google Maps) */}
+            <div className="mb-10 h-[360px] sm:h-[440px] rounded-[2rem] overflow-hidden border border-gray-200 shadow-lg shadow-brand-dark/5">
+              <GoogleMapCustom address={`Ports, ${city.lake}`} light />
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {city.ports.map((p, i) => (
