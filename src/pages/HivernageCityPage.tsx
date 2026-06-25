@@ -204,9 +204,12 @@ export function HivernageCityPage() {
             </div>
             {/* Carte des zones d'intervention : 1 pin cyan par zone, nom au survol, auto-zoom */}
             {zones.length > 0 && (
-              <div className="mb-10 h-[380px] sm:h-[460px] rounded-[2rem] overflow-hidden border border-gray-200 ring-1 ring-black/5 shadow-xl shadow-brand-dark/5 bg-[#e8eef2]">
-                <ZonesMap zones={zones} ariaLabel={`Carte des zones d'intervention autour ${dePlace}`} />
-              </div>
+              <>
+                <div className="h-[380px] sm:h-[460px] rounded-[2rem] overflow-hidden border border-gray-200 ring-1 ring-black/5 shadow-xl shadow-brand-dark/5 bg-[#e8eef2]">
+                  <ZonesMap zones={zones} ariaLabel={`Carte des zones d'intervention autour ${dePlace}`} />
+                </div>
+                <p className="mb-10 mt-2 text-right text-[10px] text-gray-400">Fond de carte © OpenStreetMap, © CARTO</p>
+              </>
             )}
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {city.ports.map((p, i) => (

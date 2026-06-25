@@ -16,12 +16,11 @@ export function ZonesMap({ zones, ariaLabel }: { zones: Zone[]; ariaLabel?: stri
 
     const map = L.map(ref.current, {
       scrollWheelZoom: false,
-      attributionControl: true,
+      attributionControl: false,
       zoomControl: true,
     });
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap, &copy; CARTO',
       subdomains: 'abcd',
       maxZoom: 19,
     }).addTo(map);
