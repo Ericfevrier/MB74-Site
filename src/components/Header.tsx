@@ -119,21 +119,21 @@ export function Header() {
               {activeMenu === 'marques' && (
                 <div className="flex gap-6 justify-center">
                   {megaMenuMarques.map((item, i) => (
-                    <Link 
-                      key={i} 
-                      to={`/marque/${item.name.toLowerCase()}`} 
+                    <Link
+                      key={i}
+                      to={`/marque/${item.name.toLowerCase()}`}
                       onClick={() => setActiveMenu(null)}
-                      className="w-44 flex flex-col items-center justify-center gap-6 group/item hover:bg-white/5 px-2 py-6 rounded-3xl transition-all border border-transparent hover:border-white/10"
+                      aria-label={item.name}
+                      className="w-44 flex items-center justify-center group/item hover:bg-white/5 px-4 py-8 rounded-3xl transition-all border border-transparent hover:border-white/10"
                     >
                       <div className="h-16 flex items-center justify-center w-full px-4">
-                        <img 
-                          src={item.logo} 
-                          alt={`Logo bateau ${item.name}`} 
+                        <img
+                          src={item.logo}
+                          alt={`Logo ${item.name}`}
                           className="max-h-full max-w-full object-contain opacity-80 group-hover/item:opacity-100 group-hover/item:scale-105 transition-all duration-300"
                           referrerPolicy="no-referrer"
                         />
                       </div>
-                      <span className="font-sans font-bold text-base tracking-widest uppercase text-gray-400 group-hover/item:text-white transition-colors">{item.name}</span>
                     </Link>
                   ))}
                 </div>
@@ -248,21 +248,21 @@ export function Header() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {megaMenuMarques.map((item, idx) => (
-                  <Link 
-                    key={idx} 
+                  <Link
+                    key={idx}
                     to={`/marque/${item.name.toLowerCase()}`}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex flex-col items-center justify-center gap-3 p-4 hover:bg-white/5 transition-all rounded-2xl border border-white/5"
+                    aria-label={item.name}
+                    className="flex items-center justify-center p-5 hover:bg-white/5 transition-all rounded-2xl border border-white/5"
                   >
-                    <div className="h-8 flex items-center justify-center w-full">
-                      <img 
-                        src={item.logo} 
-                        alt={`Logo bateau ${item.name}`} 
-                        className={`max-h-full max-w-full object-contain opacity-80`}
+                    <div className="h-10 flex items-center justify-center w-full">
+                      <img
+                        src={item.logo}
+                        alt={`Logo ${item.name}`}
+                        className="max-h-full max-w-full object-contain opacity-80"
                         referrerPolicy="no-referrer"
                       />
                     </div>
-                    <span className="text-[10px] uppercase tracking-widest text-gray-300 font-bold">{item.name}</span>
                   </Link>
                 ))}
               </div>
