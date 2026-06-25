@@ -106,18 +106,21 @@ export function BrandPage() {
               <span className="bg-brand-cyan text-brand-dark px-6 py-2 rounded-full text-[12px] font-bold uppercase tracking-widest shadow-lg shadow-brand-cyan/20">
                 {role} {brand.name}
               </span>
-              <div className="h-20 md:h-28 flex items-center justify-center">
-                {brand.logoBg ? (
-                  <span className="bg-white rounded-2xl px-8 py-4 h-full flex items-center justify-center shadow-xl">
+              {brand.heroWordmark ? (
+                <div className="flex items-center justify-center gap-4 md:gap-5">
+                  <span className="bg-white rounded-2xl p-3 md:p-4 shadow-xl flex items-center justify-center flex-shrink-0">
                     <img
                       src={brand.logo}
                       alt={`Logo ${brand.name}`}
-                      className="max-h-full max-w-[150px] md:max-w-[190px] object-contain"
+                      className="h-12 md:h-[72px] w-auto object-contain"
                       fetchPriority="high"
                       referrerPolicy="no-referrer"
                     />
                   </span>
-                ) : (
+                  <span className="text-white font-bold uppercase tracking-tight leading-none text-5xl md:text-7xl">{brand.name}</span>
+                </div>
+              ) : (
+                <div className="h-20 md:h-28 flex items-center justify-center">
                   <img
                     src={brand.logo}
                     alt={`Logo ${brand.name}`}
@@ -125,8 +128,8 @@ export function BrandPage() {
                     fetchPriority="high"
                     referrerPolicy="no-referrer"
                   />
-                )}
-              </div>
+                </div>
+              )}
             </div>
             <p className="text-brand-cyan text-sm md:text-base font-bold uppercase tracking-[0.3em] mb-4">
               {brand.tagline}
