@@ -67,7 +67,7 @@ export const usedBoats: UsedBoat[] = [
       'Revêtement de sol Sea Deck Luxe et rack wake/surf',
       'Bimini et système audio deluxe avec accès USB',
     ],
-    sold: false,
+    sold: true,
   },
   {
     slug: 'super-air-nautique-220-2008',
