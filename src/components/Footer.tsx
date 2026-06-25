@@ -26,14 +26,12 @@ export function Footer() {
               Motorboat74, concessionnaire officiel de la marque Nautique et importateur de Connelly Ski en Haute-Savoie, est spécialisé dans la vente, l'hivernage et l'entretien de bateaux à moteur. Nous vous accompagnons dans tous vos projets nautiques sur le Lac d'Annecy et ses environs.
             </p>
 
-            <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/5 grayscale-[30%] hover:grayscale-0 transition-all duration-700">
-              <img 
-                src="/images/2026-p25-ext-16.jpg" 
-                alt="Bateau Motorboat" 
-                className="w-full aspect-[16/9] object-cover"
-                referrerPolicy="no-referrer"
-              />
-            </div>
+            <a href="tel:+33457572727" className="inline-flex items-center gap-3 text-white hover:text-brand-cyan transition-colors">
+              <span className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-cyan flex-shrink-0">
+                <Phone size={18} />
+              </span>
+              <span className="font-bold text-lg tracking-tight">04 57 57 27 27</span>
+            </a>
           </div>
 
           {/* Column 2: Services */}
@@ -73,7 +71,7 @@ export function Footer() {
           </div>
 
           {/* Column 4: Zones d'interventions */}
-          <div className="col-span-1 lg:col-span-3">
+          <div className="col-span-1 lg:col-span-2">
             <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Zones d'interventions</h3>
             <ul className="space-y-3">
               {[
@@ -92,7 +90,7 @@ export function Footer() {
           </div>
 
           {/* Column 5: Marques, réseaux & contact */}
-          <div className="col-span-2 lg:col-span-2 space-y-8">
+          <div className="col-span-2 lg:col-span-3 space-y-8">
             <div>
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Marques</h3>
               <div className="space-y-3">
