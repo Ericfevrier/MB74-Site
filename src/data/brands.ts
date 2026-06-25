@@ -24,6 +24,8 @@ export interface BrandData {
   logo: string;
   /** Statut commercial affiché (ex. "Concessionnaire officiel", "Importateur officiel"). Défaut : "Concessionnaire officiel". */
   role?: string;
+  /** Affiche le logo du hero sur une pastille blanche (pour les logos peu lisibles sur fond sombre). */
+  logoBg?: boolean;
   heroImage: string;
   description: string;
   tagline: string;
@@ -175,6 +177,7 @@ export const brandsData: Record<string, BrandData> = {
     fullName: "MasterCraft Boats",
     logo: "/images/mcft-70e1d427.png",
     role: "Importateur officiel",
+    logoBg: true,
     heroImage: "https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp",
     tagline: "Une exigence sans compromis",
     introImages: [

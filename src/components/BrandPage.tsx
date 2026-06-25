@@ -107,13 +107,25 @@ export function BrandPage() {
                 {role} {brand.name}
               </span>
               <div className="h-20 md:h-28 flex items-center justify-center">
-                <img
-                  src={brand.logo}
-                  alt={`Logo ${brand.name}`}
-                  className="max-h-full max-w-[250px] md:max-w-[350px] object-contain"
-                  fetchPriority="high"
-                  referrerPolicy="no-referrer"
-                />
+                {brand.logoBg ? (
+                  <span className="bg-white rounded-2xl px-8 py-4 h-full flex items-center justify-center shadow-xl">
+                    <img
+                      src={brand.logo}
+                      alt={`Logo ${brand.name}`}
+                      className="max-h-full max-w-[150px] md:max-w-[190px] object-contain"
+                      fetchPriority="high"
+                      referrerPolicy="no-referrer"
+                    />
+                  </span>
+                ) : (
+                  <img
+                    src={brand.logo}
+                    alt={`Logo ${brand.name}`}
+                    className="max-h-full max-w-[250px] md:max-w-[350px] object-contain"
+                    fetchPriority="high"
+                    referrerPolicy="no-referrer"
+                  />
+                )}
               </div>
             </div>
             <p className="text-brand-cyan text-sm md:text-base font-bold uppercase tracking-[0.3em] mb-4">
