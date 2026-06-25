@@ -37,9 +37,8 @@ const megaMenuBateaux = [
 ];
 
 // Marques affichées dans le menu (réduit à Nautique + Mastercraft pour le moment).
-// crop = recadrer sur l'emblème (logo Nautique = emblème + wordmark, on ne garde que l'emblème).
 const megaMenuMarques = [
-  { name: "Nautique", logo: "/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png", crop: true },
+  { name: "Nautique", logo: "/images/event-listing-boat-shows.png", crop: false },
   { name: "Mastercraft", logo: "/images/mcft-70e1d427.png", crop: false },
 ];
 
@@ -127,19 +126,15 @@ export function Header() {
                       aria-label={item.name}
                       className="w-44 flex items-center justify-center group/item hover:bg-white/5 px-4 py-8 rounded-3xl transition-all border border-transparent hover:border-white/10"
                     >
-                      <div className="h-16 flex items-center justify-center w-full px-4">
-                        {item.crop ? (
-                          <span className="h-16 w-16 overflow-hidden flex items-center justify-center opacity-80 group-hover/item:opacity-100 group-hover/item:scale-105 transition-all duration-300">
-                            <img src={item.logo} alt={`Logo ${item.name}`} className="h-full w-full object-cover object-left" referrerPolicy="no-referrer" />
-                          </span>
-                        ) : (
+                      <div className="h-20 flex items-center justify-center w-full">
+                        <span className="bg-white rounded-2xl h-20 w-20 flex items-center justify-center p-2.5 shadow-md group-hover/item:scale-105 transition-transform duration-300">
                           <img
                             src={item.logo}
                             alt={`Logo ${item.name}`}
-                            className="max-h-full max-w-full object-contain opacity-80 group-hover/item:opacity-100 group-hover/item:scale-105 transition-all duration-300"
+                            className="max-h-full max-w-full object-contain"
                             referrerPolicy="no-referrer"
                           />
-                        )}
+                        </span>
                       </div>
                     </Link>
                   ))}
@@ -262,19 +257,15 @@ export function Header() {
                     aria-label={item.name}
                     className="flex items-center justify-center p-5 hover:bg-white/5 transition-all rounded-2xl border border-white/5"
                   >
-                    <div className="h-10 flex items-center justify-center w-full">
-                      {item.crop ? (
-                        <span className="h-10 w-10 overflow-hidden flex items-center justify-center opacity-80">
-                          <img src={item.logo} alt={`Logo ${item.name}`} className="h-full w-full object-cover object-left" referrerPolicy="no-referrer" />
-                        </span>
-                      ) : (
+                    <div className="flex items-center justify-center w-full">
+                      <span className="bg-white rounded-xl h-16 w-16 flex items-center justify-center p-2 shadow-md">
                         <img
                           src={item.logo}
                           alt={`Logo ${item.name}`}
-                          className="max-h-full max-w-full object-contain opacity-80"
+                          className="max-h-full max-w-full object-contain"
                           referrerPolicy="no-referrer"
                         />
-                      )}
+                      </span>
                     </div>
                   </Link>
                 ))}
