@@ -62,9 +62,16 @@ export function Footer() {
             <div>
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Zones d'interventions</h3>
               <ul className="space-y-3">
-                {['Annecy', 'Aix-les-Bains', 'Thonon-les-Bains', 'Évian-les-Bains', 'Genève', 'Lac de Serre-Ponçon'].map((item) => (
-                  <li key={item}>
-                    <span className="text-[14px] font-medium">{item}</span>
+                {[
+                  { name: 'Annecy', slug: 'annecy' },
+                  { name: 'Aix-les-Bains', slug: 'aix-les-bains' },
+                  { name: 'Thonon-les-Bains', slug: 'thonon-les-bains' },
+                  { name: 'Évian-les-Bains', slug: 'evian-les-bains' },
+                  { name: 'Genève', slug: 'geneve' },
+                  { name: 'Lac de Serre-Ponçon', slug: 'lac-de-serre-poncon' },
+                ].map((item) => (
+                  <li key={item.slug}>
+                    <Link to={`/services/hivernage-bateaux/${item.slug}`} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
                   </li>
                 ))}
               </ul>
