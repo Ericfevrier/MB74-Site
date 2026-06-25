@@ -95,24 +95,23 @@ export function Footer() {
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Marques</h3>
               <div className="space-y-5">
                 {[
-                  { name: 'Nautique', slug: 'nautique', logo: '/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png', hideName: true, whiteBg: false },
-                  { name: 'MasterCraft', slug: 'mastercraft', logo: '/images/mcft-70e1d427.png', hideName: false, whiteBg: true },
+                  { name: 'Nautique', slug: 'nautique', logo: '/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png', crop: true },
+                  { name: 'MasterCraft', slug: 'mastercraft', logo: '/images/mcft-70e1d427.png', crop: false },
                 ].map((b) => (
                   <Link
                     key={b.slug}
                     to={`/marque/${b.slug}`}
                     className="group flex items-center gap-4"
                   >
-                    {b.whiteBg ? (
-                      <span className="bg-white rounded-lg flex items-center justify-center px-3 py-2 h-12 flex-shrink-0">
-                        <img src={b.logo} alt={`Logo ${b.name}`} className="h-8 w-auto max-w-[120px] object-contain" referrerPolicy="no-referrer" />
-                      </span>
-                    ) : (
-                      <img src={b.logo} alt={`Logo ${b.name}`} className="h-12 w-auto max-w-[150px] object-contain opacity-90 group-hover:opacity-100 transition" referrerPolicy="no-referrer" />
-                    )}
-                    {!b.hideName && (
-                      <span className="text-white font-bold uppercase tracking-tight group-hover:text-brand-cyan transition-colors">{b.name}</span>
-                    )}
+                    <span className="bg-white rounded-lg h-12 w-14 flex items-center justify-center overflow-hidden flex-shrink-0">
+                      <img
+                        src={b.logo}
+                        alt={`Logo ${b.name}`}
+                        className={b.crop ? 'h-full w-full object-cover object-left' : 'h-9 w-auto max-w-[110px] object-contain'}
+                        referrerPolicy="no-referrer"
+                      />
+                    </span>
+                    <span className="text-white font-bold uppercase tracking-tight group-hover:text-brand-cyan transition-colors">{b.name}</span>
                   </Link>
                 ))}
               </div>
