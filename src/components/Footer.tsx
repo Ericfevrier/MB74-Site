@@ -95,16 +95,24 @@ export function Footer() {
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Marques</h3>
               <div className="space-y-5">
                 {[
-                  { name: 'Nautique', slug: 'nautique', logo: '/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png' },
-                  { name: 'MasterCraft', slug: 'mastercraft', logo: '/images/mcft-70e1d427.png' },
+                  { name: 'Nautique', slug: 'nautique', logo: '/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png', hideName: true, whiteBg: false },
+                  { name: 'MasterCraft', slug: 'mastercraft', logo: '/images/mcft-70e1d427.png', hideName: false, whiteBg: true },
                 ].map((b) => (
                   <Link
                     key={b.slug}
                     to={`/marque/${b.slug}`}
                     className="group flex items-center gap-4"
                   >
-                    <img src={b.logo} alt={`Logo ${b.name}`} className="h-11 w-auto max-w-[68px] object-contain opacity-90 group-hover:opacity-100 transition" referrerPolicy="no-referrer" />
-                    <span className="text-white font-bold uppercase tracking-tight group-hover:text-brand-cyan transition-colors">{b.name}</span>
+                    {b.whiteBg ? (
+                      <span className="bg-white rounded-lg flex items-center justify-center px-3 py-2 h-12 flex-shrink-0">
+                        <img src={b.logo} alt={`Logo ${b.name}`} className="h-8 w-auto max-w-[120px] object-contain" referrerPolicy="no-referrer" />
+                      </span>
+                    ) : (
+                      <img src={b.logo} alt={`Logo ${b.name}`} className="h-12 w-auto max-w-[150px] object-contain opacity-90 group-hover:opacity-100 transition" referrerPolicy="no-referrer" />
+                    )}
+                    {!b.hideName && (
+                      <span className="text-white font-bold uppercase tracking-tight group-hover:text-brand-cyan transition-colors">{b.name}</span>
+                    )}
                   </Link>
                 ))}
               </div>
