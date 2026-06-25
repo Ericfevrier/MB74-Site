@@ -117,25 +117,23 @@ export function Header() {
               <div className="absolute top-0 inset-x-0 h-1 bg-brand-cyan"></div>
               
               {activeMenu === 'marques' && (
-                <div className="flex gap-6 justify-center">
+                <div className="flex gap-4 justify-center">
                   {megaMenuMarques.map((item, i) => (
                     <Link
                       key={i}
                       to={`/marque/${item.name.toLowerCase()}`}
                       onClick={() => setActiveMenu(null)}
                       aria-label={item.name}
-                      className="w-44 flex items-center justify-center group/item hover:bg-white/5 px-4 py-8 rounded-3xl transition-all border border-transparent hover:border-white/10"
+                      className="flex items-center justify-center group/item hover:bg-white/5 p-2.5 rounded-2xl transition-all border border-transparent hover:border-white/10"
                     >
-                      <div className="h-20 flex items-center justify-center w-full">
-                        <span className="bg-white rounded-2xl h-20 w-20 flex items-center justify-center p-2.5 shadow-md group-hover/item:scale-105 transition-transform duration-300">
-                          <img
-                            src={item.logo}
-                            alt={`Logo ${item.name}`}
-                            className="max-h-full max-w-full object-contain"
-                            referrerPolicy="no-referrer"
-                          />
-                        </span>
-                      </div>
+                      <span className="bg-white rounded-2xl h-28 w-28 flex items-center justify-center p-3 shadow-md group-hover/item:scale-105 transition-transform duration-300">
+                        <img
+                          src={item.logo}
+                          alt={`Logo ${item.name}`}
+                          className="max-h-full max-w-full object-contain"
+                          referrerPolicy="no-referrer"
+                        />
+                      </span>
                     </Link>
                   ))}
                 </div>
