@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Wrench, LifeBuoy, Truck, Sofa, Caravan, Shield, Anchor, ArrowRight } from 'lucide-react';
 import { services, hivernageCross } from '../data/services';
 

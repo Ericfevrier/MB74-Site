@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, CalendarDays, Clock } from 'lucide-react';
 import { SITE } from '../data/site';

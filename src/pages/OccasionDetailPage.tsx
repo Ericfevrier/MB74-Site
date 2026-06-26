@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import {
   ArrowRight, Phone, Calendar, Users, Gauge, Clock, Ruler, MapPin, Check, ChevronDown,

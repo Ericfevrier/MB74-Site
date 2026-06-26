@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ArrowRight } from 'lucide-react';
 import { SITE } from '../data/site';
 import { ArticleLayout, TocItem, InternalLink } from '../components/blog/ArticleLayout';

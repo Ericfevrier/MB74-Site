@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Navigate, Link } from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { Phone, ArrowRight, ShipWheel, Warehouse, Wrench, Anchor, MapPin, ShieldCheck, CheckCircle2, Sofa, Truck, Caravan, LifeBuoy } from 'lucide-react';
 import { getHivernageCity } from '../data/hivernageCities';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ArrowRight, Phone, Calendar, Clock, Gauge, Users, Ruler } from 'lucide-react';
 import { SITE } from '../data/site';
 import { UsedBoat } from '../data/usedBoats';

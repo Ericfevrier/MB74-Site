@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Phone, MapPin, Mail, Send, CheckCircle2 } from 'lucide-react';
 import { SITE } from '../../data/site';
 import { GoogleMapCustom } from '../GoogleMapCustom';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Sparkles, Tag, ShieldCheck, Waves, Wallet, ChevronRight } from 'lucide-react';
 import { SITE } from '../data/site';
