@@ -6,7 +6,7 @@ import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { availableUsedBoats, soldUsedBoats } from '../data/usedBoats';
-import { cmsLogin, fetchUsedBoats } from '../lib/cms';
+import { serverCms, fetchUsedBoats } from '../lib/cms';
 
 const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
 
@@ -15,20 +15,16 @@ const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
  * Repli sur les données statiques si le CMS est absent/injoignable.
  */
 export async function loader() {
-  const url = process.env.CMS_URL;
-  if (url) {
+  const cfg = await serverCms();
+  if (cfg) {
     try {
-      let token = process.env.CMS_TOKEN;
-      if (!token && process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
-        token = await cmsLogin(url, process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD);
-      }
-      const all = await fetchUsedBoats({ url, token });
-      return { boats: all.filter((b) => !b.sold), soldCount: all.filter((b) => b.sold).length, source: 'cms' };
+      const all = await fetchUsedBoats(cfg);
+      return { boats: all.filter((b) => !b.sold), soldCount: all.filter((b) => b.sold).length };
     } catch {
       /* repli statique ci-dessous */
     }
   }
-  return { boats: availableUsedBoats(), soldCount: soldUsedBoats().length, source: 'static' };
+  return { boats: availableUsedBoats(), soldCount: soldUsedBoats().length };
 }
 
 export function meta() {

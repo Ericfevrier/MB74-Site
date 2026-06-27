@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
-import { getUsedBoatBySlug, allUsedBoats, availableUsedBoats } from '../data/usedBoats';
+import { getUsedBoatBySlug, allUsedBoats, availableUsedBoats, type UsedBoat } from '../data/usedBoats';
 import { getBrandModels } from '../data/boatBrands';
 import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
@@ -17,9 +17,9 @@ const firstInt = (s?: string): number | undefined => {
   return m ? parseInt(m[0].replace(/\s/g, ''), 10) : undefined;
 };
 
-export function OccasionDetailPage() {
+export function OccasionDetailPage({ boat: boatProp, related: relatedProp }: { boat?: UsedBoat | null; related?: UsedBoat[] } = {}) {
   const { slug } = useParams<{ slug: string }>();
-  const boat = getUsedBoatBySlug(slug);
+  const boat = boatProp !== undefined ? boatProp : getUsedBoatBySlug(slug);
   const [activeImg, setActiveImg] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
@@ -36,9 +36,12 @@ export function OccasionDetailPage() {
   const heroAbs = boat.image.startsWith('http') ? boat.image : `${SITE.url}${boat.image}`;
 
   // Bateaux similaires (même marque), repli sur les autres disponibles.
-  let related = allUsedBoats().filter((b) => b.slug !== boat.slug && b.brandId === boat.brandId);
-  if (related.length === 0) related = availableUsedBoats().filter((b) => b.slug !== boat.slug);
-  related = related.slice(0, 3);
+  let related = relatedProp;
+  if (!related) {
+    related = allUsedBoats().filter((b) => b.slug !== boat.slug && b.brandId === boat.brandId);
+    if (related.length === 0) related = availableUsedBoats().filter((b) => b.slug !== boat.slug);
+    related = related.slice(0, 3);
+  }
 
   const keySpecs = [
     boat.year && { Icon: Calendar, label: 'Millésime', value: boat.year },

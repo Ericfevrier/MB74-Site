@@ -6,12 +6,16 @@ import { GENERATED_MODELS } from './generated/boat-models';
  * Fusion CMS : surcharge le sous-ensemble éditorial d'un modèle (nom, intro, galerie,
  * specs, points forts, FAQ, SEO) en gardant tout le structurel du code (hero, jalons, options…).
  */
-function mergeModels(brandId: string, base: Record<string, NautiqueModel>): Record<string, NautiqueModel> {
-  if (!Array.isArray(GENERATED_MODELS) || !GENERATED_MODELS.length) return base;
+function mergeModels(
+  brandId: string,
+  base: Record<string, NautiqueModel>,
+  editorial: unknown[] = GENERATED_MODELS,
+): Record<string, NautiqueModel> {
+  if (!Array.isArray(editorial) || !editorial.length) return base;
   const ne = (v: unknown) =>
     v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && v.length === 0);
   const out: Record<string, NautiqueModel> = { ...base };
-  for (const e of GENERATED_MODELS as any[]) {
+  for (const e of editorial as any[]) {
     if (e.brand !== brandId || !out[e.slug]) continue;
     out[e.slug] = {
       ...out[e.slug],
@@ -50,4 +54,22 @@ export const BRAND_MODELS: Record<string, BrandModels> = {
 
 export function getBrandModels(brandId?: string): BrandModels | undefined {
   return brandId ? BRAND_MODELS[brandId.toLowerCase()] : undefined;
+}
+
+/** Bases éditables par marque (avant fusion), pour la fusion live côté loader SSR. */
+const MODEL_BASES: Record<string, Record<string, NautiqueModel>> = {
+  nautique: nautiqueModels,
+  mastercraft: mastercraftModels,
+};
+
+/** Modèle fusionné avec l'éditorial LIVE du CMS (loader SSR). `undefined` si introuvable. */
+export function getModelLive(
+  brandId: string | undefined,
+  modelId: string | undefined,
+  editorial: unknown[],
+): NautiqueModel | undefined {
+  const id = brandId?.toLowerCase();
+  const base = id ? MODEL_BASES[id] : undefined;
+  if (!base || !modelId) return undefined;
+  return mergeModels(id!, base, editorial)[modelId];
 }

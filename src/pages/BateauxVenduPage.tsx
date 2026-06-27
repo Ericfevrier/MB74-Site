@@ -4,14 +4,14 @@ import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
-import { soldUsedBoats } from '../data/usedBoats';
+import { soldUsedBoats, type UsedBoat } from '../data/usedBoats';
 import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 
 const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
 
-export function BateauxVenduPage() {
-  const boats = soldUsedBoats();
+export function BateauxVenduPage({ boats: boatsProp }: { boats?: UsedBoat[] } = {}) {
+  const boats = boatsProp ?? soldUsedBoats();
   const canonical = `${SITE.url}/bateaux/vendu/`;
 
   // Aucun vendu → on renvoie vers le stock disponible plutôt que d'afficher une page vide.

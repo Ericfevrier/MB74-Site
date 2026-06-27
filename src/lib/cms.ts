@@ -56,6 +56,25 @@ export function mapUsedBoat(r: Record<string, any>): UsedBoat {
   };
 }
 
+/**
+ * Config CMS côté SERVEUR (loaders), avec token mis en cache.
+ * Prod : CMS_TOKEN (token lecture seule). Dev : login admin (cache ~10 min).
+ * Renvoie null si CMS_URL absent → le loader retombe sur les données statiques.
+ */
+let _cache: { token?: string; at: number } | null = null;
+export async function serverCms(): Promise<CmsConfig | null> {
+  const url = process.env.CMS_URL;
+  if (!url) return null;
+  if (process.env.CMS_TOKEN) return { url, token: process.env.CMS_TOKEN };
+  if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
+    if (!_cache || Date.now() - _cache.at > 10 * 60 * 1000) {
+      _cache = { token: await cmsLogin(url, process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD), at: Date.now() };
+    }
+    return { url, token: _cache.token };
+  }
+  return { url };
+}
+
 /** Récupère les occasions publiées depuis le CMS, mappées. */
 export async function fetchUsedBoats(cfg: CmsConfig): Promise<UsedBoat[]> {
   const rows = await cmsFetch<Record<string, any>[]>(

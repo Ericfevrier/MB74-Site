@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { ArrowRight, CalendarDays, Clock } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
-import { BLOG_CATEGORIES, BLOG_ARTICLES, categoryName } from '../data/blog';
+import { BLOG_CATEGORIES, BLOG_ARTICLES, categoryName, type BlogArticle, type BlogCategory } from '../data/blog';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 
 const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
@@ -12,13 +12,15 @@ const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.w
 const fmtDate = (iso: string) =>
   new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
-export function BlogHubPage() {
+export function BlogHubPage({ articles: articlesProp, categories: categoriesProp }: { articles?: BlogArticle[]; categories?: BlogCategory[] } = {}) {
   const canonical = `${SITE.url}/blog/`;
   const [active, setActive] = useState<string | null>(null);
+  const allArticles = articlesProp ?? BLOG_ARTICLES;
+  const categories = categoriesProp ?? BLOG_CATEGORIES;
 
   const articles = useMemo(
-    () => (active ? BLOG_ARTICLES.filter((a) => a.category === active) : BLOG_ARTICLES),
-    [active],
+    () => (active ? allArticles.filter((a) => a.category === active) : allArticles),
+    [active, allArticles],
   );
 
   const schema = [
@@ -28,7 +30,7 @@ export function BlogHubPage() {
       name: `Blog ${SITE.name}`,
       url: canonical,
       description: 'Conseils, guides et actualités nautiques par Motor Boat 74, près du lac d’Annecy.',
-      blogPost: BLOG_ARTICLES.map((a) => ({
+      blogPost: allArticles.map((a) => ({
         '@type': 'BlogPosting',
         headline: a.title,
         url: `${SITE.url}${a.path}/`,
@@ -89,7 +91,7 @@ export function BlogHubPage() {
           >
             Tous les articles
           </button>
-          {BLOG_CATEGORIES.map((c) => (
+          {categories.map((c) => (
             <button
               key={c.slug}
               onClick={() => setActive(c.slug)}

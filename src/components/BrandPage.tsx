@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
 import { ArrowRight, ChevronRight, ShieldCheck, Waves, Wallet, Wrench } from 'lucide-react';
-import { brandsData } from '../data/brands';
+import { brandsData, type BrandData } from '../data/brands';
 import { getBrandModels } from '../data/boatBrands';
 import { ModelComparison } from './ModelComparison';
 import { UsedBoatsSection } from './UsedBoatsSection';
@@ -46,9 +46,9 @@ function AngleSlider({ images, alt }: { images: string[]; alt: string }) {
   );
 }
 
-export function BrandPage() {
+export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {}) {
   const { id } = useParams<{ id: string }>();
-  const brand = id ? brandsData[id.toLowerCase()] : null;
+  const brand = brandProp !== undefined ? brandProp : id ? brandsData[id.toLowerCase()] : null;
   const catalogStudio = getBrandModels(id)?.catalogStudio;
 
   useEffect(() => {

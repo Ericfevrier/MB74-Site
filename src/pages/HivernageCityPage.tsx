@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, Navigate, Link } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { Phone, ArrowRight, ShipWheel, Warehouse, Wrench, Anchor, MapPin, ShieldCheck, CheckCircle2, Sofa, Truck, Caravan, LifeBuoy } from 'lucide-react';
-import { getHivernageCity } from '../data/hivernageCities';
+import { getHivernageCity, type HivernageCity } from '../data/hivernageCities';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
@@ -16,9 +16,9 @@ const SOLUTIONS = [
   { icon: Anchor, title: "Remise en route et mise à l'eau", desc: 'Votre bateau est contrôlé et prêt à naviguer sur le lieu de votre choix.' },
 ];
 
-export function HivernageCityPage() {
+export function HivernageCityPage({ city: cityProp }: { city?: HivernageCity | null } = {}) {
   const { slug } = useParams<{ slug: string }>();
-  const city = slug ? getHivernageCity(slug) : undefined;
+  const city = cityProp !== undefined ? cityProp : slug ? getHivernageCity(slug) : undefined;
   if (!city) return <Navigate to="/hivernage-stockage-bateau" replace />;
 
   const canonical = `${SITE.url}/services/hivernage-bateaux/${city.slug}/`;

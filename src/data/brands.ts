@@ -38,7 +38,7 @@ export interface BrandData {
   introImages?: string[];
 }
 
-const STATIC_BRANDS_DATA: Record<string, BrandData> = {
+export const STATIC_BRANDS_DATA: Record<string, BrandData> = {
   nautique: {
     id: "nautique",
     name: "Nautique",
@@ -324,7 +324,7 @@ const STATIC_BRANDS_DATA: Record<string, BrandData> = {
 };
 
 /** Fusion : le CMS surcharge les champs éditoriaux ; le code garde le structurel (modèles, comparatifs, introImages…). */
-function mergeBrands(base: Record<string, BrandData>, editorial: unknown[]): Record<string, BrandData> {
+export function mergeBrands(base: Record<string, BrandData>, editorial: unknown[]): Record<string, BrandData> {
   if (!editorial || !editorial.length) return base;
   const ne = (v: unknown) => v !== undefined && v !== null && v !== '';
   const out: Record<string, BrandData> = { ...base };

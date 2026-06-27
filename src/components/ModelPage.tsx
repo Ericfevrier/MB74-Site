@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Breadcrumb } from './Breadcrumb';
 import { getBrandModels } from '../data/boatBrands';
+import type { NautiqueModel } from '../data/nautiqueModels';
 import { usedBoatsForModel } from '../data/usedBoats';
 import { SITE } from '../data/site';
 import { ServiceContactBlock } from './services/ServiceContactBlock';
@@ -18,10 +19,10 @@ const GROUP_ICON: Record<string, React.ComponentType<{ size?: number; className?
   Performance: Gauge,
 };
 
-export function ModelPage() {
+export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null } = {}) {
   const { brandId, modelId } = useParams<{ brandId: string; modelId: string }>();
   const brand = getBrandModels(brandId);
-  const model = brand && modelId ? brand.models[modelId] : undefined;
+  const model = modelProp !== undefined ? modelProp ?? undefined : brand && modelId ? brand.models[modelId] : undefined;
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [openOpt, setOpenOpt] = useState<number | null>(0);
