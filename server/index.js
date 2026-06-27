@@ -1,37 +1,81 @@
 /**
- * Serveur de production Motor Boat 74 — destiné à l'hébergement Node.js o2switch.
+ * Serveur de production Motor Boat 74 — app Node.js (SSR React Router v7) pour o2switch.
  *
  * Rôles :
- *   1. Servir le build statique de Vite (dossier ../dist)
- *   2. Exposer les endpoints d'envoi des formulaires (contact + hivernage)
- *   3. Renvoyer index.html pour toutes les routes SPA (react-router)
+ *   1. Servir les assets client du build SSR (build/client)
+ *   2. Exposer les endpoints formulaires (contact + hivernage) :
+ *        → persistance dans Directus (collection contact_submissions)
+ *        → envoi e-mail (nodemailer)  ── les deux sont indépendants/résilients
+ *   3. Déléguer TOUT le rendu des pages au handler React Router (SSR + loaders live)
  *
  * o2switch (Phusion Passenger) injecte le port via process.env.PORT.
+ * Dev : utiliser plutôt `npm run dev:ssr`. Ce serveur attend un build (`npm run build:ssr`).
  */
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
+import { createRequestHandler } from '@react-router/express';
 
 dotenv.config({ path: '.env.local' });
 dotenv.config(); // .env en repli
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const distDir = path.resolve(__dirname, '..', 'dist');
+const rootDir = path.resolve(__dirname, '..');
+const clientDir = path.join(rootDir, 'build', 'client');
+const serverBuildPath = path.join(rootDir, 'build', 'server', 'index.js');
 
 const app = express();
 app.disable('x-powered-by');
-app.use(express.json({ limit: '1mb' }));
-app.use(express.urlencoded({ extended: true }));
+app.set('trust proxy', true);
+
+/* ------------------------------------------------------------------ */
+/*  Directus (persistance des soumissions)                            */
+/* ------------------------------------------------------------------ */
+
+const CMS_URL = process.env.CMS_URL;
+// Token d'écriture : idéalement un token dédié avec droit "create" sur contact_submissions.
+const CMS_WRITE_TOKEN = process.env.CMS_WRITE_TOKEN || process.env.CMS_TOKEN;
+
+let _adminTok = null;
+let _adminAt = 0;
+async function cmsToken() {
+  if (CMS_WRITE_TOKEN) return CMS_WRITE_TOKEN;
+  if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
+    if (!_adminTok || Date.now() - _adminAt > 10 * 60 * 1000) {
+      const r = await fetch(`${CMS_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD }),
+      });
+      if (!r.ok) throw new Error(`CMS login -> ${r.status}`);
+      _adminTok = (await r.json()).data.access_token;
+      _adminAt = Date.now();
+    }
+    return _adminTok;
+  }
+  return null;
+}
+
+/** Crée un enregistrement dans contact_submissions. Lève en cas d'échec (géré par l'appelant). */
+async function saveSubmission(record) {
+  if (!CMS_URL) return { stored: false, reason: 'no-cms' };
+  const token = await cmsToken();
+  const r = await fetch(`${CMS_URL}/items/contact_submissions`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+    body: JSON.stringify(record),
+  });
+  if (!r.ok) throw new Error(`CMS create -> ${r.status} ${await r.text()}`);
+  return { stored: true };
+}
 
 /* ------------------------------------------------------------------ */
 /*  E-mail (nodemailer)                                               */
 /* ------------------------------------------------------------------ */
 
-const mailEnabled = Boolean(
-  process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS,
-);
+const mailEnabled = Boolean(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
 
 const transporter = mailEnabled
   ? nodemailer.createTransport({
@@ -66,53 +110,63 @@ async function sendMail({ subject, fields, replyTo }) {
     .join('\n');
 
   if (!transporter) {
-    // SMTP non configuré : on journalise au lieu d'échouer (utile en dev).
     console.log(`[mail simulé] ${subject}\n${text}\n`);
     return { simulated: true };
   }
-
-  await transporter.sendMail({
-    from: MAIL_FROM,
-    to: MAIL_TO,
-    replyTo: replyTo || MAIL_FROM,
-    subject,
-    text,
-    html,
-  });
+  await transporter.sendMail({ from: MAIL_FROM, to: MAIL_TO, replyTo: replyTo || MAIL_FROM, subject, text, html });
   return { simulated: false };
+}
+
+/**
+ * Traite une soumission : persiste dans Directus ET envoie l'e-mail, indépendamment.
+ * Réussit si AU MOINS un canal aboutit ; échoue seulement si les deux échouent.
+ */
+async function handleSubmission(res, { record, subject, fields, replyTo }) {
+  const [store, mail] = await Promise.allSettled([
+    saveSubmission(record),
+    sendMail({ subject, fields, replyTo }),
+  ]);
+  if (store.status === 'rejected') console.error('Persistance CMS échouée:', store.reason?.message || store.reason);
+  if (mail.status === 'rejected') console.error('Envoi e-mail échoué:', mail.reason?.message || mail.reason);
+
+  const stored = store.status === 'fulfilled' && store.value?.stored;
+  const mailed = mail.status === 'fulfilled';
+  if (!stored && !mailed) {
+    return res.status(502).json({ ok: false, error: "L'envoi a échoué, merci de réessayer ou de nous appeler." });
+  }
+  res.json({ ok: true, stored: !!stored, mailed });
 }
 
 /* ------------------------------------------------------------------ */
 /*  API                                                               */
 /* ------------------------------------------------------------------ */
 
+app.use('/api', express.json({ limit: '1mb' }));
+app.use('/api', express.urlencoded({ extended: true }));
+
 app.get('/api/health', (_req, res) => {
-  res.json({ ok: true, mailEnabled });
+  res.json({ ok: true, mailEnabled, cms: Boolean(CMS_URL) });
 });
 
-// Formulaire de contact (page d'accueil)
+// Formulaire de contact (toutes pages)
 app.post('/api/contact', async (req, res) => {
   const { nom, prenom, tel, email, message, sujet } = req.body || {};
   if (!nom || !email || !message) {
     return res.status(400).json({ ok: false, error: 'Champs requis manquants.' });
   }
-  try {
-    const fields = { Nom: nom };
-    if (prenom) fields['Prénom'] = prenom;
-    fields.Email = email;
-    if (tel) fields['Téléphone'] = tel;
-    if (sujet) fields.Sujet = sujet;
-    fields.Message = message;
-    const r = await sendMail({
-      subject: sujet ? `Contact — ${sujet} — ${nom}` : `Nouveau message de contact — ${nom}`,
-      fields,
-      replyTo: email,
-    });
-    res.json({ ok: true, ...r });
-  } catch (err) {
-    console.error('Erreur envoi contact:', err);
-    res.status(500).json({ ok: false, error: "L'envoi a échoué." });
-  }
+  const fullName = [prenom, nom].filter(Boolean).join(' ').trim();
+  const sourcePage = req.body?.source_page || req.get('referer') || '';
+  const fields = { Nom: fullName };
+  fields.Email = email;
+  if (tel) fields['Téléphone'] = tel;
+  if (sujet) fields.Sujet = sujet;
+  fields.Message = message;
+  await handleSubmission(res, {
+    record: { nom: fullName, email, tel: tel || null, subject: sujet || 'Contact', message, source_page: sourcePage },
+    subject: sujet ? `Contact — ${sujet} — ${fullName}` : `Nouveau message de contact — ${fullName}`,
+    fields,
+    replyTo: email,
+  });
 });
 
 // Formulaire devis hivernage / stockage
@@ -121,37 +175,31 @@ app.post('/api/hivernage', async (req, res) => {
   if (!nom || !email) {
     return res.status(400).json({ ok: false, error: 'Champs requis manquants.' });
   }
-  try {
-    const r = await sendMail({
-      subject: `Demande de devis hivernage — ${nom}`,
-      fields: {
-        Nom: nom,
-        Téléphone: tel || '—',
-        Email: email,
-        'Modèle de bateau': modele || '—',
-        Formule: formule || '—',
-      },
-      replyTo: email,
-    });
-    res.json({ ok: true, ...r });
-  } catch (err) {
-    console.error('Erreur envoi hivernage:', err);
-    res.status(500).json({ ok: false, error: "L'envoi a échoué." });
-  }
+  const sourcePage = req.body?.source_page || req.get('referer') || '';
+  const msg = [modele && `Modèle : ${modele}`, formule && `Formule : ${formule}`].filter(Boolean).join(' — ') || '—';
+  await handleSubmission(res, {
+    record: { nom, email, tel: tel || null, subject: 'Devis hivernage', message: msg, source_page: sourcePage },
+    subject: `Demande de devis hivernage — ${nom}`,
+    fields: { Nom: nom, Téléphone: tel || '—', Email: email, 'Modèle de bateau': modele || '—', Formule: formule || '—' },
+    replyTo: email,
+  });
 });
 
 /* ------------------------------------------------------------------ */
-/*  Fichiers statiques + fallback SPA                                 */
+/*  Assets client + rendu SSR (React Router)                          */
 /* ------------------------------------------------------------------ */
 
-app.use(express.static(distDir, { index: false, maxAge: '1y' }));
+// Assets fingerprintés → cache immuable ; autres fichiers publics → cache court.
+app.use('/assets', express.static(path.join(clientDir, 'assets'), { immutable: true, maxAge: '1y' }));
+app.use(express.static(clientDir, { maxAge: '1h', index: false }));
 
-// Toute autre route renvoie l'app React (react-router gère le routage).
-app.get('*', (_req, res) => {
-  res.sendFile(path.join(distDir, 'index.html'));
-});
+const build = await import(serverBuildPath);
+app.all('*', createRequestHandler({ build, mode: process.env.NODE_ENV || 'production' }));
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Motor Boat 74 — serveur démarré sur le port ${port} (mail: ${mailEnabled ? 'activé' : 'simulé'})`);
+  console.log(
+    `Motor Boat 74 — SSR démarré sur le port ${port} ` +
+      `(mail: ${mailEnabled ? 'activé' : 'simulé'}, cms: ${CMS_URL ? 'connecté' : 'non configuré'})`,
+  );
 });
