@@ -44,6 +44,15 @@ jobs:
           cp -r server deploy-bundle/server
           cp package.json package-lock.json deploy-bundle/
           cp .env.example deploy-bundle/ 2>/dev/null || true
+          # Liens symboliques pour servir les STATIQUES via Apache (et non l'app Node).
+          # o2switch sert directement les fichiers existants dans la racine du document ;
+          # ça contourne Passenger et son 429 sur les rafales HTTP/2.
+          ln -s build/client/assets deploy-bundle/assets
+          ln -s build/client/images deploy-bundle/images
+          ln -s build/client/favicon-64.png deploy-bundle/favicon-64.png
+          ln -s build/client/apple-touch-icon.png deploy-bundle/apple-touch-icon.png
+          ln -s build/client/robots.txt deploy-bundle/robots.txt
+          ln -s build/client/sitemap.xml deploy-bundle/sitemap.xml
 
       - name: Publier sur la branche deploy
         run: |
