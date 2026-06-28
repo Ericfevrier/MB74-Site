@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
+import { pageMeta } from '../lib/meta';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
 import {
   Wrench,
   Zap,
@@ -71,6 +72,36 @@ const FAQS = [
   },
 ];
 
+export function depannageMeta() {
+  const canonical = `${SITE.url}/depannage`;
+  return pageMeta({
+    title: 'Dépannage Bateau Lac d’Annecy 7j/7 | Motor Boat 74',
+    description:
+      'Dépannage de bateau sur le lac d’Annecy : intervention rapide 7j/7 (30-60 min) avec bateau-atelier équipé, réparation à flot, remorquage. Appelez Motor Boat 74.',
+    canonical,
+    image: `${SITE.url}/images/services/depannage.webp`,
+    robots: 'index, follow, max-image-preview:large',
+    ogDescription:
+      'Intervention rapide 7j/7 sur le lac d’Annecy : panne moteur, batterie, électrique, remorquage. Bateau-atelier équipé.',
+    geo: { region: 'FR-74', placename: "Lac d'Annecy, Haute-Savoie" },
+    jsonLd: [
+      serviceSchema({
+        name: 'Dépannage de bateau sur le Lac d’Annecy',
+        serviceType: 'Dépannage, assistance et remorquage de bateau',
+        url: canonical,
+        description:
+          "Dépannage de bateau 7j/7 sur le lac d'Annecy : intervention rapide à flot grâce à un bateau-atelier équipé (panne moteur, batterie, électrique), remorquage et assistance.",
+      }),
+      faqSchema(FAQS),
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Services', url: `${SITE.url}/services` },
+        { name: 'Dépannage' },
+      ]),
+    ],
+  });
+}
+
 export function DepannagePage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -113,79 +144,12 @@ export function DepannagePage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const canonical = `${SITE.url}/depannage`;
-  const business = {
-    '@type': 'LocalBusiness',
-    '@id': `${SITE.url}/#business`,
-    name: SITE.name,
-    telephone: SITE.phoneHref.replace('tel:', ''),
-    email: SITE.email,
-    url: SITE.url,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: SITE.addressStreet,
-      postalCode: SITE.addressPostal,
-      addressLocality: SITE.addressLocality,
-      addressRegion: SITE.addressRegion,
-      addressCountry: SITE.addressCountry,
-    },
-  };
-  const schemaService = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: 'Dépannage de bateau sur le Lac d’Annecy',
-    serviceType: 'Dépannage, assistance et remorquage de bateau',
-    provider: business,
-    areaServed: [
-      { '@type': 'Place', name: "Lac d'Annecy" },
-      { '@type': 'AdministrativeArea', name: 'Haute-Savoie' },
-    ],
-    url: canonical,
-    description:
-      "Dépannage de bateau 7j/7 sur le lac d'Annecy : intervention rapide à flot grâce à un bateau-atelier équipé (panne moteur, batterie, électrique), remorquage et assistance.",
-  };
-  const schemaFAQ = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQS.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
-  };
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE.url}/services` },
-      { '@type': 'ListItem', position: 3, name: 'Dépannage' },
-    ],
-  };
-
   const inputCls =
     'w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-brand-dark focus:bg-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 placeholder:text-gray-400 transition font-medium';
   const labelCls = 'block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2';
 
   return (
     <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
-      <Helmet>
-        <title>Dépannage Bateau Lac d’Annecy 7j/7 | Motor Boat 74</title>
-        <meta name="description" content="Dépannage de bateau sur le lac d’Annecy : intervention rapide 7j/7 (30-60 min) avec bateau-atelier équipé, réparation à flot, remorquage. Appelez Motor Boat 74." />
-        <link rel="canonical" href={canonical} />
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta name="geo.region" content="FR-74" />
-        <meta name="geo.placename" content="Lac d'Annecy, Haute-Savoie" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Dépannage Bateau Lac d’Annecy 7j/7 | Motor Boat 74" />
-        <meta property="og:description" content="Intervention rapide 7j/7 sur le lac d’Annecy : panne moteur, batterie, électrique, remorquage. Bateau-atelier équipé." />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={`${SITE.url}/images/services/depannage.webp`} />
-        <script type="application/ld+json">{JSON.stringify(schemaService)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
-
       {/* Mobile sticky CTA, appel d'urgence */}
       <div className="lg:hidden fixed bottom-6 inset-x-0 mx-auto px-6 z-50 pointer-events-none">
         <a

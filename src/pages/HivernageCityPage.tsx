@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams, Navigate, Link } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { Phone, ArrowRight, ShipWheel, Warehouse, Wrench, Anchor, MapPin, ShieldCheck, CheckCircle2, Sofa, Truck, Caravan, LifeBuoy } from 'lucide-react';
 import { getHivernageCity, type HivernageCity } from '../data/hivernageCities';
 import { SITE } from '../data/site';
@@ -8,6 +7,37 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { ZonesMap } from '../components/ZonesMap';
 import { getZones } from '../data/hivernageZones';
+import { pageMeta } from '../lib/meta';
+import { businessNode, breadcrumbSchema } from '../lib/schema';
+
+export function cityPageMeta({ data, params }: { data?: { city?: HivernageCity } | null; params: { slug?: string } }) {
+  const city = data?.city ?? (params.slug ? getHivernageCity(params.slug) : undefined);
+  if (!city) return [{ title: `Hivernage & stockage de bateau | ${SITE.name}` }];
+  const canonical = `${SITE.url}/services/hivernage-bateaux/${city.slug}/`;
+  return pageMeta({
+    title: city.metaTitle,
+    description: city.metaDescription,
+    canonical,
+    image: `${SITE.url}${city.hero}`,
+    geo: { region: 'FR-74', placename: `${city.city}, Haute-Savoie` },
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: `Hivernage et stockage de bateaux, ${city.city}`,
+        serviceType: 'Hivernage et stockage de bateau',
+        description: city.metaDescription,
+        areaServed: { '@type': 'Place', name: city.city },
+        provider: businessNode,
+      },
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Hivernage / Stockage', url: `${SITE.url}/hivernage-stockage-bateau` },
+        { name: city.city, url: canonical },
+      ]),
+    ],
+  });
+}
 
 const SOLUTIONS = [
   { icon: ShipWheel, title: "Sortie de l'eau et essai avant stockage", desc: 'Notre équipe se déplace pour réaliser la sortie de votre bateau dans les meilleures conditions.' },
@@ -21,7 +51,6 @@ export function HivernageCityPage({ city: cityProp }: { city?: HivernageCity | n
   const city = cityProp !== undefined ? cityProp : slug ? getHivernageCity(slug) : undefined;
   if (!city) return <Navigate to="/hivernage-stockage-bateau" replace />;
 
-  const canonical = `${SITE.url}/services/hivernage-bateaux/${city.slug}/`;
   const reasons = [
     { icon: MapPin, title: 'Expertise locale', desc: `Connaissance du ${city.lake} et de ses environs.` },
     { icon: ShieldCheck, title: 'Sécurité maximale', desc: 'Nos locaux sont sous vidéosurveillance toute l’année.' },
@@ -52,57 +81,8 @@ export function HivernageCityPage({ city: cityProp }: { city?: HivernageCity | n
 
   const zones = getZones(city.slug);
 
-  const schemaService = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: `Hivernage et stockage de bateaux, ${city.city}`,
-    serviceType: 'Hivernage et stockage de bateau',
-    description: city.metaDescription,
-    areaServed: { '@type': 'Place', name: city.city },
-    provider: {
-      '@type': 'LocalBusiness',
-      '@id': `${SITE.url}/#business`,
-      name: SITE.name,
-      telephone: SITE.phoneHref.replace('tel:', ''),
-      email: SITE.email,
-      url: SITE.url,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: SITE.addressStreet,
-        postalCode: SITE.addressPostal,
-        addressLocality: SITE.addressLocality,
-        addressRegion: SITE.addressRegion,
-        addressCountry: SITE.addressCountry,
-      },
-    },
-  };
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Hivernage / Stockage', item: `${SITE.url}/hivernage-stockage-bateau` },
-      { '@type': 'ListItem', position: 3, name: city.city, item: canonical },
-    ],
-  };
-
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>{city.metaTitle}</title>
-        <meta name="description" content={city.metaDescription} />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={city.metaTitle} />
-        <meta property="og:description" content={city.metaDescription} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={`${SITE.url}${city.hero}`} />
-        <meta name="geo.region" content="FR-74" />
-        <meta name="geo.placename" content={`${city.city}, Haute-Savoie`} />
-        <script type="application/ld+json">{JSON.stringify(schemaService)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
-
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">
         <div className="absolute inset-0">

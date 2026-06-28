@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
+import { pageMeta } from '../lib/meta';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
 import {
   Truck,
   Globe,
@@ -73,6 +74,39 @@ const FAQS = [
   },
 ];
 
+export function transportMeta() {
+  const canonical = `${SITE.url}/transport`;
+  return pageMeta({
+    title: 'Transport de Bateau en France et Europe | Motor Boat 74',
+    description:
+      'Transport de bateau partout en France et en Europe : convoyage sécurisé, assurance pro, remorques adaptées. Service clé en main. Devis personnalisé.',
+    canonical,
+    image: `${SITE.url}/images/services/transport.webp`,
+    robots: 'index, follow, max-image-preview:large',
+    ogDescription:
+      'Convoyage sécurisé de bateau, assurance pro, remorques adaptées, partout en France et en Europe.',
+    jsonLd: [
+      serviceSchema({
+        name: 'Transport de bateau en France et en Europe',
+        serviceType: 'Transport et convoyage de bateau',
+        url: canonical,
+        description:
+          "Transport de bateau partout en France et en Europe : convoyage sécurisé après achat ou vente, transfert entre ports, livraison sur lac ou en mer, avec véhicules et remorques adaptés.",
+        areaServed: [
+          { '@type': 'Country', name: 'France' },
+          { '@type': 'Place', name: 'Europe' },
+        ],
+      }),
+      faqSchema(FAQS),
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Services', url: `${SITE.url}/services` },
+        { name: 'Transport' },
+      ]),
+    ],
+  });
+}
+
 export function TransportPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -115,70 +149,12 @@ export function TransportPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const canonical = `${SITE.url}/transport`;
-  const business = {
-    '@type': 'LocalBusiness',
-    '@id': `${SITE.url}/#business`,
-    name: SITE.name,
-    telephone: SITE.phoneHref.replace('tel:', ''),
-    email: SITE.email,
-    url: SITE.url,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: SITE.addressStreet,
-      postalCode: SITE.addressPostal,
-      addressLocality: SITE.addressLocality,
-      addressRegion: SITE.addressRegion,
-      addressCountry: SITE.addressCountry,
-    },
-  };
-  const schemaService = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: 'Transport de bateau en France et en Europe',
-    serviceType: 'Transport et convoyage de bateau',
-    provider: business,
-    areaServed: [{ '@type': 'Country', name: 'France' }, { '@type': 'Place', name: 'Europe' }],
-    url: canonical,
-    description:
-      "Transport de bateau partout en France et en Europe : convoyage sécurisé après achat ou vente, transfert entre ports, livraison sur lac ou en mer, avec véhicules et remorques adaptés.",
-  };
-  const schemaFAQ = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQS.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-  };
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE.url}/services` },
-      { '@type': 'ListItem', position: 3, name: 'Transport' },
-    ],
-  };
-
   const inputCls =
     'w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-brand-dark focus:bg-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 placeholder:text-gray-400 transition font-medium';
   const labelCls = 'block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2';
 
   return (
     <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
-      <Helmet>
-        <title>Transport de Bateau en France et Europe | Motor Boat 74</title>
-        <meta name="description" content="Transport de bateau partout en France et en Europe : convoyage sécurisé, assurance pro, remorques adaptées. Service clé en main. Devis personnalisé." />
-        <link rel="canonical" href={canonical} />
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Transport de bateau en France et en Europe | Motor Boat 74" />
-        <meta property="og:description" content="Convoyage sécurisé de bateau, assurance pro, remorques adaptées, partout en France et en Europe." />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={`${SITE.url}/images/services/transport.webp`} />
-        <script type="application/ld+json">{JSON.stringify(schemaService)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
-
       <div className="lg:hidden fixed bottom-6 inset-x-0 mx-auto px-6 z-50 pointer-events-none">
         <button onClick={scrollToForm} className="w-full bg-brand-cyan text-brand-dark font-extrabold py-4 px-6 rounded-2xl shadow-2xl flex items-center justify-center gap-2 text-sm uppercase tracking-wider active:scale-95 transition-all pointer-events-auto border border-white/20">
           <Send className="w-5 h-5" /> Devis transport

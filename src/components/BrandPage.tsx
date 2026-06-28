@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
 import { ArrowRight, ChevronRight, ShieldCheck, Waves, Wallet, Wrench } from 'lucide-react';
 import { brandsData, type BrandData } from '../data/brands';
 import { getBrandModels } from '../data/boatBrands';
+import { SITE } from '../data/site';
+import { pageMeta } from '../lib/meta';
+
+export function brandPageMeta({ data, params }: { data?: { brand?: BrandData } | null; params: { id?: string } }) {
+  const id = (params.id || '').toLowerCase();
+  const brand = data?.brand ?? (id ? brandsData[id] : undefined);
+  if (!brand) return [{ title: 'Marque non trouvée | Motorboat 74' }, { name: 'robots', content: 'noindex' }];
+  const role = brand.role || 'Concessionnaire officiel';
+  return pageMeta({
+    title: `${brand.fullName} | ${role} ${brand.name} | Motorboat 74`,
+    description: `Découvrez la gamme ${brand.name}. ${brand.description.substring(0, 100)}...`,
+    canonical: `${SITE.url}/marque/${params.id}`,
+  });
+}
 import { ModelComparison } from './ModelComparison';
 import { UsedBoatsSection } from './UsedBoatsSection';
 import { FAQSection } from './FAQSection';
@@ -58,10 +71,6 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
   if (!brand) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-brand-dark text-white p-4">
-        <Helmet>
-          <title>Marque non trouvée | Motorboat 74</title>
-          <meta name="robots" content="noindex" />
-        </Helmet>
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Marque non trouvée</h1>
           <Link to="/" className="text-brand-cyan hover:underline flex items-center justify-center gap-2">
@@ -76,11 +85,6 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
 
   return (
     <div className="bg-brand-light">
-      <Helmet>
-        <title>{`${brand.fullName} | ${role} ${brand.name} | Motorboat 74`}</title>
-        <meta name="description" content={`Découvrez la gamme ${brand.name}. ${brand.description.substring(0, 100)}...`} />
-        <link rel="canonical" href={`https://motorboat74.com/marque/${id}`} />
-      </Helmet>
       {/* Brand Hero */}
       <section className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-brand-dark cursor-default">
         <div className="absolute inset-0 z-0">

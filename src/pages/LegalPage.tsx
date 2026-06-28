@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
+import { pageMeta } from '../lib/meta';
 
 type Block = { h?: string; p?: string[]; ul?: string[] };
 
@@ -187,9 +187,19 @@ const SLUGS = {
   cgv: 'cgv-pro',
 } as const;
 
-export function LegalPage({ doc }: { doc: 'mentions' | 'privacy' | 'cgv' }) {
+export function legalMeta(doc: 'mentions' | 'privacy' | 'cgv') {
   const data = DOCS[doc];
   const slug = SLUGS[doc];
+  return pageMeta({
+    title: `${data.title} | ${SITE.name}`,
+    description: `${data.title} de ${SITE.name}.`,
+    canonical: `${SITE.url}/${slug}/`,
+    robots: 'index, follow',
+  });
+}
+
+export function LegalPage({ doc }: { doc: 'mentions' | 'privacy' | 'cgv' }) {
+  const data = DOCS[doc];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -197,12 +207,6 @@ export function LegalPage({ doc }: { doc: 'mentions' | 'privacy' | 'cgv' }) {
 
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>{`${data.title} | ${SITE.name}`}</title>
-        <meta name="description" content={`${data.title} de ${SITE.name}.`} />
-        <link rel="canonical" href={`${SITE.url}/${slug}/`} />
-        <meta name="robots" content="index, follow" />
-      </Helmet>
 
       <header className="bg-brand-dark text-white">
         <div className="max-w-4xl mx-auto px-4 lg:px-8 py-16 lg:py-20">

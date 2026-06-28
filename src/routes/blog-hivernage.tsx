@@ -1,1 +1,1 @@
-export { BlogHivernagePage as default } from '../pages/BlogHivernagePage';
+export { BlogHivernagePage as default, blogHivernageMeta as meta } from '../pages/BlogHivernagePage';

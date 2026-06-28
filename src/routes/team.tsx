@@ -1,1 +1,1 @@
-export { TeamPage as default } from '../pages/TeamPage';
+export { TeamPage as default, teamMeta as meta } from '../pages/TeamPage';

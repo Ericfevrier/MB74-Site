@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
+import { pageMeta } from '../lib/meta';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
 import {
   Caravan,
   ShieldCheck,
@@ -64,6 +65,40 @@ const FAQS = [
   },
 ];
 
+export function remorquesMeta() {
+  const canonical = `${SITE.url}/remorques`;
+  return pageMeta({
+    title: 'Remorques de Bateau Sur Mesure Haute-Savoie | Motor Boat 74',
+    description:
+      "Remorques de bateau sur mesure à Annecy et en Haute-Savoie : homologuées CE, adaptées à votre bateau, réglage et mise à l'eau inclus. Demandez conseil.",
+    canonical,
+    image: `${SITE.url}/images/services/remorques.webp`,
+    robots: 'index, follow, max-image-preview:large',
+    ogDescription:
+      "Remorques homologuées CE, adaptées à chaque bateau, réglage et mise à l'eau inclus. À Annecy et en Haute-Savoie.",
+    geo: { region: 'FR-74', placename: 'Annecy, Haute-Savoie' },
+    jsonLd: [
+      serviceSchema({
+        name: 'Remorques de bateau sur mesure à Annecy',
+        serviceType: 'Vente et préparation de remorques de bateau',
+        url: canonical,
+        description:
+          "Remorques de bateau sur mesure à Annecy et en Haute-Savoie : remorques homologuées CE, simples ou doubles essieux freinées, adaptées à chaque bateau, réglage et mise à l'eau inclus.",
+        areaServed: [
+          { '@type': 'City', name: 'Annecy' },
+          { '@type': 'AdministrativeArea', name: 'Haute-Savoie' },
+        ],
+      }),
+      faqSchema(FAQS),
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Services', url: `${SITE.url}/services` },
+        { name: 'Remorques' },
+      ]),
+    ],
+  });
+}
+
 export function RemorquesPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -106,72 +141,12 @@ export function RemorquesPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const canonical = `${SITE.url}/remorques`;
-  const business = {
-    '@type': 'LocalBusiness',
-    '@id': `${SITE.url}/#business`,
-    name: SITE.name,
-    telephone: SITE.phoneHref.replace('tel:', ''),
-    email: SITE.email,
-    url: SITE.url,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: SITE.addressStreet,
-      postalCode: SITE.addressPostal,
-      addressLocality: SITE.addressLocality,
-      addressRegion: SITE.addressRegion,
-      addressCountry: SITE.addressCountry,
-    },
-  };
-  const schemaService = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: 'Remorques de bateau sur mesure à Annecy',
-    serviceType: 'Vente et préparation de remorques de bateau',
-    provider: business,
-    areaServed: [{ '@type': 'City', name: 'Annecy' }, { '@type': 'AdministrativeArea', name: 'Haute-Savoie' }],
-    url: canonical,
-    description:
-      "Remorques de bateau sur mesure à Annecy et en Haute-Savoie : remorques homologuées CE, simples ou doubles essieux freinées, adaptées à chaque bateau, réglage et mise à l'eau inclus.",
-  };
-  const schemaFAQ = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQS.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-  };
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE.url}/services` },
-      { '@type': 'ListItem', position: 3, name: 'Remorques' },
-    ],
-  };
-
   const inputCls =
     'w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-brand-dark focus:bg-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 placeholder:text-gray-400 transition font-medium';
   const labelCls = 'block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2';
 
   return (
     <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
-      <Helmet>
-        <title>Remorques de Bateau Sur Mesure Haute-Savoie | Motor Boat 74</title>
-        <meta name="description" content="Remorques de bateau sur mesure à Annecy et en Haute-Savoie : homologuées CE, adaptées à votre bateau, réglage et mise à l'eau inclus. Demandez conseil." />
-        <link rel="canonical" href={canonical} />
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta name="geo.region" content="FR-74" />
-        <meta name="geo.placename" content="Annecy, Haute-Savoie" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Remorques de bateau sur mesure en Haute-Savoie | Motor Boat 74" />
-        <meta property="og:description" content="Remorques homologuées CE, adaptées à chaque bateau, réglage et mise à l'eau inclus. À Annecy et en Haute-Savoie." />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={`${SITE.url}/images/services/remorques.webp`} />
-        <script type="application/ld+json">{JSON.stringify(schemaService)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
-
       <div className="lg:hidden fixed bottom-6 inset-x-0 mx-auto px-6 z-50 pointer-events-none">
         <button onClick={scrollToForm} className="w-full bg-brand-cyan text-brand-dark font-extrabold py-4 px-6 rounded-2xl shadow-2xl flex items-center justify-center gap-2 text-sm uppercase tracking-wider active:scale-95 transition-all pointer-events-auto border border-white/20">
           <Send className="w-5 h-5" /> Demander conseil

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
@@ -9,66 +8,64 @@ import { NautiqueModel } from '../data/nautiqueModels';
 import { brandsData } from '../data/brands';
 import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
+import { pageMeta } from '../lib/meta';
+import { breadcrumbSchema } from '../lib/schema';
 
 const HERO = 'https://www.mastercraft.com/media/cwehmhdl/mb-2-3.webp';
 const BRAND_IDS = ['nautique', 'mastercraft'] as const;
 
-export function BateauxNeufsPage() {
-  const canonical = `${SITE.url}/bateaux/neufs/`;
-
-  const brands = BRAND_IDS.map((id) => {
+function neufsBrands() {
+  return BRAND_IDS.map((id) => {
     const bm = BRAND_MODELS[id];
     const meta = brandsData[id];
     if (!bm || !meta) return null;
     const models = bm.order.map((slug) => bm.models[slug]).filter(Boolean);
     return { id, name: bm.name, models };
   }).filter(Boolean) as { id: string; name: string; models: NautiqueModel[] }[];
+}
 
-  const allModels = brands.flatMap((b) => b.models.map((m) => ({ b, m })));
-
-  const schema = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'CollectionPage',
-      name: 'Bateaux neufs',
-      url: canonical,
-      hasPart: {
-        '@type': 'ItemList',
-        numberOfItems: allModels.length,
-        itemListElement: allModels.map(({ b, m }, i) => ({
-          '@type': 'ListItem',
-          position: i + 1,
-          url: `${SITE.url}/${b.id}/${m.slug}/`,
-          name: m.fullName || m.name,
-        })),
+export function bateauxNeufsMeta() {
+  const canonical = `${SITE.url}/bateaux/neufs/`;
+  const allModels = neufsBrands().flatMap((b) => b.models.map((m) => ({ b, m })));
+  return pageMeta({
+    title: 'Bateaux neufs Nautique & MasterCraft près d’Annecy | Motor Boat 74',
+    description:
+      'Découvrez nos bateaux neufs Nautique et MasterCraft : wakeboats et bateaux de ski nautique dernière génération. Configuration, essai sur le lac d’Annecy et devis chez Motor Boat 74.',
+    canonical,
+    image: HERO,
+    ogTitle: 'Bateaux neufs Nautique & MasterCraft | Motor Boat 74',
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'Bateaux neufs',
+        url: canonical,
+        hasPart: {
+          '@type': 'ItemList',
+          numberOfItems: allModels.length,
+          itemListElement: allModels.map(({ b, m }, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            url: `${SITE.url}/${b.id}/${m.slug}/`,
+            name: m.fullName || m.name,
+          })),
+        },
       },
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-        { '@type': 'ListItem', position: 2, name: 'Bateaux', item: `${SITE.url}/bateaux/` },
-        { '@type': 'ListItem', position: 3, name: 'Bateaux neufs', item: canonical },
-      ],
-    },
-  ];
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Bateaux', url: `${SITE.url}/bateaux/` },
+        { name: 'Bateaux neufs', url: canonical },
+      ]),
+    ],
+  });
+}
+
+export function BateauxNeufsPage() {
+  const brands = neufsBrands();
+  const allModels = brands.flatMap((b) => b.models.map((m) => ({ b, m })));
 
   return (
     <div className="bg-brand-light">
-      <Helmet>
-        <title>Bateaux neufs Nautique & MasterCraft près d’Annecy | Motor Boat 74</title>
-        <meta
-          name="description"
-          content="Découvrez nos bateaux neufs Nautique et MasterCraft : wakeboats et bateaux de ski nautique dernière génération. Configuration, essai sur le lac d’Annecy et devis chez Motor Boat 74."
-        />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Bateaux neufs Nautique & MasterCraft | Motor Boat 74" />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={HERO} />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      </Helmet>
 
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">

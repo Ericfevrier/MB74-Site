@@ -1,45 +1,45 @@
 import React from 'react';
 import { Link, Navigate } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { soldUsedBoats, type UsedBoat } from '../data/usedBoats';
 import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
+import { pageMeta } from '../lib/meta';
+import { breadcrumbSchema } from '../lib/schema';
 
 const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
 
+export function bateauxVenduMeta() {
+  const canonical = `${SITE.url}/bateaux/vendu/`;
+  return pageMeta({
+    title: 'Bateaux vendus | Motor Boat 74',
+    description:
+      'Les bateaux récemment vendus par Motor Boat 74, près du lac d’Annecy. Un modèle similaire vous intéresse ? Nous lançons une recherche sur mesure.',
+    canonical,
+    // Archive « preuve sociale » : accessible mais hors index (évite la dilution et la cannibalisation).
+    robots: 'noindex, follow',
+    jsonLd: [
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Bateaux', url: `${SITE.url}/bateaux/` },
+        { name: 'Bateaux vendus', url: canonical },
+      ]),
+    ],
+  });
+}
+
 export function BateauxVenduPage({ boats: boatsProp }: { boats?: UsedBoat[] } = {}) {
   const boats = boatsProp ?? soldUsedBoats();
-  const canonical = `${SITE.url}/bateaux/vendu/`;
 
   // Aucun vendu → on renvoie vers le stock disponible plutôt que d'afficher une page vide.
   if (boats.length === 0) {
     return <Navigate to="/bateaux/occasion" replace />;
   }
 
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Bateaux', item: `${SITE.url}/bateaux/` },
-      { '@type': 'ListItem', position: 3, name: 'Bateaux vendus', item: canonical },
-    ],
-  };
-
   return (
     <div className="bg-brand-light">
-      <Helmet>
-        <title>Bateaux vendus | Motor Boat 74</title>
-        <meta name="description" content="Les bateaux récemment vendus par Motor Boat 74, près du lac d’Annecy. Un modèle similaire vous intéresse ? Nous lançons une recherche sur mesure." />
-        {/* Archive « preuve sociale » : accessible mais hors index (évite la dilution et la cannibalisation). */}
-        <meta name="robots" content="noindex, follow" />
-        <link rel="canonical" href={canonical} />
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
-
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">
         <div className="absolute inset-0">

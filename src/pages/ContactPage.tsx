@@ -1,52 +1,49 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router';
 import { Clock } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { GoogleMapCustom } from '../components/GoogleMapCustom';
+import { pageMeta } from '../lib/meta';
+
+export function contactMeta() {
+  const canonical = `${SITE.url}/contact/`;
+  return pageMeta({
+    title: 'Contactez-nous | Motor Boat 74',
+    description:
+      'MotorBoat74 vous accompagne pour l’achat, la vente, l’entretien ou l’hivernage de votre bateau. Contactez-nous facilement dès aujourd’hui à Annecy / Saint-Ferréol.',
+    canonical,
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        name: 'Contact, Motor Boat 74',
+        url: canonical,
+        mainEntity: {
+          '@type': 'LocalBusiness',
+          '@id': `${SITE.url}/#business`,
+          name: SITE.name,
+          telephone: SITE.phoneHref.replace('tel:', ''),
+          email: SITE.email,
+          url: SITE.url,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: SITE.addressStreet,
+            postalCode: SITE.addressPostal,
+            addressLocality: SITE.addressLocality,
+            addressRegion: SITE.addressRegion,
+            addressCountry: SITE.addressCountry,
+          },
+        },
+      },
+    ],
+  });
+}
 
 export function ContactPage() {
-  const canonical = `${SITE.url}/contact/`;
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'ContactPage',
-    name: 'Contact, Motor Boat 74',
-    url: canonical,
-    mainEntity: {
-      '@type': 'LocalBusiness',
-      '@id': `${SITE.url}/#business`,
-      name: SITE.name,
-      telephone: SITE.phoneHref.replace('tel:', ''),
-      email: SITE.email,
-      url: SITE.url,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: SITE.addressStreet,
-        postalCode: SITE.addressPostal,
-        addressLocality: SITE.addressLocality,
-        addressRegion: SITE.addressRegion,
-        addressCountry: SITE.addressCountry,
-      },
-    },
-  };
-
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>Contactez-nous | Motor Boat 74</title>
-        <meta
-          name="description"
-          content="MotorBoat74 vous accompagne pour l’achat, la vente, l’entretien ou l’hivernage de votre bateau. Contactez-nous facilement dès aujourd’hui à Annecy / Saint-Ferréol."
-        />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Contactez-nous | Motor Boat 74" />
-        <meta property="og:url" content={canonical} />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      </Helmet>
-
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">
         <div className="absolute inset-0">

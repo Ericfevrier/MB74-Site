@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { GoogleMapCustom } from '../components/GoogleMapCustom';
+import { pageMeta } from '../lib/meta';
+import { breadcrumbSchema } from '../lib/schema';
 
 const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
 
@@ -48,51 +49,43 @@ const team: Member[] = [
   },
 ];
 
-export function TeamPage() {
+export function teamMeta() {
   const canonical = `${SITE.url}/la-team/`;
-
-  const schema = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: SITE.name,
-      url: `${SITE.url}/`,
-      telephone: SITE.phoneDisplay,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: SITE.addressStreet,
-        postalCode: SITE.addressPostal,
-        addressLocality: SITE.addressLocality,
-        addressRegion: SITE.addressRegion,
-        addressCountry: SITE.addressCountry,
+  return pageMeta({
+    title: 'La Team | Motor Boat 74, concessionnaire Nautique près d’Annecy',
+    description:
+      'Rencontrez l’équipe de Motor Boat 74, concessionnaire officiel Nautique et importateur Connelly Ski en Haute-Savoie : vente, hivernage et entretien de bateaux près du lac d’Annecy.',
+    canonical,
+    image: HERO,
+    ogTitle: 'La Team | Motor Boat 74',
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: SITE.name,
+        url: `${SITE.url}/`,
+        telephone: SITE.phoneDisplay,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: SITE.addressStreet,
+          postalCode: SITE.addressPostal,
+          addressLocality: SITE.addressLocality,
+          addressRegion: SITE.addressRegion,
+          addressCountry: SITE.addressCountry,
+        },
+        employee: team.map((m) => ({ '@type': 'Person', name: m.name, jobTitle: m.role, image: m.image })),
       },
-      employee: team.map((m) => ({ '@type': 'Person', name: m.name, jobTitle: m.role, image: m.image })),
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-        { '@type': 'ListItem', position: 2, name: 'La Team', item: canonical },
-      ],
-    },
-  ];
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'La Team', url: canonical },
+      ]),
+    ],
+  });
+}
 
+export function TeamPage() {
   return (
     <div className="bg-brand-light">
-      <Helmet>
-        <title>La Team | Motor Boat 74, concessionnaire Nautique près d’Annecy</title>
-        <meta
-          name="description"
-          content="Rencontrez l’équipe de Motor Boat 74, concessionnaire officiel Nautique et importateur Connelly Ski en Haute-Savoie : vente, hivernage et entretien de bateaux près du lac d’Annecy."
-        />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="La Team | Motor Boat 74" />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={HERO} />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      </Helmet>
 
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">

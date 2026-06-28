@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Sparkles, Tag, ShieldCheck, Waves, Wallet, ChevronRight } from 'lucide-react';
 import { SITE } from '../data/site';
+import { pageMeta } from '../lib/meta';
+import { breadcrumbSchema, faqSchema } from '../lib/schema';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { brandsData } from '../data/brands';
 import { BRAND_MODELS } from '../data/boatBrands';
@@ -33,46 +34,38 @@ const faqs = [
   },
 ];
 
-export function BateauxHubPage() {
+export function bateauxHubMeta() {
   const canonical = `${SITE.url}/bateaux/`;
+  return pageMeta({
+    title: 'Bateaux neufs et d’occasion près d’Annecy | Motor Boat 74',
+    description:
+      'Bateaux neufs et d’occasion près du lac d’Annecy : wakeboats et bateaux de ski Nautique et MasterCraft. Essai sur l’eau, reprise, financement et entretien chez Motor Boat 74.',
+    canonical,
+    image: HERO,
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'Bateaux neufs et d’occasion',
+        url: canonical,
+        isPartOf: { '@type': 'WebSite', name: SITE.name, url: `${SITE.url}/` },
+        about: 'Vente de wakeboats et bateaux de ski nautique neufs et d’occasion près du lac d’Annecy.',
+      },
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Bateaux', url: canonical },
+      ]),
+      faqSchema(faqs),
+    ],
+  });
+}
+
+export function BateauxHubPage() {
   const usedCount = availableUsedBoats().length;
   const newCount = BRAND_IDS.reduce((n, id) => n + (BRAND_MODELS[id]?.order.length || 0), 0);
 
-  const schema = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'CollectionPage',
-      name: 'Bateaux neufs et d’occasion',
-      url: canonical,
-      isPartOf: { '@type': 'WebSite', name: SITE.name, url: `${SITE.url}/` },
-      about: 'Vente de wakeboats et bateaux de ski nautique neufs et d’occasion près du lac d’Annecy.',
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-        { '@type': 'ListItem', position: 2, name: 'Bateaux', item: canonical },
-      ],
-    },
-  ];
-
   return (
     <div className="bg-brand-light">
-      <Helmet>
-        <title>Bateaux neufs et d’occasion près d’Annecy | Motor Boat 74</title>
-        <meta
-          name="description"
-          content="Bateaux neufs et d’occasion près du lac d’Annecy : wakeboats et bateaux de ski Nautique et MasterCraft. Essai sur l’eau, reprise, financement et entretien chez Motor Boat 74."
-        />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Bateaux neufs et d’occasion près d’Annecy | Motor Boat 74" />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={HERO} />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      </Helmet>
-
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">
         <div className="absolute inset-0">
@@ -188,15 +181,6 @@ export function BateauxHubPage() {
             ))}
           </div>
         </div>
-        <Helmet>
-          <script type="application/ld+json">
-            {JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'FAQPage',
-              mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-            })}
-          </script>
-        </Helmet>
       </section>
 
       <ShowroomSection />

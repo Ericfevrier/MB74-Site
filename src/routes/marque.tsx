@@ -2,6 +2,7 @@ import { useLoaderData, type LoaderFunctionArgs } from 'react-router';
 import { BrandPage } from '../components/BrandPage';
 import { STATIC_BRANDS_DATA, mergeBrands } from '../data/brands';
 import { serverCms, fetchBrands } from '../lib/cms';
+export { brandPageMeta as meta } from '../components/BrandPage';
 
 /** Loader SSR : marque lue en live depuis le CMS (éditorial fusionné sur le structurel). */
 export async function clientLoader({ params }: LoaderFunctionArgs) {

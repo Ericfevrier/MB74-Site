@@ -1,1 +1,1 @@
-export { ServicePage as default } from '../pages/ServicePage';
+export { ServicePage as default, servicePageMeta as meta } from '../pages/ServicePage';

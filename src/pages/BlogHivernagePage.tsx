@@ -1,9 +1,51 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router';
 import { ArrowRight } from 'lucide-react';
 import { SITE } from '../data/site';
 import { ArticleLayout, TocItem, InternalLink } from '../components/blog/ArticleLayout';
+import { pageMeta } from '../lib/meta';
+import { faqSchema, breadcrumbSchema } from '../lib/schema';
+
+export function blogHivernageMeta() {
+  const path = '/blog/hivernage/hivernage-bateau-guide-complet';
+  const canonical = `${SITE.url}${path}/`;
+  const title = 'Hivernage bateau : le guide complet pour bien préparer votre bateau';
+  const hero = '/images/hivernage/annecy.jpg';
+  const author = "L'équipe Motor Boat 74";
+  const schemaArticle = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    image: `${SITE.url}${hero}`,
+    datePublished: '2025-10-06',
+    dateModified: '2025-10-06',
+    author: { '@type': 'Organization', name: author },
+    publisher: {
+      '@type': 'Organization',
+      name: SITE.name,
+      logo: { '@type': 'ImageObject', url: `${SITE.url}/images/logo-transprent.png` },
+    },
+    mainEntityOfPage: canonical,
+  };
+  return pageMeta({
+    title: 'Hivernage bateau : le guide complet | Motor Boat 74',
+    description:
+      "Le guide complet de l'hivernage de bateau : préparation de la coque et du moteur, méthodes de stockage, entretien hivernal et conseils par type de bateau.",
+    canonical,
+    image: `${SITE.url}${hero}`,
+    ogType: 'article',
+    ogTitle: title,
+    jsonLd: [
+      schemaArticle,
+      faqSchema(FAQS),
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Blog', url: `${SITE.url}/blog/` },
+        { name: 'Hivernage bateau : le guide complet', url: canonical },
+      ]),
+    ],
+  });
+}
 
 const FAQS = [
   {
@@ -51,7 +93,6 @@ const Tip = ({ label, children }: { label: string; children: React.ReactNode }) 
 
 export function BlogHivernagePage() {
   const path = '/blog/hivernage/hivernage-bateau-guide-complet';
-  const canonical = `${SITE.url}${path}/`;
   const title = 'Hivernage bateau : le guide complet pour bien préparer votre bateau';
   const hero = '/images/hivernage/annecy.jpg';
   const author = "L'équipe Motor Boat 74";
@@ -73,51 +114,8 @@ export function BlogHivernagePage() {
     { label: 'Bateaux d’occasion', to: '/bateaux/occasion' },
   ];
 
-  const schemaArticle = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: title,
-    image: `${SITE.url}${hero}`,
-    datePublished: '2025-10-06',
-    dateModified: '2025-10-06',
-    author: { '@type': 'Organization', name: author },
-    publisher: {
-      '@type': 'Organization',
-      name: SITE.name,
-      logo: { '@type': 'ImageObject', url: `${SITE.url}/images/logo-transprent.png` },
-    },
-    mainEntityOfPage: canonical,
-  };
-  const schemaFAQ = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQS.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-  };
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE.url}/blog/` },
-      { '@type': 'ListItem', position: 3, name: 'Hivernage bateau : le guide complet', item: canonical },
-    ],
-  };
-
   return (
     <>
-      <Helmet>
-        <title>Hivernage bateau : le guide complet | Motor Boat 74</title>
-        <meta name="description" content="Le guide complet de l'hivernage de bateau : préparation de la coque et du moteur, méthodes de stockage, entretien hivernal et conseils par type de bateau." />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={title} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={`${SITE.url}${hero}`} />
-        <script type="application/ld+json">{JSON.stringify(schemaArticle)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
-
       <ArticleLayout
         slug="hivernage-bateau-guide-complet"
         path={path}

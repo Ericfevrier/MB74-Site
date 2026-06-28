@@ -2,6 +2,7 @@ import { useLoaderData, redirect, type LoaderFunctionArgs } from 'react-router';
 import { HivernageCityPage } from '../pages/HivernageCityPage';
 import { getHivernageCity } from '../data/hivernageCities';
 import { serverCms, fetchCities } from '../lib/cms';
+export { cityPageMeta as meta } from '../pages/HivernageCityPage';
 
 /** Loader SSR : page ville lue en live depuis le CMS (repli statique côté page). */
 export async function clientLoader({ params }: LoaderFunctionArgs) {

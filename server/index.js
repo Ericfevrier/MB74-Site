@@ -1,17 +1,21 @@
 /**
  * Serveur de production Motor Boat 74 — app Node.js (SPA React Router v7) pour o2switch.
  *
- * Architecture identique à Ilico (qui tourne sans souci sur o2switch) :
- *   - SPA : on sert le shell statique build/client/index.html pour toutes les routes,
- *     le rendu se fait côté navigateur (pas de SSR lourd → o2switch n'est plus saturé).
+ * Architecture identique à Ilico (qui tourne sans souci sur o2switch), mais avec
+ * PRÉRENDU SEO :
+ *   - Chaque route a un HTML statique généré au build (build/client/<route>/index.html)
+ *     contenant titres, métas, JSON-LD et contenu → indexable sans JS. Le navigateur
+ *     réhydrate par-dessus (toujours du SPA, pas de SSR lourd → o2switch n'est pas saturé).
+ *   - Routes inconnues (404, etc.) → shell SPA léger (__spa-fallback.html).
  *   - Endpoints formulaires (contact + hivernage) : persistance Directus + e-mail.
  *
  * o2switch (Phusion Passenger) injecte le port via process.env.PORT.
- * Build attendu : `npm run build:ssr` (génère build/client en mode SPA).
+ * Build attendu : `npm run build:ssr` (génère build/client prérendu).
  */
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { existsSync } from 'fs';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 
@@ -22,6 +26,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const clientDir = path.join(rootDir, 'build', 'client');
 const indexHtml = path.join(clientDir, 'index.html');
+const spaFallback = path.join(clientDir, '__spa-fallback.html');
 
 const app = express();
 app.disable('x-powered-by');
@@ -188,11 +193,22 @@ app.post('/api/hivernage', async (req, res) => {
 
 // Assets fingerprintés → cache immuable ; autres fichiers publics → cache court.
 app.use('/assets', express.static(path.join(clientDir, 'assets'), { immutable: true, maxAge: '1y' }));
-app.use(express.static(clientDir, { maxAge: '1h', index: false }));
+// redirect:false → ne pas rediriger '/depannage' vers '/depannage/' (les dossiers
+// prérendus existent) ; le catch-all sert directement le HTML de la route.
+app.use(express.static(clientDir, { maxAge: '1h', index: false, redirect: false }));
 
-// Toute autre route → le shell SPA (React Router gère le routage côté client).
-app.get('*', (_req, res) => {
-  res.sendFile(indexHtml);
+// Route → HTML prérendu de la page si présent (SEO), sinon shell SPA (React Router
+// gère alors le routage côté client, y compris la page 404).
+app.get('*', (req, res) => {
+  const rel = decodeURIComponent(req.path).replace(/\/+$/, ''); // '/contact/' → '/contact'
+  const candidate = rel === '' ? indexHtml : path.join(clientDir, rel, 'index.html');
+  // HTML peu caché : un nouveau déploiement doit être pris en compte rapidement.
+  res.set('Cache-Control', 'no-cache');
+  // Garde-fou anti-traversal : le fichier servi doit rester sous clientDir.
+  if (candidate.startsWith(clientDir) && existsSync(candidate)) {
+    return res.sendFile(candidate);
+  }
+  res.sendFile(existsSync(spaFallback) ? spaFallback : indexHtml);
 });
 
 const port = process.env.PORT || 3000;

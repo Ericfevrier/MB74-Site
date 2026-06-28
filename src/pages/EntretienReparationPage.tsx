@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
+import { pageMeta } from '../lib/meta';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
 import {
   Wrench,
   Settings,
@@ -77,6 +78,40 @@ const FAQS = [
   },
 ];
 
+export function entretienMeta() {
+  const canonical = `${SITE.url}/entretien-reparation`;
+  return pageMeta({
+    title: 'Réparation & Entretien Bateau Annecy | Motor Boat 74',
+    description:
+      'Entretien et réparation de bateaux à Annecy : révision moteur, réparation, carrosserie, peinture et accastillage, en atelier ou sur place. Devis gratuit sous 24 h.',
+    canonical,
+    image: `${SITE.url}/images/services/entretien.webp`,
+    robots: 'index, follow, max-image-preview:large',
+    ogDescription:
+      'Révision moteur, réparation, carrosserie et accastillage à Annecy, en atelier ou sur place. Devis gratuit.',
+    geo: { region: 'FR-74', placename: 'Annecy, Haute-Savoie' },
+    jsonLd: [
+      serviceSchema({
+        name: 'Entretien et réparation de bateaux à Annecy',
+        serviceType: 'Entretien, réparation mécanique et carrosserie nautique',
+        url: canonical,
+        description:
+          "Entretien et réparation de bateaux à Annecy : révision moteur (hors-bord et in-board), réparation, carrosserie, peinture, gel-coat et pose d'accastillage, en atelier ou sur place.",
+        areaServed: [
+          { '@type': 'City', name: 'Annecy' },
+          { '@type': 'AdministrativeArea', name: 'Haute-Savoie' },
+        ],
+      }),
+      faqSchema(FAQS),
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Services', url: `${SITE.url}/services` },
+        { name: 'Entretien & Réparation' },
+      ]),
+    ],
+  });
+}
+
 export function EntretienReparationPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -119,79 +154,12 @@ export function EntretienReparationPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const canonical = `${SITE.url}/entretien-reparation`;
-  const business = {
-    '@type': 'LocalBusiness',
-    '@id': `${SITE.url}/#business`,
-    name: SITE.name,
-    telephone: SITE.phoneHref.replace('tel:', ''),
-    email: SITE.email,
-    url: SITE.url,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: SITE.addressStreet,
-      postalCode: SITE.addressPostal,
-      addressLocality: SITE.addressLocality,
-      addressRegion: SITE.addressRegion,
-      addressCountry: SITE.addressCountry,
-    },
-  };
-  const schemaService = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: 'Entretien et réparation de bateaux à Annecy',
-    serviceType: 'Entretien, réparation mécanique et carrosserie nautique',
-    provider: business,
-    areaServed: [
-      { '@type': 'City', name: 'Annecy' },
-      { '@type': 'AdministrativeArea', name: 'Haute-Savoie' },
-    ],
-    url: canonical,
-    description:
-      "Entretien et réparation de bateaux à Annecy : révision moteur (hors-bord et in-board), réparation, carrosserie, peinture, gel-coat et pose d'accastillage, en atelier ou sur place.",
-  };
-  const schemaFAQ = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQS.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
-  };
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE.url}/services` },
-      { '@type': 'ListItem', position: 3, name: 'Entretien & Réparation' },
-    ],
-  };
-
   const inputCls =
     'w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-brand-dark focus:bg-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 placeholder:text-gray-400 transition font-medium';
   const labelCls = 'block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2';
 
   return (
     <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
-      <Helmet>
-        <title>Réparation & Entretien Bateau Annecy | Motor Boat 74</title>
-        <meta name="description" content="Entretien et réparation de bateaux à Annecy : révision moteur, réparation, carrosserie, peinture et accastillage, en atelier ou sur place. Devis gratuit sous 24 h." />
-        <link rel="canonical" href={canonical} />
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta name="geo.region" content="FR-74" />
-        <meta name="geo.placename" content="Annecy, Haute-Savoie" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Entretien et réparation de bateaux à Annecy | Motor Boat 74" />
-        <meta property="og:description" content="Révision moteur, réparation, carrosserie et accastillage à Annecy, en atelier ou sur place. Devis gratuit." />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={`${SITE.url}/images/services/entretien.webp`} />
-        <script type="application/ld+json">{JSON.stringify(schemaService)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
-
       {/* Mobile sticky CTA */}
       <div className="lg:hidden fixed bottom-6 inset-x-0 mx-auto px-6 z-50 pointer-events-none">
         <button

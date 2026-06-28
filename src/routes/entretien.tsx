@@ -1,1 +1,1 @@
-export { EntretienReparationPage as default } from '../pages/EntretienReparationPage';
+export { EntretienReparationPage as default, entretienMeta as meta } from '../pages/EntretienReparationPage';

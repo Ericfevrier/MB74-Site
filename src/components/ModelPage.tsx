@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link, Navigate } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ChevronDown, ArrowRight, Phone, Ruler, Users, Gauge, Check, X,
@@ -12,12 +11,115 @@ import type { NautiqueModel } from '../data/nautiqueModels';
 import { usedBoatsForModel } from '../data/usedBoats';
 import { SITE } from '../data/site';
 import { ServiceContactBlock } from './services/ServiceContactBlock';
+import { pageMeta } from '../lib/meta';
+import { breadcrumbSchema, faqSchema } from '../lib/schema';
 
 const GROUP_ICON: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Dimensions: Ruler,
   Capacité: Users,
   Performance: Gauge,
 };
+
+export function modelPageMeta({ data, params }: { data?: { model?: NautiqueModel } | null; params: { brandId?: string; modelId?: string } }) {
+  const brand = getBrandModels(params.brandId);
+  const model = data?.model ?? (brand && params.modelId ? brand.models[params.modelId] : undefined);
+  if (!model || !brand) return [{ title: `Nos bateaux | ${SITE.name}` }];
+
+  const brandName = brand.name;
+  const brandPath = `/marque/${brand.id}`;
+  const fullName = model.fullName || model.name;
+  const canonical = `${SITE.url}/${brand.id}/${model.slug}/`;
+  const heroAbs = model.hero.startsWith('http') ? model.hero : `${SITE.url}${model.hero}`;
+  const milestones = (model.milestones ?? []).slice().sort((a, b) => Number(b.year) - Number(a.year));
+
+  const business = {
+    '@type': 'AutoDealer',
+    '@id': `${SITE.url}/#business`,
+    name: SITE.name,
+    telephone: SITE.phoneHref.replace('tel:', ''),
+    email: SITE.email,
+    url: SITE.url,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: SITE.addressStreet,
+      postalCode: SITE.addressPostal,
+      addressLocality: SITE.addressLocality,
+      addressRegion: SITE.addressRegion,
+      addressCountry: SITE.addressCountry,
+    },
+  };
+  const schemaProduct = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: `${fullName} ${model.year}`,
+    brand: { '@type': 'Brand', name: brandName },
+    category: 'Wakeboat / Bateau de sport nautique',
+    image: [heroAbs],
+    description: model.metaDescription,
+    releaseDate: model.year,
+    ...(milestones.length
+      ? { additionalProperty: { '@type': 'PropertyValue', name: 'Millésimes documentés', value: milestones.map((m) => m.year).join(', ') } }
+      : {}),
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      url: canonical,
+      seller: business,
+    },
+  };
+  const schemaVehicle = {
+    '@context': 'https://schema.org',
+    '@type': 'Vehicle',
+    name: `${fullName} ${model.year}`,
+    brand: { '@type': 'Brand', name: brandName },
+    vehicleConfiguration: model.gamme,
+    ...(model.motorizations && model.motorizations.length
+      ? {
+          vehicleEngine: model.motorizations.map((m) => ({
+            '@type': 'EngineSpecification',
+            name: m.name,
+            fuelType: m.fuel,
+            enginePower: m.power,
+          })),
+        }
+      : {}),
+  };
+  const schemaVideo = model.videoId
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'VideoObject',
+        name: `${fullName}, vidéo`,
+        description: `Présentation vidéo du ${fullName}.`,
+        thumbnailUrl: [`https://i.ytimg.com/vi/${model.videoId}/hqdefault.jpg`],
+        uploadDate: `${model.year}-01-01`,
+        contentUrl: `https://www.youtube.com/watch?v=${model.videoId}`,
+        embedUrl: `https://www.youtube.com/embed/${model.videoId}`,
+      }
+    : null;
+
+  return pageMeta({
+    title: model.metaTitle,
+    description: model.metaDescription,
+    canonical,
+    image: heroAbs,
+    ogType: 'product',
+    twitterCard: true,
+    geo: { region: 'FR-74', placename: "Lac d'Annecy, Haute-Savoie" },
+    jsonLd: [
+      schemaProduct,
+      schemaVehicle,
+      faqSchema(model.faqs.map((f) => ({ q: f.q, a: f.a.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') }))),
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Marques', url: `${SITE.url}${brandPath}` },
+        { name: brandName, url: `${SITE.url}${brandPath}` },
+        { name: model.short, url: canonical },
+      ]),
+      ...(schemaVideo ? [schemaVideo] : []),
+    ],
+  });
+}
 
 export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null } = {}) {
   const { brandId, modelId } = useParams<{ brandId: string; modelId: string }>();
@@ -78,8 +180,6 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
   const isParagon = brand.id === 'nautique' && (model.slug.includes('paragon') || model.gamme.toLowerCase().includes('paragon'));
   // H1 : "Nautique G25 Paragon" pour les Paragon Nautique, nom complet sinon.
   const heroTitle = isParagon ? `Nautique ${model.short}` : model.name;
-  const canonical = `${SITE.url}/${brand.id}/${model.slug}/`;
-  const heroAbs = model.hero.startsWith('http') ? model.hero : `${SITE.url}${model.hero}`;
   const others = brand.order.filter((s) => s !== model.slug).map((s) => brand.models[s]);
   const hasEquip = Boolean(model.editions || model.motorizations || model.features || model.options);
   const occasions = brand.id === 'nautique' ? usedBoatsForModel(model.slug) : [];
@@ -97,115 +197,10 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
     { id: 'contact', label: 'Prix & Contact' },
   ].filter(Boolean) as { id: string; label: string }[];
 
-  /* ----------------------------- JSON-LD ----------------------------- */
-  const business = {
-    '@type': 'AutoDealer',
-    '@id': `${SITE.url}/#business`,
-    name: SITE.name,
-    telephone: SITE.phoneHref.replace('tel:', ''),
-    email: SITE.email,
-    url: SITE.url,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: SITE.addressStreet,
-      postalCode: SITE.addressPostal,
-      addressLocality: SITE.addressLocality,
-      addressRegion: SITE.addressRegion,
-      addressCountry: SITE.addressCountry,
-    },
-  };
-  const schemaProduct = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: `${fullName} ${model.year}`,
-    brand: { '@type': 'Brand', name: brandName },
-    category: 'Wakeboat / Bateau de sport nautique',
-    image: [heroAbs],
-    description: model.metaDescription,
-    releaseDate: model.year,
-    ...(milestones.length
-      ? { additionalProperty: { '@type': 'PropertyValue', name: 'Millésimes documentés', value: milestones.map((m) => m.year).join(', ') } }
-      : {}),
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'EUR',
-      availability: 'https://schema.org/InStock',
-      url: canonical,
-      seller: business,
-    },
-  };
-  const schemaVehicle = {
-    '@context': 'https://schema.org',
-    '@type': 'Vehicle',
-    name: `${fullName} ${model.year}`,
-    brand: { '@type': 'Brand', name: brandName },
-    vehicleConfiguration: model.gamme,
-    ...(model.motorizations && model.motorizations.length
-      ? {
-          vehicleEngine: model.motorizations.map((m) => ({
-            '@type': 'EngineSpecification',
-            name: m.name,
-            fuelType: m.fuel,
-            enginePower: m.power,
-          })),
-        }
-      : {}),
-  };
-  const schemaFAQ = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: model.faqs.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') },
-    })),
-  };
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Marques', item: `${SITE.url}${brandPath}` },
-      { '@type': 'ListItem', position: 3, name: brandName, item: `${SITE.url}${brandPath}` },
-      { '@type': 'ListItem', position: 4, name: model.short, item: canonical },
-    ],
-  };
-  const schemaVideo = model.videoId
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'VideoObject',
-        name: `${fullName}, vidéo`,
-        description: `Présentation vidéo du ${fullName}.`,
-        thumbnailUrl: [`https://i.ytimg.com/vi/${model.videoId}/hqdefault.jpg`],
-        uploadDate: `${model.year}-01-01`,
-        contentUrl: `https://www.youtube.com/watch?v=${model.videoId}`,
-        embedUrl: `https://www.youtube.com/embed/${model.videoId}`,
-      }
-    : null;
-
   const sectionPad = 'scroll-mt-[180px]';
 
   return (
     <div className="bg-brand-dark text-gray-200">
-      <Helmet>
-        <title>{model.metaTitle}</title>
-        <meta name="description" content={model.metaDescription} />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:type" content="product" />
-        <meta property="og:title" content={model.metaTitle} />
-        <meta property="og:description" content={model.metaDescription} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={heroAbs} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="geo.region" content="FR-74" />
-        <meta name="geo.placename" content="Lac d'Annecy, Haute-Savoie" />
-        <script type="application/ld+json">{JSON.stringify(schemaProduct)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaVehicle)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-        {schemaVideo && <script type="application/ld+json">{JSON.stringify(schemaVideo)}</script>}
-      </Helmet>
-
       {/* ===================== HERO ===================== */}
       {/* Hero : texte à gauche, bateau à droite (vue rotative) */}
       <header className="relative overflow-hidden bg-brand-dark">

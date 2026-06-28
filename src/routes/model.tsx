@@ -2,6 +2,7 @@ import { useLoaderData, redirect, type LoaderFunctionArgs } from 'react-router';
 import { ModelPage } from '../components/ModelPage';
 import { getModelLive, getBrandModels } from '../data/boatBrands';
 import { serverCms, fetchModels } from '../lib/cms';
+export { modelPageMeta as meta } from '../components/ModelPage';
 
 /** Loader SSR : modèle lu en live depuis le CMS (éditorial fusionné sur le structurel). */
 export async function clientLoader({ params }: LoaderFunctionArgs) {

@@ -10,8 +10,6 @@
     "dev": "vite --port=3000 --host=0.0.0.0",
     "prebuild": "tsx scripts/sync-content.ts && tsx scripts/generate-sitemap.ts",
     "build": "vite build",
-    "prerender": "tsx scripts/prerender.ts",
-    "build:static": "npm run build && npm run prerender",
     "dev:ssr": "react-router dev",
     "build:ssr": "react-router build",
     "start:ssr": "react-router-serve ./build/server/index.js",
@@ -35,7 +33,6 @@
     "nodemailer": "^8.0.10",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
-    "react-helmet-async": "^3.0.0",
     "react-router": "^7.18.0"
   },
   "devDependencies": {
@@ -50,7 +47,6 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.0.4",
     "autoprefixer": "^10.4.21",
-    "puppeteer": "^25.2.1",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",

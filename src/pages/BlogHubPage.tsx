@@ -1,19 +1,52 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { ArrowRight, CalendarDays, Clock } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { BLOG_CATEGORIES, BLOG_ARTICLES, categoryName, type BlogArticle, type BlogCategory } from '../data/blog';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
+import { pageMeta } from '../lib/meta';
+import { breadcrumbSchema } from '../lib/schema';
 
 const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
 
 const fmtDate = (iso: string) =>
   new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
-export function BlogHubPage({ articles: articlesProp, categories: categoriesProp }: { articles?: BlogArticle[]; categories?: BlogCategory[] } = {}) {
+export function blogHubMeta({ data }: { data?: { articles?: BlogArticle[] } } = {}) {
   const canonical = `${SITE.url}/blog/`;
+  const allArticles = data?.articles ?? BLOG_ARTICLES;
+  return pageMeta({
+    title: `Blog | Conseils & actualités nautiques | ${SITE.name}`,
+    description:
+      'Le blog de Motor Boat 74 : guides d’entretien et d’hivernage, comparatifs, actualités Nautique et MasterCraft, conseils d’achat et de revente, près du lac d’Annecy.',
+    canonical,
+    image: HERO,
+    ogTitle: `Blog | ${SITE.name}`,
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Blog',
+        name: `Blog ${SITE.name}`,
+        url: canonical,
+        description: 'Conseils, guides et actualités nautiques par Motor Boat 74, près du lac d’Annecy.',
+        blogPost: allArticles.map((a) => ({
+          '@type': 'BlogPosting',
+          headline: a.title,
+          url: `${SITE.url}${a.path}/`,
+          datePublished: a.date,
+          articleSection: categoryName(a.category),
+        })),
+      },
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Blog', url: canonical },
+      ]),
+    ],
+  });
+}
+
+export function BlogHubPage({ articles: articlesProp, categories: categoriesProp }: { articles?: BlogArticle[]; categories?: BlogCategory[] } = {}) {
   const [active, setActive] = useState<string | null>(null);
   const allArticles = articlesProp ?? BLOG_ARTICLES;
   const categories = categoriesProp ?? BLOG_CATEGORIES;
@@ -23,46 +56,8 @@ export function BlogHubPage({ articles: articlesProp, categories: categoriesProp
     [active, allArticles],
   );
 
-  const schema = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Blog',
-      name: `Blog ${SITE.name}`,
-      url: canonical,
-      description: 'Conseils, guides et actualités nautiques par Motor Boat 74, près du lac d’Annecy.',
-      blogPost: allArticles.map((a) => ({
-        '@type': 'BlogPosting',
-        headline: a.title,
-        url: `${SITE.url}${a.path}/`,
-        datePublished: a.date,
-        articleSection: categoryName(a.category),
-      })),
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: canonical },
-      ],
-    },
-  ];
-
   return (
     <div className="bg-brand-light">
-      <Helmet>
-        <title>{`Blog | Conseils & actualités nautiques | ${SITE.name}`}</title>
-        <meta
-          name="description"
-          content="Le blog de Motor Boat 74 : guides d’entretien et d’hivernage, comparatifs, actualités Nautique et MasterCraft, conseils d’achat et de revente, près du lac d’Annecy."
-        />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={`Blog | ${SITE.name}`} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={HERO} />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      </Helmet>
 
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">

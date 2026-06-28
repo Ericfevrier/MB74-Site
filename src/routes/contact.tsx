@@ -1,1 +1,1 @@
-export { ContactPage as default } from '../pages/ContactPage';
+export { ContactPage as default, contactMeta as meta } from '../pages/ContactPage';

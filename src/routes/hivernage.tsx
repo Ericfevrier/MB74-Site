@@ -1,1 +1,1 @@
-export { HivernageStockagePage as default } from '../pages/HivernageStockagePage';
+export { HivernageStockagePage as default, hivernageMeta as meta } from '../pages/HivernageStockagePage';

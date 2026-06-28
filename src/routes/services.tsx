@@ -1,1 +1,1 @@
-export { ServicesHubPage as default } from '../pages/ServicesHubPage';
+export { ServicesHubPage as default, servicesHubMeta as meta } from '../pages/ServicesHubPage';

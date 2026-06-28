@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router';
 import { motion, AnimatePresence } from 'motion/react';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
+import { pageMeta } from '../lib/meta';
 import {
   Shield,
   Wrench,
@@ -31,6 +31,135 @@ import {
   MessageCircle,
   Truck,
 } from 'lucide-react';
+
+export function hivernageMeta() {
+  const SITE_URL = 'https://motorboat74.com';
+  const GOOGLE_RATING = { value: '4.7', count: 20 };
+  const areaServed = [
+    { '@type': 'City', name: 'Annecy' },
+    { '@type': 'AdministrativeArea', name: 'Haute-Savoie' },
+    { '@type': 'Place', name: "Lac d'Annecy" },
+    { '@type': 'Place', name: 'Lac du Bourget' },
+    { '@type': 'Place', name: 'Lac Léman' },
+    { '@type': 'City', name: 'Sevrier' },
+    { '@type': 'City', name: 'Saint-Jorioz' },
+    { '@type': 'City', name: 'Talloires' },
+    { '@type': 'City', name: 'Faverges' },
+  ];
+
+  const schemaLocalBusiness = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${SITE_URL}/#business`,
+    name: 'MotorBoat 74',
+    description:
+      "Concessionnaire et atelier nautique en Haute-Savoie spécialisé dans l'hivernage, le stockage, l'entretien et la vente de bateaux sur le Lac d'Annecy.",
+    url: SITE_URL,
+    logo: `${SITE_URL}/images/logo-transprent.png`,
+    image: `${SITE_URL}/images/logo-transprent.png`,
+    telephone: '+33457572727',
+    email: 'contact@motorboat74.com',
+    priceRange: '€€',
+    currenciesAccepted: 'EUR',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '179 Allée des Edelweiss',
+      addressLocality: 'Saint-Ferréol',
+      postalCode: '74210',
+      addressRegion: 'Haute-Savoie',
+      addressCountry: 'FR',
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: 45.7466, longitude: 6.3036 },
+    areaServed,
+    hasMap:
+      'https://www.google.com/maps/dir/?api=1&destination=179+All%C3%A9e+des+Edelweiss+74210+Saint-Ferr%C3%A9ol',
+    ...(GOOGLE_RATING.count > 0
+      ? {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: GOOGLE_RATING.value,
+            reviewCount: GOOGLE_RATING.count,
+            bestRating: '5',
+          },
+        }
+      : {}),
+  };
+
+  const schemaService = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Hivernage et stockage de bateau à Annecy (Haute-Savoie)',
+    serviceType: 'Hivernage, stockage et entretien hivernal de bateaux',
+    provider: { '@id': `${SITE_URL}/#business` },
+    areaServed,
+    url: `${SITE_URL}/hivernage-stockage-bateau`,
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      url: `${SITE_URL}/hivernage-stockage-bateau`,
+      description: 'Devis personnalisé gratuit sous 24 h, selon la taille et la motorisation du bateau.',
+    },
+    description:
+      "Hivernez votre bateau à Annecy et en Haute-Savoie dans un hangar sécurisé de 3 000 m². Mise hors d'eau, hivernage moteur certifié, antigel, stockage hors-gel, remise en service et livraison printanière incluses.",
+  };
+
+  const schemaFAQ = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      { '@type': 'Question', name: "Quand faut-il effectuer l'hivernage de son bateau ?", acceptedAnswer: { '@type': 'Answer', text: "L'hivernage doit démarrer dès la fin de saison d'été (septembre à novembre) avant les premières gelées alpines en Haute-Savoie. Attendre décembre augmente fortement les risques d'infiltration d’eau gelée et de casse thermique du bloc moteur." } },
+      { '@type': 'Question', name: "Quel est le prix moyen d'un hivernage de bateau à Annecy ?", acceptedAnswer: { '@type': 'Answer', text: 'Le tarif dépend de la longueur de la coque, de la motorisation (in-board / hors-bord) et de la formule choisie (hivernage complet ou stockage seul). Nous établissons un devis personnalisé et gratuit sous 24 h, sans engagement.' } },
+      { '@type': 'Question', name: 'Quels types de bateaux pouvez-vous hiverner ?', acceptedAnswer: { '@type': 'Answer', text: "Nous stockons et entretenons tous types d'embarcations : bateaux de wakeboard / wakesurf (Nautique, MasterCraft, Tigé, Malibu), motorboats, yachts de cabine, runabouts et barques de pêche. Notre grue à portique prend en charge les bateaux jusqu'à 10 tonnes." } },
+      { '@type': 'Question', name: "Comment préparez-vous le moteur pour l'hiver ?", acceptedAnswer: { '@type': 'Answer', text: "Notre protocole hivernage inclut : vidange moteur complète, remplacement des filtres à huile/carburant, stabilisation de l'essence, injection d'antigel de grade marine biodégradable dans le circuit thermique, déconnexion avec charge d’entretien de la batterie et pulvérisation de graisse anti-corrosion." } },
+      { '@type': 'Question', name: 'Vaut-il mieux stocker son bateau en intérieur ou en extérieur ?', acceptedAnswer: { '@type': 'Answer', text: "En Haute-Savoie, l'intérieur en hangar isolé est hautement recommandé en raison du gel tenace et des fortes chutes de neige alpines. Un stockage intérieur élimine l'usure prématurée liée aux UV, à l'accumulation de glace et prévient la condensation destructrice." } },
+      { '@type': 'Question', name: "Comment se déroule la remise à l'eau au printemps ?", acceptedAnswer: { '@type': 'Answer', text: "Comprise dans notre pack Hivernage Complet, nous rechargeons les batteries, démarrons le moteur en bac avec contrôle des fluides, inspectons les pompes de cale et d'eau, et effectuons la mise à l'eau au port de votre choix (Annecy, Sevrier, Veyrier, etc.) à la date convenue." } },
+      { '@type': 'Question', name: "Quelle est la durée minimale d'un contrat de stockage ?", acceptedAnswer: { '@type': 'Answer', text: "Notre contrat de stockage hivernal standard couvre la saison d'octobre à avril (7 mois). Des options de stockage à l'année (remisage annuel sous hangar) sont aussi disponibles pour les propriétaires réguliers." } },
+      { '@type': 'Question', name: 'Mon bateau est-il assuré pendant son séjour dans votre hangar ?', acceptedAnswer: { '@type': 'Answer', text: "Notre infrastructure de 3 000 m² à Saint-Ferréol bénéficie d'une couverture d'assurance responsabilité civile professionnelle de stockage robuste. Votre bateau doit néanmoins conserver sa propre police d'assurance tous risques contre le vol et l'incendie (condition standard marine)." } },
+      { '@type': 'Question', name: "Puis-je accéder à mon bateau pendant la période d'hivernage ?", acceptedAnswer: { '@type': 'Answer', text: "Oui, l'accès est possible sur rendez-vous préalable d'au moins 48 heures ouvrées pour des raisons d'organisation et de sécurité optimale de l'enceinte sous clé." } },
+      { '@type': 'Question', name: 'Prenez-vous en charge toutes les marques de bateaux ?', acceptedAnswer: { '@type': 'Answer', text: "Oui. Bien que nous soyons concessionnaire officiel Nautique, nos mécaniciens possèdent une expertise élargie de plus de 15 ans permettant d'intervenir sur Malibu, Mastercraft, Tigé, Supra, Moomba, Sea Ray, Beneteau, Jeanneau, Monterey, Quicksilver, Yamaha, etc." } },
+      { '@type': 'Question', name: 'Quelle est la différence entre un hivernage actif et passif ?', acceptedAnswer: { '@type': 'Answer', text: "L’hivernage passif (le nôtre, privilégiant l'arrêt total) consiste à purger en totalité les systèmes de fluides et remiser le bateau au sec. L’hivernage actif maintient le bateau à flot ou sous surveillance dynamique hebdomadaire, déconseillé sur le Lac d'Annecy à cause des températures négatives durables." } },
+      { '@type': 'Question', name: 'Gerez-vous la récupération de mon bateau directement au port ?', acceptedAnswer: { '@type': 'Answer', text: "Oui. Notre équipe assure le service complet de transport : nous venons gruter ou sortir votre bateau de l'eau sur sa remorque au ponton d’Annecy, Sevrier, Saint-Jorioz, Talloires, Veyrier, Thonon ou Genève pour le convoyer directement à notre dépôt sécurisé." } },
+    ],
+  };
+
+  const schemaBreadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://motorboat74.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://motorboat74.com/#services' },
+      { '@type': 'ListItem', position: 3, name: 'Hivernage & Stockage' },
+    ],
+  };
+
+  return pageMeta({
+    title: 'Hivernage & Stockage Bateau Annecy, Hangar 3000 m² | MB74',
+    description:
+      "Hivernage et stockage de bateau à Annecy (Haute-Savoie) : hangar sécurisé 3 000 m², hivernage moteur certifié, antigel, remise à l'eau incluse. Devis personnalisé gratuit sous 24 h.",
+    canonical: 'https://motorboat74.com/hivernage-stockage-bateau',
+    image: 'https://motorboat74.com/images/2026-g23-perf-18.jpg',
+    robots: 'index, follow, max-image-preview:large',
+    ogTitle: 'Hivernage & Stockage de Bateau à Annecy, Hangar sécurisé 3 000 m²',
+    ogDescription:
+      "Hivernage moteur certifié, antigel, stockage hors-gel et remise à l'eau incluse sur le Lac d'Annecy. Devis personnalisé gratuit sous 24 h.",
+    ogLocale: 'fr_FR',
+    ogSiteName: 'MotorBoat 74',
+    twitterCard: true,
+    geo: {
+      region: 'FR-74',
+      placename: 'Saint-Ferréol, Annecy, Haute-Savoie',
+      position: '45.7365;6.2772',
+      icbm: '45.7365, 6.2772',
+    },
+    jsonLd: [schemaLocalBusiness, schemaService, schemaFAQ, schemaBreadcrumb],
+    extra: [
+      { name: 'twitter:title', content: 'Hivernage & Stockage de Bateau à Annecy, Hangar 3 000 m²' },
+      { name: 'twitter:description', content: "Hivernage moteur certifié et stockage hors-gel sur le Lac d'Annecy. Devis personnalisé gratuit sous 24 h." },
+      { name: 'twitter:image', content: 'https://motorboat74.com/images/2026-g23-perf-18.jpg' },
+    ],
+  });
+}
 
 export function HivernageStockagePage() {
   // States of interactive UI
@@ -81,195 +210,6 @@ export function HivernageStockagePage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  // JSON-LD Schemas definitions
-  const SITE_URL = "https://motorboat74.com";
-
-  // Note d'avis Google (profil Google Business, relevé le 2026-06-11).
-  const GOOGLE_RATING = { value: "4.7", count: 20 };
-
-  const areaServed = [
-    { "@type": "City", "name": "Annecy" },
-    { "@type": "AdministrativeArea", "name": "Haute-Savoie" },
-    { "@type": "Place", "name": "Lac d'Annecy" },
-    { "@type": "Place", "name": "Lac du Bourget" },
-    { "@type": "Place", "name": "Lac Léman" },
-    { "@type": "City", "name": "Sevrier" },
-    { "@type": "City", "name": "Saint-Jorioz" },
-    { "@type": "City", "name": "Talloires" },
-    { "@type": "City", "name": "Faverges" }
-  ];
-
-  const schemaLocalBusiness = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": `${SITE_URL}/#business`,
-    "name": "MotorBoat 74",
-    "description": "Concessionnaire et atelier nautique en Haute-Savoie spécialisé dans l'hivernage, le stockage, l'entretien et la vente de bateaux sur le Lac d'Annecy.",
-    "url": SITE_URL,
-    "logo": `${SITE_URL}/images/logo-transprent.png`,
-    "image": `${SITE_URL}/images/logo-transprent.png`,
-    "telephone": "+33457572727",
-    "email": "contact@motorboat74.com",
-    "priceRange": "€€",
-    "currenciesAccepted": "EUR",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "179 Allée des Edelweiss",
-      "addressLocality": "Saint-Ferréol",
-      "postalCode": "74210",
-      "addressRegion": "Haute-Savoie",
-      "addressCountry": "FR"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 45.7466,
-      "longitude": 6.3036
-    },
-    "areaServed": areaServed,
-    "hasMap": "https://www.google.com/maps/dir/?api=1&destination=179+All%C3%A9e+des+Edelweiss+74210+Saint-Ferr%C3%A9ol",
-    ...(GOOGLE_RATING.count > 0
-      ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            "ratingValue": GOOGLE_RATING.value,
-            "reviewCount": GOOGLE_RATING.count,
-            "bestRating": "5"
-          }
-        }
-      : {})
-  };
-
-  const schemaService = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Hivernage et stockage de bateau à Annecy (Haute-Savoie)",
-    "serviceType": "Hivernage, stockage et entretien hivernal de bateaux",
-    "provider": { "@id": `${SITE_URL}/#business` },
-    "areaServed": areaServed,
-    "url": `${SITE_URL}/hivernage-stockage-bateau`,
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": "EUR",
-      "availability": "https://schema.org/InStock",
-      "url": `${SITE_URL}/hivernage-stockage-bateau`,
-      "description": "Devis personnalisé gratuit sous 24 h, selon la taille et la motorisation du bateau."
-    },
-    "description": "Hivernez votre bateau à Annecy et en Haute-Savoie dans un hangar sécurisé de 3 000 m². Mise hors d'eau, hivernage moteur certifié, antigel, stockage hors-gel, remise en service et livraison printanière incluses."
-  };
-
-  const schemaFAQ = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Quand faut-il effectuer l'hivernage de son bateau ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "L'hivernage doit démarrer dès la fin de saison d'été (septembre à novembre) avant les premières gelées alpines en Haute-Savoie. Attendre décembre augmente fortement les risques d'infiltration d’eau gelée et de casse thermique du bloc moteur."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Quel est le prix moyen d'un hivernage de bateau à Annecy ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Le tarif dépend de la longueur de la coque, de la motorisation (in-board / hors-bord) et de la formule choisie (hivernage complet ou stockage seul). Nous établissons un devis personnalisé et gratuit sous 24 h, sans engagement."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Quels types de bateaux pouvez-vous hiverner ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Nous stockons et entretenons tous types d'embarcations : bateaux de wakeboard / wakesurf (Nautique, MasterCraft, Tigé, Malibu), motorboats, yachts de cabine, runabouts et barques de pêche. Notre grue à portique prend en charge les bateaux jusqu'à 10 tonnes."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Comment préparez-vous le moteur pour l'hiver ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Notre protocole hivernage inclut : vidange moteur complète, remplacement des filtres à huile/carburant, stabilisation de l'essence, injection d'antigel de grade marine biodégradable dans le circuit thermique, déconnexion avec charge d’entretien de la batterie et pulvérisation de graisse anti-corrosion."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Vaut-il mieux stocker son bateau en intérieur ou en extérieur ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "En Haute-Savoie, l'intérieur en hangar isolé est hautement recommandé en raison du gel tenace et des fortes chutes de neige alpines. Un stockage intérieur élimine l'usure prématurée liée aux UV, à l'accumulation de glace et prévient la condensation destructrice."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Comment se déroule la remise à l'eau au printemps ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Comprise dans notre pack Hivernage Complet, nous rechargeons les batteries, démarrons le moteur en bac avec contrôle des fluides, inspectons les pompes de cale et d'eau, et effectuons la mise à l'eau au port de votre choix (Annecy, Sevrier, Veyrier, etc.) à la date convenue."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Quelle est la durée minimale d'un contrat de stockage ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Notre contrat de stockage hivernal standard couvre la saison d'octobre à avril (7 mois). Des options de stockage à l'année (remisage annuel sous hangar) sont aussi disponibles pour les propriétaires réguliers."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Mon bateau est-il assuré pendant son séjour dans votre hangar ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Notre infrastructure de 3 000 m² à Saint-Ferréol bénéficie d'une couverture d'assurance responsabilité civile professionnelle de stockage robuste. Votre bateau doit néanmoins conserver sa propre police d'assurance tous risques contre le vol et l'incendie (condition standard marine)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Puis-je accéder à mon bateau pendant la période d'hivernage ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Oui, l'accès est possible sur rendez-vous préalable d'au moins 48 heures ouvrées pour des raisons d'organisation et de sécurité optimale de l'enceinte sous clé."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Prenez-vous en charge toutes les marques de bateaux ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Oui. Bien que nous soyons concessionnaire officiel Nautique, nos mécaniciens possèdent une expertise élargie de plus de 15 ans permettant d'intervenir sur Malibu, Mastercraft, Tigé, Supra, Moomba, Sea Ray, Beneteau, Jeanneau, Monterey, Quicksilver, Yamaha, etc."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Quelle est la différence entre un hivernage actif et passif ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "L’hivernage passif (le nôtre, privilégiant l'arrêt total) consiste à purger en totalité les systèmes de fluides et remiser le bateau au sec. L’hivernage actif maintient le bateau à flot ou sous surveillance dynamique hebdomadaire, déconseillé sur le Lac d'Annecy à cause des températures négatives durables."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Gerez-vous la récupération de mon bateau directement au port ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Oui. Notre équipe assure le service complet de transport : nous venons gruter ou sortir votre bateau de l'eau sur sa remorque au ponton d’Annecy, Sevrier, Saint-Jorioz, Talloires, Veyrier, Thonon ou Genève pour le convoyer directement à notre dépôt sécurisé."
-        }
-      }
-    ]
-  };
-
-  const schemaBreadcrumb = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://motorboat74.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://motorboat74.com/#services" },
-      { "@type": "ListItem", "position": 3, "name": "Hivernage & Stockage" }
-    ]
-  };
 
   // 12 High-quality FAQS mapped to a structured UI list
   const faqs = [
@@ -325,34 +265,6 @@ export function HivernageStockagePage() {
 
   return (
     <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
-      <Helmet>
-        <title>Hivernage & Stockage Bateau Annecy, Hangar 3000 m² | MB74</title>
-        <meta name="description" content="Hivernage et stockage de bateau à Annecy (Haute-Savoie) : hangar sécurisé 3 000 m², hivernage moteur certifié, antigel, remise à l'eau incluse. Devis personnalisé gratuit sous 24 h." />
-        <link rel="canonical" href="https://motorboat74.com/hivernage-stockage-bateau" />
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta name="geo.region" content="FR-74" />
-        <meta name="geo.placename" content="Saint-Ferréol, Annecy, Haute-Savoie" />
-        <meta name="geo.position" content="45.7365;6.2772" />
-        <meta name="ICBM" content="45.7365, 6.2772" />
-        {/* Open Graph */}
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="fr_FR" />
-        <meta property="og:site_name" content="MotorBoat 74" />
-        <meta property="og:title" content="Hivernage & Stockage de Bateau à Annecy, Hangar sécurisé 3 000 m²" />
-        <meta property="og:description" content="Hivernage moteur certifié, antigel, stockage hors-gel et remise à l'eau incluse sur le Lac d'Annecy. Devis personnalisé gratuit sous 24 h." />
-        <meta property="og:url" content="https://motorboat74.com/hivernage-stockage-bateau" />
-        <meta property="og:image" content="https://motorboat74.com/images/2026-g23-perf-18.jpg" />
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Hivernage & Stockage de Bateau à Annecy, Hangar 3 000 m²" />
-        <meta name="twitter:description" content="Hivernage moteur certifié et stockage hors-gel sur le Lac d'Annecy. Devis personnalisé gratuit sous 24 h." />
-        <meta name="twitter:image" content="https://motorboat74.com/images/2026-g23-perf-18.jpg" />
-        <script type="application/ld+json">{JSON.stringify(schemaLocalBusiness)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaService)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
-
       {/* 🟢 Mobile Sticky bottom CTA floating - scrolls to form */}
       <div className="lg:hidden fixed bottom-6 inset-x-0 mx-auto px-6 z-50 pointer-events-none">
         <button 

@@ -1,5 +1,6 @@
 import { useLoaderData } from 'react-router';
 import { BlogHubPage } from '../pages/BlogHubPage';
+export { blogHubMeta as meta } from '../pages/BlogHubPage';
 import { BLOG_ARTICLES, BLOG_CATEGORIES } from '../data/blog';
 import { serverCms, fetchBlogArticles, fetchBlogCategories } from '../lib/cms';
 

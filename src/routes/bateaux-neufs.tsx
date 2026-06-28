@@ -1,1 +1,1 @@
-export { BateauxNeufsPage as default } from '../pages/BateauxNeufsPage';
+export { BateauxNeufsPage as default, bateauxNeufsMeta as meta } from '../pages/BateauxNeufsPage';

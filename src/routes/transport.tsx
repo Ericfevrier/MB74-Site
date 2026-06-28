@@ -1,1 +1,1 @@
-export { TransportPage as default } from '../pages/TransportPage';
+export { TransportPage as default, transportMeta as meta } from '../pages/TransportPage';

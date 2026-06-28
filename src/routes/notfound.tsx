@@ -1,1 +1,1 @@
-export { NotFound as default } from '../components/NotFound';
+export { NotFound as default, notFoundMeta as meta } from '../components/NotFound';

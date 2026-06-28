@@ -2,6 +2,7 @@ import { useLoaderData, redirect, type LoaderFunctionArgs } from 'react-router';
 import { OccasionDetailPage } from '../pages/OccasionDetailPage';
 import { getUsedBoatBySlug } from '../data/usedBoats';
 import { serverCms, fetchUsedBoats } from '../lib/cms';
+export { occasionDetailMeta as meta } from '../pages/OccasionDetailPage';
 
 /** Loader SSR : fiche occasion lue en live depuis le CMS (repli statique côté page). */
 export async function clientLoader({ params }: LoaderFunctionArgs) {

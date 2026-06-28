@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import {
   ArrowRight, Phone, Calendar, Users, Gauge, Clock, Ruler, MapPin, Check, ChevronDown,
   ShieldCheck, Wallet, Wrench, Waves,
@@ -11,11 +10,108 @@ import { getUsedBoatBySlug, allUsedBoats, availableUsedBoats, type UsedBoat } fr
 import { getBrandModels } from '../data/boatBrands';
 import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
+import { pageMeta } from '../lib/meta';
+import { breadcrumbSchema, faqSchema } from '../lib/schema';
 
 const firstInt = (s?: string): number | undefined => {
   const m = s?.match(/\d[\d\s]*/);
   return m ? parseInt(m[0].replace(/\s/g, ''), 10) : undefined;
 };
+
+/** FAQ d'une fiche occasion (partagée par l'UI et le JSON-LD). */
+export function occasionFaqs(boat: UsedBoat) {
+  return [
+    boat.sold
+      ? {
+          q: `Le ${boat.title} ${boat.year} est-il encore disponible ?`,
+          a: `Ce ${boat.title} a été vendu. Motor Boat 74 peut rechercher pour vous un modèle équivalent : contactez-nous pour lancer une recherche sur mesure, nous vous alertons dès qu’un bateau correspondant arrive.`,
+        }
+      : {
+          q: `Le ${boat.title} ${boat.year} est-il disponible ?`,
+          a: `Oui, ce ${boat.title} ${boat.year} est actuellement disponible chez Motor Boat 74, près du lac d’Annecy. Contactez-nous au ${SITE.phoneDisplay} pour vérifier la disponibilité, organiser une visite ou un essai.`,
+        },
+    {
+      q: 'Puis-je essayer ce bateau avant l’achat ?',
+      a: 'Oui. Nous organisons des essais sur l’eau sur le lac d’Annecy pour vous permettre de prendre en main le bateau et de valider votre choix avant l’achat.',
+    },
+    {
+      q: 'Reprenez-vous mon bateau actuel ?',
+      a: 'Oui, Motor Boat 74 propose la reprise de votre bateau. Nous l’estimons et déduisons sa valeur du prix, pour simplifier votre changement.',
+    },
+    {
+      q: 'Le financement est-il possible ?',
+      a: 'Oui, nous proposons des solutions de financement sur mesure pour les bateaux d’occasion comme neufs. Parlons-en pour adapter les mensualités à votre projet.',
+    },
+    {
+      q: 'Ce bateau d’occasion est-il révisé et garanti ?',
+      a: 'Chaque bateau d’occasion est contrôlé et préparé par nos ateliers avant la vente (mécanique, coque, sellerie). Nous assurons ensuite son entretien, son hivernage et son SAV.',
+    },
+  ];
+}
+
+export function occasionDetailMeta({ data, params }: { data?: { boat?: UsedBoat } | null; params: { slug?: string } }) {
+  const boat = data?.boat ?? getUsedBoatBySlug(params.slug);
+  if (!boat) return [{ title: `Bateaux d’occasion | ${SITE.name}` }];
+
+  const brand = getBrandModels(boat.brandId);
+  const brandName = brand?.name || (boat.brandId === 'heyday' ? 'Heyday' : boat.brandId === 'malibu' ? 'Malibu' : undefined);
+  const model = brand?.models[boat.modelSlug];
+  const gallery = boat.gallery && boat.gallery.length ? boat.gallery : [boat.image];
+  const canonical = `${SITE.url}/bateaux/occasion/${boat.slug}/`;
+  const heroAbs = boat.image.startsWith('http') ? boat.image : `${SITE.url}${boat.image}`;
+  const seating = firstInt(boat.capacity);
+  const hoursNum = firstInt(boat.hours);
+  const additionalProperty = [
+    boat.hours && { '@type': 'PropertyValue', name: 'Heures moteur', value: boat.hours },
+    boat.length && { '@type': 'PropertyValue', name: 'Longueur', value: boat.length },
+    boat.location && { '@type': 'PropertyValue', name: 'Localisation', value: boat.location },
+  ].filter(Boolean);
+  const nextYear = new Date();
+  nextYear.setFullYear(nextYear.getFullYear() + 1);
+
+  return pageMeta({
+    title: `${boat.title} ${boat.year} d’occasion${boat.price && !boat.sold ? ` - ${boat.price}` : ''} | Motor Boat 74`,
+    description: `${boat.title} ${boat.year} d’occasion${brandName ? ` (${brandName})` : ''} chez Motor Boat 74, près du lac d’Annecy. ${boat.power ? boat.power + '. ' : ''}${boat.hours ? boat.hours + ' moteur. ' : ''}Révisé, essai sur l’eau, reprise et financement.`,
+    canonical,
+    image: heroAbs,
+    ogTitle: `${boat.title} ${boat.year} d’occasion | Motor Boat 74`,
+    robots: boat.sold ? 'noindex, follow' : undefined,
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': ['Product', 'Vehicle'],
+        name: `${boat.title} ${boat.year} d’occasion`,
+        image: gallery.map((g) => (g.startsWith('http') ? g : `${SITE.url}${g}`)),
+        description: boat.description || `${boat.title} ${boat.year} d’occasion, révisé par Motor Boat 74, près du lac d’Annecy.`,
+        ...(brandName ? { brand: { '@type': 'Brand', name: brandName } } : {}),
+        ...(model ? { model: model.fullName || model.name } : {}),
+        vehicleModelDate: boat.year,
+        productionDate: boat.year,
+        itemCondition: 'https://schema.org/UsedCondition',
+        ...(boat.power ? { vehicleEngine: { '@type': 'EngineSpecification', name: boat.power } } : {}),
+        ...(seating ? { vehicleSeatingCapacity: seating } : {}),
+        ...(hoursNum ? { mileageFromOdometer: { '@type': 'QuantitativeValue', value: hoursNum, unitText: 'heures' } } : {}),
+        ...(additionalProperty.length ? { additionalProperty } : {}),
+        offers: {
+          '@type': 'Offer',
+          priceCurrency: 'EUR',
+          ...(boat.priceValue ? { price: boat.priceValue, priceValidUntil: nextYear.toISOString().slice(0, 10) } : {}),
+          availability: boat.sold ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+          itemCondition: 'https://schema.org/UsedCondition',
+          url: canonical,
+          seller: { '@type': 'AutoDealer', name: SITE.name, telephone: SITE.phoneDisplay },
+        },
+      },
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Bateaux', url: `${SITE.url}/bateaux/` },
+        { name: 'Bateaux d’occasion', url: `${SITE.url}/bateaux/occasion/` },
+        { name: `${boat.title} ${boat.year}`, url: canonical },
+      ]),
+      faqSchema(occasionFaqs(boat)),
+    ],
+  });
+}
 
 export function OccasionDetailPage({ boat: boatProp, related: relatedProp }: { boat?: UsedBoat | null; related?: UsedBoat[] } = {}) {
   const { slug } = useParams<{ slug: string }>();
@@ -32,8 +128,6 @@ export function OccasionDetailPage({ boat: boatProp, related: relatedProp }: { b
   const model = brand?.models[boat.modelSlug];
   const modelPath = model ? `/${boat.brandId}/${model.slug}` : undefined;
   const gallery = boat.gallery && boat.gallery.length ? boat.gallery : [boat.image];
-  const canonical = `${SITE.url}/bateaux/occasion/${boat.slug}/`;
-  const heroAbs = boat.image.startsWith('http') ? boat.image : `${SITE.url}${boat.image}`;
 
   // Bateaux similaires (même marque), repli sur les autres disponibles.
   let related = relatedProp;
@@ -64,108 +158,10 @@ export function OccasionDetailPage({ boat: boatProp, related: relatedProp }: { b
     { label: 'État', value: boat.sold ? 'Vendu' : 'Occasion révisée' },
   ].filter(Boolean) as { label: string; value: string }[];
 
-  const seating = firstInt(boat.capacity);
-  const hoursNum = firstInt(boat.hours);
-
-  const faqs = [
-    boat.sold
-      ? {
-          q: `Le ${boat.title} ${boat.year} est-il encore disponible ?`,
-          a: `Ce ${boat.title} a été vendu. Motor Boat 74 peut rechercher pour vous un modèle équivalent : contactez-nous pour lancer une recherche sur mesure, nous vous alertons dès qu’un bateau correspondant arrive.`,
-        }
-      : {
-          q: `Le ${boat.title} ${boat.year} est-il disponible ?`,
-          a: `Oui, ce ${boat.title} ${boat.year} est actuellement disponible chez Motor Boat 74, près du lac d’Annecy. Contactez-nous au ${SITE.phoneDisplay} pour vérifier la disponibilité, organiser une visite ou un essai.`,
-        },
-    {
-      q: 'Puis-je essayer ce bateau avant l’achat ?',
-      a: 'Oui. Nous organisons des essais sur l’eau sur le lac d’Annecy pour vous permettre de prendre en main le bateau et de valider votre choix avant l’achat.',
-    },
-    {
-      q: 'Reprenez-vous mon bateau actuel ?',
-      a: 'Oui, Motor Boat 74 propose la reprise de votre bateau. Nous l’estimons et déduisons sa valeur du prix, pour simplifier votre changement.',
-    },
-    {
-      q: 'Le financement est-il possible ?',
-      a: 'Oui, nous proposons des solutions de financement sur mesure pour les bateaux d’occasion comme neufs. Parlons-en pour adapter les mensualités à votre projet.',
-    },
-    {
-      q: 'Ce bateau d’occasion est-il révisé et garanti ?',
-      a: 'Chaque bateau d’occasion est contrôlé et préparé par nos ateliers avant la vente (mécanique, coque, sellerie). Nous assurons ensuite son entretien, son hivernage et son SAV.',
-    },
-  ];
-
-  const additionalProperty = [
-    boat.hours && { '@type': 'PropertyValue', name: 'Heures moteur', value: boat.hours },
-    boat.length && { '@type': 'PropertyValue', name: 'Longueur', value: boat.length },
-    boat.location && { '@type': 'PropertyValue', name: 'Localisation', value: boat.location },
-  ].filter(Boolean);
-
-  const nextYear = new Date();
-  nextYear.setFullYear(nextYear.getFullYear() + 1);
-
-  const schema = [
-    {
-      '@context': 'https://schema.org',
-      '@type': ['Product', 'Vehicle'],
-      name: `${boat.title} ${boat.year} d’occasion`,
-      image: gallery.map((g) => (g.startsWith('http') ? g : `${SITE.url}${g}`)),
-      description: boat.description || `${boat.title} ${boat.year} d’occasion, révisé par Motor Boat 74, près du lac d’Annecy.`,
-      ...(brandName ? { brand: { '@type': 'Brand', name: brandName } } : {}),
-      ...(model ? { model: model.fullName || model.name } : {}),
-      vehicleModelDate: boat.year,
-      productionDate: boat.year,
-      itemCondition: 'https://schema.org/UsedCondition',
-      ...(boat.power ? { vehicleEngine: { '@type': 'EngineSpecification', name: boat.power } } : {}),
-      ...(seating ? { vehicleSeatingCapacity: seating } : {}),
-      ...(hoursNum
-        ? { mileageFromOdometer: { '@type': 'QuantitativeValue', value: hoursNum, unitText: 'heures' } }
-        : {}),
-      ...(additionalProperty.length ? { additionalProperty } : {}),
-      offers: {
-        '@type': 'Offer',
-        priceCurrency: 'EUR',
-        ...(boat.priceValue ? { price: boat.priceValue, priceValidUntil: nextYear.toISOString().slice(0, 10) } : {}),
-        availability: boat.sold ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
-        itemCondition: 'https://schema.org/UsedCondition',
-        url: canonical,
-        seller: { '@type': 'AutoDealer', name: SITE.name, telephone: SITE.phoneDisplay },
-      },
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-        { '@type': 'ListItem', position: 2, name: 'Bateaux', item: `${SITE.url}/bateaux/` },
-        { '@type': 'ListItem', position: 3, name: 'Bateaux d’occasion', item: `${SITE.url}/bateaux/occasion/` },
-        { '@type': 'ListItem', position: 4, name: `${boat.title} ${boat.year}`, item: canonical },
-      ],
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-    },
-  ];
+  const faqs = occasionFaqs(boat);
 
   return (
     <div className="bg-brand-light">
-      <Helmet>
-        <title>{`${boat.title} ${boat.year} d’occasion${boat.price && !boat.sold ? ` - ${boat.price}` : ''} | Motor Boat 74`}</title>
-        <meta
-          name="description"
-          content={`${boat.title} ${boat.year} d’occasion${brandName ? ` (${brandName})` : ''} chez Motor Boat 74, près du lac d’Annecy. ${boat.power ? boat.power + '. ' : ''}${boat.hours ? boat.hours + ' moteur. ' : ''}Révisé, essai sur l’eau, reprise et financement.`}
-        />
-        <link rel="canonical" href={canonical} />
-        {boat.sold && <meta name="robots" content="noindex, follow" />}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={`${boat.title} ${boat.year} d’occasion | Motor Boat 74`} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={heroAbs} />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      </Helmet>
-
       {/* ===================== HERO ===================== */}
       <div className="bg-brand-dark text-white">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 pt-10 pb-16 lg:pt-12 lg:pb-20">

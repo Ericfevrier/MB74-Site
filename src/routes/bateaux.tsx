@@ -1,1 +1,1 @@
-export { BateauxHubPage as default } from '../pages/BateauxHubPage';
+export { BateauxHubPage as default, bateauxHubMeta as meta } from '../pages/BateauxHubPage';

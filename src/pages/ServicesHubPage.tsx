@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Check, Shield, Wrench, LifeBuoy, Truck, Sofa, Caravan, Warehouse, Clock, MapPin } from 'lucide-react';
 import { SITE } from '../data/site';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
+import { pageMeta } from '../lib/meta';
+import { breadcrumbSchema } from '../lib/schema';
 
 interface HubCard {
   title: string;
@@ -64,33 +65,26 @@ const stats = [
   { icon: MapPin, value: 'Transport', label: 'en France et en Europe' },
 ];
 
-export function ServicesHubPage() {
+export function servicesHubMeta() {
   const canonical = `${SITE.url}/services/`;
-
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: canonical },
+  return pageMeta({
+    title: 'Nos Services Nautiques | Motor Boat 74',
+    description:
+      'Découvrez les services de MotorBoat74 à Annecy : vente de bateaux Nautique, hivernage sécurisé, entretien, dépannage, transport et sellerie en Haute-Savoie.',
+    canonical,
+    image: `${SITE.url}/images/services/services-hub.jpg`,
+    jsonLd: [
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Services', url: canonical },
+      ]),
     ],
-  };
+  });
+}
 
+export function ServicesHubPage() {
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>Nos Services Nautiques | Motor Boat 74</title>
-        <meta
-          name="description"
-          content="Découvrez les services de MotorBoat74 à Annecy : vente de bateaux Nautique, hivernage sécurisé, entretien, dépannage, transport et sellerie en Haute-Savoie."
-        />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Nos Services Nautiques | Motor Boat 74" />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={`${SITE.url}/images/services/services-hub.jpg`} />
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
 
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">

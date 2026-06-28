@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useParams, Navigate, Link } from 'react-router';
-import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
 import { Breadcrumb } from '../components/Breadcrumb';
 import {
@@ -12,6 +11,37 @@ import { getService, ServiceSection, ServiceCard } from '../data/services';
 import { SITE } from '../data/site';
 import { OtherServices } from '../components/OtherServices';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
+import { pageMeta } from '../lib/meta';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
+
+export function servicePageMeta({ params }: { params: { slug?: string } }) {
+  const service = params.slug ? getService(params.slug) : undefined;
+  if (!service) return [{ title: `Nos Services Nautiques | ${SITE.name}` }];
+  const canonical = `${SITE.url}/services/${service.slug}/`;
+  return pageMeta({
+    title: service.metaTitle,
+    description: service.metaDescription,
+    canonical,
+    image: `${SITE.url}${service.heroImage}`,
+    twitterCard: true,
+    geo: { region: 'FR-74', placename: 'Annecy, Haute-Savoie' },
+    jsonLd: [
+      serviceSchema({
+        name: service.h1,
+        serviceType: service.nav,
+        url: canonical,
+        description: service.metaDescription,
+        areaServed: ['Annecy', 'Haute-Savoie', 'Lac d’Annecy'],
+      }),
+      faqSchema(service.faqs.map((f) => ({ q: f.question, a: f.answer }))),
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Services', url: `${SITE.url}/services/` },
+        { name: service.nav, url: canonical },
+      ]),
+    ],
+  });
+}
 
 /** Icônes optionnelles par carte (clé → composant lucide). */
 const CARD_ICONS: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
@@ -237,72 +267,8 @@ export function ServicePage() {
 
   if (!service) return <Navigate to="/services" replace />;
 
-  const canonical = `${SITE.url}/services/${service.slug}/`;
-
-  const schemaService = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: service.h1,
-    serviceType: service.nav,
-    description: service.metaDescription,
-    areaServed: ['Annecy', 'Haute-Savoie', 'Lac d’Annecy'],
-    provider: {
-      '@type': 'LocalBusiness',
-      '@id': `${SITE.url}/#business`,
-      name: SITE.name,
-      telephone: SITE.phoneHref.replace('tel:', ''),
-      email: SITE.email,
-      url: SITE.url,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: SITE.addressStreet,
-        postalCode: SITE.addressPostal,
-        addressLocality: SITE.addressLocality,
-        addressRegion: SITE.addressRegion,
-        addressCountry: SITE.addressCountry,
-      },
-    },
-  };
-
-  const schemaFAQ = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: service.faqs.map((f) => ({
-      '@type': 'Question',
-      name: f.question,
-      acceptedAnswer: { '@type': 'Answer', text: f.answer },
-    })),
-  };
-
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE.url}/services/` },
-      { '@type': 'ListItem', position: 3, name: service.nav, item: canonical },
-    ],
-  };
-
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>{service.metaTitle}</title>
-        <meta name="description" content={service.metaDescription} />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={service.metaTitle} />
-        <meta property="og:description" content={service.metaDescription} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={`${SITE.url}${service.heroImage}`} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="geo.region" content="FR-74" />
-        <meta name="geo.placename" content="Annecy, Haute-Savoie" />
-        <script type="application/ld+json">{JSON.stringify(schemaService)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
-
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">
         <div className="absolute inset-0">

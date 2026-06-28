@@ -1,1 +1,1 @@
-export { RemorquesPage as default } from '../pages/RemorquesPage';
+export { RemorquesPage as default, remorquesMeta as meta } from '../pages/RemorquesPage';

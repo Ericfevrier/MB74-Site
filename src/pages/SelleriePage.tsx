@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
+import { pageMeta } from '../lib/meta';
+import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
 import {
   Sofa,
   Scissors,
@@ -76,6 +77,40 @@ const FAQS = [
   },
 ];
 
+export function sellerieMeta() {
+  const canonical = `${SITE.url}/sellerie`;
+  return pageMeta({
+    title: 'Sellerie de Bateau Sur Mesure et Rénovation | Motor Boat 74',
+    description:
+      "Sellerie de bateau à Annecy : confection sur mesure, réparation et rénovation complète. Matériaux marins anti-UV et anti-humidité, pose incluse. Devis gratuit.",
+    canonical,
+    image: `${SITE.url}/images/services/sellerie.webp`,
+    robots: 'index, follow, max-image-preview:large',
+    ogDescription:
+      'Confection sur mesure, réparation et rénovation de sellerie nautique à Annecy. Matériaux anti-UV et anti-humidité, pose incluse.',
+    geo: { region: 'FR-74', placename: 'Annecy, Haute-Savoie' },
+    jsonLd: [
+      serviceSchema({
+        name: 'Sellerie de bateau sur mesure et rénovation',
+        serviceType: 'Sellerie nautique : confection, réparation et rénovation',
+        url: canonical,
+        description:
+          "Sellerie de bateau à Annecy : confection sur mesure, réparation, remplacement et rénovation complète de la sellerie nautique, avec des matériaux marins résistants aux UV et à l'humidité.",
+        areaServed: [
+          { '@type': 'City', name: 'Annecy' },
+          { '@type': 'AdministrativeArea', name: 'Haute-Savoie' },
+        ],
+      }),
+      faqSchema(FAQS),
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Services', url: `${SITE.url}/services` },
+        { name: 'Sellerie' },
+      ]),
+    ],
+  });
+}
+
 export function SelleriePage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -118,79 +153,12 @@ export function SelleriePage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const canonical = `${SITE.url}/sellerie`;
-  const business = {
-    '@type': 'LocalBusiness',
-    '@id': `${SITE.url}/#business`,
-    name: SITE.name,
-    telephone: SITE.phoneHref.replace('tel:', ''),
-    email: SITE.email,
-    url: SITE.url,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: SITE.addressStreet,
-      postalCode: SITE.addressPostal,
-      addressLocality: SITE.addressLocality,
-      addressRegion: SITE.addressRegion,
-      addressCountry: SITE.addressCountry,
-    },
-  };
-  const schemaService = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: 'Sellerie de bateau sur mesure et rénovation',
-    serviceType: 'Sellerie nautique : confection, réparation et rénovation',
-    provider: business,
-    areaServed: [
-      { '@type': 'City', name: 'Annecy' },
-      { '@type': 'AdministrativeArea', name: 'Haute-Savoie' },
-    ],
-    url: canonical,
-    description:
-      "Sellerie de bateau à Annecy : confection sur mesure, réparation, remplacement et rénovation complète de la sellerie nautique, avec des matériaux marins résistants aux UV et à l'humidité.",
-  };
-  const schemaFAQ = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQS.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
-  };
-  const schemaBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE.url}/services` },
-      { '@type': 'ListItem', position: 3, name: 'Sellerie' },
-    ],
-  };
-
   const inputCls =
     'w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm text-brand-dark focus:bg-white focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 placeholder:text-gray-400 transition font-medium';
   const labelCls = 'block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2';
 
   return (
     <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
-      <Helmet>
-        <title>Sellerie de Bateau Sur Mesure et Rénovation | Motor Boat 74</title>
-        <meta name="description" content="Sellerie de bateau à Annecy : confection sur mesure, réparation et rénovation complète. Matériaux marins anti-UV et anti-humidité, pose incluse. Devis gratuit." />
-        <link rel="canonical" href={canonical} />
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta name="geo.region" content="FR-74" />
-        <meta name="geo.placename" content="Annecy, Haute-Savoie" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Sellerie de bateau sur mesure et rénovation | Motor Boat 74" />
-        <meta property="og:description" content="Confection sur mesure, réparation et rénovation de sellerie nautique à Annecy. Matériaux anti-UV et anti-humidité, pose incluse." />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={`${SITE.url}/images/services/sellerie.webp`} />
-        <script type="application/ld+json">{JSON.stringify(schemaService)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaFAQ)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-      </Helmet>
-
       {/* Mobile sticky CTA */}
       <div className="lg:hidden fixed bottom-6 inset-x-0 mx-auto px-6 z-50 pointer-events-none">
         <button
