@@ -4,7 +4,7 @@ import { getHivernageCity } from '../data/hivernageCities';
 import { serverCms, fetchCities } from '../lib/cms';
 
 /** Loader SSR : page ville lue en live depuis le CMS (repli statique côté page). */
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function clientLoader({ params }: LoaderFunctionArgs) {
   const slug = params.slug!;
   const cfg = await serverCms();
   if (cfg) {
@@ -21,7 +21,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 }
 
 export default function City() {
-  const data = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof clientLoader>();
   if (!data) return <HivernageCityPage />;
   return <HivernageCityPage city={data.city} />;
 }

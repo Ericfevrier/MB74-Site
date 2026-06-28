@@ -4,7 +4,7 @@ import { BLOG_ARTICLES, BLOG_CATEGORIES } from '../data/blog';
 import { serverCms, fetchBlogArticles, fetchBlogCategories } from '../lib/cms';
 
 /** Loader SSR : articles + catégories lus en live depuis le CMS (repli statique). */
-export async function loader() {
+export async function clientLoader() {
   const cfg = await serverCms();
   if (cfg) {
     try {
@@ -21,6 +21,6 @@ export async function loader() {
 }
 
 export default function Blog() {
-  const { articles, categories } = useLoaderData<typeof loader>();
+  const { articles, categories } = useLoaderData<typeof clientLoader>();
   return <BlogHubPage articles={articles} categories={categories} />;
 }

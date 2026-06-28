@@ -4,7 +4,7 @@ import { getModelLive, getBrandModels } from '../data/boatBrands';
 import { serverCms, fetchModels } from '../lib/cms';
 
 /** Loader SSR : modèle lu en live depuis le CMS (éditorial fusionné sur le structurel). */
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function clientLoader({ params }: LoaderFunctionArgs) {
   const cfg = await serverCms();
   if (cfg) {
     try {
@@ -24,7 +24,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 }
 
 export default function Model() {
-  const data = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof clientLoader>();
   if (!data) return <ModelPage />;
   return <ModelPage model={data.model} />;
 }

@@ -63,6 +63,8 @@ export function mapUsedBoat(r: Record<string, any>): UsedBoat {
  */
 let _cache: { token?: string; at: number } | null = null;
 export async function serverCms(): Promise<CmsConfig | null> {
+  // Côté navigateur (clientLoader en mode SPA), `process` n'existe pas → repli statique.
+  if (typeof process === 'undefined' || !process.env) return null;
   const url = process.env.CMS_URL;
   if (!url) return null;
   if (process.env.CMS_TOKEN) return { url, token: process.env.CMS_TOKEN };

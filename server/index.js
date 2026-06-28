@@ -1,22 +1,19 @@
 /**
- * Serveur de production Motor Boat 74 — app Node.js (SSR React Router v7) pour o2switch.
+ * Serveur de production Motor Boat 74 — app Node.js (SPA React Router v7) pour o2switch.
  *
- * Rôles :
- *   1. Servir les assets client du build SSR (build/client)
- *   2. Exposer les endpoints formulaires (contact + hivernage) :
- *        → persistance dans Directus (collection contact_submissions)
- *        → envoi e-mail (nodemailer)  ── les deux sont indépendants/résilients
- *   3. Déléguer TOUT le rendu des pages au handler React Router (SSR + loaders live)
+ * Architecture identique à Ilico (qui tourne sans souci sur o2switch) :
+ *   - SPA : on sert le shell statique build/client/index.html pour toutes les routes,
+ *     le rendu se fait côté navigateur (pas de SSR lourd → o2switch n'est plus saturé).
+ *   - Endpoints formulaires (contact + hivernage) : persistance Directus + e-mail.
  *
  * o2switch (Phusion Passenger) injecte le port via process.env.PORT.
- * Dev : utiliser plutôt `npm run dev:ssr`. Ce serveur attend un build (`npm run build:ssr`).
+ * Build attendu : `npm run build:ssr` (génère build/client en mode SPA).
  */
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
-import { createRequestHandler } from '@react-router/express';
 
 dotenv.config({ path: '.env.local' });
 dotenv.config(); // .env en repli
@@ -24,7 +21,7 @@ dotenv.config(); // .env en repli
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const clientDir = path.join(rootDir, 'build', 'client');
-const serverBuildPath = path.join(rootDir, 'build', 'server', 'index.js');
+const indexHtml = path.join(clientDir, 'index.html');
 
 const app = express();
 app.disable('x-powered-by');
@@ -186,29 +183,22 @@ app.post('/api/hivernage', async (req, res) => {
 });
 
 /* ------------------------------------------------------------------ */
-/*  Assets client + rendu SSR (React Router)                          */
+/*  SPA : assets statiques + fallback index.html                      */
 /* ------------------------------------------------------------------ */
 
 // Assets fingerprintés → cache immuable ; autres fichiers publics → cache court.
 app.use('/assets', express.static(path.join(clientDir, 'assets'), { immutable: true, maxAge: '1y' }));
 app.use(express.static(clientDir, { maxAge: '1h', index: false }));
 
-const port = process.env.PORT || 3000;
+// Toute autre route → le shell SPA (React Router gère le routage côté client).
+app.get('*', (_req, res) => {
+  res.sendFile(indexHtml);
+});
 
-// Chargement du bundle SSR SANS top-level await : Phusion Passenger (o2switch) charge
-// le fichier de démarrage d'une façon incompatible avec un `await` racine. On charge
-// donc le build via .then(), puis on branche le handler et on écoute.
-import(serverBuildPath)
-  .then((build) => {
-    app.all('*', createRequestHandler({ build, mode: process.env.NODE_ENV || 'production' }));
-    app.listen(port, () => {
-      console.log(
-        `Motor Boat 74 — SSR démarré sur le port ${port} ` +
-          `(mail: ${mailEnabled ? 'activé' : 'simulé'}, cms: ${CMS_URL ? 'connecté' : 'non configuré'})`,
-      );
-    });
-  })
-  .catch((err) => {
-    console.error('Échec du démarrage SSR :', err);
-    process.exit(1);
-  });
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(
+    `Motor Boat 74 — SPA démarré sur le port ${port} ` +
+      `(mail: ${mailEnabled ? 'activé' : 'simulé'}, cms: ${CMS_URL ? 'connecté' : 'non configuré'})`,
+  );
+});

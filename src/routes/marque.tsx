@@ -4,7 +4,7 @@ import { STATIC_BRANDS_DATA, mergeBrands } from '../data/brands';
 import { serverCms, fetchBrands } from '../lib/cms';
 
 /** Loader SSR : marque lue en live depuis le CMS (éditorial fusionné sur le structurel). */
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function clientLoader({ params }: LoaderFunctionArgs) {
   const id = (params.id || '').toLowerCase();
   const cfg = await serverCms();
   if (cfg) {
@@ -20,7 +20,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 }
 
 export default function Marque() {
-  const data = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof clientLoader>();
   if (!data) return <BrandPage />;
   return <BrandPage brand={data.brand} />;
 }

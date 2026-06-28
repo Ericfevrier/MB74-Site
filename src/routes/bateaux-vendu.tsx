@@ -4,7 +4,7 @@ import { soldUsedBoats } from '../data/usedBoats';
 import { serverCms, fetchUsedBoats } from '../lib/cms';
 
 /** Loader SSR : vendus lus en live depuis le CMS (repli statique). */
-export async function loader() {
+export async function clientLoader() {
   const cfg = await serverCms();
   if (cfg) {
     try {
@@ -18,6 +18,6 @@ export async function loader() {
 }
 
 export default function BateauxVendu() {
-  const { boats } = useLoaderData<typeof loader>();
+  const { boats } = useLoaderData<typeof clientLoader>();
   return <BateauxVenduPage boats={boats} />;
 }

@@ -4,7 +4,7 @@ import { getUsedBoatBySlug } from '../data/usedBoats';
 import { serverCms, fetchUsedBoats } from '../lib/cms';
 
 /** Loader SSR : fiche occasion lue en live depuis le CMS (repli statique côté page). */
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function clientLoader({ params }: LoaderFunctionArgs) {
   const slug = params.slug!;
   const cfg = await serverCms();
   if (cfg) {
@@ -26,7 +26,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 }
 
 export default function OccasionDetail() {
-  const data = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof clientLoader>();
   if (!data) return <OccasionDetailPage />;
   return <OccasionDetailPage boat={data.boat} related={data.related} />;
 }

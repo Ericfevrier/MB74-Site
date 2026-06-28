@@ -14,7 +14,7 @@ const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
  * Loader SSR : lit le CMS Directus À CHAQUE REQUÊTE (mise à jour instantanée, sans rebuild).
  * Repli sur les données statiques si le CMS est absent/injoignable.
  */
-export async function loader() {
+export async function clientLoader() {
   const cfg = await serverCms();
   if (cfg) {
     try {
@@ -40,7 +40,7 @@ export function meta() {
 }
 
 export default function Occasion() {
-  const { boats, soldCount } = useLoaderData<typeof loader>();
+  const { boats, soldCount } = useLoaderData<typeof clientLoader>();
 
   return (
     <div className="bg-brand-light">
