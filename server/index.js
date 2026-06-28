@@ -33,6 +33,49 @@ app.disable('x-powered-by');
 app.set('trust proxy', true);
 
 /* ------------------------------------------------------------------ */
+/*  Protection PRÉPRODUCTION (staging)                                 */
+/* ------------------------------------------------------------------ */
+// Sur le sous-domaine de préprod uniquement : pas d'indexation Google + accès
+// protégé par identifiant/mot de passe (HTTP Basic). En PRODUCTION (motorboat74.com),
+// le hostname ne correspond pas → aucune restriction, rien à désactiver.
+// Identifiants lus dans l'environnement (.env), jamais en dur dans le dépôt.
+const STAGING_HOST = process.env.STAGING_HOST || 'staging.motorboat74.com';
+const STAGING_USER = process.env.STAGING_USER || '';
+const STAGING_PASS = process.env.STAGING_PASS || '';
+// Interrupteur explicite : STAGING_PROTECT=1 force la protection sur ce déploiement
+// (fiable même si le Host n'est pas exactement STAGING_HOST). À NE PAS mettre en prod.
+const STAGING_PROTECT = process.env.STAGING_PROTECT === '1';
+
+function timingSafeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+app.use((req, res, next) => {
+  if (!STAGING_PROTECT && req.hostname !== STAGING_HOST) return next(); // prod → libre
+
+  // Jamais indexé en préprod (en plus du 401 qui bloque déjà les crawlers).
+  res.set('X-Robots-Tag', 'noindex, nofollow');
+
+  // Sécurité « fermé par défaut » : si les identifiants ne sont pas configurés,
+  // on bloque tout l'accès plutôt que de laisser la préprod ouverte.
+  if (!STAGING_USER || !STAGING_PASS) {
+    return res.status(503).send('Préproduction non configurée (STAGING_USER / STAGING_PASS manquants).');
+  }
+
+  const [scheme, encoded] = (req.headers.authorization || '').split(' ');
+  if (scheme === 'Basic' && encoded) {
+    const [user, ...passParts] = Buffer.from(encoded, 'base64').toString().split(':');
+    const pass = passParts.join(':');
+    if (timingSafeEqual(user, STAGING_USER) && timingSafeEqual(pass, STAGING_PASS)) return next();
+  }
+  res.set('WWW-Authenticate', 'Basic realm="Motor Boat 74 - preproduction", charset="UTF-8"');
+  return res.status(401).send('Acces restreint a la preproduction.');
+});
+
+/* ------------------------------------------------------------------ */
 /*  Directus (persistance des soumissions)                            */
 /* ------------------------------------------------------------------ */
 
