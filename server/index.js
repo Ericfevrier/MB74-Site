@@ -193,13 +193,22 @@ app.post('/api/hivernage', async (req, res) => {
 app.use('/assets', express.static(path.join(clientDir, 'assets'), { immutable: true, maxAge: '1y' }));
 app.use(express.static(clientDir, { maxAge: '1h', index: false }));
 
-const build = await import(serverBuildPath);
-app.all('*', createRequestHandler({ build, mode: process.env.NODE_ENV || 'production' }));
-
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(
-    `Motor Boat 74 — SSR démarré sur le port ${port} ` +
-      `(mail: ${mailEnabled ? 'activé' : 'simulé'}, cms: ${CMS_URL ? 'connecté' : 'non configuré'})`,
-  );
-});
+
+// Chargement du bundle SSR SANS top-level await : Phusion Passenger (o2switch) charge
+// le fichier de démarrage d'une façon incompatible avec un `await` racine. On charge
+// donc le build via .then(), puis on branche le handler et on écoute.
+import(serverBuildPath)
+  .then((build) => {
+    app.all('*', createRequestHandler({ build, mode: process.env.NODE_ENV || 'production' }));
+    app.listen(port, () => {
+      console.log(
+        `Motor Boat 74 — SSR démarré sur le port ${port} ` +
+          `(mail: ${mailEnabled ? 'activé' : 'simulé'}, cms: ${CMS_URL ? 'connecté' : 'non configuré'})`,
+      );
+    });
+  })
+  .catch((err) => {
+    console.error('Échec du démarrage SSR :', err);
+    process.exit(1);
+  });
