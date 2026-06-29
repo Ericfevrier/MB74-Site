@@ -30,6 +30,9 @@ export default [
   route('blog', 'routes/blog.tsx'),
   route('blog/hivernage/hivernage-bateau-guide-complet', 'routes/blog-hivernage.tsx'),
 
+  // Admin (back-office, non indexé, non prérendu)
+  route('admin', 'routes/admin.tsx'),
+
   // Légales
   route('mentions-legales', 'routes/mentions.tsx'),
   route('politique-de-confidentialite', 'routes/privacy.tsx'),

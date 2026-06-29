@@ -1,4 +1,4 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from 'react-router';
 import './index.css';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -28,6 +28,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  // Le back-office /admin s'affiche en plein écran, sans l'en-tête ni le pied du site.
+  const isAdmin = useLocation().pathname.startsWith('/admin');
+  if (isAdmin) {
+    return (
+      <main className="min-h-screen bg-brand-light">
+        <Outlet />
+      </main>
+    );
+  }
   return (
     <div className="min-h-screen flex flex-col bg-brand-light">
       <Header />
