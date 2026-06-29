@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Instagram, Facebook, Youtube, Linkedin, Phone } from 'lucide-react';
+import { Instagram, Facebook, Youtube, Linkedin, Phone, Lock } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -164,9 +164,19 @@ export function Footer() {
               </Link>
             ))}
           </div>
-          <p className="text-[11px] font-bold uppercase tracking-widest text-white/20">
-            © {new Date().getFullYear()} Tous droits réservés
-          </p>
+          <div className="flex items-center gap-5">
+            <p className="text-[11px] font-bold uppercase tracking-widest text-white/20">
+              © {new Date().getFullYear()} Tous droits réservés
+            </p>
+            <Link
+              to="/admin"
+              aria-label="Espace administration"
+              title="Administration"
+              className="text-white/20 hover:text-brand-cyan transition-colors"
+            >
+              <Lock size={13} />
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
