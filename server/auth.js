@@ -41,12 +41,28 @@ export function verifyToken(token) {
   return Buffer.from(userB64, 'base64url').toString('utf8');
 }
 
-export const authConfigured = () => Boolean(process.env.ADMIN_USERNAME && process.env.ADMIN_PASSWORD_HASH);
+export const authConfigured = () =>
+  Boolean(process.env.ADMIN_USERNAME && (process.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD_HASH));
 
-/** Vérifie identifiant + mot de passe (comparaison bcrypt à temps ~constant). */
+function safeEqualStr(a, b) {
+  const ba = Buffer.from(String(a));
+  const bb = Buffer.from(String(b));
+  return ba.length === bb.length && crypto.timingSafeEqual(ba, bb);
+}
+
+/**
+ * Vérifie identifiant + mot de passe.
+ * Priorité à ADMIN_PASSWORD (en clair) : fiable sur les panels qui interprètent le `$`
+ * des hash bcrypt (cPanel/Passenger). Sinon, repli sur ADMIN_PASSWORD_HASH (bcrypt).
+ */
 export async function checkCredentials(username, password) {
   if (!authConfigured()) return false;
   const okUser = username === process.env.ADMIN_USERNAME;
+
+  if (process.env.ADMIN_PASSWORD) {
+    return okUser && safeEqualStr(password || '', process.env.ADMIN_PASSWORD);
+  }
+
   // Toujours exécuter un compare bcrypt pour limiter l'oracle temporel sur l'existence du compte.
   const hash = okUser
     ? process.env.ADMIN_PASSWORD_HASH
