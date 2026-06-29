@@ -91,6 +91,49 @@ function boatToRow(b) {
   };
 }
 
+const ISO_DATE = (v) => {
+  if (!v) return '';
+  if (v instanceof Date) return v.toISOString().slice(0, 10);
+  return String(v).slice(0, 10);
+};
+
+const BLOG_FIELDS = ['slug', 'title', 'excerpt', 'category', 'date', 'image', 'reading_time', 'content', 'status'];
+
+/** Ligne DB → forme `BlogArticle` du site. `opts.full` ajoute le contenu ; `opts.admin` ajoute id/status. */
+function rowToArticle(r, opts = {}) {
+  const a = {
+    slug: r.slug,
+    path: `/blog/${r.slug}`,
+    title: r.title,
+    excerpt: r.excerpt || '',
+    category: r.category || '',
+    date: ISO_DATE(r.date),
+    image: r.image || '',
+    readingTime: r.reading_time || undefined,
+  };
+  if (opts.full || opts.admin) a.content = r.content || '';
+  if (opts.admin) {
+    a.id = r.id;
+    a.status = r.status;
+  }
+  return a;
+}
+
+function articleToRow(a) {
+  const s = (v) => (v === undefined || v === null || v === '' ? null : String(v));
+  return {
+    slug: String(a.slug || '').trim(),
+    title: String(a.title || '').trim(),
+    excerpt: s(a.excerpt),
+    category: a.category ? String(a.category) : '',
+    date: a.date ? String(a.date).slice(0, 10) : null,
+    image: s(a.image),
+    reading_time: s(a.readingTime),
+    content: a.content != null ? String(a.content) : null,
+    status: a.status === 'draft' ? 'draft' : 'published',
+  };
+}
+
 const needDb = (res) =>
   res.status(503).json({ ok: false, error: 'Base de données non configurée.' });
 
@@ -200,6 +243,92 @@ export function mountAdmin(app) {
       res.json({ ok: true });
     } catch (e) {
       console.error('DELETE /api/admin/used-boats', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  /* ------------------------- Blog (public) ------------------------ */
+
+  app.get('/api/blog', async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query("SELECT * FROM blog_articles WHERE status = 'published' ORDER BY date DESC, id DESC");
+      res.json({ articles: rows.map((r) => rowToArticle(r)) });
+    } catch (e) {
+      console.error('GET /api/blog', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.get('/api/blog/:slug', async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query("SELECT * FROM blog_articles WHERE slug = ? AND status = 'published' LIMIT 1", [req.params.slug]);
+      if (!rows.length) return res.status(404).json({ ok: false, error: 'Article introuvable.' });
+      res.json({ article: rowToArticle(rows[0], { full: true }) });
+    } catch (e) {
+      console.error('GET /api/blog/:slug', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  /* ------------------------- Blog (admin) ------------------------- */
+
+  app.get('/api/admin/blog', requireAuth, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT * FROM blog_articles ORDER BY date DESC, id DESC');
+      res.json({ articles: rows.map((r) => rowToArticle(r, { admin: true })) });
+    } catch (e) {
+      console.error('GET /api/admin/blog', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.post('/api/admin/blog', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const row = articleToRow(req.body || {});
+    if (!row.slug || !row.title) return res.status(400).json({ ok: false, error: 'Slug et titre requis.' });
+    try {
+      const cols = BLOG_FIELDS.join(', ');
+      const placeholders = BLOG_FIELDS.map(() => '?').join(', ');
+      const r = await query(`INSERT INTO blog_articles (${cols}) VALUES (${placeholders})`, BLOG_FIELDS.map((c) => row[c]));
+      res.json({ ok: true, id: r.insertId });
+    } catch (e) {
+      if (e.code === 'ER_DUP_ENTRY') return res.status(409).json({ ok: false, error: 'Ce slug existe déjà.' });
+      console.error('POST /api/admin/blog', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.put('/api/admin/blog/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
+    const row = articleToRow(req.body || {});
+    if (!row.slug || !row.title) return res.status(400).json({ ok: false, error: 'Slug et titre requis.' });
+    try {
+      const set = BLOG_FIELDS.map((c) => `${c} = ?`).join(', ');
+      const r = await query(`UPDATE blog_articles SET ${set} WHERE id = ?`, [...BLOG_FIELDS.map((c) => row[c]), id]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      if (e.code === 'ER_DUP_ENTRY') return res.status(409).json({ ok: false, error: 'Ce slug existe déjà.' });
+      console.error('PUT /api/admin/blog', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.delete('/api/admin/blog/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
+    try {
+      const r = await query('DELETE FROM blog_articles WHERE id = ?', [id]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('DELETE /api/admin/blog', e.message);
       res.status(500).json({ ok: false, error: 'Erreur base de données.' });
     }
   });

@@ -8,6 +8,7 @@
  */
 import { useEffect, useState } from 'react';
 import type { UsedBoat } from '../data/usedBoats';
+import type { BlogArticle } from '../data/blog';
 
 export async function fetchPublicUsedBoats(): Promise<UsedBoat[]> {
   const res = await fetch('/api/used-boats');
@@ -29,6 +30,41 @@ export function useLiveUsedBoats(): { boats: UsedBoat[] | null; loaded: boolean 
     fetchPublicUsedBoats()
       .then((all) => alive && setState({ boats: all, loaded: true }))
       .catch(() => alive && setState({ boats: null, loaded: true }));
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return state;
+}
+
+/* ----------------------------- Blog ------------------------------ */
+
+export interface PublicArticle extends BlogArticle {
+  content?: string;
+}
+
+export async function fetchPublicBlog(): Promise<BlogArticle[]> {
+  const res = await fetch('/api/blog');
+  if (!res.ok) throw new Error(`/api/blog -> ${res.status}`);
+  const json = await res.json();
+  return (json.articles ?? []) as BlogArticle[];
+}
+
+export async function fetchPublicArticle(slug: string): Promise<PublicArticle> {
+  const res = await fetch(`/api/blog/${encodeURIComponent(slug)}`);
+  if (!res.ok) throw new Error(`/api/blog/${slug} -> ${res.status}`);
+  const json = await res.json();
+  return json.article as PublicArticle;
+}
+
+/** Articles de blog live (base) ; `articles` null si l'API échoue. */
+export function useLiveBlog(): { articles: BlogArticle[] | null; loaded: boolean } {
+  const [state, setState] = useState<{ articles: BlogArticle[] | null; loaded: boolean }>({ articles: null, loaded: false });
+  useEffect(() => {
+    let alive = true;
+    fetchPublicBlog()
+      .then((a) => alive && setState({ articles: a, loaded: true }))
+      .catch(() => alive && setState({ articles: null, loaded: true }));
     return () => {
       alive = false;
     };

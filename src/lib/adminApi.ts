@@ -2,11 +2,18 @@
  * Client de l'API admin (même origine). Cookie de session envoyé automatiquement.
  */
 import type { UsedBoat } from '../data/usedBoats';
+import type { BlogArticle } from '../data/blog';
 
 export interface AdminBoat extends UsedBoat {
   id: number;
   status: 'published' | 'draft';
   sortOrder: number;
+}
+
+export interface AdminArticle extends BlogArticle {
+  id: number;
+  status: 'published' | 'draft';
+  content: string;
 }
 
 export interface ContactMessage {
@@ -47,6 +54,11 @@ export const adminApi = {
   createBoat: (b: Partial<AdminBoat>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/used-boats', b),
   updateBoat: (id: number, b: Partial<AdminBoat>) => req('PUT', `/api/admin/used-boats/${id}`, b),
   deleteBoat: (id: number) => req('DELETE', `/api/admin/used-boats/${id}`),
+
+  listArticles: () => req<{ articles: AdminArticle[] }>('GET', '/api/admin/blog'),
+  createArticle: (a: Partial<AdminArticle>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/blog', a),
+  updateArticle: (id: number, a: Partial<AdminArticle>) => req('PUT', `/api/admin/blog/${id}`, a),
+  deleteArticle: (id: number) => req('DELETE', `/api/admin/blog/${id}`),
 
   listMessages: () => req<{ messages: ContactMessage[] }>('GET', '/api/admin/messages'),
   markMessage: (id: number, read: boolean) => req('PATCH', `/api/admin/messages/${id}`, { read }),

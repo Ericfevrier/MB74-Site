@@ -29,6 +29,7 @@ export default [
   route('la-team', 'routes/team.tsx'),
   route('blog', 'routes/blog.tsx'),
   route('blog/hivernage/hivernage-bateau-guide-complet', 'routes/blog-hivernage.tsx'),
+  route('blog/:slug', 'routes/blog-article.tsx'),
 
   // Admin (back-office, non indexé, non prérendu)
   route('admin', 'routes/admin.tsx'),

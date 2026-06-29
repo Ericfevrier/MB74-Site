@@ -7,6 +7,7 @@ import { BLOG_CATEGORIES, BLOG_ARTICLES, categoryName, type BlogArticle, type Bl
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
 import { breadcrumbSchema } from '../lib/schema';
+import { useLiveBlog } from '../lib/publicApi';
 
 const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
 
@@ -48,8 +49,18 @@ export function blogHubMeta({ data }: { data?: { articles?: BlogArticle[] } } = 
 
 export function BlogHubPage({ articles: articlesProp, categories: categoriesProp }: { articles?: BlogArticle[]; categories?: BlogCategory[] } = {}) {
   const [active, setActive] = useState<string | null>(null);
-  const allArticles = articlesProp ?? BLOG_ARTICLES;
   const categories = categoriesProp ?? BLOG_CATEGORIES;
+  const live = useLiveBlog();
+
+  // Fusion : articles statiques (ex. guide hivernage) + articles de la base (gérés dans /admin),
+  // dédoublonnés par slug (la base prime), triés par date décroissante.
+  const allArticles = useMemo(() => {
+    const base = articlesProp ?? BLOG_ARTICLES;
+    const bySlug = new Map<string, BlogArticle>();
+    for (const a of base) bySlug.set(a.slug, a);
+    for (const a of live.articles ?? []) bySlug.set(a.slug, a);
+    return [...bySlug.values()].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  }, [articlesProp, live.articles]);
 
   const articles = useMemo(
     () => (active ? allArticles.filter((a) => a.category === active) : allArticles),

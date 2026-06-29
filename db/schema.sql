@@ -30,6 +30,24 @@ CREATE TABLE IF NOT EXISTS used_boats (
   KEY idx_status_sold (status, sold)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Articles de blog (contenu en markdown, rendu côté site).
+CREATE TABLE IF NOT EXISTS blog_articles (
+  id           INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  slug         VARCHAR(191) NOT NULL,
+  title        VARCHAR(255) NOT NULL,
+  excerpt      TEXT         NULL,
+  category     VARCHAR(64)  NOT NULL DEFAULT '',
+  date         DATE         NULL,
+  image        VARCHAR(512) NULL,
+  reading_time VARCHAR(32)  NULL,
+  content      MEDIUMTEXT   NULL,
+  status       VARCHAR(16)  NOT NULL DEFAULT 'published',
+  created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uniq_blog_slug (slug),
+  KEY idx_blog_status (status, date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Messages de contact (formulaires contact + hivernage).
 CREATE TABLE IF NOT EXISTS contact_submissions (
   id           INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
