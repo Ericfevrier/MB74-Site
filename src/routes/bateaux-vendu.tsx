@@ -1,24 +1,17 @@
 import { useLoaderData } from 'react-router';
 import { BateauxVenduPage } from '../pages/BateauxVenduPage';
 import { soldUsedBoats } from '../data/usedBoats';
-import { serverCms, fetchUsedBoats } from '../lib/cms';
+import { useLiveUsedBoats } from '../lib/publicApi';
 export { bateauxVenduMeta as meta } from '../pages/BateauxVenduPage';
 
-/** Loader SSR : vendus lus en live depuis le CMS (repli statique). */
-export async function clientLoader() {
-  const cfg = await serverCms();
-  if (cfg) {
-    try {
-      const all = await fetchUsedBoats(cfg);
-      return { boats: all.filter((b) => b.sold) };
-    } catch {
-      /* repli statique */
-    }
-  }
+/** Statique au prerender (SEO) ; le composant rafraîchit en live depuis /api. */
+export function clientLoader() {
   return { boats: soldUsedBoats() };
 }
 
 export default function BateauxVendu() {
-  const { boats } = useLoaderData<typeof clientLoader>();
+  const initial = useLoaderData<typeof clientLoader>();
+  const live = useLiveUsedBoats();
+  const boats = live.boats && live.boats.length ? live.boats.filter((b) => b.sold) : initial.boats;
   return <BateauxVenduPage boats={boats} />;
 }

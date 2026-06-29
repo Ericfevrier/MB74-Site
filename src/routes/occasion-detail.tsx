@@ -1,33 +1,42 @@
-import { useLoaderData, redirect, type LoaderFunctionArgs } from 'react-router';
+import { useParams } from 'react-router';
+import { Loader2 } from 'lucide-react';
 import { OccasionDetailPage } from '../pages/OccasionDetailPage';
 import { getUsedBoatBySlug } from '../data/usedBoats';
-import { serverCms, fetchUsedBoats } from '../lib/cms';
+import { useLiveUsedBoats } from '../lib/publicApi';
 export { occasionDetailMeta as meta } from '../pages/OccasionDetailPage';
 
-/** Loader SSR : fiche occasion lue en live depuis le CMS (repli statique côté page). */
-export async function clientLoader({ params }: LoaderFunctionArgs) {
-  const slug = params.slug!;
-  const cfg = await serverCms();
-  if (cfg) {
-    try {
-      const all = await fetchUsedBoats(cfg);
-      const boat = all.find((b) => b.slug === slug);
-      if (boat) {
-        let related = all.filter((b) => b.slug !== boat.slug && b.brandId === boat.brandId);
-        if (related.length === 0) related = all.filter((b) => b.slug !== boat.slug && !b.sold);
-        return { boat, related: related.slice(0, 3) };
-      }
-    } catch {
-      /* repli statique ci-dessous */
-    }
-  }
-  // Introuvable côté CMS : si absent aussi du statique, redirection 302 propre (pas de <Navigate> en SSR).
-  if (!getUsedBoatBySlug(slug)) throw redirect('/bateaux/occasion');
-  return null; // présent en statique : la page calcule via useParams
+/** Statique au prerender (SEO) : la fiche est calculée par la page via useParams. */
+export function clientLoader() {
+  return null;
 }
 
 export default function OccasionDetail() {
-  const data = useLoaderData<typeof clientLoader>();
-  if (!data) return <OccasionDetailPage />;
-  return <OccasionDetailPage boat={data.boat} related={data.related} />;
+  const { slug } = useParams<{ slug: string }>();
+  const live = useLiveUsedBoats();
+  const staticBoat = slug ? getUsedBoatBySlug(slug) : undefined;
+
+  // Base peuplée : on privilégie la fiche live (inclut les bateaux ajoutés via /admin).
+  if (live.boats && live.boats.length) {
+    const boat = live.boats.find((b) => b.slug === slug);
+    if (boat) {
+      let related = live.boats.filter((b) => b.slug !== boat.slug && b.brandId === boat.brandId);
+      if (related.length === 0) related = live.boats.filter((b) => b.slug !== boat.slug && !b.sold);
+      return <OccasionDetailPage boat={boat} related={related.slice(0, 3)} />;
+    }
+    // Absent du live mais présent en statique → on affiche le statique ci-dessous.
+  }
+
+  // Fiche live en cours de chargement et aucune fiche statique → on patiente
+  // (évite une redirection prématurée pour un bateau qui n'existe qu'en base).
+  if (!live.loaded && !staticBoat) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center bg-brand-light">
+        <Loader2 className="w-8 h-8 animate-spin text-brand-cyan" />
+      </div>
+    );
+  }
+
+  // Repli statique (prerender, base vide, ou slug introuvable) — la page gère via useParams
+  // (et redirige proprement si le bateau n'existe nulle part).
+  return <OccasionDetailPage />;
 }

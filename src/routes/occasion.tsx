@@ -6,24 +6,12 @@ import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { availableUsedBoats, soldUsedBoats } from '../data/usedBoats';
-import { serverCms, fetchUsedBoats } from '../lib/cms';
+import { useLiveUsedBoats } from '../lib/publicApi';
 
 const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
 
-/**
- * Loader SSR : lit le CMS Directus À CHAQUE REQUÊTE (mise à jour instantanée, sans rebuild).
- * Repli sur les données statiques si le CMS est absent/injoignable.
- */
-export async function clientLoader() {
-  const cfg = await serverCms();
-  if (cfg) {
-    try {
-      const all = await fetchUsedBoats(cfg);
-      return { boats: all.filter((b) => !b.sold), soldCount: all.filter((b) => b.sold).length };
-    } catch {
-      /* repli statique ci-dessous */
-    }
-  }
+/** Données statiques au prerender (SEO) ; le composant rafraîchit en live depuis /api. */
+export function clientLoader() {
   return { boats: availableUsedBoats(), soldCount: soldUsedBoats().length };
 }
 
@@ -40,7 +28,12 @@ export function meta() {
 }
 
 export default function Occasion() {
-  const { boats, soldCount } = useLoaderData<typeof clientLoader>();
+  const initial = useLoaderData<typeof clientLoader>();
+  const live = useLiveUsedBoats();
+  // On n'utilise le live que si la base renvoie des bateaux (sinon on garde le statique).
+  const all = live.boats && live.boats.length ? live.boats : null;
+  const boats = all ? all.filter((b) => !b.sold) : initial.boats;
+  const soldCount = all ? all.filter((b) => b.sold).length : initial.soldCount;
 
   return (
     <div className="bg-brand-light">
