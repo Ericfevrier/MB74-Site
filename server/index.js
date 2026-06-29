@@ -18,6 +18,8 @@ import { fileURLToPath } from 'url';
 import { existsSync } from 'fs';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
+import { dbConfigured, dbHealthy } from './db.js';
+import { mountAdmin, saveSubmissionDb } from './admin.js';
 
 dotenv.config({ path: '.env.local' });
 dotenv.config(); // .env en repli
@@ -76,47 +78,6 @@ app.use((req, res, next) => {
 });
 
 /* ------------------------------------------------------------------ */
-/*  Directus (persistance des soumissions)                            */
-/* ------------------------------------------------------------------ */
-
-const CMS_URL = process.env.CMS_URL;
-// Token d'écriture : idéalement un token dédié avec droit "create" sur contact_submissions.
-const CMS_WRITE_TOKEN = process.env.CMS_WRITE_TOKEN || process.env.CMS_TOKEN;
-
-let _adminTok = null;
-let _adminAt = 0;
-async function cmsToken() {
-  if (CMS_WRITE_TOKEN) return CMS_WRITE_TOKEN;
-  if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
-    if (!_adminTok || Date.now() - _adminAt > 10 * 60 * 1000) {
-      const r = await fetch(`${CMS_URL}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD }),
-      });
-      if (!r.ok) throw new Error(`CMS login -> ${r.status}`);
-      _adminTok = (await r.json()).data.access_token;
-      _adminAt = Date.now();
-    }
-    return _adminTok;
-  }
-  return null;
-}
-
-/** Crée un enregistrement dans contact_submissions. Lève en cas d'échec (géré par l'appelant). */
-async function saveSubmission(record) {
-  if (!CMS_URL) return { stored: false, reason: 'no-cms' };
-  const token = await cmsToken();
-  const r = await fetch(`${CMS_URL}/items/contact_submissions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
-    body: JSON.stringify(record),
-  });
-  if (!r.ok) throw new Error(`CMS create -> ${r.status} ${await r.text()}`);
-  return { stored: true };
-}
-
-/* ------------------------------------------------------------------ */
 /*  E-mail (nodemailer)                                               */
 /* ------------------------------------------------------------------ */
 
@@ -163,15 +124,15 @@ async function sendMail({ subject, fields, replyTo }) {
 }
 
 /**
- * Traite une soumission : persiste dans Directus ET envoie l'e-mail, indépendamment.
+ * Traite une soumission : persiste en base (MariaDB) ET envoie l'e-mail, indépendamment.
  * Réussit si AU MOINS un canal aboutit ; échoue seulement si les deux échouent.
  */
 async function handleSubmission(res, { record, subject, fields, replyTo }) {
   const [store, mail] = await Promise.allSettled([
-    saveSubmission(record),
+    saveSubmissionDb(record),
     sendMail({ subject, fields, replyTo }),
   ]);
-  if (store.status === 'rejected') console.error('Persistance CMS échouée:', store.reason?.message || store.reason);
+  if (store.status === 'rejected') console.error('Persistance DB échouée:', store.reason?.message || store.reason);
   if (mail.status === 'rejected') console.error('Envoi e-mail échoué:', mail.reason?.message || mail.reason);
 
   const stored = store.status === 'fulfilled' && store.value?.stored;
@@ -189,9 +150,12 @@ async function handleSubmission(res, { record, subject, fields, replyTo }) {
 app.use('/api', express.json({ limit: '1mb' }));
 app.use('/api', express.urlencoded({ extended: true }));
 
-app.get('/api/health', (_req, res) => {
-  res.json({ ok: true, mailEnabled, cms: Boolean(CMS_URL) });
+app.get('/api/health', async (_req, res) => {
+  res.json({ ok: true, mailEnabled, db: dbConfigured() ? await dbHealthy() : false });
 });
+
+// API admin (auth + CRUD occasions + messages) et lecture publique /api/used-boats.
+mountAdmin(app);
 
 // Formulaire de contact (toutes pages)
 app.post('/api/contact', async (req, res) => {
@@ -258,6 +222,6 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(
     `Motor Boat 74 — SPA démarré sur le port ${port} ` +
-      `(mail: ${mailEnabled ? 'activé' : 'simulé'}, cms: ${CMS_URL ? 'connecté' : 'non configuré'})`,
+      `(mail: ${mailEnabled ? 'activé' : 'simulé'}, db: ${dbConfigured() ? 'configurée' : 'non configurée'})`,
   );
 });
