@@ -7,7 +7,7 @@ const fmt = (iso: string) => {
   return isNaN(d.getTime()) ? iso : d.toLocaleString('fr-FR', { dateStyle: 'medium', timeStyle: 'short' });
 };
 
-export function MessagesInbox() {
+export function MessagesInbox({ onChange }: { onChange?: () => void } = {}) {
   const [messages, setMessages] = useState<ContactMessage[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [openId, setOpenId] = useState<number | null>(null);
@@ -26,7 +26,7 @@ export function MessagesInbox() {
     setOpenId(next);
     if (next !== null && !m.is_read) {
       setMessages((list) => (list ? list.map((x) => (x.id === m.id ? { ...x, is_read: 1 } : x)) : list));
-      adminApi.markMessage(m.id, true).catch(() => {});
+      adminApi.markMessage(m.id, true).then(() => onChange?.()).catch(() => {});
     }
   };
 
@@ -36,6 +36,7 @@ export function MessagesInbox() {
     try {
       await adminApi.deleteMessage(m.id);
       load();
+      onChange?.();
     } catch (err: any) {
       alert(err.message);
     }
