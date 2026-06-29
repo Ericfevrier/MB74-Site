@@ -55,8 +55,19 @@ function timingSafeEqual(a, b) {
   return diff === 0;
 }
 
+// Le portail préprod (Basic Auth) ne couvre QUE les pages publiques HTML.
+// Exemptés → pas de double connexion : le back-office /admin (qui a son propre
+// écran de login), l'API (/api/admin protégée par cookie), et les fichiers
+// statiques (assets, images…) pour que /admin et ses ressources se chargent.
+function exemptFromStagingGate(p) {
+  if (p === '/admin' || p.startsWith('/admin/') || p.startsWith('/api/')) return true;
+  const last = p.slice(p.lastIndexOf('/') + 1);
+  return last.includes('.'); // fichier statique (a une extension)
+}
+
 app.use((req, res, next) => {
   if (!STAGING_PROTECT && req.hostname !== STAGING_HOST) return next(); // prod → libre
+  if (exemptFromStagingGate(req.path)) return next();
 
   // Jamais indexé en préprod (en plus du 401 qui bloque déjà les crawlers).
   res.set('X-Robots-Tag', 'noindex, nofollow');
