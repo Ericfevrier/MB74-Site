@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { Phone, MapPin, Mail, Send, CheckCircle2 } from 'lucide-react';
 import { SITE } from '../../data/site';
+import { useSiteSettings } from '../../lib/settings';
 import { GoogleMapCustom } from '../GoogleMapCustom';
 
 interface ServiceContactBlockProps {
@@ -22,6 +23,7 @@ const inputCls =
   'w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-dark placeholder:text-gray-400 focus:bg-white focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan/20 outline-none transition';
 
 export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader }: ServiceContactBlockProps) {
+  const s = useSiteSettings();
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -58,12 +60,12 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
   };
 
   const infoRows = [
-    { icon: Phone, label: 'Téléphone', value: SITE.phoneDisplay, href: SITE.phoneHref },
-    { icon: Mail, label: 'Email', value: SITE.email, href: SITE.emailHref },
+    { icon: Phone, label: 'Téléphone', value: s.phoneDisplay, href: s.phoneHref },
+    { icon: Mail, label: 'Email', value: s.email, href: `mailto:${s.email}` },
     {
       icon: MapPin,
       label: 'Showroom',
-      value: `${SITE.addressStreet}, ${SITE.addressPostal} ${SITE.addressLocality}`,
+      value: `${s.addressStreet}, ${s.addressPostal} ${s.addressLocality}`,
     },
   ];
 

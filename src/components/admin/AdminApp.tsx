@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Lock, LogOut, Ship, Inbox, Loader2, LayoutDashboard, Menu, X, ExternalLink, FileText } from 'lucide-react';
+import { Lock, LogOut, Ship, Inbox, Loader2, LayoutDashboard, Menu, X, ExternalLink, FileText, Settings } from 'lucide-react';
 import { adminApi } from '../../lib/adminApi';
 import { OccasionsManager } from './OccasionsManager';
 import { MessagesInbox } from './MessagesInbox';
 import { DashboardView } from './DashboardView';
 import { BlogManager } from './BlogManager';
+import { SettingsManager } from './SettingsManager';
 
 type Auth = { state: 'loading' } | { state: 'out' } | { state: 'in'; username: string };
 
@@ -62,7 +63,7 @@ function LoginScreen({ onIn }: { onIn: (u: string) => void }) {
 /* ------------------------------------------------------------------ */
 /*  Sections du back-office (registre extensible)                     */
 /* ------------------------------------------------------------------ */
-export type SectionId = 'dashboard' | 'occasions' | 'blog' | 'messages';
+export type SectionId = 'dashboard' | 'occasions' | 'blog' | 'messages' | 'settings';
 
 interface SectionDef {
   id: SectionId;
@@ -75,6 +76,7 @@ const SECTIONS: SectionDef[] = [
   { id: 'occasions', label: 'Occasions', icon: <Ship size={18} /> },
   { id: 'blog', label: 'Blog', icon: <FileText size={18} /> },
   { id: 'messages', label: 'Messages', icon: <Inbox size={18} /> },
+  { id: 'settings', label: 'Réglages', icon: <Settings size={18} /> },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -201,6 +203,7 @@ export function AdminApp() {
           {section === 'occasions' && <OccasionsManager />}
           {section === 'blog' && <BlogManager />}
           {section === 'messages' && <MessagesInbox onChange={refreshUnread} />}
+          {section === 'settings' && <SettingsManager />}
         </main>
       </div>
     </div>

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { Instagram, Facebook, Youtube, Linkedin, Phone, Lock } from 'lucide-react';
+import { useSiteSettings } from '../lib/settings';
 
 export function Footer() {
+  const s = useSiteSettings();
   return (
     <footer className="bg-ink-850 text-gray-400 pt-20">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -26,11 +28,11 @@ export function Footer() {
               Motorboat74, concessionnaire officiel de la marque Nautique et importateur de Connelly Ski en Haute-Savoie, est spécialisé dans la vente, l'hivernage et l'entretien de bateaux à moteur. Nous vous accompagnons dans tous vos projets nautiques sur le Lac d'Annecy et ses environs.
             </p>
 
-            <a href="tel:+33457572727" className="inline-flex items-center gap-3 text-white hover:text-brand-cyan transition-colors">
+            <a href={s.phoneHref} className="inline-flex items-center gap-3 text-white hover:text-brand-cyan transition-colors">
               <span className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-cyan flex-shrink-0">
                 <Phone size={18} />
               </span>
-              <span className="font-bold text-lg tracking-tight">04 57 57 27 27</span>
+              <span className="font-bold text-lg tracking-tight">{s.phoneDisplay}</span>
             </a>
           </div>
 
@@ -121,10 +123,10 @@ export function Footer() {
               <h3 className="text-white text-sm font-bold uppercase tracking-widest mb-4">Suivez-nous</h3>
               <div className="flex items-center gap-3">
                 {[
-                  { Icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/motorboat_74/' },
-                  { Icon: Facebook, label: 'Facebook', href: 'https://www.facebook.com/motorboat74/' },
-                  { Icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/@MotorBoat74' },
-                  { Icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/company/motor-boat-74/' },
+                  { Icon: Instagram, label: 'Instagram', href: s.instagram },
+                  { Icon: Facebook, label: 'Facebook', href: s.facebook },
+                  { Icon: Youtube, label: 'YouTube', href: s.youtube },
+                  { Icon: Linkedin, label: 'LinkedIn', href: s.linkedin },
                 ].map(({ Icon, label, href }) => (
                   <a
                     key={label}

@@ -333,6 +333,58 @@ export function mountAdmin(app) {
     }
   });
 
+  /* ------------------------- Réglages ----------------------------- */
+
+  // Clés autorisées (on ignore toute autre clé envoyée).
+  const SETTING_KEYS = [
+    'phone', 'email', 'address_street', 'address_locality', 'address_postal', 'address_region',
+    'hours', 'instagram', 'facebook', 'youtube', 'linkedin',
+  ];
+
+  async function readSettings() {
+    const rows = await query('SELECT name, value FROM settings');
+    const out = {};
+    for (const r of rows) out[r.name] = r.value;
+    return out;
+  }
+
+  // Lecture publique (affichage live du site).
+  app.get('/api/settings', async (_req, res) => {
+    if (!dbConfigured()) return res.json({ settings: {} });
+    try {
+      res.json({ settings: await readSettings() });
+    } catch (e) {
+      console.error('GET /api/settings', e.message);
+      res.json({ settings: {} });
+    }
+  });
+
+  app.get('/api/admin/settings', requireAuth, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      res.json({ settings: await readSettings() });
+    } catch (e) {
+      console.error('GET /api/admin/settings', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.put('/api/admin/settings', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const body = (req.body && req.body.settings) || req.body || {};
+    try {
+      for (const key of SETTING_KEYS) {
+        if (!(key in body)) continue;
+        const value = body[key] == null ? '' : String(body[key]);
+        await query('INSERT INTO settings (name, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE value = VALUES(value)', [key, value]);
+      }
+      res.json({ ok: true, settings: await readSettings() });
+    } catch (e) {
+      console.error('PUT /api/admin/settings', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
   /* ----------------------- Messages (admin) ----------------------- */
 
   app.get('/api/admin/messages', requireAuth, async (_req, res) => {

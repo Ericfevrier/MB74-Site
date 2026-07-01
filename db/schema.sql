@@ -48,6 +48,13 @@ CREATE TABLE IF NOT EXISTS blog_articles (
   KEY idx_blog_status (status, date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Réglages du site (clé/valeur) : coordonnées, réseaux, etc. (affichage live).
+CREATE TABLE IF NOT EXISTS settings (
+  name       VARCHAR(64) NOT NULL PRIMARY KEY,
+  value      TEXT        NULL,
+  updated_at TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Messages de contact (formulaires contact + hivernage).
 CREATE TABLE IF NOT EXISTS contact_submissions (
   id           INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

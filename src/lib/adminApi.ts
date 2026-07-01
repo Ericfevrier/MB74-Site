@@ -60,6 +60,10 @@ export const adminApi = {
   updateArticle: (id: number, a: Partial<AdminArticle>) => req('PUT', `/api/admin/blog/${id}`, a),
   deleteArticle: (id: number) => req('DELETE', `/api/admin/blog/${id}`),
 
+  getSettings: () => req<{ settings: Record<string, string> }>('GET', '/api/admin/settings'),
+  saveSettings: (settings: Record<string, string>) =>
+    req<{ ok: boolean; settings: Record<string, string> }>('PUT', '/api/admin/settings', { settings }),
+
   listMessages: () => req<{ messages: ContactMessage[] }>('GET', '/api/admin/messages'),
   markMessage: (id: number, read: boolean) => req('PATCH', `/api/admin/messages/${id}`, { read }),
   deleteMessage: (id: number) => req('DELETE', `/api/admin/messages/${id}`),
