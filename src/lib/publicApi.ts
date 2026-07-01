@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import type { UsedBoat } from '../data/usedBoats';
 import type { BlogArticle } from '../data/blog';
 import type { TeamMember } from '../data/team';
+import type { HivernageCity } from '../data/hivernageCities';
 
 export async function fetchPublicUsedBoats(): Promise<UsedBoat[]> {
   const res = await fetch('/api/used-boats');
@@ -93,5 +94,34 @@ export function useLiveTeam(): { members: TeamMember[] | null; loaded: boolean }
       alive = false;
     };
   }, []);
+  return state;
+}
+
+/* ------------------------ Villes (hivernage) --------------------- */
+
+export async function fetchPublicCity(slug: string): Promise<HivernageCity> {
+  const res = await fetch(`/api/cities/${encodeURIComponent(slug)}`);
+  if (!res.ok) throw new Error(`/api/cities/${slug} -> ${res.status}`);
+  const json = await res.json();
+  return json.city as HivernageCity;
+}
+
+/** Ville live par slug ; `city` null tant que non chargée / si absente en base. */
+export function useLiveCity(slug: string | undefined): { city: HivernageCity | null; loaded: boolean } {
+  const [state, setState] = useState<{ city: HivernageCity | null; loaded: boolean }>({ city: null, loaded: false });
+  useEffect(() => {
+    let alive = true;
+    setState({ city: null, loaded: false });
+    if (!slug) {
+      setState({ city: null, loaded: true });
+      return;
+    }
+    fetchPublicCity(slug)
+      .then((c) => alive && setState({ city: c, loaded: true }))
+      .catch(() => alive && setState({ city: null, loaded: true }));
+    return () => {
+      alive = false;
+    };
+  }, [slug]);
   return state;
 }

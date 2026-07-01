@@ -48,6 +48,28 @@ CREATE TABLE IF NOT EXISTS blog_articles (
   KEY idx_blog_status (status, date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Pages villes (hivernage par ville). ports / local_expertise stockés en JSON.
+CREATE TABLE IF NOT EXISTS hivernage_cities (
+  id               INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  slug             VARCHAR(191) NOT NULL,
+  city             VARCHAR(191) NOT NULL,
+  h1               VARCHAR(255) NULL,
+  meta_title       VARCHAR(255) NULL,
+  meta_description TEXT         NULL,
+  hero             VARCHAR(512) NULL,
+  intro            TEXT         NULL,
+  lake             VARCHAR(191) NULL,
+  zones_intro      TEXT         NULL,
+  ports            JSON         NULL,
+  local_expertise  JSON         NULL,
+  sort_order       INT          NOT NULL DEFAULT 0,
+  status           VARCHAR(16)  NOT NULL DEFAULT 'published',
+  created_at       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uniq_city_slug (slug),
+  KEY idx_city_status (status, sort_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Membres de l'équipe (page « La Team »).
 CREATE TABLE IF NOT EXISTS team_members (
   id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

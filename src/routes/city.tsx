@@ -1,28 +1,27 @@
-import { useLoaderData, redirect, type LoaderFunctionArgs } from 'react-router';
+import { useParams } from 'react-router';
+import { Loader2 } from 'lucide-react';
 import { HivernageCityPage } from '../pages/HivernageCityPage';
 import { getHivernageCity } from '../data/hivernageCities';
-import { serverCms, fetchCities } from '../lib/cms';
+import { useLiveCity } from '../lib/publicApi';
 export { cityPageMeta as meta } from '../pages/HivernageCityPage';
 
-/** Loader SSR : page ville lue en live depuis le CMS (repli statique côté page). */
-export async function clientLoader({ params }: LoaderFunctionArgs) {
-  const slug = params.slug!;
-  const cfg = await serverCms();
-  if (cfg) {
-    try {
-      const cities = await fetchCities(cfg);
-      const city = cities.find((c) => c.slug === slug);
-      if (city) return { city };
-    } catch {
-      /* repli statique ci-dessous */
-    }
-  }
-  if (!getHivernageCity(slug)) throw redirect('/hivernage-stockage-bateau');
-  return null; // présent en statique : la page calcule via useParams
+/** Statique au prerender (SEO) : la page calcule via useParams ; refresh live dans le composant. */
+export function clientLoader() {
+  return null;
 }
 
 export default function City() {
-  const data = useLoaderData<typeof clientLoader>();
-  if (!data) return <HivernageCityPage />;
-  return <HivernageCityPage city={data.city} />;
+  const { slug } = useParams<{ slug: string }>();
+  const live = useLiveCity(slug);
+  const staticCity = slug ? getHivernageCity(slug) : undefined;
+
+  if (live.city) return <HivernageCityPage city={live.city} />;
+  if (!live.loaded && !staticCity) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center bg-white">
+        <Loader2 className="w-8 h-8 animate-spin text-brand-cyan" />
+      </div>
+    );
+  }
+  return <HivernageCityPage />;
 }

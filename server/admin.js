@@ -159,6 +159,67 @@ function memberToRow(a) {
   };
 }
 
+const parseJson = (v, fallback) => {
+  if (v == null) return fallback;
+  if (typeof v === 'object') return v;
+  try {
+    return JSON.parse(v);
+  } catch {
+    return fallback;
+  }
+};
+
+const CITY_FIELDS = [
+  'slug', 'city', 'h1', 'meta_title', 'meta_description', 'hero', 'intro', 'lake',
+  'zones_intro', 'ports', 'local_expertise', 'sort_order', 'status',
+];
+
+function rowToCity(r, admin = false) {
+  const c = {
+    slug: r.slug,
+    city: r.city,
+    h1: r.h1 || '',
+    metaTitle: r.meta_title || '',
+    metaDescription: r.meta_description || '',
+    hero: r.hero || '',
+    intro: r.intro || '',
+    lake: r.lake || '',
+    zonesIntro: r.zones_intro || '',
+    ports: parseJson(r.ports, []),
+    localExpertise: parseJson(r.local_expertise, undefined),
+  };
+  if (admin) {
+    c.id = r.id;
+    c.status = r.status;
+    c.sortOrder = r.sort_order;
+  }
+  return c;
+}
+
+function cityToRow(c) {
+  const s = (v) => (v === undefined || v === null ? '' : String(v));
+  const arr = Array.isArray(c.ports) ? c.ports.filter((p) => p && (p.title || p.desc)) : [];
+  let le = null;
+  if (c.localExpertise && (c.localExpertise.intro || (c.localExpertise.facts || []).length)) {
+    le = { intro: s(c.localExpertise.intro), facts: (c.localExpertise.facts || []).filter((f) => f && (f.title || f.text)) };
+  }
+  return {
+    slug: String(c.slug || '').trim(),
+    city: String(c.city || '').trim(),
+    h1: s(c.h1),
+    meta_title: s(c.metaTitle),
+    meta_description: s(c.metaDescription),
+    hero: s(c.hero),
+    intro: s(c.intro),
+    lake: s(c.lake),
+    zones_intro: s(c.zonesIntro),
+    ports: JSON.stringify(arr),
+    local_expertise: le ? JSON.stringify(le) : null,
+    sort_order: Number.isFinite(Number(c.sortOrder)) ? Number(c.sortOrder) : 0,
+    status: c.status === 'draft' ? 'draft' : 'published',
+  };
+}
+
 const needDb = (res) =>
   res.status(503).json({ ok: false, error: 'Base de données non configurée.' });
 
@@ -424,6 +485,90 @@ export function mountAdmin(app) {
       res.json({ ok: true });
     } catch (e) {
       console.error('DELETE /api/admin/team', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  /* -------------------- Villes (hivernage) ------------------------ */
+
+  app.get('/api/cities', async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query("SELECT * FROM hivernage_cities WHERE status = 'published' ORDER BY sort_order ASC, id ASC");
+      res.json({ cities: rows.map((r) => rowToCity(r)) });
+    } catch (e) {
+      console.error('GET /api/cities', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.get('/api/cities/:slug', async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query("SELECT * FROM hivernage_cities WHERE slug = ? AND status = 'published' LIMIT 1", [req.params.slug]);
+      if (!rows.length) return res.status(404).json({ ok: false, error: 'Ville introuvable.' });
+      res.json({ city: rowToCity(rows[0]) });
+    } catch (e) {
+      console.error('GET /api/cities/:slug', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.get('/api/admin/cities', requireAuth, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT * FROM hivernage_cities ORDER BY sort_order ASC, id ASC');
+      res.json({ cities: rows.map((r) => rowToCity(r, true)) });
+    } catch (e) {
+      console.error('GET /api/admin/cities', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.post('/api/admin/cities', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const row = cityToRow(req.body || {});
+    if (!row.slug || !row.city) return res.status(400).json({ ok: false, error: 'Slug et ville requis.' });
+    try {
+      const cols = CITY_FIELDS.join(', ');
+      const ph = CITY_FIELDS.map(() => '?').join(', ');
+      const r = await query(`INSERT INTO hivernage_cities (${cols}) VALUES (${ph})`, CITY_FIELDS.map((c) => row[c]));
+      res.json({ ok: true, id: r.insertId });
+    } catch (e) {
+      if (e.code === 'ER_DUP_ENTRY') return res.status(409).json({ ok: false, error: 'Ce slug existe déjà.' });
+      console.error('POST /api/admin/cities', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.put('/api/admin/cities/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
+    const row = cityToRow(req.body || {});
+    if (!row.slug || !row.city) return res.status(400).json({ ok: false, error: 'Slug et ville requis.' });
+    try {
+      const set = CITY_FIELDS.map((c) => `${c} = ?`).join(', ');
+      const r = await query(`UPDATE hivernage_cities SET ${set} WHERE id = ?`, [...CITY_FIELDS.map((c) => row[c]), id]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      if (e.code === 'ER_DUP_ENTRY') return res.status(409).json({ ok: false, error: 'Ce slug existe déjà.' });
+      console.error('PUT /api/admin/cities', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.delete('/api/admin/cities/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
+    try {
+      const r = await query('DELETE FROM hivernage_cities WHERE id = ?', [id]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('DELETE /api/admin/cities', e.message);
       res.status(500).json({ ok: false, error: 'Erreur base de données.' });
     }
   });

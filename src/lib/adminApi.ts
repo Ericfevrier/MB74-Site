@@ -4,6 +4,7 @@
 import type { UsedBoat } from '../data/usedBoats';
 import type { BlogArticle } from '../data/blog';
 import type { TeamMember } from '../data/team';
+import type { HivernageCity } from '../data/hivernageCities';
 
 export interface AdminBoat extends UsedBoat {
   id: number;
@@ -18,6 +19,12 @@ export interface AdminArticle extends BlogArticle {
 }
 
 export interface AdminMember extends TeamMember {
+  id: number;
+  status: 'published' | 'draft';
+  sortOrder: number;
+}
+
+export interface AdminCity extends HivernageCity {
   id: number;
   status: 'published' | 'draft';
   sortOrder: number;
@@ -71,6 +78,11 @@ export const adminApi = {
   createMember: (m: Partial<AdminMember>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/team', m),
   updateMember: (id: number, m: Partial<AdminMember>) => req('PUT', `/api/admin/team/${id}`, m),
   deleteMember: (id: number) => req('DELETE', `/api/admin/team/${id}`),
+
+  listCities: () => req<{ cities: AdminCity[] }>('GET', '/api/admin/cities'),
+  createCity: (c: Partial<AdminCity>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/cities', c),
+  updateCity: (id: number, c: Partial<AdminCity>) => req('PUT', `/api/admin/cities/${id}`, c),
+  deleteCity: (id: number) => req('DELETE', `/api/admin/cities/${id}`),
 
   getSettings: () => req<{ settings: Record<string, string> }>('GET', '/api/admin/settings'),
   saveSettings: (settings: Record<string, string>) =>
