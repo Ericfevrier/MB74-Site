@@ -1,0 +1,58 @@
+{
+  "name": "motorboat74-site",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "vite --port=3000 --host=0.0.0.0",
+    "prebuild": "tsx scripts/sync-content.ts && tsx scripts/generate-sitemap.ts",
+    "build": "vite build",
+    "dev:ssr": "react-router dev",
+    "build:ssr": "react-router build",
+    "start:ssr": "react-router-serve ./build/server/index.js",
+    "preview": "vite preview",
+    "start": "node server/index.js",
+    "dev:server": "PORT=8787 node server/index.js",
+    "serve": "npm run build:ssr && npm run start",
+    "clean": "rm -rf dist build",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-router/express": "^7.18.0",
+    "@react-router/node": "^7.18.0",
+    "@vis.gl/react-google-maps": "^1.8.3",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "isbot": "^5.1.44",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.546.0",
+    "marked": "^18.0.5",
+    "motion": "^12.23.24",
+    "mysql2": "^3.22.5",
+    "nodemailer": "^8.0.10",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "react-router": "^7.18.0"
+  },
+  "devDependencies": {
+    "@react-router/dev": "^7.18.0",
+    "@react-router/serve": "^7.18.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/express": "^4.17.21",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "^22.14.0",
+    "@types/nodemailer": "^8.0.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.0.4",
+    "autoprefixer": "^10.4.21",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.3"
+  }
+}

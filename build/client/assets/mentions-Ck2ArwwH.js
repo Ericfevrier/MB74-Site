@@ -1,0 +1,1 @@
+import{w as t,j as o}from"./react-vendor-BcqMDm6E.js";import{L as n,l as s}from"./LegalPage-fXwQC3VD.js";import"./vendor-D3tH4PLb.js";import"./site-BLNgaAJn.js";import"./Breadcrumb-DKZHa54_.js";import"./meta-DCoIr5Qo.js";const c=()=>s("mentions"),f=t(function(){return o.jsx(n,{doc:"mentions"})});export{f as default,c as meta};

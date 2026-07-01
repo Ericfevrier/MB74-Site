@@ -1,0 +1,1 @@
+import{w as t,j as o}from"./react-vendor-BcqMDm6E.js";import{L as r,l as a}from"./LegalPage-fXwQC3VD.js";import"./vendor-D3tH4PLb.js";import"./site-BLNgaAJn.js";import"./Breadcrumb-DKZHa54_.js";import"./meta-DCoIr5Qo.js";const g=()=>a("cgv"),l=t(function(){return o.jsx(r,{doc:"cgv"})});export{l as default,g as meta};
