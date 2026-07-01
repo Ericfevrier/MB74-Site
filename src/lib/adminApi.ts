@@ -3,6 +3,7 @@
  */
 import type { UsedBoat } from '../data/usedBoats';
 import type { BlogArticle } from '../data/blog';
+import type { TeamMember } from '../data/team';
 
 export interface AdminBoat extends UsedBoat {
   id: number;
@@ -14,6 +15,12 @@ export interface AdminArticle extends BlogArticle {
   id: number;
   status: 'published' | 'draft';
   content: string;
+}
+
+export interface AdminMember extends TeamMember {
+  id: number;
+  status: 'published' | 'draft';
+  sortOrder: number;
 }
 
 export interface ContactMessage {
@@ -59,6 +66,11 @@ export const adminApi = {
   createArticle: (a: Partial<AdminArticle>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/blog', a),
   updateArticle: (id: number, a: Partial<AdminArticle>) => req('PUT', `/api/admin/blog/${id}`, a),
   deleteArticle: (id: number) => req('DELETE', `/api/admin/blog/${id}`),
+
+  listTeam: () => req<{ members: AdminMember[] }>('GET', '/api/admin/team'),
+  createMember: (m: Partial<AdminMember>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/team', m),
+  updateMember: (id: number, m: Partial<AdminMember>) => req('PUT', `/api/admin/team/${id}`, m),
+  deleteMember: (id: number) => req('DELETE', `/api/admin/team/${id}`),
 
   getSettings: () => req<{ settings: Record<string, string> }>('GET', '/api/admin/settings'),
   saveSettings: (settings: Record<string, string>) =>

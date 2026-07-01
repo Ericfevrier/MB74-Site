@@ -48,6 +48,21 @@ CREATE TABLE IF NOT EXISTS blog_articles (
   KEY idx_blog_status (status, date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Membres de l'équipe (page « La Team »).
+CREATE TABLE IF NOT EXISTS team_members (
+  id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name       VARCHAR(191) NOT NULL,
+  role       VARCHAR(191) NULL,
+  bio        TEXT         NULL,
+  image      VARCHAR(512) NULL,
+  position   VARCHAR(64)  NULL,
+  sort_order INT          NOT NULL DEFAULT 0,
+  status     VARCHAR(16)  NOT NULL DEFAULT 'published',
+  created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  KEY idx_team_status (status, sort_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Réglages du site (clé/valeur) : coordonnées, réseaux, etc. (affichage live).
 CREATE TABLE IF NOT EXISTS settings (
   name       VARCHAR(64) NOT NULL PRIMARY KEY,

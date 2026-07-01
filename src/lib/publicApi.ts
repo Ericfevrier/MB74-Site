@@ -9,6 +9,7 @@
 import { useEffect, useState } from 'react';
 import type { UsedBoat } from '../data/usedBoats';
 import type { BlogArticle } from '../data/blog';
+import type { TeamMember } from '../data/team';
 
 export async function fetchPublicUsedBoats(): Promise<UsedBoat[]> {
   const res = await fetch('/api/used-boats');
@@ -65,6 +66,29 @@ export function useLiveBlog(): { articles: BlogArticle[] | null; loaded: boolean
     fetchPublicBlog()
       .then((a) => alive && setState({ articles: a, loaded: true }))
       .catch(() => alive && setState({ articles: null, loaded: true }));
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return state;
+}
+
+/* ----------------------------- Équipe ---------------------------- */
+
+export async function fetchPublicTeam(): Promise<TeamMember[]> {
+  const res = await fetch('/api/team');
+  if (!res.ok) throw new Error(`/api/team -> ${res.status}`);
+  const json = await res.json();
+  return (json.members ?? []) as TeamMember[];
+}
+
+export function useLiveTeam(): { members: TeamMember[] | null; loaded: boolean } {
+  const [state, setState] = useState<{ members: TeamMember[] | null; loaded: boolean }>({ members: null, loaded: false });
+  useEffect(() => {
+    let alive = true;
+    fetchPublicTeam()
+      .then((m) => alive && setState({ members: m, loaded: true }))
+      .catch(() => alive && setState({ members: null, loaded: true }));
     return () => {
       alive = false;
     };

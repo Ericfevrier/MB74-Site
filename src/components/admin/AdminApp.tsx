@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Lock, LogOut, Ship, Inbox, Loader2, LayoutDashboard, Menu, X, ExternalLink, FileText, Settings } from 'lucide-react';
+import { Lock, LogOut, Ship, Inbox, Loader2, LayoutDashboard, Menu, X, ExternalLink, FileText, Settings, Users } from 'lucide-react';
 import { adminApi } from '../../lib/adminApi';
 import { OccasionsManager } from './OccasionsManager';
 import { MessagesInbox } from './MessagesInbox';
 import { DashboardView } from './DashboardView';
 import { BlogManager } from './BlogManager';
+import { TeamManager } from './TeamManager';
 import { SettingsManager } from './SettingsManager';
 
 type Auth = { state: 'loading' } | { state: 'out' } | { state: 'in'; username: string };
@@ -63,7 +64,7 @@ function LoginScreen({ onIn }: { onIn: (u: string) => void }) {
 /* ------------------------------------------------------------------ */
 /*  Sections du back-office (registre extensible)                     */
 /* ------------------------------------------------------------------ */
-export type SectionId = 'dashboard' | 'occasions' | 'blog' | 'messages' | 'settings';
+export type SectionId = 'dashboard' | 'occasions' | 'blog' | 'team' | 'messages' | 'settings';
 
 interface SectionDef {
   id: SectionId;
@@ -75,6 +76,7 @@ const SECTIONS: SectionDef[] = [
   { id: 'dashboard', label: 'Tableau de bord', icon: <LayoutDashboard size={18} /> },
   { id: 'occasions', label: 'Occasions', icon: <Ship size={18} /> },
   { id: 'blog', label: 'Blog', icon: <FileText size={18} /> },
+  { id: 'team', label: 'Équipe', icon: <Users size={18} /> },
   { id: 'messages', label: 'Messages', icon: <Inbox size={18} /> },
   { id: 'settings', label: 'Réglages', icon: <Settings size={18} /> },
 ];
@@ -202,6 +204,7 @@ export function AdminApp() {
           {section === 'dashboard' && <DashboardView onGo={go} unread={unread} />}
           {section === 'occasions' && <OccasionsManager />}
           {section === 'blog' && <BlogManager />}
+          {section === 'team' && <TeamManager />}
           {section === 'messages' && <MessagesInbox onChange={refreshUnread} />}
           {section === 'settings' && <SettingsManager />}
         </main>

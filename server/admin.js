@@ -134,6 +134,31 @@ function articleToRow(a) {
   };
 }
 
+const TEAM_FIELDS = ['name', 'role', 'bio', 'image', 'position', 'sort_order', 'status'];
+
+function rowToMember(r, admin = false) {
+  const m = { name: r.name, role: r.role || '', bio: r.bio || '', image: r.image || '', position: r.position || '' };
+  if (admin) {
+    m.id = r.id;
+    m.status = r.status;
+    m.sortOrder = r.sort_order;
+  }
+  return m;
+}
+
+function memberToRow(a) {
+  const s = (v) => (v === undefined || v === null || v === '' ? null : String(v));
+  return {
+    name: String(a.name || '').trim(),
+    role: s(a.role),
+    bio: s(a.bio),
+    image: s(a.image),
+    position: s(a.position),
+    sort_order: Number.isFinite(Number(a.sortOrder)) ? Number(a.sortOrder) : 0,
+    status: a.status === 'draft' ? 'draft' : 'published',
+  };
+}
+
 const needDb = (res) =>
   res.status(503).json({ ok: false, error: 'Base de données non configurée.' });
 
@@ -329,6 +354,76 @@ export function mountAdmin(app) {
       res.json({ ok: true });
     } catch (e) {
       console.error('DELETE /api/admin/blog', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  /* --------------------------- Équipe ----------------------------- */
+
+  app.get('/api/team', async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query("SELECT * FROM team_members WHERE status = 'published' ORDER BY sort_order ASC, id ASC");
+      res.json({ members: rows.map((r) => rowToMember(r)) });
+    } catch (e) {
+      console.error('GET /api/team', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.get('/api/admin/team', requireAuth, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT * FROM team_members ORDER BY sort_order ASC, id ASC');
+      res.json({ members: rows.map((r) => rowToMember(r, true)) });
+    } catch (e) {
+      console.error('GET /api/admin/team', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.post('/api/admin/team', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const row = memberToRow(req.body || {});
+    if (!row.name) return res.status(400).json({ ok: false, error: 'Nom requis.' });
+    try {
+      const cols = TEAM_FIELDS.join(', ');
+      const ph = TEAM_FIELDS.map(() => '?').join(', ');
+      const r = await query(`INSERT INTO team_members (${cols}) VALUES (${ph})`, TEAM_FIELDS.map((c) => row[c]));
+      res.json({ ok: true, id: r.insertId });
+    } catch (e) {
+      console.error('POST /api/admin/team', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.put('/api/admin/team/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
+    const row = memberToRow(req.body || {});
+    if (!row.name) return res.status(400).json({ ok: false, error: 'Nom requis.' });
+    try {
+      const set = TEAM_FIELDS.map((c) => `${c} = ?`).join(', ');
+      const r = await query(`UPDATE team_members SET ${set} WHERE id = ?`, [...TEAM_FIELDS.map((c) => row[c]), id]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('PUT /api/admin/team', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.delete('/api/admin/team/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
+    try {
+      const r = await query('DELETE FROM team_members WHERE id = ?', [id]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('DELETE /api/admin/team', e.message);
       res.status(500).json({ ok: false, error: 'Erreur base de données.' });
     }
   });
