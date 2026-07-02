@@ -97,6 +97,41 @@ export function useLiveTeam(): { members: TeamMember[] | null; loaded: boolean }
   return state;
 }
 
+/* ----------------------------- Marques --------------------------- */
+
+export interface BrandEditorialRow {
+  brand_id: string;
+  name?: string;
+  full_name?: string;
+  role?: string;
+  logo?: string;
+  hero_image?: string;
+  tagline?: string;
+  description?: string;
+  hero_wordmark?: boolean;
+}
+
+export async function fetchPublicBrands(): Promise<BrandEditorialRow[]> {
+  const res = await fetch('/api/brands');
+  if (!res.ok) throw new Error(`/api/brands -> ${res.status}`);
+  const json = await res.json();
+  return (json.brands ?? []) as BrandEditorialRow[];
+}
+
+export function useLiveBrands(): { brands: BrandEditorialRow[] | null; loaded: boolean } {
+  const [state, setState] = useState<{ brands: BrandEditorialRow[] | null; loaded: boolean }>({ brands: null, loaded: false });
+  useEffect(() => {
+    let alive = true;
+    fetchPublicBrands()
+      .then((b) => alive && setState({ brands: b, loaded: true }))
+      .catch(() => alive && setState({ brands: null, loaded: true }));
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return state;
+}
+
 /* ------------------------ Villes (hivernage) --------------------- */
 
 export async function fetchPublicCity(slug: string): Promise<HivernageCity> {

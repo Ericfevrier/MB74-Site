@@ -30,6 +30,18 @@ export interface AdminCity extends HivernageCity {
   sortOrder: number;
 }
 
+export interface BrandEditorial {
+  brand_id: string;
+  name: string;
+  full_name: string;
+  role: string;
+  logo: string;
+  hero_image: string;
+  tagline: string;
+  description: string;
+  hero_wordmark: boolean;
+}
+
 export interface ContactMessage {
   id: number;
   nom: string;
@@ -83,6 +95,9 @@ export const adminApi = {
   createCity: (c: Partial<AdminCity>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/cities', c),
   updateCity: (id: number, c: Partial<AdminCity>) => req('PUT', `/api/admin/cities/${id}`, c),
   deleteCity: (id: number) => req('DELETE', `/api/admin/cities/${id}`),
+
+  listBrands: () => req<{ brands: BrandEditorial[] }>('GET', '/api/admin/brands'),
+  saveBrand: (brandId: string, b: Partial<BrandEditorial>) => req('PUT', `/api/admin/brands/${brandId}`, b),
 
   getSettings: () => req<{ settings: Record<string, string> }>('GET', '/api/admin/settings'),
   saveSettings: (settings: Record<string, string>) =>

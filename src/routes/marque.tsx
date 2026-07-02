@@ -1,27 +1,22 @@
-import { useLoaderData, type LoaderFunctionArgs } from 'react-router';
+import { useParams } from 'react-router';
 import { BrandPage } from '../components/BrandPage';
 import { STATIC_BRANDS_DATA, mergeBrands } from '../data/brands';
-import { serverCms, fetchBrands } from '../lib/cms';
+import { useLiveBrands } from '../lib/publicApi';
 export { brandPageMeta as meta } from '../components/BrandPage';
 
-/** Loader SSR : marque lue en live depuis le CMS (éditorial fusionné sur le structurel). */
-export async function clientLoader({ params }: LoaderFunctionArgs) {
-  const id = (params.id || '').toLowerCase();
-  const cfg = await serverCms();
-  if (cfg) {
-    try {
-      const editorial = await fetchBrands(cfg);
-      const merged = mergeBrands(STATIC_BRANDS_DATA, editorial);
-      if (merged[id]) return { brand: merged[id] };
-    } catch {
-      /* repli statique */
-    }
-  }
-  return null; // la page calcule depuis les données statiques via useParams
+/** Statique au prerender (SEO) ; l'éditorial live (base) est fusionné côté navigateur. */
+export function clientLoader() {
+  return null;
 }
 
 export default function Marque() {
-  const data = useLoaderData<typeof clientLoader>();
-  if (!data) return <BrandPage />;
-  return <BrandPage brand={data.brand} />;
+  const { id } = useParams<{ id: string }>();
+  const live = useLiveBrands();
+
+  if (live.brands && live.brands.length) {
+    const merged = mergeBrands(STATIC_BRANDS_DATA, live.brands);
+    const brand = merged[(id || '').toLowerCase()];
+    if (brand) return <BrandPage brand={brand} />;
+  }
+  return <BrandPage />; // repli statique via useParams
 }

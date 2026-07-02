@@ -48,6 +48,20 @@ CREATE TABLE IF NOT EXISTS blog_articles (
   KEY idx_blog_status (status, date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Marques (champs éditoriaux ; le structurel — modèles, comparatifs — reste dans le code).
+CREATE TABLE IF NOT EXISTS brands (
+  brand_id      VARCHAR(64)  NOT NULL PRIMARY KEY,
+  name          VARCHAR(191) NULL,
+  full_name     VARCHAR(191) NULL,
+  role          VARCHAR(191) NULL,
+  logo          VARCHAR(512) NULL,
+  hero_image    VARCHAR(512) NULL,
+  tagline       VARCHAR(255) NULL,
+  description   TEXT         NULL,
+  hero_wordmark TINYINT(1)   NOT NULL DEFAULT 0,
+  updated_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Pages villes (hivernage par ville). ports / local_expertise stockés en JSON.
 CREATE TABLE IF NOT EXISTS hivernage_cities (
   id               INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

@@ -489,6 +489,72 @@ export function mountAdmin(app) {
     }
   });
 
+  /* --------------------------- Marques ---------------------------- */
+
+  const BRAND_FIELDS = ['brand_id', 'name', 'full_name', 'role', 'logo', 'hero_image', 'tagline', 'description', 'hero_wordmark'];
+  const rowToBrand = (r) => ({
+    brand_id: r.brand_id,
+    name: r.name || '',
+    full_name: r.full_name || '',
+    role: r.role || '',
+    logo: r.logo || '',
+    hero_image: r.hero_image || '',
+    tagline: r.tagline || '',
+    description: r.description || '',
+    hero_wordmark: !!r.hero_wordmark,
+  });
+
+  app.get('/api/brands', async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT * FROM brands');
+      res.json({ brands: rows.map(rowToBrand) });
+    } catch (e) {
+      console.error('GET /api/brands', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.get('/api/admin/brands', requireAuth, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT * FROM brands');
+      res.json({ brands: rows.map(rowToBrand) });
+    } catch (e) {
+      console.error('GET /api/admin/brands', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.put('/api/admin/brands/:brandId', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const brandId = String(req.params.brandId || '').trim();
+    if (!brandId) return res.status(400).json({ ok: false, error: 'brand_id requis.' });
+    const b = req.body || {};
+    const s = (v) => (v === undefined || v === null ? '' : String(v));
+    const vals = {
+      brand_id: brandId,
+      name: s(b.name),
+      full_name: s(b.full_name),
+      role: s(b.role),
+      logo: s(b.logo),
+      hero_image: s(b.hero_image),
+      tagline: s(b.tagline),
+      description: s(b.description),
+      hero_wordmark: b.hero_wordmark ? 1 : 0,
+    };
+    try {
+      const cols = BRAND_FIELDS.join(', ');
+      const ph = BRAND_FIELDS.map(() => '?').join(', ');
+      const upd = BRAND_FIELDS.filter((c) => c !== 'brand_id').map((c) => `${c} = VALUES(${c})`).join(', ');
+      await query(`INSERT INTO brands (${cols}) VALUES (${ph}) ON DUPLICATE KEY UPDATE ${upd}`, BRAND_FIELDS.map((c) => vals[c]));
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('PUT /api/admin/brands', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
   /* -------------------- Villes (hivernage) ------------------------ */
 
   app.get('/api/cities', async (_req, res) => {
