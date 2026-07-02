@@ -5,6 +5,7 @@ import type { UsedBoat } from '../data/usedBoats';
 import type { BlogArticle } from '../data/blog';
 import type { TeamMember } from '../data/team';
 import type { HivernageCity } from '../data/hivernageCities';
+import type { NautiqueModel } from '../data/nautiqueModels';
 
 export interface AdminBoat extends UsedBoat {
   id: number;
@@ -26,6 +27,13 @@ export interface AdminMember extends TeamMember {
 
 export interface AdminCity extends HivernageCity {
   id: number;
+  status: 'published' | 'draft';
+  sortOrder: number;
+}
+
+export interface AdminModel extends NautiqueModel {
+  id: number;
+  brand: string;
   status: 'published' | 'draft';
   sortOrder: number;
 }
@@ -95,6 +103,13 @@ export const adminApi = {
   createCity: (c: Partial<AdminCity>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/cities', c),
   updateCity: (id: number, c: Partial<AdminCity>) => req('PUT', `/api/admin/cities/${id}`, c),
   deleteCity: (id: number) => req('DELETE', `/api/admin/cities/${id}`),
+
+  listModels: () => req<{ models: AdminModel[] }>('GET', '/api/admin/models'),
+  createModel: (m: Partial<AdminModel>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/models', m),
+  updateModel: (id: number, m: Partial<AdminModel>) => req('PUT', `/api/admin/models/${id}`, m),
+  deleteModel: (id: number) => req('DELETE', `/api/admin/models/${id}`),
+  importModels: (models: Partial<AdminModel>[]) =>
+    req<{ ok: boolean; imported: number }>('POST', '/api/admin/models/import', { models }),
 
   listBrands: () => req<{ brands: BrandEditorial[] }>('GET', '/api/admin/brands'),
   saveBrand: (brandId: string, b: Partial<BrandEditorial>) => req('PUT', `/api/admin/brands/${brandId}`, b),

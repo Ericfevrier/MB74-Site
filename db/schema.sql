@@ -62,6 +62,23 @@ CREATE TABLE IF NOT EXISTS brands (
   updated_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Modèles de bateaux (fiches techniques complètes). La fiche entière (specs, galerie,
+-- motorisations, éditions, options, millésimes, FAQ, points forts…) est stockée en JSON
+-- dans `data`. Fusionnée en live par-dessus les données statiques du code (par brand+slug).
+CREATE TABLE IF NOT EXISTS boat_models (
+  id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  brand      VARCHAR(64)  NOT NULL DEFAULT '',
+  slug       VARCHAR(191) NOT NULL,
+  name       VARCHAR(255) NOT NULL DEFAULT '',
+  data       LONGTEXT     NULL,
+  status     VARCHAR(16)  NOT NULL DEFAULT 'published',
+  sort_order INT          NOT NULL DEFAULT 0,
+  created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uniq_model (brand, slug),
+  KEY idx_model_status (status, sort_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Pages villes (hivernage par ville). ports / local_expertise stockés en JSON.
 CREATE TABLE IF NOT EXISTS hivernage_cities (
   id               INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

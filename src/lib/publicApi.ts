@@ -11,6 +11,7 @@ import type { UsedBoat } from '../data/usedBoats';
 import type { BlogArticle } from '../data/blog';
 import type { TeamMember } from '../data/team';
 import type { HivernageCity } from '../data/hivernageCities';
+import type { NautiqueModel } from '../data/nautiqueModels';
 
 export async function fetchPublicUsedBoats(): Promise<UsedBoat[]> {
   const res = await fetch('/api/used-boats');
@@ -125,6 +126,35 @@ export function useLiveBrands(): { brands: BrandEditorialRow[] | null; loaded: b
     fetchPublicBrands()
       .then((b) => alive && setState({ brands: b, loaded: true }))
       .catch(() => alive && setState({ brands: null, loaded: true }));
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return state;
+}
+
+/* ----------------------------- Modèles --------------------------- */
+
+/** Modèle live tel que renvoyé par l'API : NautiqueModel complet + brand. */
+export interface PublicModel extends NautiqueModel {
+  brand: string;
+}
+
+export async function fetchPublicModels(): Promise<PublicModel[]> {
+  const res = await fetch('/api/models');
+  if (!res.ok) throw new Error(`/api/models -> ${res.status}`);
+  const json = await res.json();
+  return (json.models ?? []) as PublicModel[];
+}
+
+/** Modèles live (base) ; `models` null si l'API échoue → repli statique côté page. */
+export function useLiveModels(): { models: PublicModel[] | null; loaded: boolean } {
+  const [state, setState] = useState<{ models: PublicModel[] | null; loaded: boolean }>({ models: null, loaded: false });
+  useEffect(() => {
+    let alive = true;
+    fetchPublicModels()
+      .then((m) => alive && setState({ models: m, loaded: true }))
+      .catch(() => alive && setState({ models: null, loaded: true }));
     return () => {
       alive = false;
     };

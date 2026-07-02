@@ -555,6 +555,135 @@ export function mountAdmin(app) {
     }
   });
 
+  /* --------------------------- Modèles ---------------------------- */
+
+  // Le modèle complet (NautiqueModel) est stocké en JSON dans la colonne `data`.
+  // slug/name/brand sont dupliqués en colonnes pour le tri et l'unicité.
+  const rowToModel = (r, admin = false) => {
+    const data = parseJson(r.data, {}) || {};
+    const model = { ...data, slug: r.slug, name: data.name || r.name || '' };
+    const out = { brand: r.brand || '', ...model };
+    if (admin) {
+      out.id = r.id;
+      out.status = r.status;
+      out.sortOrder = r.sort_order;
+    }
+    return out;
+  };
+
+  // Corps admin (modèle complet + brand/status/sortOrder) → colonnes.
+  const modelToRow = (m) => {
+    const brand = String(m.brand || '').trim().toLowerCase();
+    const slug = String(m.slug || '').trim();
+    // On retire les champs « enveloppe » du blob de données.
+    const { id, status, sortOrder, brand: _b, ...data } = m || {};
+    data.slug = slug;
+    return {
+      brand,
+      slug,
+      name: String(data.name || '').trim(),
+      data: JSON.stringify(data),
+      status: m.status === 'draft' ? 'draft' : 'published',
+      sort_order: Number.isFinite(Number(m.sortOrder)) ? Number(m.sortOrder) : 0,
+    };
+  };
+
+  const MODEL_FIELDS = ['brand', 'slug', 'name', 'data', 'status', 'sort_order'];
+
+  // Lecture publique : tous les modèles publiés (fusionnés en live côté site).
+  app.get('/api/models', async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query("SELECT * FROM boat_models WHERE status = 'published' ORDER BY sort_order ASC, id ASC");
+      res.json({ models: rows.map((r) => rowToModel(r)) });
+    } catch (e) {
+      console.error('GET /api/models', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.get('/api/admin/models', requireAuth, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT * FROM boat_models ORDER BY brand ASC, sort_order ASC, id ASC');
+      res.json({ models: rows.map((r) => rowToModel(r, true)) });
+    } catch (e) {
+      console.error('GET /api/admin/models', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.post('/api/admin/models', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const row = modelToRow(req.body || {});
+    if (!row.slug || !row.brand) return res.status(400).json({ ok: false, error: 'Marque et slug requis.' });
+    try {
+      const cols = MODEL_FIELDS.join(', ');
+      const ph = MODEL_FIELDS.map(() => '?').join(', ');
+      const r = await query(`INSERT INTO boat_models (${cols}) VALUES (${ph})`, MODEL_FIELDS.map((c) => row[c]));
+      res.json({ ok: true, id: r.insertId });
+    } catch (e) {
+      if (e.code === 'ER_DUP_ENTRY') return res.status(409).json({ ok: false, error: 'Ce modèle (marque + slug) existe déjà.' });
+      console.error('POST /api/admin/models', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.put('/api/admin/models/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
+    const row = modelToRow(req.body || {});
+    if (!row.slug || !row.brand) return res.status(400).json({ ok: false, error: 'Marque et slug requis.' });
+    try {
+      const set = MODEL_FIELDS.map((c) => `${c} = ?`).join(', ');
+      const r = await query(`UPDATE boat_models SET ${set} WHERE id = ?`, [...MODEL_FIELDS.map((c) => row[c]), id]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      if (e.code === 'ER_DUP_ENTRY') return res.status(409).json({ ok: false, error: 'Ce modèle (marque + slug) existe déjà.' });
+      console.error('PUT /api/admin/models', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.delete('/api/admin/models/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
+    try {
+      const r = await query('DELETE FROM boat_models WHERE id = ?', [id]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('DELETE /api/admin/models', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  // Import en masse (seed depuis les données statiques envoyées par le client).
+  // N'écrase PAS un modèle déjà présent (INSERT IGNORE sur brand+slug).
+  app.post('/api/admin/models/import', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const list = Array.isArray(req.body && req.body.models) ? req.body.models : [];
+    if (!list.length) return res.status(400).json({ ok: false, error: 'Aucun modèle fourni.' });
+    let imported = 0;
+    try {
+      for (let i = 0; i < list.length; i++) {
+        const row = modelToRow({ ...list[i], sortOrder: i });
+        if (!row.slug || !row.brand) continue;
+        const cols = MODEL_FIELDS.join(', ');
+        const ph = MODEL_FIELDS.map(() => '?').join(', ');
+        const r = await query(`INSERT IGNORE INTO boat_models (${cols}) VALUES (${ph})`, MODEL_FIELDS.map((c) => row[c]));
+        if (r.affectedRows) imported++;
+      }
+      res.json({ ok: true, imported });
+    } catch (e) {
+      console.error('POST /api/admin/models/import', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
   /* -------------------- Villes (hivernage) ------------------------ */
 
   app.get('/api/cities', async (_req, res) => {

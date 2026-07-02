@@ -62,6 +62,41 @@ const MODEL_BASES: Record<string, Record<string, NautiqueModel>> = {
   mastercraft: mastercraftModels,
 };
 
+/**
+ * Fusion d'un modèle LIVE complet (éditeur admin) par-dessus le statique.
+ * `live` est un NautiqueModel complet issu de /api/models : chaque champ non vide
+ * surcharge le statique ; les champs absents/vides gardent la valeur du code (sécurité SEO).
+ */
+export function mergeFullModel(base: NautiqueModel | undefined, live: Partial<NautiqueModel> | undefined): NautiqueModel | undefined {
+  if (!live) return base;
+  if (!base) return live.slug ? (live as NautiqueModel) : undefined;
+  const ne = (v: unknown) =>
+    v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && v.length === 0);
+  const out: any = { ...base };
+  for (const [k, v] of Object.entries(live)) {
+    if (k === 'brand' || k === 'id' || k === 'status' || k === 'sortOrder') continue;
+    if (ne(v)) out[k] = v;
+  }
+  return out as NautiqueModel;
+}
+
+/**
+ * Résout un modèle depuis une liste live complète (/api/models), en fusionnant sur
+ * le statique. `undefined` si ni la base live ni le statique ne le connaissent.
+ */
+export function resolveLiveModel(
+  brandId: string | undefined,
+  modelId: string | undefined,
+  liveModels: Array<Partial<NautiqueModel> & { brand?: string }> | null,
+): NautiqueModel | undefined {
+  const id = brandId?.toLowerCase();
+  if (!id || !modelId) return undefined;
+  const base = MODEL_BASES[id]?.[modelId];
+  const live = (liveModels || []).find((m) => (m.brand || '').toLowerCase() === id && m.slug === modelId);
+  if (!live) return base ? mergeFullModel(base, undefined) : undefined;
+  return mergeFullModel(base, live);
+}
+
 /** Modèle fusionné avec l'éditorial LIVE du CMS (loader SSR). `undefined` si introuvable. */
 export function getModelLive(
   brandId: string | undefined,

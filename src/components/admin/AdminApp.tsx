@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Lock, LogOut, Ship, Inbox, Loader2, LayoutDashboard, Menu, X, ExternalLink,
-  FileText, Settings, Users, MapPin, PanelLeftClose, PanelLeft, Anchor,
+  FileText, Settings, Users, MapPin, PanelLeftClose, PanelLeft, Anchor, Sailboat,
 } from 'lucide-react';
 import { adminApi } from '../../lib/adminApi';
 import { OccasionsManager } from './OccasionsManager';
@@ -11,10 +11,11 @@ import { BlogManager } from './BlogManager';
 import { TeamManager } from './TeamManager';
 import { CitiesManager } from './CitiesManager';
 import { BrandsManager } from './BrandsManager';
+import { ModelsManager } from './ModelsManager';
 import { SettingsManager } from './SettingsManager';
 
 type Auth = { state: 'loading' } | { state: 'out' } | { state: 'in'; username: string };
-export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'blog' | 'team' | 'cities' | 'messages' | 'settings';
+export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'models' | 'blog' | 'team' | 'cities' | 'messages' | 'settings';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -30,6 +31,7 @@ const NAV: NavEntry[] = [
     items: [
       { id: 'occasions', label: 'Occasions', Icon: Ship },
       { id: 'brands', label: 'Marques', Icon: Anchor },
+      { id: 'models', label: 'Modèles', Icon: Sailboat },
       { id: 'blog', label: 'Blog', Icon: FileText },
       { id: 'cities', label: 'Villes hivernage', Icon: MapPin },
       { id: 'team', label: 'Équipe', Icon: Users },
@@ -208,6 +210,7 @@ export function AdminApp() {
           {section === 'dashboard' && <DashboardView onGo={go} unread={unread} username={auth.username} />}
           {section === 'occasions' && <OccasionsManager />}
           {section === 'brands' && <BrandsManager />}
+          {section === 'models' && <ModelsManager />}
           {section === 'blog' && <BlogManager />}
           {section === 'team' && <TeamManager />}
           {section === 'cities' && <CitiesManager />}
