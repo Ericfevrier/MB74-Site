@@ -50,6 +50,13 @@ export interface BrandEditorial {
   hero_wordmark: boolean;
 }
 
+export interface MediaFile {
+  name: string;
+  url: string;
+  size: number;
+  mtime: number;
+}
+
 export interface ContactMessage {
   id: number;
   nom: string;
@@ -119,6 +126,11 @@ export const adminApi = {
   getSettings: () => req<{ settings: Record<string, string> }>('GET', '/api/admin/settings'),
   saveSettings: (settings: Record<string, string>) =>
     req<{ ok: boolean; settings: Record<string, string> }>('PUT', '/api/admin/settings', { settings }),
+
+  listMedia: () => req<{ uploads: MediaFile[]; site: MediaFile[] }>('GET', '/api/admin/media'),
+  uploadMedia: (filename: string, dataUrl: string) =>
+    req<{ ok: boolean; name: string; url: string; size: number }>('POST', '/api/admin/media', { filename, dataUrl }),
+  deleteMedia: (name: string) => req('DELETE', `/api/admin/media/${encodeURIComponent(name)}`),
 
   listMessages: () => req<{ messages: ContactMessage[] }>('GET', '/api/admin/messages'),
   markMessage: (id: number, read: boolean) => req('PATCH', `/api/admin/messages/${id}`, { read }),

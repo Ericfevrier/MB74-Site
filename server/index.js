@@ -158,6 +158,9 @@ async function handleSubmission(res, { record, subject, fields, replyTo }) {
 /*  API                                                               */
 /* ------------------------------------------------------------------ */
 
+// Upload média : les fichiers (WebP légers) peuvent dépasser 1 Mo → parser dédié,
+// enregistré AVANT le parser global (plus spécifique + prioritaire).
+app.use('/api/admin/media', express.json({ limit: '25mb' }));
 app.use('/api', express.json({ limit: '1mb' }));
 app.use('/api', express.urlencoded({ extended: true }));
 
@@ -209,6 +212,8 @@ app.post('/api/hivernage', async (req, res) => {
 /*  SPA : assets statiques + fallback index.html                      */
 /* ------------------------------------------------------------------ */
 
+// Médiathèque : uploads admin (dossier persistant hors build).
+app.use('/uploads', express.static(path.join(rootDir, 'uploads'), { maxAge: '1y' }));
 // Assets fingerprintés → cache immuable ; autres fichiers publics → cache court.
 app.use('/assets', express.static(path.join(clientDir, 'assets'), { immutable: true, maxAge: '1y' }));
 // redirect:false → ne pas rediriger '/depannage' vers '/depannage/' (les dossiers

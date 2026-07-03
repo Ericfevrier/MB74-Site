@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Lock, LogOut, Ship, Inbox, Loader2, LayoutDashboard, Menu, X, ExternalLink,
-  FileText, Settings, Users, MapPin, PanelLeftClose, PanelLeft, Anchor, Sailboat,
+  FileText, Settings, Users, MapPin, PanelLeftClose, PanelLeft, Anchor, Sailboat, Image as ImageIcon,
 } from 'lucide-react';
 import { adminApi } from '../../lib/adminApi';
 import { OccasionsManager } from './OccasionsManager';
@@ -12,10 +12,11 @@ import { TeamManager } from './TeamManager';
 import { CitiesManager } from './CitiesManager';
 import { BrandsManager } from './BrandsManager';
 import { ModelsManager } from './ModelsManager';
+import { MediaManager } from './MediaManager';
 import { SettingsManager } from './SettingsManager';
 
 type Auth = { state: 'loading' } | { state: 'out' } | { state: 'in'; username: string };
-export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'models' | 'blog' | 'team' | 'cities' | 'messages' | 'settings';
+export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'models' | 'blog' | 'team' | 'cities' | 'media' | 'messages' | 'settings';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -41,6 +42,7 @@ const NAV: NavEntry[] = [
     kind: 'group',
     label: 'Outils',
     items: [
+      { id: 'media', label: 'Médias', Icon: ImageIcon },
       { id: 'messages', label: 'Messages', Icon: Inbox },
       { id: 'settings', label: 'Réglages', Icon: Settings },
     ],
@@ -214,6 +216,7 @@ export function AdminApp() {
           {section === 'blog' && <BlogManager />}
           {section === 'team' && <TeamManager />}
           {section === 'cities' && <CitiesManager />}
+          {section === 'media' && <MediaManager />}
           {section === 'messages' && <MessagesInbox onChange={refreshUnread} />}
           {section === 'settings' && <SettingsManager />}
         </main>

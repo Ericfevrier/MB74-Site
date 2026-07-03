@@ -8,7 +8,8 @@ import {
 import { Breadcrumb } from './Breadcrumb';
 import { getBrandModels } from '../data/boatBrands';
 import type { NautiqueModel } from '../data/nautiqueModels';
-import { usedBoatsForModel } from '../data/usedBoats';
+import { usedBoats } from '../data/usedBoats';
+import { useLiveUsedBoats } from '../lib/publicApi';
 import { SITE } from '../data/site';
 import { ServiceContactBlock } from './services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
@@ -129,6 +130,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [openOpt, setOpenOpt] = useState<number | null>(0);
   const [activeAnchor, setActiveAnchor] = useState<string>('');
+  const liveBoats = useLiveUsedBoats(); // occasions live (admin) pour le carrousel « similaires »
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
@@ -182,7 +184,11 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
   const heroTitle = isParagon ? `Nautique ${model.short}` : model.name;
   const others = brand.order.filter((s) => s !== model.slug).map((s) => brand.models[s]);
   const hasEquip = Boolean(model.editions || model.motorizations || model.features || model.options);
-  const occasions = brand.id === 'nautique' ? usedBoatsForModel(model.slug) : [];
+  // Occasions similaires : source live (admin) si dispo, sinon statique — et JAMAIS de bateau vendu.
+  const occasionSource = liveBoats.boats && liveBoats.boats.length ? liveBoats.boats : usedBoats;
+  const occasions = brand.id === 'nautique'
+    ? occasionSource.filter((b) => b.modelSlug === model.slug && !b.sold)
+    : [];
   const milestones = (model.milestones ?? []).slice().sort((a, b) => Number(b.year) - Number(a.year));
 
   const anchors = [

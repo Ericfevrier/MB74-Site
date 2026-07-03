@@ -7,6 +7,9 @@
  * Sans base configurée, les écritures renvoient 503 ; la lecture publique renvoie 503
  * aussi → les loaders du site retombent alors sur les données statiques.
  */
+import { promises as fsp, existsSync, mkdirSync, readdirSync, statSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { query, dbConfigured } from './db.js';
 import {
   COOKIE_NAME,
@@ -222,6 +225,36 @@ function cityToRow(c) {
 
 const needDb = (res) =>
   res.status(503).json({ ok: false, error: 'Base de données non configurée.' });
+
+/* ------------------------------ Médiathèque ----------------------------- */
+const ADMIN_DIR = path.dirname(fileURLToPath(import.meta.url));
+const ROOT_DIR = path.resolve(ADMIN_DIR, '..');
+// Dossier d'uploads PERSISTANT (hors build → survit à `git reset --hard`).
+const UPLOADS_DIR = path.join(ROOT_DIR, 'uploads');
+// Images embarquées dans le build (lecture seule, pour retrouver les visuels existants).
+const SITE_IMAGES_DIR = path.join(ROOT_DIR, 'build', 'client', 'images');
+const IMG_EXT = /\.(webp|jpe?g|png|gif|avif|svg)$/i;
+
+/** Liste récursive des images d'un dossier, avec URL publique, taille et date. */
+function listImages(dir, baseUrl) {
+  if (!existsSync(dir)) return [];
+  const out = [];
+  const walk = (d) => {
+    for (const ent of readdirSync(d, { withFileTypes: true })) {
+      const fp = path.join(d, ent.name);
+      if (ent.isDirectory()) walk(fp);
+      else if (IMG_EXT.test(ent.name)) {
+        try {
+          const st = statSync(fp);
+          const rel = path.relative(dir, fp).split(path.sep).join('/');
+          out.push({ name: rel, url: `${baseUrl}/${rel}`, size: st.size, mtime: st.mtimeMs });
+        } catch { /* ignore */ }
+      }
+    }
+  };
+  walk(dir);
+  return out;
+}
 
 export function mountAdmin(app) {
   /* ----------------------------- Auth ----------------------------- */
@@ -840,6 +873,62 @@ export function mountAdmin(app) {
     } catch (e) {
       console.error('PUT /api/admin/settings', e.message);
       res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  /* ----------------------- Médiathèque (admin) -------------------- */
+
+  // Liste : uploads (gérables) + images du site embarquées (lecture seule).
+  app.get('/api/admin/media', requireAuth, (_req, res) => {
+    try {
+      const uploads = listImages(UPLOADS_DIR, '/uploads').sort((a, b) => b.mtime - a.mtime);
+      const site = listImages(SITE_IMAGES_DIR, '/images').sort((a, b) => a.name.localeCompare(b.name));
+      res.json({ uploads, site });
+    } catch (e) {
+      console.error('GET /api/admin/media', e.message);
+      res.status(500).json({ ok: false, error: 'Lecture de la médiathèque impossible.' });
+    }
+  });
+
+  // Upload : l'image est déjà convertie en WebP côté navigateur, envoyée en data URL base64.
+  app.post('/api/admin/media', requireAuth, async (req, res) => {
+    const { filename, dataUrl } = req.body || {};
+    if (!dataUrl || typeof dataUrl !== 'string') return res.status(400).json({ ok: false, error: 'Image manquante.' });
+    const m = /^data:image\/(webp|png|jpe?g|avif);base64,(.+)$/i.exec(dataUrl);
+    if (!m) return res.status(400).json({ ok: false, error: 'Format non supporté (webp, png, jpg).' });
+    const ext = /jpe?g/i.test(m[1]) ? 'jpg' : m[1].toLowerCase();
+    const buf = Buffer.from(m[2], 'base64');
+    if (!buf.length) return res.status(400).json({ ok: false, error: 'Image vide.' });
+    if (buf.length > 20 * 1024 * 1024) return res.status(413).json({ ok: false, error: 'Fichier trop volumineux (max 20 Mo).' });
+    const base =
+      String(filename || 'image')
+        .toLowerCase()
+        .replace(/\.[a-z0-9]+$/i, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 60) || 'image';
+    const name = `${base}-${Date.now().toString(36)}.${ext}`;
+    try {
+      if (!existsSync(UPLOADS_DIR)) mkdirSync(UPLOADS_DIR, { recursive: true });
+      await fsp.writeFile(path.join(UPLOADS_DIR, name), buf);
+      res.json({ ok: true, name, url: `/uploads/${name}`, size: buf.length });
+    } catch (e) {
+      console.error('POST /api/admin/media', e.message);
+      res.status(500).json({ ok: false, error: "Échec de l'enregistrement du fichier." });
+    }
+  });
+
+  // Suppression : uniquement dans le dossier uploads (les images du site sont protégées).
+  app.delete('/api/admin/media/:name', requireAuth, async (req, res) => {
+    const name = path.basename(String(req.params.name || '')); // anti-traversal
+    const fp = path.join(UPLOADS_DIR, name);
+    if (!fp.startsWith(UPLOADS_DIR) || !existsSync(fp)) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+    try {
+      await fsp.unlink(fp);
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('DELETE /api/admin/media', e.message);
+      res.status(500).json({ ok: false, error: 'Suppression impossible.' });
     }
   });
 
