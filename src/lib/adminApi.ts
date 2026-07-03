@@ -88,6 +88,8 @@ export const adminApi = {
   createBoat: (b: Partial<AdminBoat>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/used-boats', b),
   updateBoat: (id: number, b: Partial<AdminBoat>) => req('PUT', `/api/admin/used-boats/${id}`, b),
   deleteBoat: (id: number) => req('DELETE', `/api/admin/used-boats/${id}`),
+  importBoats: (boats: Partial<AdminBoat>[]) =>
+    req<{ ok: boolean; imported: number }>('POST', '/api/admin/used-boats/import', { boats }),
 
   listArticles: () => req<{ articles: AdminArticle[] }>('GET', '/api/admin/blog'),
   createArticle: (a: Partial<AdminArticle>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/blog', a),

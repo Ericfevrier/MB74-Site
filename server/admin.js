@@ -319,6 +319,29 @@ export function mountAdmin(app) {
     }
   });
 
+  // Import en masse (seed depuis le catalogue statique envoyé par le client).
+  // N'écrase PAS une fiche déjà présente (INSERT IGNORE sur le slug).
+  app.post('/api/admin/used-boats/import', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const list = Array.isArray(req.body && req.body.boats) ? req.body.boats : [];
+    if (!list.length) return res.status(400).json({ ok: false, error: 'Aucune occasion fournie.' });
+    let imported = 0;
+    try {
+      const cols = BOAT_FIELDS.join(', ');
+      const ph = BOAT_FIELDS.map(() => '?').join(', ');
+      for (let i = 0; i < list.length; i++) {
+        const row = boatToRow({ sortOrder: i, ...list[i] });
+        if (!row.slug || !row.title) continue;
+        const r = await query(`INSERT IGNORE INTO used_boats (${cols}) VALUES (${ph})`, BOAT_FIELDS.map((c) => row[c]));
+        if (r.affectedRows) imported++;
+      }
+      res.json({ ok: true, imported });
+    } catch (e) {
+      console.error('POST /api/admin/used-boats/import', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
   app.delete('/api/admin/used-boats/:id', requireAuth, async (req, res) => {
     if (!dbConfigured()) return needDb(res);
     const id = Number(req.params.id);

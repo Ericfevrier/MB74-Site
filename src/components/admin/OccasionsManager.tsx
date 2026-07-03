@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Download, Eye, EyeOff, Tag, CheckCircle2 } from 'lucide-react';
 import { adminApi, type AdminBoat } from '../../lib/adminApi';
+import { allUsedBoats } from '../../data/usedBoats';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -131,6 +132,8 @@ export function OccasionsManager() {
   const [boats, setBoats] = useState<AdminBoat[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<Draft | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
+  const [busy, setBusy] = useState<number | 'import' | null>(null);
 
   const load = () => {
     setError(null);
@@ -151,6 +154,37 @@ export function OccasionsManager() {
     }
   };
 
+  // Enregistre une modif partielle en renvoyant la fiche complète (updateBoat remplace tout).
+  const patch = async (b: AdminBoat, changes: Partial<AdminBoat>) => {
+    setBusy(b.id);
+    setError(null);
+    try {
+      const { galleryText, highlightsText, ...rest } = { ...b, ...changes } as any;
+      await adminApi.updateBoat(b.id, rest);
+      load();
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const importDefaults = async () => {
+    if (!confirm('Importer les occasions actuelles du site dans la base ? Les fiches déjà présentes ne seront pas écrasées.')) return;
+    setBusy('import');
+    setError(null);
+    try {
+      const payload = allUsedBoats().map((b) => ({ ...b, status: 'published' as const }));
+      const r = await adminApi.importBoats(payload);
+      setMsg(`${r.imported} occasion(s) importée(s).`);
+      load();
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setBusy(null);
+    }
+  };
+
   if (editing) {
     return (
       <BoatForm
@@ -158,29 +192,42 @@ export function OccasionsManager() {
         onCancel={() => setEditing(null)}
         onSaved={() => {
           setEditing(null);
+          setMsg('Occasion enregistrée.');
           load();
         }}
       />
     );
   }
 
+  const importBtn = (
+    <button onClick={importDefaults} disabled={busy === 'import'} className="inline-flex items-center gap-2 bg-white border border-gray-300 text-brand-dark px-4 py-2.5 rounded-xl text-sm font-bold hover:border-brand-cyan disabled:opacity-50 transition">
+      {busy === 'import' ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />} Importer les occasions actuelles
+    </button>
+  );
+
   return (
     <div>
-      <div className="flex items-center justify-between gap-4 mb-6">
+      <div className="flex items-center justify-between gap-4 mb-2 flex-wrap">
         <h1 className="text-xl font-bold uppercase tracking-tight text-brand-dark">
           Bateaux d'occasion {boats ? <span className="text-gray-400 font-normal">({boats.length})</span> : null}
         </h1>
-        <button onClick={() => setEditing(emptyDraft())} className="flex items-center gap-2 bg-brand-cyan text-brand-dark px-5 py-2.5 rounded-xl text-sm font-bold uppercase tracking-wide hover:brightness-110 transition">
-          <Plus size={16} /> Ajouter
-        </button>
+        <div className="flex gap-2">
+          {importBtn}
+          <button onClick={() => { setMsg(null); setEditing(emptyDraft()); }} className="flex items-center gap-2 bg-brand-dark text-white px-5 py-2.5 rounded-xl text-sm font-bold uppercase tracking-wide hover:bg-brand-cyan hover:text-brand-dark transition">
+            <Plus size={16} /> Ajouter
+          </button>
+        </div>
       </div>
+      <p className="text-gray-500 text-sm mb-6">Ajoute, modifie, masque (brouillon) ou marque comme vendu chaque bateau. Les fiches publiées et disponibles apparaissent sur le site.</p>
 
+      {msg && <p className="inline-flex items-center gap-1.5 text-emerald-600 text-sm font-bold mb-4"><CheckCircle2 size={16} /> {msg}</p>}
       {error && <p className="text-red-600 text-sm font-medium mb-4">{error}</p>}
       {!boats && !error && <div className="flex justify-center py-16 text-gray-400"><Loader2 className="animate-spin" /></div>}
 
       {boats && boats.length === 0 && (
-        <div className="bg-white border-2 border-dashed border-gray-300 rounded-2xl p-12 text-center text-gray-500">
-          Aucun bateau pour l'instant. Clique sur « Ajouter » pour créer la première fiche.
+        <div className="bg-white border-2 border-dashed border-gray-300 rounded-2xl p-12 text-center">
+          <p className="text-gray-500 mb-4">Aucun bateau en base. Importe les occasions actuelles du site, ou crée une fiche.</p>
+          <div className="flex justify-center gap-2">{importBtn}</div>
         </div>
       )}
 
@@ -199,10 +246,33 @@ export function OccasionsManager() {
                   {b.price || '—'} · /{b.slug}
                 </p>
               </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
-                {b.status === 'draft' && <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Brouillon</span>}
-                {b.sold ? <span className="text-[10px] font-bold uppercase bg-red-100 text-red-600 px-2 py-1 rounded">Vendu</span> : <span className="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Dispo</span>}
-                <button onClick={() => setEditing({ ...b, galleryText: toText(b.gallery), highlightsText: toText(b.highlights) })} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier">
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                {b.status === 'draft'
+                  ? <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Brouillon</span>
+                  : <span className="text-[10px] font-bold uppercase bg-sky-100 text-sky-700 px-2 py-1 rounded">Publié</span>}
+                {b.sold
+                  ? <span className="text-[10px] font-bold uppercase bg-red-100 text-red-600 px-2 py-1 rounded">Vendu</span>
+                  : <span className="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Dispo</span>}
+
+                <span className="w-px h-6 bg-gray-200 mx-1" />
+
+                {busy === b.id ? (
+                  <span className="p-2 text-gray-400"><Loader2 size={16} className="animate-spin" /></span>
+                ) : (
+                  <>
+                    <button onClick={() => patch(b, { status: b.status === 'published' ? 'draft' : 'published' })}
+                      className="p-2 text-gray-500 hover:text-brand-cyan transition"
+                      title={b.status === 'published' ? 'Masquer (mettre en brouillon)' : 'Publier'}>
+                      {b.status === 'published' ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                    <button onClick={() => patch(b, { sold: !b.sold })}
+                      className={`p-2 transition ${b.sold ? 'text-emerald-600 hover:text-emerald-700' : 'text-gray-500 hover:text-red-600'}`}
+                      title={b.sold ? 'Remettre disponible' : 'Marquer comme vendu'}>
+                      <Tag size={16} />
+                    </button>
+                  </>
+                )}
+                <button onClick={() => { setMsg(null); setEditing({ ...b, galleryText: toText(b.gallery), highlightsText: toText(b.highlights) }); }} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier">
                   <Pencil size={16} />
                 </button>
                 <button onClick={() => remove(b)} className="p-2 text-gray-500 hover:text-red-600 transition" title="Supprimer">
