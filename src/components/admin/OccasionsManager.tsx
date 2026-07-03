@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Download, Eye, EyeOff, Tag, CheckCircle2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Download, Eye, EyeOff, Tag, CheckCircle2, Image as ImageIcon, ImagePlus, X } from 'lucide-react';
 import { adminApi, type AdminBoat } from '../../lib/adminApi';
 import { allUsedBoats } from '../../data/usedBoats';
+import { MediaPicker } from './MediaPicker';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -33,7 +34,11 @@ function BoatForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel: ()
   const [d, setD] = useState<Draft>(initial);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [picker, setPicker] = useState<null | 'image' | 'gallery'>(null);
   const set = (k: keyof Draft, v: any) => setD((p) => ({ ...p, [k]: v }));
+
+  const gallery = d.gallery || [];
+  const setGallery = (g: string[]) => set('gallery', g);
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +47,7 @@ function BoatForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel: ()
     const payload: Partial<AdminBoat> = {
       ...d,
       priceValue: d.priceValue === undefined || (d.priceValue as any) === '' ? undefined : Number(d.priceValue),
-      gallery: toArr(d.galleryText),
+      gallery,
       highlights: toArr(d.highlightsText),
     };
     delete (payload as any).galleryText;
@@ -82,22 +87,66 @@ function BoatForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel: ()
         <Field label="Localisation"><input className={INPUT} value={d.location || ''} onChange={(e) => set('location', e.target.value)} /></Field>
       </div>
 
+      {/* Image principale */}
       <div className="mt-5">
-        <Field label="Image principale (URL)"><input className={INPUT} value={d.image || ''} onChange={(e) => set('image', e.target.value)} placeholder="https://…" /></Field>
+        <label className={LABEL}>Image principale</label>
+        <div className="flex items-start gap-3">
+          <div className="w-28 h-20 rounded-lg overflow-hidden border border-gray-200 bg-gray-50 flex-shrink-0 flex items-center justify-center">
+            {d.image ? <img src={d.image} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : <ImageIcon size={20} className="text-gray-300" />}
+          </div>
+          <div className="flex-1 flex gap-2">
+            <input className={INPUT} value={d.image || ''} onChange={(e) => set('image', e.target.value)} placeholder="URL, ou « Médias » →" />
+            <button type="button" onClick={() => setPicker('image')} className="flex-shrink-0 inline-flex items-center gap-1.5 bg-brand-dark text-white px-3.5 rounded-xl text-sm font-bold hover:bg-brand-cyan hover:text-brand-dark transition">
+              <ImagePlus size={16} /> Médias
+            </button>
+          </div>
+        </div>
       </div>
+
+      {/* Galerie visuelle */}
+      <div className="mt-5">
+        <div className="flex items-center justify-between mb-1.5">
+          <label className={LABEL}>Galerie <span className="text-gray-400">({gallery.length})</span></label>
+          <button type="button" onClick={() => setPicker('gallery')} className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-cyan hover:text-brand-dark transition">
+            <ImagePlus size={14} /> Ajouter des photos
+          </button>
+        </div>
+        {gallery.length > 0 ? (
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+            {gallery.map((url, i) => (
+              <div key={i} className="relative group rounded-lg overflow-hidden border border-gray-200 aspect-square">
+                <img src={url} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                <button type="button" onClick={() => setGallery(gallery.filter((_, k) => k !== i))} title="Retirer" className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-500 transition">
+                  <X size={13} />
+                </button>
+                {i === 0 && <span className="absolute bottom-1 left-1 text-[9px] font-bold uppercase bg-brand-cyan text-brand-dark px-1.5 py-0.5 rounded">1re</span>}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-xs text-gray-400 bg-gray-50 border border-dashed border-gray-200 rounded-lg p-4 text-center">Aucune photo. Clique sur « Ajouter des photos ».</p>
+        )}
+      </div>
+
       <div className="grid sm:grid-cols-2 gap-5 mt-5">
-        <Field label="Galerie (une URL par ligne)">
-          <textarea className={`${INPUT} h-28 resize-y font-mono text-xs`} value={d.galleryText || ''} onChange={(e) => set('galleryText', e.target.value)} />
-        </Field>
         <Field label="Points forts (un par ligne)">
           <textarea className={`${INPUT} h-28 resize-y`} value={d.highlightsText || ''} onChange={(e) => set('highlightsText', e.target.value)} />
         </Field>
-      </div>
-      <div className="mt-5">
         <Field label="Description">
           <textarea className={`${INPUT} h-28 resize-y`} value={d.description || ''} onChange={(e) => set('description', e.target.value)} />
         </Field>
       </div>
+
+      <MediaPicker
+        open={picker !== null}
+        multiple={picker === 'gallery'}
+        title={picker === 'image' ? "Image principale de l'occasion" : 'Photos de la galerie'}
+        onClose={() => setPicker(null)}
+        onSelect={(urls) => {
+          if (picker === 'image') set('image', urls[0]);
+          else setGallery([...gallery, ...urls.filter((u) => !gallery.includes(u))]);
+        }}
+      />
 
       <div className="flex flex-wrap items-center gap-6 mt-6">
         <label className="flex items-center gap-2 text-sm font-medium text-brand-dark">
