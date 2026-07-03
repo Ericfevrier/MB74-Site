@@ -19,7 +19,8 @@ export default function OccasionDetail() {
   if (live.boats && live.boats.length) {
     const boat = live.boats.find((b) => b.slug === slug);
     if (boat) {
-      let related = live.boats.filter((b) => b.slug !== boat.slug && b.brandId === boat.brandId);
+      // Bateaux similaires : jamais de vendu (même marque d'abord, puis toute occasion dispo).
+      let related = live.boats.filter((b) => b.slug !== boat.slug && b.brandId === boat.brandId && !b.sold);
       if (related.length === 0) related = live.boats.filter((b) => b.slug !== boat.slug && !b.sold);
       return <OccasionDetailPage boat={boat} related={related.slice(0, 3)} />;
     }

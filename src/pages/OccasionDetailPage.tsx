@@ -129,10 +129,10 @@ export function OccasionDetailPage({ boat: boatProp, related: relatedProp }: { b
   const modelPath = model ? `/${boat.brandId}/${model.slug}` : undefined;
   const gallery = boat.gallery && boat.gallery.length ? boat.gallery : [boat.image];
 
-  // Bateaux similaires (même marque), repli sur les autres disponibles.
+  // Bateaux similaires (même marque), jamais de vendu, repli sur les autres disponibles.
   let related = relatedProp;
   if (!related) {
-    related = allUsedBoats().filter((b) => b.slug !== boat.slug && b.brandId === boat.brandId);
+    related = allUsedBoats().filter((b) => b.slug !== boat.slug && b.brandId === boat.brandId && !b.sold);
     if (related.length === 0) related = availableUsedBoats().filter((b) => b.slug !== boat.slug);
     related = related.slice(0, 3);
   }
