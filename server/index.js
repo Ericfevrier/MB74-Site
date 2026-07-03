@@ -20,6 +20,7 @@ import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import { dbConfigured, dbHealthy } from './db.js';
 import { mountAdmin, saveSubmissionDb } from './admin.js';
+import { buildSitemap } from './sitemap.js';
 
 dotenv.config({ path: '.env.local' });
 dotenv.config(); // .env en repli
@@ -211,6 +212,38 @@ app.post('/api/hivernage', async (req, res) => {
 /* ------------------------------------------------------------------ */
 /*  SPA : assets statiques + fallback index.html                      */
 /* ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------ */
+/*  SEO : sitemap.xml + robots.txt dynamiques                          */
+/* ------------------------------------------------------------------ */
+
+const SITE_URL = (process.env.SITE_URL || 'https://motorboat74.com').replace(/\/+$/, '');
+
+// Sitemap reconstruit à la volée depuis la base (contenus publiés, occasions non
+// vendues…), avec repli sur le fichier statique du build en cas d'erreur.
+app.get('/sitemap.xml', async (_req, res) => {
+  try {
+    const xml = await buildSitemap(clientDir);
+    res.type('application/xml').set('Cache-Control', 'public, max-age=3600').send(xml);
+  } catch (e) {
+    console.error('GET /sitemap.xml', e.message);
+    const staticFile = path.join(clientDir, 'sitemap.xml');
+    if (existsSync(staticFile)) return res.type('application/xml').sendFile(staticFile);
+    res.status(500).send('sitemap indisponible');
+  }
+});
+
+// robots.txt dynamique : tout bloquer en préprod, sinon autoriser + pointer le sitemap.
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  const staging = STAGING_PROTECT || req.hostname === STAGING_HOST;
+  if (staging) return res.send('User-agent: *\nDisallow: /\n');
+  res.send(
+    `User-agent: *\nAllow: /\n\n` +
+      `Disallow: /api/\nDisallow: /admin\n\n` +
+      `Sitemap: ${SITE_URL}/sitemap.xml\n`,
+  );
+});
 
 // Médiathèque : uploads admin (dossier persistant hors build).
 app.use('/uploads', express.static(path.join(rootDir, 'uploads'), { maxAge: '1y' }));
