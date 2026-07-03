@@ -49,6 +49,8 @@ CREATE TABLE IF NOT EXISTS blog_articles (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Marques (champs éditoriaux ; le structurel — modèles, comparatifs — reste dans le code).
+-- `data` : page marque COMPLÈTE en JSON (identité, hero, description, introImages,
+-- models « vitrine », comparatifs). Les colonnes restent pour le listing rapide.
 CREATE TABLE IF NOT EXISTS brands (
   brand_id      VARCHAR(64)  NOT NULL PRIMARY KEY,
   name          VARCHAR(191) NULL,
@@ -59,6 +61,7 @@ CREATE TABLE IF NOT EXISTS brands (
   tagline       VARCHAR(255) NULL,
   description   TEXT         NULL,
   hero_wordmark TINYINT(1)   NOT NULL DEFAULT 0,
+  data          LONGTEXT     NULL,
   updated_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

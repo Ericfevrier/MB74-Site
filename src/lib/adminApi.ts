@@ -6,6 +6,7 @@ import type { BlogArticle } from '../data/blog';
 import type { TeamMember } from '../data/team';
 import type { HivernageCity } from '../data/hivernageCities';
 import type { NautiqueModel } from '../data/nautiqueModels';
+import type { BrandData } from '../data/brands';
 
 export interface AdminBoat extends UsedBoat {
   id: number;
@@ -38,16 +39,9 @@ export interface AdminModel extends NautiqueModel {
   sortOrder: number;
 }
 
-export interface BrandEditorial {
+/** Marque complète éditable (page marque entière). */
+export interface AdminBrand extends BrandData {
   brand_id: string;
-  name: string;
-  full_name: string;
-  role: string;
-  logo: string;
-  hero_image: string;
-  tagline: string;
-  description: string;
-  hero_wordmark: boolean;
 }
 
 export interface MediaFile {
@@ -120,8 +114,10 @@ export const adminApi = {
   importModels: (models: Partial<AdminModel>[]) =>
     req<{ ok: boolean; imported: number }>('POST', '/api/admin/models/import', { models }),
 
-  listBrands: () => req<{ brands: BrandEditorial[] }>('GET', '/api/admin/brands'),
-  saveBrand: (brandId: string, b: Partial<BrandEditorial>) => req('PUT', `/api/admin/brands/${brandId}`, b),
+  listBrands: () => req<{ brands: AdminBrand[] }>('GET', '/api/admin/brands'),
+  saveBrand: (brandId: string, b: Partial<AdminBrand>) => req('PUT', `/api/admin/brands/${brandId}`, b),
+  createBrand: (b: Partial<AdminBrand>) => req<{ ok: boolean; brand_id: string }>('POST', '/api/admin/brands', b),
+  deleteBrand: (brandId: string) => req('DELETE', `/api/admin/brands/${brandId}`),
 
   getSettings: () => req<{ settings: Record<string, string> }>('GET', '/api/admin/settings'),
   saveSettings: (settings: Record<string, string>) =>

@@ -12,6 +12,7 @@ import type { BlogArticle } from '../data/blog';
 import type { TeamMember } from '../data/team';
 import type { HivernageCity } from '../data/hivernageCities';
 import type { NautiqueModel } from '../data/nautiqueModels';
+import type { BrandData } from '../data/brands';
 
 export async function fetchPublicUsedBoats(): Promise<UsedBoat[]> {
   const res = await fetch('/api/used-boats');
@@ -100,27 +101,18 @@ export function useLiveTeam(): { members: TeamMember[] | null; loaded: boolean }
 
 /* ----------------------------- Marques --------------------------- */
 
-export interface BrandEditorialRow {
-  brand_id: string;
-  name?: string;
-  full_name?: string;
-  role?: string;
-  logo?: string;
-  hero_image?: string;
-  tagline?: string;
-  description?: string;
-  hero_wordmark?: boolean;
-}
+/** Marque live complète (BrandData) telle que renvoyée par l'API. */
+export type BrandLiveRow = Partial<BrandData> & { brand_id: string; id?: string };
 
-export async function fetchPublicBrands(): Promise<BrandEditorialRow[]> {
+export async function fetchPublicBrands(): Promise<BrandLiveRow[]> {
   const res = await fetch('/api/brands');
   if (!res.ok) throw new Error(`/api/brands -> ${res.status}`);
   const json = await res.json();
-  return (json.brands ?? []) as BrandEditorialRow[];
+  return (json.brands ?? []) as BrandLiveRow[];
 }
 
-export function useLiveBrands(): { brands: BrandEditorialRow[] | null; loaded: boolean } {
-  const [state, setState] = useState<{ brands: BrandEditorialRow[] | null; loaded: boolean }>({ brands: null, loaded: false });
+export function useLiveBrands(): { brands: BrandLiveRow[] | null; loaded: boolean } {
+  const [state, setState] = useState<{ brands: BrandLiveRow[] | null; loaded: boolean }>({ brands: null, loaded: false });
   useEffect(() => {
     let alive = true;
     fetchPublicBrands()

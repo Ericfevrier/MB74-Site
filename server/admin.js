@@ -547,18 +547,59 @@ export function mountAdmin(app) {
 
   /* --------------------------- Marques ---------------------------- */
 
-  const BRAND_FIELDS = ['brand_id', 'name', 'full_name', 'role', 'logo', 'hero_image', 'tagline', 'description', 'hero_wordmark'];
-  const rowToBrand = (r) => ({
-    brand_id: r.brand_id,
-    name: r.name || '',
-    full_name: r.full_name || '',
-    role: r.role || '',
-    logo: r.logo || '',
-    hero_image: r.hero_image || '',
-    tagline: r.tagline || '',
-    description: r.description || '',
-    hero_wordmark: !!r.hero_wordmark,
-  });
+  // La page marque complète (BrandData : identité, hero, description, introImages,
+  // models « vitrine », comparatifs) est stockée en JSON dans `data`. Les colonnes
+  // (name, logo…) sont dupliquées pour le listing rapide et la compat ascendante.
+  const BRAND_FIELDS = ['brand_id', 'name', 'full_name', 'role', 'logo', 'hero_image', 'tagline', 'description', 'hero_wordmark', 'data'];
+
+  const rowToBrand = (r) => {
+    const data = parseJson(r.data, null);
+    if (data && typeof data === 'object') {
+      return { brand_id: r.brand_id, ...data, id: r.brand_id };
+    }
+    // Repli colonnes (marque pas encore enregistrée en données complètes).
+    return {
+      brand_id: r.brand_id,
+      id: r.brand_id,
+      name: r.name || '',
+      fullName: r.full_name || '',
+      role: r.role || '',
+      logo: r.logo || '',
+      heroImage: r.hero_image || '',
+      tagline: r.tagline || '',
+      description: r.description || '',
+      heroWordmark: !!r.hero_wordmark,
+      models: [],
+      comparisons: [],
+      introImages: [],
+    };
+  };
+
+  const brandToRow = (brandId, b) => {
+    const s = (v) => (v === undefined || v === null ? '' : String(v));
+    const data = { ...b, id: brandId };
+    delete data.brand_id;
+    return {
+      brand_id: brandId,
+      name: s(b.name),
+      full_name: s(b.fullName),
+      role: s(b.role),
+      logo: s(b.logo),
+      hero_image: s(b.heroImage),
+      tagline: s(b.tagline),
+      description: s(b.description),
+      hero_wordmark: b.heroWordmark ? 1 : 0,
+      data: JSON.stringify(data),
+    };
+  };
+
+  const slugifyId = (v) =>
+    String(v || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
 
   app.get('/api/brands', async (_req, res) => {
     if (!dbConfigured()) return needDb(res);
@@ -574,7 +615,7 @@ export function mountAdmin(app) {
   app.get('/api/admin/brands', requireAuth, async (_req, res) => {
     if (!dbConfigured()) return needDb(res);
     try {
-      const rows = await query('SELECT * FROM brands');
+      const rows = await query('SELECT * FROM brands ORDER BY brand_id ASC');
       res.json({ brands: rows.map(rowToBrand) });
     } catch (e) {
       console.error('GET /api/admin/brands', e.message);
@@ -582,31 +623,51 @@ export function mountAdmin(app) {
     }
   });
 
+  // Création d'une nouvelle marque (échoue si l'identifiant existe déjà).
+  app.post('/api/admin/brands', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const b = req.body || {};
+    const brandId = slugifyId(b.brand_id || b.id || b.name);
+    if (!brandId) return res.status(400).json({ ok: false, error: 'Identifiant de marque requis.' });
+    const row = brandToRow(brandId, b);
+    try {
+      const cols = BRAND_FIELDS.join(', ');
+      const ph = BRAND_FIELDS.map(() => '?').join(', ');
+      await query(`INSERT INTO brands (${cols}) VALUES (${ph})`, BRAND_FIELDS.map((c) => row[c]));
+      res.json({ ok: true, brand_id: brandId });
+    } catch (e) {
+      if (e.code === 'ER_DUP_ENTRY') return res.status(409).json({ ok: false, error: 'Cette marque existe déjà.' });
+      console.error('POST /api/admin/brands', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
   app.put('/api/admin/brands/:brandId', requireAuth, async (req, res) => {
     if (!dbConfigured()) return needDb(res);
-    const brandId = String(req.params.brandId || '').trim();
+    const brandId = String(req.params.brandId || '').trim().toLowerCase();
     if (!brandId) return res.status(400).json({ ok: false, error: 'brand_id requis.' });
-    const b = req.body || {};
-    const s = (v) => (v === undefined || v === null ? '' : String(v));
-    const vals = {
-      brand_id: brandId,
-      name: s(b.name),
-      full_name: s(b.full_name),
-      role: s(b.role),
-      logo: s(b.logo),
-      hero_image: s(b.hero_image),
-      tagline: s(b.tagline),
-      description: s(b.description),
-      hero_wordmark: b.hero_wordmark ? 1 : 0,
-    };
+    const row = brandToRow(brandId, req.body || {});
     try {
       const cols = BRAND_FIELDS.join(', ');
       const ph = BRAND_FIELDS.map(() => '?').join(', ');
       const upd = BRAND_FIELDS.filter((c) => c !== 'brand_id').map((c) => `${c} = VALUES(${c})`).join(', ');
-      await query(`INSERT INTO brands (${cols}) VALUES (${ph}) ON DUPLICATE KEY UPDATE ${upd}`, BRAND_FIELDS.map((c) => vals[c]));
+      await query(`INSERT INTO brands (${cols}) VALUES (${ph}) ON DUPLICATE KEY UPDATE ${upd}`, BRAND_FIELDS.map((c) => row[c]));
       res.json({ ok: true });
     } catch (e) {
       console.error('PUT /api/admin/brands', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.delete('/api/admin/brands/:brandId', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const brandId = String(req.params.brandId || '').trim().toLowerCase();
+    try {
+      const r = await query('DELETE FROM brands WHERE brand_id = ?', [brandId]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('DELETE /api/admin/brands', e.message);
       res.status(500).json({ ok: false, error: 'Erreur base de données.' });
     }
   });

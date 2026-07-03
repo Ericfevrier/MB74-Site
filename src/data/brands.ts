@@ -346,4 +346,37 @@ export function mergeBrands(base: Record<string, BrandData>, editorial: unknown[
   return out;
 }
 
+/**
+ * Fusion d'une marque LIVE COMPLÈTE (éditeur admin) par-dessus le statique.
+ * Chaque champ non vide surcharge le statique ; les champs absents/vides gardent
+ * la valeur du code (sécurité SEO au prerender). Gère aussi les tableaux
+ * (models, comparisons, introImages) et les marques nouvelles (absentes du statique).
+ */
+export function mergeFullBrand(base: BrandData | undefined, live: Partial<BrandData> & { brand_id?: string; id?: string }): BrandData {
+  const ne = (v: unknown) => v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && v.length === 0);
+  const id = (live.id || live.brand_id || base?.id || '') as string;
+  const out: any = { ...(base || {}), id };
+  for (const [k, v] of Object.entries(live)) {
+    if (k === 'brand_id') continue;
+    if (ne(v)) out[k] = v;
+  }
+  if (!out.models) out.models = [];
+  return out as BrandData;
+}
+
+/** Applique une liste de marques live complètes sur la base statique. */
+export function mergeFullBrands(
+  base: Record<string, BrandData>,
+  live: Array<Partial<BrandData> & { brand_id?: string; id?: string }> | null | undefined,
+): Record<string, BrandData> {
+  if (!live || !live.length) return base;
+  const out: Record<string, BrandData> = { ...base };
+  for (const b of live) {
+    const id = (b.id || b.brand_id || '') as string;
+    if (!id) continue;
+    out[id] = mergeFullBrand(base[id], b);
+  }
+  return out;
+}
+
 export const brandsData: Record<string, BrandData> = mergeBrands(STATIC_BRANDS_DATA, GENERATED_BRANDS);

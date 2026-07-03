@@ -18,10 +18,11 @@ const BTN_DEL = 'p-1.5 text-gray-400 hover:text-red-500 transition flex-shrink-0
 
 const BRAND_OPTIONS = Object.values(BRAND_MODELS).map((b) => ({ id: b.id, name: b.name }));
 
-/** Toutes les fiches statiques aplaties (pour l'import par défaut). */
-function staticModelsFlat(): Partial<AdminModel>[] {
+/** Fiches statiques aplaties (pour l'import par défaut), éventuellement filtrées sur une marque. */
+function staticModelsFlat(brandFilter?: string): Partial<AdminModel>[] {
   const out: Partial<AdminModel>[] = [];
   for (const b of Object.values(BRAND_MODELS)) {
+    if (brandFilter && b.id !== brandFilter) continue;
     const order = b.order.length ? b.order : Object.keys(b.models);
     order.forEach((slug, i) => {
       const m = b.models[slug];
@@ -350,7 +351,7 @@ function ModelForm({ initial, isNew, onCancel, onSaved }: { initial: Partial<Adm
 }
 
 /* --------------------------------- Manager ------------------------------------ */
-export function ModelsManager() {
+export function ModelsManager({ brand: brandProp }: { brand?: string } = {}) {
   const [rows, setRows] = useState<AdminModel[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<AdminModel | 'new' | null>(null);
@@ -359,7 +360,10 @@ export function ModelsManager() {
 
   const load = () => {
     setError(null);
-    adminApi.listModels().then((r) => setRows(r.models)).catch((e) => setError(e.message));
+    adminApi
+      .listModels()
+      .then((r) => setRows(brandProp ? r.models.filter((m) => m.brand === brandProp) : r.models))
+      .catch((e) => setError(e.message));
   };
   useEffect(load, []);
 
@@ -370,11 +374,11 @@ export function ModelsManager() {
   }, [rows]);
 
   const importDefaults = async () => {
-    if (!confirm('Importer toutes les fiches modèles actuelles du site dans la base ? Les modèles déjà présents ne seront pas écrasés.')) return;
+    if (!confirm('Importer les fiches modèles actuelles du site dans la base ? Les modèles déjà présents ne seront pas écrasés.')) return;
     setImporting(true);
     setError(null);
     try {
-      const r = await adminApi.importModels(staticModelsFlat());
+      const r = await adminApi.importModels(staticModelsFlat(brandProp));
       setMsg(`${r.imported} modèle(s) importé(s).`);
       load();
     } catch (e: any) {
@@ -399,7 +403,7 @@ export function ModelsManager() {
     return (
       <ModelForm
         isNew={isNew}
-        initial={isNew ? emptyModel(BRAND_OPTIONS[0]?.id || 'nautique') : (editing as AdminModel)}
+        initial={isNew ? emptyModel(brandProp || BRAND_OPTIONS[0]?.id || 'nautique') : (editing as AdminModel)}
         onCancel={() => setEditing(null)}
         onSaved={() => { setEditing(null); setMsg('Modèle enregistré.'); load(); }}
       />
@@ -410,7 +414,7 @@ export function ModelsManager() {
     <div>
       <div className="flex items-start justify-between gap-4 flex-wrap mb-6">
         <div>
-          <h1 className="text-xl font-bold uppercase tracking-tight text-brand-dark mb-1">Modèles</h1>
+          {!brandProp && <h1 className="text-xl font-bold uppercase tracking-tight text-brand-dark mb-1">Modèles</h1>}
           <p className="text-gray-500 text-sm">Fiches techniques complètes (specs, galerie, motorisations, options, FAQ…).</p>
         </div>
         <div className="flex gap-2">
