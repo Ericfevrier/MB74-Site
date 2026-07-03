@@ -3,6 +3,8 @@ import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Eye, EyeOff } from 'luc
 import { marked } from 'marked';
 import { adminApi, type AdminArticle } from '../../lib/adminApi';
 import { BLOG_CATEGORIES } from '../../data/blog';
+import { SeoFields } from './SeoFields';
+import type { Seo } from '../../lib/seo';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -120,6 +122,18 @@ function ArticleForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel:
           />
         )}
         <p className="text-xs text-gray-400 mt-1.5">Markdown : <code>## titre</code>, <code>**gras**</code>, <code>- liste</code>, <code>[texte](url)</code>, <code>![alt](image)</code>.</p>
+      </div>
+
+      <div className="mt-6">
+        <SeoFields
+          seo={(d.seo as Seo) || {}}
+          onChange={(v) => set('seo', v)}
+          path="/blog"
+          slug={d.slug}
+          fallbackTitle={d.title ? `${d.title} | Motor Boat 74` : undefined}
+          fallbackDescription={d.excerpt}
+          fallbackImage={d.image}
+        />
       </div>
 
       <label className="flex items-center gap-2 text-sm font-medium text-brand-dark mt-6">

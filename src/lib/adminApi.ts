@@ -7,17 +7,20 @@ import type { TeamMember } from '../data/team';
 import type { HivernageCity } from '../data/hivernageCities';
 import type { NautiqueModel } from '../data/nautiqueModels';
 import type { BrandData } from '../data/brands';
+import type { Seo } from './seo';
 
 export interface AdminBoat extends UsedBoat {
   id: number;
   status: 'published' | 'draft';
   sortOrder: number;
+  seo?: Seo;
 }
 
 export interface AdminArticle extends BlogArticle {
   id: number;
   status: 'published' | 'draft';
   content: string;
+  seo?: Seo;
 }
 
 export interface AdminMember extends TeamMember {

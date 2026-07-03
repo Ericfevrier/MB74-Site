@@ -37,24 +37,47 @@ export async function buildSitemap(clientDir) {
       if (indexable) set.set(loc, lastmod || set.get(loc) || null);
       else set.delete(loc);
     };
-    try {
-      const boats = await query('SELECT slug, sold, status FROM used_boats');
-      for (const b of boats) apply(`${SITE}/bateaux/occasion/${b.slug}`, b.status === 'published' && !b.sold);
+    const noindex = (v) => {
+      if (!v) return false;
+      try {
+        return !!(typeof v === 'string' ? JSON.parse(v) : v).noindex;
+      } catch {
+        return false;
+      }
+    };
+    // Chaque type est indépendant : si une colonne manque (migration pas encore jouée),
+    // on n'invalide pas la réconciliation des autres types.
+    const step = async (fn) => {
+      try {
+        await fn();
+      } catch (e) {
+        console.error('sitemap DB:', e.message);
+      }
+    };
 
-      const arts = await query('SELECT slug, status, date FROM blog_articles');
+    await step(async () => {
+      const boats = await query('SELECT slug, sold, status, seo FROM used_boats');
+      for (const b of boats) apply(`${SITE}/bateaux/occasion/${b.slug}`, b.status === 'published' && !b.sold && !noindex(b.seo));
+    });
+    await step(async () => {
+      const arts = await query('SELECT slug, status, date, seo FROM blog_articles');
       for (const a of arts) {
         const lm = a.date ? new Date(a.date).toISOString().slice(0, 10) : null;
-        apply(`${SITE}/blog/${a.slug}`, a.status === 'published', lm);
+        apply(`${SITE}/blog/${a.slug}`, a.status === 'published' && !noindex(a.seo), lm);
       }
-
-      const models = await query('SELECT brand, slug, status FROM boat_models');
-      for (const m of models) apply(`${SITE}/${m.brand}/${m.slug}`, m.status === 'published');
-
+    });
+    await step(async () => {
+      const models = await query('SELECT brand, slug, status, data FROM boat_models');
+      for (const m of models) {
+        let seo;
+        try { seo = (typeof m.data === 'string' ? JSON.parse(m.data) : m.data)?.seo; } catch { /* ignore */ }
+        apply(`${SITE}/${m.brand}/${m.slug}`, m.status === 'published' && !noindex(seo));
+      }
+    });
+    await step(async () => {
       const cities = await query('SELECT slug, status FROM hivernage_cities');
       for (const c of cities) apply(`${SITE}/services/hivernage-bateaux/${c.slug}`, c.status === 'published');
-    } catch (e) {
-      console.error('sitemap DB:', e.message); // on garde au moins la base statique
-    }
+    });
   }
 
   const today = new Date().toISOString().slice(0, 10);

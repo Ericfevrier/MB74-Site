@@ -12,6 +12,7 @@ import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
 import { breadcrumbSchema, faqSchema } from '../lib/schema';
+import { useSeoOverride } from '../lib/seo';
 
 const firstInt = (s?: string): number | undefined => {
   const m = s?.match(/\d[\d\s]*/);
@@ -116,6 +117,7 @@ export function occasionDetailMeta({ data, params }: { data?: { boat?: UsedBoat 
 export function OccasionDetailPage({ boat: boatProp, related: relatedProp }: { boat?: UsedBoat | null; related?: UsedBoat[] } = {}) {
   const { slug } = useParams<{ slug: string }>();
   const boat = boatProp !== undefined ? boatProp : getUsedBoatBySlug(slug);
+  useSeoOverride(boat?.seo);
   const [activeImg, setActiveImg] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 

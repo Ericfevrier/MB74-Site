@@ -6,6 +6,7 @@ import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { categoryName } from '../data/blog';
 import { fetchPublicArticle, type PublicArticle } from '../lib/publicApi';
+import { useSeoOverride } from '../lib/seo';
 
 const fmtDate = (iso?: string) =>
   iso ? new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
@@ -14,6 +15,7 @@ export function BlogArticlePage() {
   const { slug } = useParams<{ slug: string }>();
   const [article, setArticle] = useState<PublicArticle | null>(null);
   const [status, setStatus] = useState<'loading' | 'ok' | 'notfound'>('loading');
+  useSeoOverride(article?.seo);
 
   useEffect(() => {
     window.scrollTo(0, 0);

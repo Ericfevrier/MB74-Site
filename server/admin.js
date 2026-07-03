@@ -24,7 +24,7 @@ import {
 const BOAT_FIELDS = [
   'slug', 'model_slug', 'brand', 'title', 'year', 'capacity', 'power', 'hours',
   'length', 'location', 'price', 'price_value', 'image', 'gallery', 'description',
-  'highlights', 'sold', 'status', 'sort_order',
+  'highlights', 'sold', 'status', 'sort_order', 'seo',
 ];
 
 const parseArr = (v) => {
@@ -58,6 +58,7 @@ function rowToBoat(r, admin = false) {
     description: r.description || undefined,
     highlights: parseArr(r.highlights),
     sold: !!r.sold,
+    seo: parseJson(r.seo, undefined),
   };
   if (admin) {
     boat.id = r.id;
@@ -91,6 +92,7 @@ function boatToRow(b) {
     sold: b.sold ? 1 : 0,
     status: b.status === 'draft' ? 'draft' : 'published',
     sort_order: Number.isFinite(Number(b.sortOrder)) ? Number(b.sortOrder) : 0,
+    seo: b.seo && Object.keys(b.seo).length ? JSON.stringify(b.seo) : null,
   };
 }
 
@@ -100,7 +102,7 @@ const ISO_DATE = (v) => {
   return String(v).slice(0, 10);
 };
 
-const BLOG_FIELDS = ['slug', 'title', 'excerpt', 'category', 'date', 'image', 'reading_time', 'content', 'status'];
+const BLOG_FIELDS = ['slug', 'title', 'excerpt', 'category', 'date', 'image', 'reading_time', 'content', 'status', 'seo'];
 
 /** Ligne DB → forme `BlogArticle` du site. `opts.full` ajoute le contenu ; `opts.admin` ajoute id/status. */
 function rowToArticle(r, opts = {}) {
@@ -113,6 +115,7 @@ function rowToArticle(r, opts = {}) {
     date: ISO_DATE(r.date),
     image: r.image || '',
     readingTime: r.reading_time || undefined,
+    seo: parseJson(r.seo, undefined),
   };
   if (opts.full || opts.admin) a.content = r.content || '';
   if (opts.admin) {
@@ -134,6 +137,7 @@ function articleToRow(a) {
     reading_time: s(a.readingTime),
     content: a.content != null ? String(a.content) : null,
     status: a.status === 'draft' ? 'draft' : 'published',
+    seo: a.seo && Object.keys(a.seo).length ? JSON.stringify(a.seo) : null,
   };
 }
 

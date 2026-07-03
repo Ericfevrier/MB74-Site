@@ -43,6 +43,8 @@ export interface UsedBoat {
   highlights?: string[];
   /** true si vendu (badge « Vendu » + noindex de la fiche) */
   sold?: boolean;
+  /** Overrides SEO éditables (title/description/OG/canonical/noindex). */
+  seo?: import('../lib/seo').Seo;
 }
 
 const T = (s: string) => `https://motorboat74.com/wp-content/uploads/elementor/thumbs/${s}`;

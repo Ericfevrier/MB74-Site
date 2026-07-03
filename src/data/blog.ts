@@ -22,6 +22,8 @@ export interface BlogArticle {
   date: string; // ISO
   image: string;
   readingTime?: string;
+  /** Overrides SEO éditables (title/description/OG/canonical/noindex). */
+  seo?: import('../lib/seo').Seo;
 }
 
 const STATIC_BLOG_CATEGORIES: BlogCategory[] = [

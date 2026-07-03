@@ -3,6 +3,8 @@ import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Download, Eye, EyeOff, 
 import { adminApi, type AdminBoat } from '../../lib/adminApi';
 import { allUsedBoats } from '../../data/usedBoats';
 import { MediaPicker } from './MediaPicker';
+import { SeoFields } from './SeoFields';
+import type { Seo } from '../../lib/seo';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -147,6 +149,18 @@ function BoatForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel: ()
           else setGallery([...gallery, ...urls.filter((u) => !gallery.includes(u))]);
         }}
       />
+
+      <div className="mt-5">
+        <SeoFields
+          seo={(d.seo as Seo) || {}}
+          onChange={(v) => set('seo', v)}
+          path="/bateaux/occasion"
+          slug={d.slug}
+          fallbackTitle={d.title ? `${d.title} ${d.year || ''} d'occasion | Motor Boat 74` : undefined}
+          fallbackDescription={d.description}
+          fallbackImage={d.image}
+        />
+      </div>
 
       <div className="flex flex-wrap items-center gap-6 mt-6">
         <label className="flex items-center gap-2 text-sm font-medium text-brand-dark">
