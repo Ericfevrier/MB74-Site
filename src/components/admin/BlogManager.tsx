@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Eye, EyeOff, Copy } from 'lucide-react';
-import { marked } from 'marked';
+import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Copy } from 'lucide-react';
 import { adminApi, type AdminArticle } from '../../lib/adminApi';
 import { BLOG_CATEGORIES } from '../../data/blog';
 import { SeoFields } from './SeoFields';
 import type { Seo } from '../../lib/seo';
 import { SearchInput, StatusFilter, FilterSelect, matchQuery } from './AdminToolbar';
 import { ScheduleFields, ScheduleBadge } from './Schedule';
+import { MarkdownEditor } from './MarkdownEditor';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -45,7 +45,6 @@ function ArticleForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel:
   const [d, setD] = useState<Draft>(initial);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [preview, setPreview] = useState(false);
   const set = (k: keyof Draft, v: any) => setD((p) => ({ ...p, [k]: v }));
 
   const save = async (e: React.FormEvent) => {
@@ -104,26 +103,8 @@ function ArticleForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel:
       </div>
 
       <div className="mt-5">
-        <div className="flex items-center justify-between mb-1.5">
-          <label className={`${LABEL} mb-0`}>Contenu (Markdown)</label>
-          <button type="button" onClick={() => setPreview((p) => !p)} className="flex items-center gap-1.5 text-xs font-bold text-brand-cyan hover:underline">
-            {preview ? <EyeOff size={14} /> : <Eye size={14} />} {preview ? 'Éditer' : 'Aperçu'}
-          </button>
-        </div>
-        {preview ? (
-          <div
-            className="prose-mb74 border border-gray-200 rounded-xl p-5 min-h-[16rem] bg-gray-50"
-            dangerouslySetInnerHTML={{ __html: marked.parse(d.content || '*Rien à afficher*') as string }}
-          />
-        ) : (
-          <textarea
-            className={`${INPUT} h-64 resize-y font-mono text-xs leading-relaxed`}
-            value={d.content || ''}
-            onChange={(e) => set('content', e.target.value)}
-            placeholder={'## Sous-titre\n\nVotre texte en **markdown**.\n\n- point 1\n- point 2\n\n[lien](https://…)'}
-          />
-        )}
-        <p className="text-xs text-gray-400 mt-1.5">Markdown : <code>## titre</code>, <code>**gras**</code>, <code>- liste</code>, <code>[texte](url)</code>, <code>![alt](image)</code>.</p>
+        <label className={LABEL}>Contenu</label>
+        <MarkdownEditor value={d.content || ''} onChange={(v) => set('content', v)} />
       </div>
 
       <div className="mt-6">
