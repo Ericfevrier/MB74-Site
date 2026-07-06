@@ -21,7 +21,8 @@ export function BlogArticlePage() {
     window.scrollTo(0, 0);
     let alive = true;
     if (!slug) return;
-    fetchPublicArticle(slug)
+    const preview = new URLSearchParams(window.location.search).has('preview');
+    fetchPublicArticle(slug, preview)
       .then((a) => alive && (setArticle(a), setStatus('ok')))
       .catch(() => alive && setStatus('notfound'));
     return () => {

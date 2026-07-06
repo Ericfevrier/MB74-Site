@@ -496,6 +496,21 @@ export function mountAdmin(app) {
     }
   });
 
+  // Fiche occasion unique (avec aperçu brouillon ?preview=1 pour un admin connecté).
+  app.get('/api/used-boats/:slug', async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const preview = req.query.preview && currentAdmin(req);
+    try {
+      const where = preview ? 'slug = ?' : `slug = ? AND ${LIVE_WINDOW}`;
+      const rows = await query(`SELECT * FROM used_boats WHERE ${where} LIMIT 1`, [req.params.slug]);
+      if (!rows.length) return res.status(404).json({ ok: false, error: 'Occasion introuvable.' });
+      res.json({ boat: rowToBoat(rows[0]) });
+    } catch (e) {
+      console.error('GET /api/used-boats/:slug', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
   /* ----------------------- Occasions (admin) ---------------------- */
 
   app.get('/api/admin/used-boats', requireAuth, async (_req, res) => {
@@ -602,8 +617,11 @@ export function mountAdmin(app) {
 
   app.get('/api/blog/:slug', async (req, res) => {
     if (!dbConfigured()) return needDb(res);
+    // Aperçu brouillon : réservé à un admin connecté (?preview=1).
+    const preview = req.query.preview && currentAdmin(req);
     try {
-      const rows = await query(`SELECT * FROM blog_articles WHERE slug = ? AND ${LIVE_WINDOW} LIMIT 1`, [req.params.slug]);
+      const where = preview ? 'slug = ?' : `slug = ? AND ${LIVE_WINDOW}`;
+      const rows = await query(`SELECT * FROM blog_articles WHERE ${where} LIMIT 1`, [req.params.slug]);
       if (!rows.length) return res.status(404).json({ ok: false, error: 'Article introuvable.' });
       res.json({ article: rowToArticle(rows[0], { full: true }) });
     } catch (e) {

@@ -9,7 +9,7 @@ import { SearchInput, StatusFilter, FilterSelect, matchQuery, useDragReorder } f
 import { GripVertical } from 'lucide-react';
 import { ScheduleFields, ScheduleBadge } from './Schedule';
 import { VersionHistory } from './VersionHistory';
-import { History } from 'lucide-react';
+import { History, ExternalLink } from 'lucide-react';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -391,6 +391,9 @@ export function OccasionsManager() {
                     </button>
                   </>
                 )}
+                <button onClick={() => window.open(`/bateaux/occasion/${b.slug}?preview=1`, '_blank')} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Aperçu">
+                  <ExternalLink size={16} />
+                </button>
                 <button onClick={() => { setMsg(null); setEditing({ ...b, galleryText: toText(b.gallery), highlightsText: toText(b.highlights) }); }} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier">
                   <Pencil size={16} />
                 </button>

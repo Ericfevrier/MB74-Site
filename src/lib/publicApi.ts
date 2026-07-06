@@ -54,11 +54,19 @@ export async function fetchPublicBlog(): Promise<BlogArticle[]> {
   return (json.articles ?? []) as BlogArticle[];
 }
 
-export async function fetchPublicArticle(slug: string): Promise<PublicArticle> {
-  const res = await fetch(`/api/blog/${encodeURIComponent(slug)}`);
+export async function fetchPublicArticle(slug: string, preview = false): Promise<PublicArticle> {
+  const res = await fetch(`/api/blog/${encodeURIComponent(slug)}${preview ? '?preview=1' : ''}`);
   if (!res.ok) throw new Error(`/api/blog/${slug} -> ${res.status}`);
   const json = await res.json();
   return json.article as PublicArticle;
+}
+
+/** Fiche occasion unique (avec aperçu brouillon si `preview` et admin connecté). */
+export async function fetchPublicBoat(slug: string, preview = false): Promise<UsedBoat> {
+  const res = await fetch(`/api/used-boats/${encodeURIComponent(slug)}${preview ? '?preview=1' : ''}`);
+  if (!res.ok) throw new Error(`/api/used-boats/${slug} -> ${res.status}`);
+  const json = await res.json();
+  return json.boat as UsedBoat;
 }
 
 /** Articles de blog live (base) ; `articles` null si l'API échoue. */

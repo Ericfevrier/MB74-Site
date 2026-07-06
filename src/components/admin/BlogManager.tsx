@@ -8,7 +8,7 @@ import { SearchInput, StatusFilter, FilterSelect, matchQuery } from './AdminTool
 import { ScheduleFields, ScheduleBadge } from './Schedule';
 import { MarkdownEditor } from './MarkdownEditor';
 import { VersionHistory } from './VersionHistory';
-import { History } from 'lucide-react';
+import { History, ExternalLink } from 'lucide-react';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -241,6 +241,7 @@ export function BlogManager() {
               <div className="flex items-center gap-2 flex-shrink-0">
                 {a.status === 'draft' && <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Brouillon</span>}
                 <ScheduleBadge item={a} />
+                <button onClick={() => window.open(`/blog/${a.slug}?preview=1`, '_blank')} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Aperçu"><ExternalLink size={16} /></button>
                 <button onClick={() => setEditing(a)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier"><Pencil size={16} /></button>
                 <button onClick={() => duplicate(a)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Dupliquer"><Copy size={16} /></button>
                 <button onClick={() => setHistory(a)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Historique"><History size={16} /></button>

@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Loader2 } from 'lucide-react';
 import { OccasionDetailPage } from '../pages/OccasionDetailPage';
-import { getUsedBoatBySlug } from '../data/usedBoats';
-import { useLiveUsedBoats } from '../lib/publicApi';
+import { getUsedBoatBySlug, type UsedBoat } from '../data/usedBoats';
+import { useLiveUsedBoats, fetchPublicBoat } from '../lib/publicApi';
 export { occasionDetailMeta as meta } from '../pages/OccasionDetailPage';
 
 /** Statique au prerender (SEO) : la fiche est calculée par la page via useParams. */
@@ -14,6 +15,25 @@ export default function OccasionDetail() {
   const { slug } = useParams<{ slug: string }>();
   const live = useLiveUsedBoats();
   const staticBoat = slug ? getUsedBoatBySlug(slug) : undefined;
+
+  // Aperçu brouillon (?preview=1) : on récupère la fiche unique (inclut les non publiées).
+  const preview = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('preview');
+  const [previewBoat, setPreviewBoat] = useState<UsedBoat | null | undefined>(undefined);
+  useEffect(() => {
+    if (!preview || !slug) return;
+    let alive = true;
+    fetchPublicBoat(slug, true)
+      .then((b) => alive && setPreviewBoat(b))
+      .catch(() => alive && setPreviewBoat(null));
+    return () => { alive = false; };
+  }, [preview, slug]);
+
+  if (preview) {
+    if (previewBoat === undefined) {
+      return <div className="min-h-[60vh] flex items-center justify-center bg-brand-light"><Loader2 className="w-8 h-8 animate-spin text-brand-cyan" /></div>;
+    }
+    if (previewBoat) return <OccasionDetailPage boat={previewBoat} />;
+  }
 
   // Base peuplée : on privilégie la fiche live (inclut les bateaux ajoutés via /admin).
   if (live.boats && live.boats.length) {
