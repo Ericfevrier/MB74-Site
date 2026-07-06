@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, X } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, X, Copy } from 'lucide-react';
 import { adminApi, type AdminCity } from '../../lib/adminApi';
 import { hivernageCities, HIVERNAGE_CITY_ORDER, type HivernagePort, type LocalFact } from '../../data/hivernageCities';
 import { SeoFields } from './SeoFields';
 import type { Seo } from '../../lib/seo';
+import { SearchInput, StatusFilter, matchQuery } from './AdminToolbar';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -153,6 +154,8 @@ export function CitiesManager() {
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<Draft | null>(null);
   const [importing, setImporting] = useState(false);
+  const [q, setQ] = useState('');
+  const [statusF, setStatusF] = useState('all');
 
   const load = () => {
     setError(null);
@@ -162,6 +165,22 @@ export function CitiesManager() {
       .catch((e) => setError(e.message));
   };
   useEffect(load, []);
+
+  const filtered = (cities || []).filter((c) => {
+    if (statusF !== 'all' && c.status !== statusF) return false;
+    if (q && !matchQuery(`${c.city} ${c.slug} ${c.lake}`, q)) return false;
+    return true;
+  });
+
+  const duplicate = async (c: AdminCity) => {
+    try {
+      const { id, ...rest } = c as any;
+      await adminApi.createCity({ ...rest, slug: `${c.slug}-copie-${Date.now().toString(36).slice(-4)}`, city: `${c.city} (copie)`, status: 'draft' });
+      load();
+    } catch (e: any) {
+      setError(e.message);
+    }
+  };
 
   const importDefaults = async () => {
     if (!confirm('Importer les villes par défaut dans la base ? (les slugs déjà présents sont ignorés)')) return;
@@ -211,7 +230,15 @@ export function CitiesManager() {
           </button>
         </div>
       </div>
-      <p className="text-gray-500 mb-6 text-sm">Tant que la base est vide, le site affiche les villes par défaut.</p>
+      <p className="text-gray-500 mb-5 text-sm">Tant que la base est vide, le site affiche les villes par défaut.</p>
+
+      {cities && cities.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 mb-5">
+          <SearchInput value={q} onChange={setQ} placeholder="Rechercher une ville…" />
+          <StatusFilter value={statusF} onChange={setStatusF} />
+          <span className="text-xs text-gray-400 ml-auto">{filtered.length} / {cities.length}</span>
+        </div>
+      )}
 
       {error && <p className="text-red-600 text-sm font-medium mb-4">{error}</p>}
       {!cities && !error && <div className="flex justify-center py-16 text-gray-400"><Loader2 className="animate-spin" /></div>}
@@ -222,9 +249,13 @@ export function CitiesManager() {
         </div>
       )}
 
-      {cities && cities.length > 0 && (
+      {cities && cities.length > 0 && filtered.length === 0 && (
+        <p className="text-gray-400 text-sm bg-white border border-dashed border-gray-300 rounded-2xl p-8 text-center">Aucune ville ne correspond.</p>
+      )}
+
+      {filtered.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden divide-y divide-gray-100">
-          {cities.map((c) => (
+          {filtered.map((c) => (
             <div key={c.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition">
               <div className="w-20 h-14 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
                 {c.hero ? <img src={c.hero} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : null}
@@ -236,6 +267,7 @@ export function CitiesManager() {
               <div className="flex items-center gap-2 flex-shrink-0">
                 {c.status === 'draft' && <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Brouillon</span>}
                 <button onClick={() => setEditing(c)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier"><Pencil size={16} /></button>
+                <button onClick={() => duplicate(c)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Dupliquer"><Copy size={16} /></button>
                 <button onClick={() => remove(c)} className="p-2 text-gray-500 hover:text-red-600 transition" title="Supprimer"><Trash2 size={16} /></button>
               </div>
             </div>

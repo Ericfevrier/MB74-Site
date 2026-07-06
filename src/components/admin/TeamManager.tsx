@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Copy } from 'lucide-react';
 import { adminApi, type AdminMember } from '../../lib/adminApi';
+import { SearchInput, matchQuery } from './AdminToolbar';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -89,6 +90,7 @@ export function TeamManager() {
   const [members, setMembers] = useState<AdminMember[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<Draft | null>(null);
+  const [q, setQ] = useState('');
 
   const load = () => {
     setError(null);
@@ -99,6 +101,8 @@ export function TeamManager() {
   };
   useEffect(load, []);
 
+  const filtered = (members || []).filter((m) => !q || matchQuery(`${m.name} ${m.role}`, q));
+
   const remove = async (m: AdminMember) => {
     if (!confirm(`Supprimer « ${m.name} » de l'équipe ?`)) return;
     try {
@@ -106,6 +110,16 @@ export function TeamManager() {
       load();
     } catch (e: any) {
       alert(e.message);
+    }
+  };
+
+  const duplicate = async (m: AdminMember) => {
+    try {
+      const { id, ...rest } = m as any;
+      await adminApi.createMember({ ...rest, name: `${m.name} (copie)`, status: 'draft' });
+      load();
+    } catch (e: any) {
+      setError(e.message);
     }
   };
 
@@ -124,6 +138,13 @@ export function TeamManager() {
         </button>
       </div>
 
+      {members && members.length > 3 && (
+        <div className="flex flex-wrap items-center gap-2 mb-5">
+          <SearchInput value={q} onChange={setQ} placeholder="Rechercher un membre…" />
+          <span className="text-xs text-gray-400 ml-auto">{filtered.length} / {members.length}</span>
+        </div>
+      )}
+
       {error && <p className="text-red-600 text-sm font-medium mb-4">{error}</p>}
       {!members && !error && <div className="flex justify-center py-16 text-gray-400"><Loader2 className="animate-spin" /></div>}
 
@@ -133,9 +154,9 @@ export function TeamManager() {
         </div>
       )}
 
-      {members && members.length > 0 && (
+      {filtered.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden divide-y divide-gray-100">
-          {members.map((m) => (
+          {filtered.map((m) => (
             <div key={m.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition">
               <div className="w-14 h-14 rounded-full bg-gray-100 overflow-hidden flex-shrink-0">
                 {m.image ? <img src={m.image} alt="" className="w-full h-full object-cover" style={{ objectPosition: m.position || 'center' }} referrerPolicy="no-referrer" /> : null}
@@ -147,6 +168,7 @@ export function TeamManager() {
               <div className="flex items-center gap-2 flex-shrink-0">
                 {m.status === 'draft' && <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Masqué</span>}
                 <button onClick={() => setEditing(m)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier"><Pencil size={16} /></button>
+                <button onClick={() => duplicate(m)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Dupliquer"><Copy size={16} /></button>
                 <button onClick={() => remove(m)} className="p-2 text-gray-500 hover:text-red-600 transition" title="Supprimer"><Trash2 size={16} /></button>
               </div>
             </div>

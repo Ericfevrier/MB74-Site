@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Download, Eye, EyeOff, Tag, CheckCircle2, Image as ImageIcon, ImagePlus, X } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Download, Eye, EyeOff, Tag, CheckCircle2, Image as ImageIcon, ImagePlus, X, Copy } from 'lucide-react';
 import { adminApi, type AdminBoat } from '../../lib/adminApi';
 import { allUsedBoats } from '../../data/usedBoats';
 import { MediaPicker } from './MediaPicker';
 import { SeoFields } from './SeoFields';
 import type { Seo } from '../../lib/seo';
+import { SearchInput, StatusFilter, FilterSelect, matchQuery } from './AdminToolbar';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -197,6 +198,9 @@ export function OccasionsManager() {
   const [editing, setEditing] = useState<Draft | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState<number | 'import' | null>(null);
+  const [q, setQ] = useState('');
+  const [statusF, setStatusF] = useState('all');
+  const [soldF, setSoldF] = useState('all');
 
   const load = () => {
     setError(null);
@@ -207,6 +211,14 @@ export function OccasionsManager() {
   };
   useEffect(load, []);
 
+  const filtered = (boats || []).filter((b) => {
+    if (statusF !== 'all' && b.status !== statusF) return false;
+    if (soldF === 'sold' && !b.sold) return false;
+    if (soldF === 'available' && b.sold) return false;
+    if (q && !matchQuery(`${b.title} ${b.slug} ${b.brandId} ${b.year} ${b.price}`, q)) return false;
+    return true;
+  });
+
   const remove = async (b: AdminBoat) => {
     if (!confirm(`Supprimer définitivement « ${b.title} » ?`)) return;
     try {
@@ -214,6 +226,22 @@ export function OccasionsManager() {
       load();
     } catch (e: any) {
       alert(e.message);
+    }
+  };
+
+  const duplicate = async (b: AdminBoat) => {
+    setBusy(b.id);
+    setError(null);
+    try {
+      const { id, galleryText, highlightsText, ...rest } = { ...b } as any;
+      const copy = { ...rest, slug: `${b.slug}-copie-${Date.now().toString(36).slice(-4)}`, title: `${b.title} (copie)`, status: 'draft', sold: false };
+      await adminApi.createBoat(copy);
+      setMsg('Occasion dupliquée (en brouillon).');
+      load();
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setBusy(null);
     }
   };
 
@@ -281,7 +309,16 @@ export function OccasionsManager() {
           </button>
         </div>
       </div>
-      <p className="text-gray-500 text-sm mb-6">Ajoute, modifie, masque (brouillon) ou marque comme vendu chaque bateau. Les fiches publiées et disponibles apparaissent sur le site.</p>
+      <p className="text-gray-500 text-sm mb-5">Ajoute, modifie, masque (brouillon) ou marque comme vendu chaque bateau. Les fiches publiées et disponibles apparaissent sur le site.</p>
+
+      {boats && boats.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 mb-5">
+          <SearchInput value={q} onChange={setQ} placeholder="Rechercher un bateau…" />
+          <StatusFilter value={statusF} onChange={setStatusF} />
+          <FilterSelect value={soldF} onChange={setSoldF} options={[{ value: 'all', label: 'Vendus + dispo' }, { value: 'available', label: 'Disponibles' }, { value: 'sold', label: 'Vendus' }]} />
+          <span className="text-xs text-gray-400 ml-auto">{filtered.length} / {boats.length}</span>
+        </div>
+      )}
 
       {msg && <p className="inline-flex items-center gap-1.5 text-emerald-600 text-sm font-bold mb-4"><CheckCircle2 size={16} /> {msg}</p>}
       {error && <p className="text-red-600 text-sm font-medium mb-4">{error}</p>}
@@ -294,9 +331,13 @@ export function OccasionsManager() {
         </div>
       )}
 
-      {boats && boats.length > 0 && (
+      {boats && boats.length > 0 && filtered.length === 0 && (
+        <p className="text-gray-400 text-sm bg-white border border-dashed border-gray-300 rounded-2xl p-8 text-center">Aucun bateau ne correspond à la recherche.</p>
+      )}
+
+      {filtered.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden divide-y divide-gray-100">
-          {boats.map((b) => (
+          {filtered.map((b) => (
             <div key={b.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition">
               <div className="w-20 h-14 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
                 {b.image ? <img src={b.image} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : null}
@@ -337,6 +378,9 @@ export function OccasionsManager() {
                 )}
                 <button onClick={() => { setMsg(null); setEditing({ ...b, galleryText: toText(b.gallery), highlightsText: toText(b.highlights) }); }} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier">
                   <Pencil size={16} />
+                </button>
+                <button onClick={() => duplicate(b)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Dupliquer">
+                  <Copy size={16} />
                 </button>
                 <button onClick={() => remove(b)} className="p-2 text-gray-500 hover:text-red-600 transition" title="Supprimer">
                   <Trash2 size={16} />

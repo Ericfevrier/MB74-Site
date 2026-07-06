@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Eye, EyeOff } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Eye, EyeOff, Copy } from 'lucide-react';
 import { marked } from 'marked';
 import { adminApi, type AdminArticle } from '../../lib/adminApi';
 import { BLOG_CATEGORIES } from '../../data/blog';
 import { SeoFields } from './SeoFields';
 import type { Seo } from '../../lib/seo';
+import { SearchInput, StatusFilter, FilterSelect, matchQuery } from './AdminToolbar';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -160,6 +161,9 @@ export function BlogManager() {
   const [articles, setArticles] = useState<AdminArticle[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<Draft | null>(null);
+  const [q, setQ] = useState('');
+  const [statusF, setStatusF] = useState('all');
+  const [catF, setCatF] = useState('all');
 
   const load = () => {
     setError(null);
@@ -170,6 +174,13 @@ export function BlogManager() {
   };
   useEffect(load, []);
 
+  const filtered = (articles || []).filter((a) => {
+    if (statusF !== 'all' && a.status !== statusF) return false;
+    if (catF !== 'all' && a.category !== catF) return false;
+    if (q && !matchQuery(`${a.title} ${a.slug} ${a.excerpt} ${a.category}`, q)) return false;
+    return true;
+  });
+
   const remove = async (a: AdminArticle) => {
     if (!confirm(`Supprimer l'article « ${a.title} » ?`)) return;
     try {
@@ -177,6 +188,16 @@ export function BlogManager() {
       load();
     } catch (e: any) {
       alert(e.message);
+    }
+  };
+
+  const duplicate = async (a: AdminArticle) => {
+    try {
+      const { id, ...rest } = a as any;
+      await adminApi.createArticle({ ...rest, slug: `${a.slug}-copie-${Date.now().toString(36).slice(-4)}`, title: `${a.title} (copie)`, status: 'draft' });
+      load();
+    } catch (e: any) {
+      setError(e.message);
     }
   };
 
@@ -195,6 +216,15 @@ export function BlogManager() {
         </button>
       </div>
 
+      {articles && articles.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 mb-5">
+          <SearchInput value={q} onChange={setQ} placeholder="Rechercher un article…" />
+          <StatusFilter value={statusF} onChange={setStatusF} />
+          <FilterSelect value={catF} onChange={setCatF} options={[{ value: 'all', label: 'Toutes catégories' }, ...BLOG_CATEGORIES.map((c) => ({ value: c.slug, label: c.name }))]} />
+          <span className="text-xs text-gray-400 ml-auto">{filtered.length} / {articles.length}</span>
+        </div>
+      )}
+
       {error && <p className="text-red-600 text-sm font-medium mb-4">{error}</p>}
       {!articles && !error && <div className="flex justify-center py-16 text-gray-400"><Loader2 className="animate-spin" /></div>}
 
@@ -204,9 +234,13 @@ export function BlogManager() {
         </div>
       )}
 
-      {articles && articles.length > 0 && (
+      {articles && articles.length > 0 && filtered.length === 0 && (
+        <p className="text-gray-400 text-sm bg-white border border-dashed border-gray-300 rounded-2xl p-8 text-center">Aucun article ne correspond.</p>
+      )}
+
+      {filtered.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden divide-y divide-gray-100">
-          {articles.map((a) => (
+          {filtered.map((a) => (
             <div key={a.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition">
               <div className="w-20 h-14 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
                 {a.image ? <img src={a.image} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : null}
@@ -218,6 +252,7 @@ export function BlogManager() {
               <div className="flex items-center gap-2 flex-shrink-0">
                 {a.status === 'draft' && <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Brouillon</span>}
                 <button onClick={() => setEditing(a)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier"><Pencil size={16} /></button>
+                <button onClick={() => duplicate(a)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Dupliquer"><Copy size={16} /></button>
                 <button onClick={() => remove(a)} className="p-2 text-gray-500 hover:text-red-600 transition" title="Supprimer"><Trash2 size={16} /></button>
               </div>
             </div>

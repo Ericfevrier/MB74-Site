@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   Loader2, Save, ArrowLeft, Pencil, Trash2, Plus, CheckCircle2, ChevronDown,
-  GripVertical, Download, X,
+  GripVertical, Download, X, Copy,
 } from 'lucide-react';
 import { adminApi, type AdminModel } from '../../lib/adminApi';
 import { BRAND_MODELS } from '../../data/boatBrands';
 import { SeoFields } from './SeoFields';
 import type { Seo } from '../../lib/seo';
+import { SearchInput, StatusFilter, matchQuery } from './AdminToolbar';
 import type {
   NautiqueModel, SpecGroup, Highlight, Motorization, Edition, OptionGroup, Milestone, ModelFAQ,
 } from '../../data/nautiqueModels';
@@ -362,6 +363,8 @@ export function ModelsManager({ brand: brandProp }: { brand?: string } = {}) {
   const [editing, setEditing] = useState<AdminModel | 'new' | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
+  const [q, setQ] = useState('');
+  const [statusF, setStatusF] = useState('all');
 
   const load = () => {
     setError(null);
@@ -372,11 +375,28 @@ export function ModelsManager({ brand: brandProp }: { brand?: string } = {}) {
   };
   useEffect(load, []);
 
+  const filtered = (rows || []).filter((m) => {
+    if (statusF !== 'all' && m.status !== statusF) return false;
+    if (q && !matchQuery(`${m.name} ${m.slug} ${m.gamme} ${m.year} ${m.brand}`, q)) return false;
+    return true;
+  });
+
   const byBrand = useMemo(() => {
     const map: Record<string, AdminModel[]> = {};
-    for (const m of rows || []) (map[m.brand] = map[m.brand] || []).push(m);
+    for (const m of filtered) (map[m.brand] = map[m.brand] || []).push(m);
     return map;
-  }, [rows]);
+  }, [filtered]);
+
+  const duplicate = async (m: AdminModel) => {
+    try {
+      const { id, ...rest } = m as any;
+      await adminApi.createModel({ ...rest, slug: `${m.slug}-copie-${Date.now().toString(36).slice(-4)}`, name: `${m.name} (copie)`, status: 'draft' });
+      setMsg('Modèle dupliqué (en brouillon).');
+      load();
+    } catch (e: any) {
+      setError(e.message);
+    }
+  };
 
   const importDefaults = async () => {
     if (!confirm('Importer les fiches modèles actuelles du site dans la base ? Les modèles déjà présents ne seront pas écrasés.')) return;
@@ -432,9 +452,21 @@ export function ModelsManager({ brand: brandProp }: { brand?: string } = {}) {
         </div>
       </div>
 
+      {rows && rows.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 mb-5">
+          <SearchInput value={q} onChange={setQ} placeholder="Rechercher un modèle…" />
+          <StatusFilter value={statusF} onChange={setStatusF} />
+          <span className="text-xs text-gray-400 ml-auto">{filtered.length} / {rows.length}</span>
+        </div>
+      )}
+
       {msg && <p className="inline-flex items-center gap-1.5 text-emerald-600 text-sm font-bold mb-4"><CheckCircle2 size={16} /> {msg} <button onClick={() => setMsg(null)} className="text-gray-400 hover:text-gray-600"><X size={14} /></button></p>}
       {error && <p className="text-red-600 text-sm font-medium mb-4">{error}</p>}
       {!rows && !error && <div className="flex justify-center py-16 text-gray-400"><Loader2 className="animate-spin" /></div>}
+
+      {rows && rows.length > 0 && filtered.length === 0 && (
+        <p className="text-gray-400 text-sm bg-white border border-dashed border-gray-300 rounded-2xl p-8 text-center">Aucun modèle ne correspond.</p>
+      )}
 
       {rows && rows.length === 0 && (
         <div className="bg-white rounded-2xl border border-dashed border-gray-300 p-10 text-center">
@@ -445,7 +477,7 @@ export function ModelsManager({ brand: brandProp }: { brand?: string } = {}) {
         </div>
       )}
 
-      {rows && rows.length > 0 && (
+      {filtered.length > 0 && (
         <div className="space-y-6">
           {Object.entries(byBrand).map(([brand, list]) => (
             <div key={brand}>
@@ -462,6 +494,7 @@ export function ModelsManager({ brand: brandProp }: { brand?: string } = {}) {
                     </div>
                     {m.status === 'draft' && <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Brouillon</span>}
                     <button onClick={() => { setMsg(null); setEditing(m); }} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier"><Pencil size={16} /></button>
+                    <button onClick={() => duplicate(m)} className="p-2 text-gray-400 hover:text-brand-cyan transition" title="Dupliquer"><Copy size={16} /></button>
                     <button onClick={() => remove(m)} className="p-2 text-gray-400 hover:text-red-500 transition" title="Supprimer"><Trash2 size={16} /></button>
                   </div>
                 ))}
