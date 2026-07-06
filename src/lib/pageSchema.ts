@@ -807,8 +807,53 @@ export const PAGES: PageDef[] = [
       },
     ],
   },
-  titleHero('bateaux', 'Bateaux — Accueil catalogue', '/bateaux', 'Nos bateaux',
-    "Wakeboats et bateaux de ski nautique Nautique et MasterCraft, neufs et d'occasion, près du lac d'Annecy. Conseil personnalisé, essai sur l'eau, reprise et financement."),
+  {
+    key: 'bateaux',
+    label: 'Bateaux — Accueil catalogue',
+    path: '/bateaux',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.title', label: 'Titre', type: 'text', default: 'Nos bateaux' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Wakeboats et bateaux de ski nautique Nautique et MasterCraft, neufs et d'occasion, près du lac d'Annecy. Conseil personnalisé, essai sur l'eau, reprise et financement." },
+        ],
+      },
+      {
+        title: 'Section « Accompagnement »',
+        fields: [
+          { key: 'acc.eyebrow', label: 'Sur-titre', type: 'text', default: 'Acheter chez Motor Boat 74' },
+          { key: 'acc.title', label: 'Titre', type: 'text', default: 'Un accompagnement de A à Z' },
+          {
+            key: 'acc.cards', label: 'Atouts', type: 'list', itemLabel: 'Atout',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Concessionnaire officiel', d: 'Revendeur agréé Nautique et MasterCraft en Haute-Savoie.' },
+              { t: 'Essai sur l’eau', d: 'Testez le modèle sur le lac d’Annecy avant de décider.' },
+              { t: 'Reprise & financement', d: 'Des solutions sur mesure, neuf comme occasion.' },
+              { t: 'Occasions révisées', d: 'Chaque bateau d’occasion est contrôlé et préparé par nos ateliers.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'FAQ',
+        fields: [
+          { key: 'faq.title', label: 'Titre', type: 'text', default: 'Questions fréquentes' },
+          {
+            key: 'faq.items', label: 'Questions / réponses', type: 'list', itemLabel: 'Question',
+            itemFields: [{ key: 'q', label: 'Question', type: 'text' }, { key: 'a', label: 'Réponse', type: 'textarea' }],
+            defaultList: [
+              { q: 'Vaut-il mieux acheter un bateau neuf ou d’occasion ?', a: "Le neuf offre la configuration exacte que vous souhaitez (motorisation, options, garantie constructeur) et la dernière technologie de vague. L’occasion permet d’accéder à un modèle haut de gamme à un budget maîtrisé. Chez Motor Boat 74, chaque occasion est révisée avant la vente." },
+              { q: 'Où essayer un bateau près d’Annecy ?', a: "Nous organisons des essais sur l’eau sur le lac d’Annecy, depuis notre showroom en Haute-Savoie. C’est le meilleur moyen de comparer les modèles et de régler la vague selon votre pratique." },
+              { q: 'Proposez-vous la reprise et le financement ?', a: "Oui. Nous reprenons votre bateau actuel et proposons des solutions de financement sur mesure, neuf comme d’occasion. Nous assurons aussi l’entretien et l’hivernage après l’achat." },
+              { q: 'Quelles marques de bateaux proposez-vous ?', a: 'Motor Boat 74 est concessionnaire officiel Nautique et distribue MasterCraft : deux références mondiales du wakeboat, du wakesurf et du ski nautique.' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   titleHero('bateaux-neufs', 'Bateaux — Neufs', '/bateaux/neufs', 'Bateaux neufs',
     "La dernière génération de wakeboats et de bateaux de ski nautique Nautique et MasterCraft. Configurez votre bateau, essayez-le sur le lac d'Annecy et profitez de notre accompagnement complet."),
   titleHero('bateaux-vendus', 'Bateaux — Vendus', '/bateaux/vendu', 'Bateaux vendus',

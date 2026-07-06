@@ -146,24 +146,22 @@ export function BateauxHubPage() {
       <section className="bg-brand-light py-20">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="text-center mb-12">
-            <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">Acheter chez Motor Boat 74</span>
-            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mt-2">Un accompagnement de A à Z</h2>
+            <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{t('acc.eyebrow')}</span>
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mt-2">{t('acc.title')}</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { Icon: ShieldCheck, t: 'Concessionnaire officiel', d: 'Revendeur agréé Nautique et MasterCraft en Haute-Savoie.' },
-              { Icon: Waves, t: 'Essai sur l’eau', d: 'Testez le modèle sur le lac d’Annecy avant de décider.' },
-              { Icon: Wallet, t: 'Reprise & financement', d: 'Des solutions sur mesure, neuf comme occasion.' },
-              { Icon: Tag, t: 'Occasions révisées', d: 'Chaque bateau d’occasion est contrôlé et préparé par nos ateliers.' },
-            ].map(({ Icon, t, d }, i) => (
-              <div key={i} className="bg-white border border-gray-200 rounded-3xl p-7">
-                <span className="w-12 h-12 rounded-2xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-5">
-                  <Icon size={22} />
-                </span>
-                <h3 className="font-bold uppercase tracking-tight text-brand-dark text-sm mb-2">{t}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{d}</p>
-              </div>
-            ))}
+            {t.list<{ t: string; d: string }>('acc.cards').map((c, i) => {
+              const Icon = [ShieldCheck, Waves, Wallet, Tag][i] || ShieldCheck;
+              return (
+                <div key={i} className="bg-white border border-gray-200 rounded-3xl p-7">
+                  <span className="w-12 h-12 rounded-2xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-5">
+                    <Icon size={22} />
+                  </span>
+                  <h3 className="font-bold uppercase tracking-tight text-brand-dark text-sm mb-2">{c.t}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{c.d}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -171,9 +169,9 @@ export function BateauxHubPage() {
       {/* FAQ */}
       <section className="bg-white py-20 border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mb-10 text-center">Questions fréquentes</h2>
+          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mb-10 text-center">{t('faq.title')}</h2>
           <div className="space-y-4">
-            {faqs.map((f, i) => (
+            {t.list<{ q: string; a: string }>('faq.items').map((f, i) => (
               <details key={i} className="group bg-brand-light border border-gray-200 rounded-2xl px-6 py-5">
                 <summary className="flex items-center justify-between gap-4 cursor-pointer font-bold text-brand-dark uppercase tracking-tight text-sm list-none">
                   <h3 className="font-bold">{f.q}</h3>
