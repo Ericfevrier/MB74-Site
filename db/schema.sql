@@ -133,6 +133,40 @@ CREATE TABLE IF NOT EXISTS settings (
   updated_at TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Comptes admin additionnels (rôles). Le compte des variables d'env reste le
+-- super-admin « bootstrap » (fonctionne même si cette table est vide).
+CREATE TABLE IF NOT EXISTS admin_users (
+  id            INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  username      VARCHAR(64)  NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role          VARCHAR(16)  NOT NULL DEFAULT 'admin',
+  created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uniq_admin_user (username)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Journal d'activité (qui a modifié quoi et quand).
+CREATE TABLE IF NOT EXISTS activity_log (
+  id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  username   VARCHAR(64)  NOT NULL DEFAULT '',
+  action     VARCHAR(16)  NOT NULL DEFAULT '',
+  entity     VARCHAR(64)  NOT NULL DEFAULT '',
+  entity_id  VARCHAR(64)  NULL,
+  detail     VARCHAR(255) NULL,
+  created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_activity_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Historique de versions (snapshot avant chaque modification, pour restauration).
+CREATE TABLE IF NOT EXISTS content_versions (
+  id          INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  entity_type VARCHAR(32)  NOT NULL,
+  entity_id   INT UNSIGNED NOT NULL,
+  data        LONGTEXT     NULL,
+  username    VARCHAR(64)  NOT NULL DEFAULT '',
+  created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_versions_entity (entity_type, entity_id, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Messages de contact (formulaires contact + hivernage).
 CREATE TABLE IF NOT EXISTS contact_submissions (
   id           INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

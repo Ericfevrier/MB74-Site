@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Lock, LogOut, Ship, Inbox, Loader2, LayoutDashboard, Menu, X, ExternalLink,
   FileText, Settings, Users, MapPin, PanelLeftClose, PanelLeft, Anchor, Image as ImageIcon,
+  ScrollText, ShieldCheck,
 } from 'lucide-react';
 import { adminApi } from '../../lib/adminApi';
 import { OccasionsManager } from './OccasionsManager';
@@ -13,14 +14,16 @@ import { CitiesManager } from './CitiesManager';
 import { BrandsManager } from './BrandsManager';
 import { MediaManager } from './MediaManager';
 import { SettingsManager } from './SettingsManager';
+import { UsersManager } from './UsersManager';
+import { ActivityView } from './ActivityView';
 
-type Auth = { state: 'loading' } | { state: 'out' } | { state: 'in'; username: string };
-export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'blog' | 'team' | 'cities' | 'media' | 'messages' | 'settings';
+type Auth = { state: 'loading' } | { state: 'out' } | { state: 'in'; username: string; role: string };
+export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'blog' | 'team' | 'cities' | 'media' | 'messages' | 'settings' | 'activity' | 'users';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
 
-type NavItem = { id: SectionId; label: string; Icon: React.ComponentType<{ size?: number }> };
+type NavItem = { id: SectionId; label: string; Icon: React.ComponentType<{ size?: number }>; superOnly?: boolean };
 type NavEntry = { kind: 'item'; item: NavItem } | { kind: 'group'; label: string; items: NavItem[] };
 
 const NAV: NavEntry[] = [
@@ -42,12 +45,14 @@ const NAV: NavEntry[] = [
     items: [
       { id: 'media', label: 'Médias', Icon: ImageIcon },
       { id: 'messages', label: 'Messages', Icon: Inbox },
+      { id: 'activity', label: 'Journal', Icon: ScrollText },
       { id: 'settings', label: 'Réglages', Icon: Settings },
+      { id: 'users', label: 'Utilisateurs', Icon: ShieldCheck, superOnly: true },
     ],
   },
 ];
 
-function LoginScreen({ onIn }: { onIn: (u: string) => void }) {
+function LoginScreen({ onIn }: { onIn: (u: string, role: string) => void }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -59,7 +64,7 @@ function LoginScreen({ onIn }: { onIn: (u: string) => void }) {
     setLoading(true);
     try {
       const r = await adminApi.login(username, password);
-      onIn(r.username);
+      onIn(r.username, r.role || 'admin');
     } catch (err: any) {
       setError(err.message || 'Connexion impossible.');
     } finally {
@@ -100,7 +105,7 @@ export function AdminApp() {
   useEffect(() => {
     adminApi
       .me()
-      .then((r) => setAuth(r.ok && r.username ? { state: 'in', username: r.username } : { state: 'out' }))
+      .then((r) => setAuth(r.ok && r.username ? { state: 'in', username: r.username, role: r.role || 'admin' } : { state: 'out' }))
       .catch(() => setAuth({ state: 'out' }));
   }, []);
 
@@ -114,7 +119,7 @@ export function AdminApp() {
   if (auth.state === 'loading') {
     return <div className="min-h-screen flex items-center justify-center bg-[#0e0e10] text-white"><Loader2 className="animate-spin" /></div>;
   }
-  if (auth.state === 'out') return <LoginScreen onIn={(u) => setAuth({ state: 'in', username: u })} />;
+  if (auth.state === 'out') return <LoginScreen onIn={(u, role) => setAuth({ state: 'in', username: u, role })} />;
 
   const logout = async () => {
     await adminApi.logout().catch(() => {});
@@ -171,7 +176,7 @@ export function AdminApp() {
             <div key={i} className="pt-4">
               {!collapsed && <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-widest text-gray-600">{e.label}</p>}
               {collapsed && <div className="mx-3 mb-2 border-t border-white/10" />}
-              <div className="space-y-1">{e.items.map((it) => <Item key={it.id} it={it} />)}</div>
+              <div className="space-y-1">{e.items.filter((it) => !it.superOnly || auth.role === 'super-admin').map((it) => <Item key={it.id} it={it} />)}</div>
             </div>
           ),
         )}
@@ -214,6 +219,8 @@ export function AdminApp() {
           {section === 'team' && <TeamManager />}
           {section === 'cities' && <CitiesManager />}
           {section === 'media' && <MediaManager />}
+          {section === 'activity' && <ActivityView />}
+          {section === 'users' && auth.role === 'super-admin' && <UsersManager />}
           {section === 'messages' && <MessagesInbox onChange={refreshUnread} />}
           {section === 'settings' && <SettingsManager />}
         </main>

@@ -21,11 +21,13 @@ function secret() {
 const b64url = (s) => Buffer.from(s).toString('base64url');
 const sign = (payload) => crypto.createHmac('sha256', secret()).update(payload).digest('base64url');
 
-export function createToken(username) {
-  const payload = `${b64url(username)}.${Date.now() + COOKIE_TTL_MS}`;
+/** Crée le jeton de session signé, portant l'utilisateur et son rôle. */
+export function createToken(username, role = 'super-admin') {
+  const payload = b64url(JSON.stringify({ u: username, r: role, e: Date.now() + COOKIE_TTL_MS }));
   return `${payload}.${sign(payload)}`;
 }
 
+/** Vérifie le jeton → { username, role } ou null. */
 export function verifyToken(token) {
   if (!token) return null;
   const i = token.lastIndexOf('.');
@@ -36,9 +38,13 @@ export function verifyToken(token) {
   const a = Buffer.from(sig);
   const b = Buffer.from(expected);
   if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
-  const [userB64, expStr] = payload.split('.');
-  if (!expStr || Date.now() > Number(expStr)) return null;
-  return Buffer.from(userB64, 'base64url').toString('utf8');
+  try {
+    const { u, r, e } = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    if (!u || !e || Date.now() > Number(e)) return null;
+    return { username: u, role: r || 'admin' };
+  } catch {
+    return null;
+  }
 }
 
 export const authConfigured = () =>
@@ -105,7 +111,7 @@ export function csrfForReq(req) {
 export function requireAuth(req, res, next) {
   const user = currentAdmin(req);
   if (!user) return res.status(401).json({ ok: false, error: 'Non authentifié.' });
-  req.admin = user;
+  req.admin = user; // { username, role }
   if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
     const header = req.get('x-csrf-token') || '';
     const expected = csrfForReq(req);
@@ -114,6 +120,16 @@ export function requireAuth(req, res, next) {
     }
   }
   next();
+}
+
+/** Middleware : réservé au super-admin (gestion des utilisateurs). */
+export function requireSuperAdmin(req, res, next) {
+  requireAuth(req, res, () => {
+    if (req.admin.role !== 'super-admin') {
+      return res.status(403).json({ ok: false, error: 'Réservé au super-administrateur.' });
+    }
+    next();
+  });
 }
 
 /* --------------------- Anti-brute-force sur le login (mémoire) ----------------- */

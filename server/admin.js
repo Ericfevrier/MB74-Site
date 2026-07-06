@@ -10,6 +10,7 @@
 import { promises as fsp, existsSync, mkdirSync, readdirSync, statSync, readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import bcrypt from 'bcryptjs';
 import { query, dbConfigured } from './db.js';
 import {
   COOKIE_NAME,
@@ -17,6 +18,7 @@ import {
   createToken,
   checkCredentials,
   requireAuth,
+  requireSuperAdmin,
   currentAdmin,
   authConfigured,
   csrfToken,
@@ -318,6 +320,37 @@ function listImages(dir, baseUrl, meta = {}) {
 }
 
 export function mountAdmin(app) {
+  /* --------------------- Journal d'activité (auto) ---------------- */
+  // Enregistre chaque mutation admin réussie (qui/quoi/quand), sans code par route.
+  app.use('/api/admin', (req, res, next) => {
+    if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
+    const p = req.originalUrl.split('?')[0].replace(/^\/api\/admin\/?/, '');
+    const seg = p.split('/').filter(Boolean);
+    const entity = seg[0] || '';
+    if (['login', 'logout', 'me', 'activity'].includes(entity)) return next();
+    res.on('finish', () => {
+      if (res.statusCode >= 400 || !dbConfigured()) return;
+      const username = (req.admin && req.admin.username) || 'inconnu';
+      const entityId = seg.find((s, i) => i > 0 && /^\d+$/.test(s)) || null;
+      query(
+        'INSERT INTO activity_log (username, action, entity, entity_id, detail) VALUES (?, ?, ?, ?, ?)',
+        [username, req.method, entity, entityId, `${req.method} /${p}`.slice(0, 255)],
+      ).catch(() => {});
+    });
+    next();
+  });
+
+  app.get('/api/admin/activity', requireAuth, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT * FROM activity_log ORDER BY created_at DESC, id DESC LIMIT 200');
+      res.json({ activity: rows });
+    } catch (e) {
+      console.error('GET /api/admin/activity', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
   /* ----------------------------- Auth ----------------------------- */
 
   app.post('/api/admin/login', async (req, res) => {
@@ -333,13 +366,27 @@ export function mountAdmin(app) {
       });
     }
     const { username, password } = req.body || {};
-    const ok = await checkCredentials(username, password);
-    if (!ok) {
+    // 1) Compte des variables d'env → super-admin (bootstrap, toujours disponible).
+    let role = null;
+    if (await checkCredentials(username, password)) {
+      role = 'super-admin';
+    } else if (dbConfigured()) {
+      // 2) Comptes additionnels en base (rôle admin/super-admin).
+      try {
+        const rows = await query('SELECT password_hash, role FROM admin_users WHERE username = ? LIMIT 1', [String(username || '')]);
+        if (rows.length && (await bcrypt.compare(String(password || ''), rows[0].password_hash))) {
+          role = rows[0].role === 'super-admin' ? 'super-admin' : 'admin';
+        }
+      } catch (e) {
+        console.error('login DB users', e.message);
+      }
+    }
+    if (!role) {
       recordLoginFailure(ip);
       return res.status(401).json({ ok: false, error: 'Identifiants invalides.' });
     }
     recordLoginSuccess(ip);
-    const token = createToken(username);
+    const token = createToken(username, role);
     res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
       sameSite: 'lax',
@@ -347,7 +394,7 @@ export function mountAdmin(app) {
       path: '/',
       maxAge: COOKIE_TTL_MS,
     });
-    res.json({ ok: true, username, csrf: csrfToken(token) });
+    res.json({ ok: true, username, role, csrf: csrfToken(token) });
   });
 
   app.post('/api/admin/logout', (req, res) => {
@@ -358,7 +405,53 @@ export function mountAdmin(app) {
   app.get('/api/admin/me', (req, res) => {
     const user = currentAdmin(req);
     if (!user) return res.status(401).json({ ok: false });
-    res.json({ ok: true, username: user, csrf: csrfForReq(req) });
+    res.json({ ok: true, username: user.username, role: user.role, csrf: csrfForReq(req) });
+  });
+
+  /* ------------------- Utilisateurs (super-admin) ----------------- */
+
+  app.get('/api/admin/users', requireSuperAdmin, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT id, username, role, created_at FROM admin_users ORDER BY username ASC');
+      res.json({ users: rows, superAdmin: process.env.ADMIN_USERNAME || null });
+    } catch (e) {
+      console.error('GET /api/admin/users', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.post('/api/admin/users', requireSuperAdmin, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const username = String((req.body && req.body.username) || '').trim();
+    const password = String((req.body && req.body.password) || '');
+    const role = (req.body && req.body.role) === 'super-admin' ? 'super-admin' : 'admin';
+    if (!/^[a-zA-Z0-9._-]{3,64}$/.test(username)) return res.status(400).json({ ok: false, error: 'Identifiant invalide (3–64 car. : lettres, chiffres, . _ -).' });
+    if (password.length < 8) return res.status(400).json({ ok: false, error: 'Mot de passe trop court (min 8 caractères).' });
+    if (username === process.env.ADMIN_USERNAME) return res.status(409).json({ ok: false, error: 'Cet identifiant est déjà celui du super-admin principal.' });
+    try {
+      const hash = await bcrypt.hash(password, 10);
+      await query('INSERT INTO admin_users (username, password_hash, role) VALUES (?, ?, ?)', [username, hash, role]);
+      res.json({ ok: true });
+    } catch (e) {
+      if (e.code === 'ER_DUP_ENTRY') return res.status(409).json({ ok: false, error: 'Cet identifiant existe déjà.' });
+      console.error('POST /api/admin/users', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.delete('/api/admin/users/:id', requireSuperAdmin, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
+    try {
+      const r = await query('DELETE FROM admin_users WHERE id = ?', [id]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('DELETE /api/admin/users', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
   });
 
   /* ----------------------- Occasions (public) --------------------- */

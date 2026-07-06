@@ -62,6 +62,23 @@ export interface MediaFile {
   caption?: string;
 }
 
+export interface AdminUser {
+  id: number;
+  username: string;
+  role: 'admin' | 'super-admin';
+  created_at: string;
+}
+
+export interface ActivityEntry {
+  id: number;
+  username: string;
+  action: string;
+  entity: string;
+  entity_id: string | null;
+  detail: string | null;
+  created_at: string;
+}
+
 export interface ContactMessage {
   id: number;
   nom: string;
@@ -101,16 +118,22 @@ async function req<T = any>(method: string, url: string, body?: unknown): Promis
 
 export const adminApi = {
   me: () =>
-    req<{ ok: boolean; username?: string; csrf?: string }>('GET', '/api/admin/me').then((r) => {
+    req<{ ok: boolean; username?: string; role?: string; csrf?: string }>('GET', '/api/admin/me').then((r) => {
       setCsrf(r.csrf);
       return r;
     }),
   login: (username: string, password: string) =>
-    req<{ ok: boolean; username: string; csrf?: string }>('POST', '/api/admin/login', { username, password }).then((r) => {
+    req<{ ok: boolean; username: string; role?: string; csrf?: string }>('POST', '/api/admin/login', { username, password }).then((r) => {
       setCsrf(r.csrf);
       return r;
     }),
   logout: () => req('POST', '/api/admin/logout').then((r) => { setCsrf(''); return r; }),
+
+  listUsers: () => req<{ users: AdminUser[]; superAdmin: string | null }>('GET', '/api/admin/users'),
+  createUser: (username: string, password: string, role: string) => req('POST', '/api/admin/users', { username, password, role }),
+  deleteUser: (id: number) => req('DELETE', `/api/admin/users/${id}`),
+
+  listActivity: () => req<{ activity: ActivityEntry[] }>('GET', '/api/admin/activity'),
 
   listBoats: () => req<{ boats: AdminBoat[] }>('GET', '/api/admin/used-boats'),
   createBoat: (b: Partial<AdminBoat>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/used-boats', b),
