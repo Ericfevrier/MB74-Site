@@ -23,38 +23,7 @@ import {
   MessageCircle,
 } from 'lucide-react';
 
-const ZONES = [
-  'France entière',
-  'Lacs alpins (Annecy, Léman, Bourget)',
-  'Côtes méditerranéennes & atlantiques',
-  'Suisse',
-  'Italie',
-  'Espagne',
-  'Allemagne',
-];
-
-const WHY = [
-  { Icon: ShieldCheck, t: 'Assurance professionnelle', d: 'Votre bateau est couvert durant le chargement, le convoyage et la livraison.' },
-  { Icon: Truck, t: 'Remorques adaptées', d: 'Du semi-rigide au runabout, un matériel dimensionné pour chaque embarcation.' },
-  { Icon: Globe, t: 'Partout en Europe', d: 'France, Suisse, Italie, Espagne, Allemagne… nous nous déplaçons sur demande.' },
-  { Icon: PackageCheck, t: 'Convoyage soigné', d: 'Arrimage minutieux et contrôle complet avant remise en main.' },
-];
-
-const PRESTATIONS = [
-  'Transport après achat ou vente de bateau',
-  'Déplacement vers un chantier naval ou un atelier de réparation',
-  'Livraison sur lac ou en mer',
-  'Transfert entre ports ou lieux de stockage',
-  'Convoyage de bateaux de toutes tailles et catégories',
-];
-
-const STEPS = [
-  { t: 'Demande de devis', d: 'Vous remplissez notre formulaire pour obtenir un tarif personnalisé.' },
-  { t: 'Planification du trajet', d: 'Nous organisons l’itinéraire selon vos disponibilités et vos besoins.' },
-  { t: 'Chargement sécurisé', d: 'Votre bateau est arrimé et protégé avec le plus grand soin.' },
-  { t: 'Transport & livraison', d: 'Nous acheminons votre navire dans les délais fixés ensemble.' },
-  { t: 'Vérification & remise en main', d: 'Contrôle complet avant de vous restituer votre bateau en parfait état.' },
-];
+const WHY_ICONS = [ShieldCheck, Truck, Globe, PackageCheck];
 
 const FAQS = [
   {
@@ -185,18 +154,18 @@ export function TransportPage() {
                 : <>Achat, vente ou simple déplacement&nbsp;? MotorBoat 74 assure le <strong className="text-brand-cyan">convoyage sécurisé</strong> de votre bateau, avec véhicules et remorques adaptés, <strong className="text-white">partout en France et en Europe</strong>.</>}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">
-              {[
-                { Icon: Globe, t: 'France & Europe', d: 'Convoyage partout en France et en Europe.' },
-                { Icon: ShieldCheck, t: 'Assurance pro', d: 'Bateau couvert du chargement à la livraison.' },
-              ].map(({ Icon, t, d }, i) => (
-                <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
-                  <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <p className="font-bold text-white text-base uppercase tracking-tight">{t}</p>
-                    <p className="text-xs text-gray-400 mt-1 font-medium">{d}</p>
+              {t.list<{ t: string; d: string }>('hero.usps').map((u, i) => {
+                const Icon = [Globe, ShieldCheck][i] || Globe;
+                return (
+                  <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
+                    <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <p className="font-bold text-white text-base uppercase tracking-tight">{u.t}</p>
+                      <p className="text-xs text-gray-400 mt-1 font-medium">{u.d}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button onClick={scrollToForm} className="bg-brand-cyan text-brand-dark px-10 py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-white transition-all duration-300 shadow-xl shadow-brand-cyan/20 active:translate-y-1 flex items-center justify-center gap-2">
@@ -228,10 +197,12 @@ export function TransportPage() {
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               <div>
                 <p className="text-lg md:text-xl text-brand-dark leading-relaxed font-medium">
-                  <strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> assure le <strong>transport de bateau partout en France et en Europe</strong>.
+                  {t.raw('bref.lead')
+                    ? t.raw('bref.lead')
+                    : <><strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> assure le <strong>transport de bateau partout en France et en Europe</strong>.</>}
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base">
-                  Service clé en main pour un achat, une vente, une mise à l'eau ou un transfert entre ports : nous chargeons, arrimons et convoyons votre bateau en toute sécurité grâce à des véhicules et remorques adaptés, avec assurance professionnelle.
+                  {t('bref.desc')}
                 </p>
                 <div className="flex flex-wrap gap-3 mt-6">
                   <button onClick={scrollToForm} className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition-colors">
@@ -243,22 +214,18 @@ export function TransportPage() {
                 </div>
               </div>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 content-start">
-                {[
-                  { Icon: Globe, k: 'Couverture', v: 'France entière & Europe' },
-                  { Icon: ShieldCheck, k: 'Assurance', v: 'Pro, du chargement à la livraison' },
-                  { Icon: Truck, k: 'Matériel', v: 'Remorques adaptées à chaque bateau' },
-                  { Icon: PackageCheck, k: 'Convoyage', v: 'Arrimage soigné & contrôle' },
-                  { Icon: Anchor, k: 'Bateaux', v: 'Toutes tailles & catégories' },
-                  { Icon: Clock, k: 'Devis', v: 'Personnalisé sur demande' },
-                ].map(({ Icon, k, v }) => (
-                  <div key={k} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
-                    <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
-                    <div>
-                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{k}</dt>
-                      <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{v}</dd>
+                {t.list<{ k: string; v: string }>('bref.facts').map((f, i) => {
+                  const Icon = [Globe, ShieldCheck, Truck, PackageCheck, Anchor, Clock][i] || Globe;
+                  return (
+                    <div key={i} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
+                      <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
+                      <div>
+                        <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{f.k}</dt>
+                        <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{f.v}</dd>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </dl>
             </div>
           </div>
@@ -270,22 +237,27 @@ export function TransportPage() {
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -z-10"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">Vos garanties</span>
+            <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">{t('why.eyebrow')}</span>
             <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-6">
-              Un transport <span className="text-brand-cyan">sûr</span> et sans souci
+              {t.raw('why.title')
+                ? t.raw('why.title')
+                : <>Un transport <span className="text-brand-cyan">sûr</span> et sans souci</>}
             </h2>
             <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
-              Votre bateau est un bien précieux : nous le traitons comme tel, du chargement jusqu'à la remise en main, partout en France et en Europe.
+              {t('why.intro')}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {WHY.map(({ Icon, t, d }) => (
-              <div key={t} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
-                <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6"><Icon className="w-6 h-6" /></div>
-                <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{t}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed font-light">{d}</p>
-              </div>
-            ))}
+            {t.list<{ t: string; d: string }>('why.cards').map((c, i) => {
+              const Icon = WHY_ICONS[i] || ShieldCheck;
+              return (
+                <div key={i} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+                  <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6"><Icon className="w-6 h-6" /></div>
+                  <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{c.t}</h3>
+                  <p className="text-sm text-gray-400 leading-relaxed font-light">{c.d}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -298,15 +270,15 @@ export function TransportPage() {
               {/* Prestations */}
               <div>
                 <div className="mb-10">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Service clé en main</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('services.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Quand faire appel à notre service de transport
+                    {t('services.title')}
                   </h2>
                 </div>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {PRESTATIONS.map((p) => (
-                    <li key={p} className="flex items-start gap-3 bg-white border border-gray-200 rounded-2xl p-5 text-sm text-gray-700">
-                      <CheckCircle className="w-5 h-5 text-brand-cyan flex-shrink-0 mt-0.5" /> {p}
+                  {t.list<{ name: string }>('services.items').map((p, i) => (
+                    <li key={i} className="flex items-start gap-3 bg-white border border-gray-200 rounded-2xl p-5 text-sm text-gray-700">
+                      <CheckCircle className="w-5 h-5 text-brand-cyan flex-shrink-0 mt-0.5" /> {p.name}
                     </li>
                   ))}
                 </ul>
@@ -315,13 +287,13 @@ export function TransportPage() {
               {/* Process */}
               <div>
                 <div className="mb-12">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Étape par étape</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('process.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">
-                    Comment se déroule le transport
+                    {t('process.title')}
                   </h2>
                 </div>
                 <div className="relative border-l border-gray-200 ml-4 md:ml-6 space-y-12 pl-8 pb-4">
-                  {STEPS.map((s, i) => (
+                  {t.list<{ t: string; d: string }>('process.steps').map((s, i) => (
                     <div key={i} className="relative">
                       <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">{i + 1}</span>
                       <h3 className="text-lg font-bold uppercase text-brand-dark">{s.t}</h3>
@@ -334,18 +306,18 @@ export function TransportPage() {
               {/* Zones */}
               <div>
                 <div className="mb-8">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Où nous intervenons</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('zones.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    De la Haute-Savoie à toute l'Europe
+                    {t('zones.title')}
                   </h2>
                   <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
-                    Basés près d'Annecy, nous convoyons votre bateau depuis les lacs alpins vers n'importe quelle destination en France et en Europe, et inversement.
+                    {t('zones.intro')}
                   </p>
                 </div>
                 <ul role="list" className="flex flex-wrap gap-2.5">
-                  {ZONES.map((z) => (
-                    <li key={z} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-brand-dark text-xs font-semibold px-4 py-2 rounded-full">
-                      <MapPin className="w-3.5 h-3.5 text-brand-cyan" /> {z}
+                  {t.list<{ name: string }>('zones.items').map((z, i) => (
+                    <li key={i} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-brand-dark text-xs font-semibold px-4 py-2 rounded-full">
+                      <MapPin className="w-3.5 h-3.5 text-brand-cyan" /> {z.name}
                     </li>
                   ))}
                 </ul>
@@ -358,7 +330,7 @@ export function TransportPage() {
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">On répond à vos questions</h2>
                 </div>
                 <div className="space-y-4">
-                  {FAQS.map((faq, idx) => (
+                  {t.list<{ q: string; a: string }>('faq.items').map((faq, idx) => (
                     <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
                       <h3 className="m-0">
                         <button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full text-left p-6 flex items-center justify-between gap-4 font-medium text-base text-brand-dark hover:bg-gray-50 transition-colors" aria-expanded={activeFaq === idx}>

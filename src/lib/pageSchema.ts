@@ -441,9 +441,125 @@ export const PAGES: PageDef[] = [
       },
     ],
   },
-  serviceHero('transport', 'Service — Transport', '/transport', '/images/services/transport.webp',
-    'Transport de bateau en France et en Europe',
-    'Achat, vente ou simple déplacement ? MotorBoat 74 assure le convoyage sécurisé de votre bateau, avec véhicules et remorques adaptés, partout en France et en Europe.'),
+  {
+    key: 'transport',
+    label: 'Service — Transport',
+    path: '/transport',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/transport.webp' },
+          { key: 'hero.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Transport de bateau en France et en Europe' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: 'Achat, vente ou simple déplacement ? MotorBoat 74 assure le convoyage sécurisé de votre bateau, avec véhicules et remorques adaptés, partout en France et en Europe.' },
+          {
+            key: 'hero.usps', label: 'Points forts (bannière)', type: 'list', itemLabel: 'Point fort',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'text' }],
+            defaultList: [{ t: 'France & Europe', d: 'Convoyage partout en France et en Europe.' }, { t: 'Assurance pro', d: 'Bateau couvert du chargement à la livraison.' }],
+          },
+        ],
+      },
+      {
+        title: 'Section « En bref »',
+        fields: [
+          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: 'MotorBoat 74 assure le transport de bateau partout en France et en Europe.' },
+          { key: 'bref.desc', label: 'Description', type: 'textarea', default: "Service clé en main pour un achat, une vente, une mise à l'eau ou un transfert entre ports : nous chargeons, arrimons et convoyons votre bateau en toute sécurité grâce à des véhicules et remorques adaptés, avec assurance professionnelle." },
+          {
+            key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
+            itemFields: [{ key: 'k', label: 'Intitulé', type: 'text' }, { key: 'v', label: 'Valeur', type: 'text' }],
+            defaultList: [
+              { k: 'Couverture', v: 'France entière & Europe' }, { k: 'Assurance', v: 'Pro, du chargement à la livraison' },
+              { k: 'Matériel', v: 'Remorques adaptées à chaque bateau' }, { k: 'Convoyage', v: 'Arrimage soigné & contrôle' },
+              { k: 'Bateaux', v: 'Toutes tailles & catégories' }, { k: 'Devis', v: 'Personnalisé sur demande' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Vos garanties »',
+        fields: [
+          { key: 'why.eyebrow', label: 'Sur-titre', type: 'text', default: 'Vos garanties' },
+          { key: 'why.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Un transport sûr et sans souci' },
+          { key: 'why.intro', label: 'Introduction', type: 'textarea', default: "Votre bateau est un bien précieux : nous le traitons comme tel, du chargement jusqu'à la remise en main, partout en France et en Europe." },
+          {
+            key: 'why.cards', label: 'Garanties', type: 'list', itemLabel: 'Garantie',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Assurance professionnelle', d: 'Votre bateau est couvert durant le chargement, le convoyage et la livraison.' },
+              { t: 'Remorques adaptées', d: 'Du semi-rigide au runabout, un matériel dimensionné pour chaque embarcation.' },
+              { t: 'Partout en Europe', d: 'France, Suisse, Italie, Espagne, Allemagne… nous nous déplaçons sur demande.' },
+              { t: 'Convoyage soigné', d: 'Arrimage minutieux et contrôle complet avant remise en main.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Prestations »',
+        fields: [
+          { key: 'services.eyebrow', label: 'Sur-titre', type: 'text', default: 'Service clé en main' },
+          { key: 'services.title', label: 'Titre', type: 'text', default: 'Quand faire appel à notre service de transport' },
+          {
+            key: 'services.items', label: 'Prestations', type: 'list', itemLabel: 'Prestation',
+            itemFields: [{ key: 'name', label: 'Intitulé', type: 'text' }],
+            defaultList: [
+              { name: 'Transport après achat ou vente de bateau' }, { name: 'Déplacement vers un chantier naval ou un atelier de réparation' },
+              { name: 'Livraison sur lac ou en mer' }, { name: 'Transfert entre ports ou lieux de stockage' },
+              { name: 'Convoyage de bateaux de toutes tailles et catégories' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Déroulement »',
+        fields: [
+          { key: 'process.eyebrow', label: 'Sur-titre', type: 'text', default: 'Étape par étape' },
+          { key: 'process.title', label: 'Titre', type: 'text', default: 'Comment se déroule le transport' },
+          {
+            key: 'process.steps', label: 'Étapes', type: 'list', itemLabel: 'Étape',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Demande de devis', d: 'Vous remplissez notre formulaire pour obtenir un tarif personnalisé.' },
+              { t: 'Planification du trajet', d: 'Nous organisons l’itinéraire selon vos disponibilités et vos besoins.' },
+              { t: 'Chargement sécurisé', d: 'Votre bateau est arrimé et protégé avec le plus grand soin.' },
+              { t: 'Transport & livraison', d: 'Nous acheminons votre navire dans les délais fixés ensemble.' },
+              { t: 'Vérification & remise en main', d: 'Contrôle complet avant de vous restituer votre bateau en parfait état.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Où nous intervenons »',
+        fields: [
+          { key: 'zones.eyebrow', label: 'Sur-titre', type: 'text', default: 'Où nous intervenons' },
+          { key: 'zones.title', label: 'Titre', type: 'text', default: "De la Haute-Savoie à toute l'Europe" },
+          { key: 'zones.intro', label: 'Introduction', type: 'textarea', default: "Basés près d'Annecy, nous convoyons votre bateau depuis les lacs alpins vers n'importe quelle destination en France et en Europe, et inversement." },
+          {
+            key: 'zones.items', label: 'Zones (badges)', type: 'list', itemLabel: 'Zone',
+            itemFields: [{ key: 'name', label: 'Nom', type: 'text' }],
+            defaultList: [
+              { name: 'France entière' }, { name: 'Lacs alpins (Annecy, Léman, Bourget)' }, { name: 'Côtes méditerranéennes & atlantiques' },
+              { name: 'Suisse' }, { name: 'Italie' }, { name: 'Espagne' }, { name: 'Allemagne' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'FAQ',
+        fields: [
+          {
+            key: 'faq.items', label: 'Questions / réponses', type: 'list', itemLabel: 'Question',
+            itemFields: [{ key: 'q', label: 'Question', type: 'text' }, { key: 'a', label: 'Réponse', type: 'textarea' }],
+            defaultList: [
+              { q: 'Quel est le prix pour transporter un bateau ?', a: 'Le prix dépend de la distance, de la taille et du poids de l’embarcation, de la zone (France ou Europe) et du type de service. Remplissez notre formulaire pour un devis précis.' },
+              { q: 'Transportez-vous des bateaux partout en France ?', a: 'Oui, dans toute la France : des lacs alpins jusqu’aux côtes méditerranéennes et atlantiques. Nous intervenons aussi en Suisse, Italie, Espagne, Allemagne sur demande.' },
+              { q: 'Quels types de bateaux pouvez-vous transporter ?', a: 'Wakeboard, wakesurf, ski nautique, semi-rigides, coques open, petits voiliers et jet-skis. Nos remorques adaptées garantissent un convoyage sécurisé.' },
+              { q: 'Le transport est-il assuré ?', a: 'Oui, tous nos transports sont couverts par une assurance professionnelle protégeant votre bateau contre les dommages durant le chargement, le convoyage et la livraison.' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   serviceHero('sellerie', 'Service — Sellerie', '/sellerie', '/images/services/sellerie.webp',
     'Sellerie de bateau sur mesure · confection & rénovation',
     "Rénover l'intérieur de votre bateau ou remplacer une sellerie usée ? De la conception à la pose, MotorBoat 74 et ses artisans partenaires redonnent confort, style et protection à votre bateau."),
