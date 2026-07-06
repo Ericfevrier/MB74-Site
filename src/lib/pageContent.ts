@@ -29,8 +29,11 @@ function ensureLoad() {
     });
 }
 
-/** Renvoie une fonction `t(key)` : surcharge admin si présente, sinon défaut du schéma. */
-export function usePageContent(pageKey: string): (key: string) => string {
+/** `t(key)` : surcharge admin sinon défaut du schéma. `t.raw(key)` : surcharge seule (''
+ *  si absente) — utile pour préserver un rendu par défaut « riche » (titres bi-colores). */
+export type PageT = ((key: string) => string) & { raw: (key: string) => string };
+
+export function usePageContent(pageKey: string): PageT {
   const [, force] = useReducer((x) => x + 1, 0);
   useEffect(() => {
     store.subs.add(force);
@@ -39,9 +42,14 @@ export function usePageContent(pageKey: string): (key: string) => string {
   }, []);
   const overrides = store.data?.[pageKey] || {};
   const defaults = PAGE_DEFAULTS[pageKey] || {};
-  return (key: string) => {
+  const t = ((key: string) => {
     const v = overrides[key];
     if (v !== undefined && v !== null && v !== '') return v;
     return defaults[key] ?? '';
+  }) as PageT;
+  t.raw = (key: string) => {
+    const v = overrides[key];
+    return v == null ? '' : v;
   };
+  return t;
 }

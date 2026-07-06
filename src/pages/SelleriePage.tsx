@@ -3,6 +3,7 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
 import { pageMeta } from '../lib/meta';
+import { usePageContent } from '../lib/pageContent';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
 import {
   Sofa,
@@ -112,6 +113,7 @@ export function sellerieMeta() {
 }
 
 export function SelleriePage() {
+  const t = usePageContent('sellerie');
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
@@ -173,7 +175,7 @@ export function SelleriePage() {
       <section className="relative min-h-[calc(100svh-80px)] lg:min-h-[calc(100svh-120px)] flex items-center justify-center pt-8 pb-10 overflow-hidden bg-brand-dark">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/services/sellerie.webp"
+            src={t('hero.image')}
             alt="Sellerie de bateau sur mesure par Motor Boat 74 à Annecy"
             className="w-full h-full object-cover opacity-60 scale-105"
             referrerPolicy="no-referrer"
@@ -191,11 +193,15 @@ export function SelleriePage() {
             />
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
-              Sellerie de bateau <span className="text-brand-cyan">sur mesure</span> <span className="text-white/90">· confection & rénovation</span>
+              {t.raw('hero.title')
+                ? t.raw('hero.title')
+                : <>Sellerie de bateau <span className="text-brand-cyan">sur mesure</span> <span className="text-white/90">· confection & rénovation</span></>}
             </h1>
 
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
-              Rénover l'intérieur de votre bateau ou remplacer une sellerie usée&nbsp;? De la <strong className="text-brand-cyan">conception à la pose</strong>, MotorBoat 74 et ses artisans partenaires redonnent confort, style et protection à votre bateau.
+              {t.raw('hero.subtitle')
+                ? t.raw('hero.subtitle')
+                : <>Rénover l'intérieur de votre bateau ou remplacer une sellerie usée&nbsp;? De la <strong className="text-brand-cyan">conception à la pose</strong>, MotorBoat 74 et ses artisans partenaires redonnent confort, style et protection à votre bateau.</>}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">

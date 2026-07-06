@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { pageMeta } from '../lib/meta';
+import { usePageContent } from '../lib/pageContent';
 import {
   Shield,
   Wrench,
@@ -162,6 +163,7 @@ export function hivernageMeta() {
 }
 
 export function HivernageStockagePage() {
+  const t = usePageContent('hivernage');
   // States of interactive UI
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -280,7 +282,7 @@ export function HivernageStockagePage() {
         {/* Background photo of mountain lake setting */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/2026-g23-perf-18.jpg"
+            src={t('hero.image')}
             alt="MotorBoat 74, hivernage et stockage de bateau en Haute-Savoie, sur le Lac d'Annecy"
             className="w-full h-full object-cover opacity-60 scale-105"
             referrerPolicy="no-referrer"
@@ -304,11 +306,15 @@ export function HivernageStockagePage() {
             />
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
-              Hivernage et stockage de bateau à <span className="text-brand-cyan">Annecy</span> <span className="text-white/90">· Hangar sécurisé 3 000 m²</span>
+              {t.raw('hero.title')
+                ? t.raw('hero.title')
+                : <>Hivernage et stockage de bateau à <span className="text-brand-cyan">Annecy</span> <span className="text-white/90">· Hangar sécurisé 3 000 m²</span></>}
             </h1>
 
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
-              Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le <strong className="text-brand-cyan">Lac d'Annecy</strong>, le <strong className="text-white">Léman</strong> et toute la région.
+              {t.raw('hero.subtitle')
+                ? t.raw('hero.subtitle')
+                : <>Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le <strong className="text-brand-cyan">Lac d'Annecy</strong>, le <strong className="text-white">Léman</strong> et toute la région.</>}
             </p>
 
             {/* 3 USP as requested */}

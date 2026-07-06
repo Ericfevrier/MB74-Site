@@ -3,6 +3,7 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
 import { pageMeta } from '../lib/meta';
+import { usePageContent } from '../lib/pageContent';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
 import {
   Wrench,
@@ -113,6 +114,7 @@ export function entretienMeta() {
 }
 
 export function EntretienReparationPage() {
+  const t = usePageContent('entretien');
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
@@ -174,7 +176,7 @@ export function EntretienReparationPage() {
       <section className="relative min-h-[calc(100svh-80px)] lg:min-h-[calc(100svh-120px)] flex items-center justify-center pt-8 pb-10 overflow-hidden bg-brand-dark">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/services/entretien.webp"
+            src={t('hero.image')}
             alt="Entretien et réparation de bateau par Motor Boat 74 à Annecy"
             className="w-full h-full object-cover opacity-60 scale-105"
             referrerPolicy="no-referrer"
@@ -192,11 +194,15 @@ export function EntretienReparationPage() {
             />
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
-              Entretien et réparation de bateaux à <span className="text-brand-cyan">Annecy</span>
+              {t.raw('hero.title')
+                ? t.raw('hero.title')
+                : <>Entretien et réparation de bateaux à <span className="text-brand-cyan">Annecy</span></>}
             </h1>
 
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
-              De la <strong className="text-brand-cyan">révision moteur</strong> aux travaux de carrosserie, MotorBoat 74 garantit performance, sécurité et longévité à votre bateau. Interventions rapides et soignées, <strong className="text-white">en atelier ou sur place</strong>.
+              {t.raw('hero.subtitle')
+                ? t.raw('hero.subtitle')
+                : <>De la <strong className="text-brand-cyan">révision moteur</strong> aux travaux de carrosserie, MotorBoat 74 garantit performance, sécurité et longévité à votre bateau. Interventions rapides et soignées, <strong className="text-white">en atelier ou sur place</strong>.</>}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">

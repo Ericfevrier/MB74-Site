@@ -24,6 +24,25 @@ export interface PageDef {
   sections: PageSection[];
 }
 
+/** Fabrique une page service avec sa bannière éditable (image, titre, sous-titre). */
+function serviceHero(key: string, label: string, path: string, image: string, title: string, subtitle: string): PageDef {
+  return {
+    key,
+    label,
+    path,
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: image },
+          { key: 'hero.title', label: 'Titre (vide = titre stylé par défaut)', type: 'text', default: title },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée par défaut)', type: 'textarea', default: subtitle },
+        ],
+      },
+    ],
+  };
+}
+
 export const PAGES: PageDef[] = [
   {
     key: 'accueil',
@@ -66,6 +85,24 @@ export const PAGES: PageDef[] = [
       },
     ],
   },
+  serviceHero('hivernage', 'Service — Hivernage & stockage', '/hivernage-stockage-bateau', '/images/2026-g23-perf-18.jpg',
+    'Hivernage et stockage de bateau à Annecy · Hangar sécurisé 3 000 m²',
+    "Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le Lac d'Annecy, le Léman et toute la région."),
+  serviceHero('entretien', 'Service — Entretien & réparation', '/entretien-reparation', '/images/services/entretien.webp',
+    'Entretien et réparation de bateaux à Annecy',
+    'De la révision moteur aux travaux de carrosserie, MotorBoat 74 garantit performance, sécurité et longévité à votre bateau. Interventions rapides et soignées, en atelier ou sur place.'),
+  serviceHero('depannage', 'Service — Dépannage', '/depannage', '/images/services/depannage.webp',
+    "Dépannage de bateau sur le Lac d'Annecy · 7j/7 en saison",
+    "Une panne sur l'eau ? Chaque minute compte. En Haute-Savoie, MotorBoat 74 intervient rapidement avec un bateau-atelier équipé pour vous remettre en sécurité et reprendre la navigation."),
+  serviceHero('transport', 'Service — Transport', '/transport', '/images/services/transport.webp',
+    'Transport de bateau en France et en Europe',
+    'Achat, vente ou simple déplacement ? MotorBoat 74 assure le convoyage sécurisé de votre bateau, avec véhicules et remorques adaptés, partout en France et en Europe.'),
+  serviceHero('sellerie', 'Service — Sellerie', '/sellerie', '/images/services/sellerie.webp',
+    'Sellerie de bateau sur mesure · confection & rénovation',
+    "Rénover l'intérieur de votre bateau ou remplacer une sellerie usée ? De la conception à la pose, MotorBoat 74 et ses artisans partenaires redonnent confort, style et protection à votre bateau."),
+  serviceHero('remorques', 'Service — Remorques', '/remorques', '/images/services/remorques.webp',
+    'Remorques de bateau sur mesure',
+    'Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. MotorBoat 74 sélectionne, règle et prépare une remorque homologuée CE, parfaitement adaptée à votre embarcation.'),
 ];
 
 /** Valeurs par défaut aplaties : { pageKey: { fieldKey: default } }. */

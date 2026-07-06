@@ -3,6 +3,7 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
 import { pageMeta } from '../lib/meta';
+import { usePageContent } from '../lib/pageContent';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
 import {
   Wrench,
@@ -103,6 +104,7 @@ export function depannageMeta() {
 }
 
 export function DepannagePage() {
+  const t = usePageContent('depannage');
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
@@ -164,7 +166,7 @@ export function DepannagePage() {
       <section className="relative min-h-[calc(100svh-80px)] lg:min-h-[calc(100svh-120px)] flex items-center justify-center pt-8 pb-10 overflow-hidden bg-brand-dark">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/services/depannage.webp"
+            src={t('hero.image')}
             alt="Dépannage de bateau sur le lac d'Annecy par Motor Boat 74"
             className="w-full h-full object-cover opacity-60 scale-105"
             referrerPolicy="no-referrer"
@@ -182,11 +184,15 @@ export function DepannagePage() {
             />
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
-              Dépannage de bateau sur le <span className="text-brand-cyan">Lac d'Annecy</span> <span className="text-white/90">· 7j/7 en saison</span>
+              {t.raw('hero.title')
+                ? t.raw('hero.title')
+                : <>Dépannage de bateau sur le <span className="text-brand-cyan">Lac d'Annecy</span> <span className="text-white/90">· 7j/7 en saison</span></>}
             </h1>
 
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
-              Une panne sur l'eau&nbsp;? Chaque minute compte. En Haute-Savoie, MotorBoat 74 intervient rapidement avec un <strong className="text-brand-cyan">bateau-atelier équipé</strong> pour vous remettre en sécurité et reprendre la navigation.
+              {t.raw('hero.subtitle')
+                ? t.raw('hero.subtitle')
+                : <>Une panne sur l'eau&nbsp;? Chaque minute compte. En Haute-Savoie, MotorBoat 74 intervient rapidement avec un <strong className="text-brand-cyan">bateau-atelier équipé</strong> pour vous remettre en sécurité et reprendre la navigation.</>}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">

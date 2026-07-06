@@ -3,6 +3,7 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
 import { pageMeta } from '../lib/meta';
+import { usePageContent } from '../lib/pageContent';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
 import {
   Caravan,
@@ -100,6 +101,7 @@ export function remorquesMeta() {
 }
 
 export function RemorquesPage() {
+  const t = usePageContent('remorques');
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
@@ -156,7 +158,7 @@ export function RemorquesPage() {
       {/* Hero */}
       <section className="relative min-h-[calc(100svh-80px)] lg:min-h-[calc(100svh-120px)] flex items-center justify-center pt-8 pb-10 overflow-hidden bg-brand-dark">
         <div className="absolute inset-0 z-0">
-          <img src="/images/services/remorques.webp" alt="Remorques de bateau sur mesure par Motor Boat 74 en Haute-Savoie" className="w-full h-full object-cover opacity-60 scale-105" referrerPolicy="no-referrer" />
+          <img src={t('hero.image')} alt="Remorques de bateau sur mesure par Motor Boat 74 en Haute-Savoie" className="w-full h-full object-cover opacity-60 scale-105" referrerPolicy="no-referrer" />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/70 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-transparent to-brand-dark/30"></div>
           <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-cyan/10 rounded-full blur-[150px] -mr-40 -mt-40"></div>
@@ -165,10 +167,14 @@ export function RemorquesPage() {
           <div className="max-w-4xl mx-auto lg:mx-0">
             <Breadcrumb className="mb-4" items={[{ label: 'Accueil', to: '/' }, { label: 'Services', to: '/services' }, { label: 'Remorques' }]} />
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
-              Remorques de bateau <span className="text-brand-cyan">sur mesure</span>
+              {t.raw('hero.title')
+                ? t.raw('hero.title')
+                : <>Remorques de bateau <span className="text-brand-cyan">sur mesure</span></>}
             </h1>
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
-              Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. MotorBoat 74 sélectionne, règle et prépare une remorque <strong className="text-brand-cyan">homologuée CE</strong>, <strong className="text-white">parfaitement adaptée</strong> à votre embarcation.
+              {t.raw('hero.subtitle')
+                ? t.raw('hero.subtitle')
+                : <>Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. MotorBoat 74 sélectionne, règle et prépare une remorque <strong className="text-brand-cyan">homologuée CE</strong>, <strong className="text-white">parfaitement adaptée</strong> à votre embarcation.</>}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">
               {[
