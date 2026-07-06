@@ -198,9 +198,123 @@ export const PAGES: PageDef[] = [
       },
     ],
   },
-  serviceHero('entretien', 'Service — Entretien & réparation', '/entretien-reparation', '/images/services/entretien.webp',
-    'Entretien et réparation de bateaux à Annecy',
-    'De la révision moteur aux travaux de carrosserie, MotorBoat 74 garantit performance, sécurité et longévité à votre bateau. Interventions rapides et soignées, en atelier ou sur place.'),
+  {
+    key: 'entretien',
+    label: 'Service — Entretien & réparation',
+    path: '/entretien-reparation',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/entretien.webp' },
+          { key: 'hero.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Entretien et réparation de bateaux à Annecy' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: 'De la révision moteur aux travaux de carrosserie, MotorBoat 74 garantit performance, sécurité et longévité à votre bateau. Interventions rapides et soignées, en atelier ou sur place.' },
+        ],
+      },
+      {
+        title: 'Section « En bref »',
+        fields: [
+          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: "MotorBoat 74 assure l'entretien et la réparation de bateaux à Annecy et en Haute-Savoie." },
+          { key: 'bref.desc', label: 'Description', type: 'textarea', default: "Révision moteur (hors-bord et in-board, toutes marques), réparation, travaux de carrosserie, peinture, gel-coat et pose d'accastillage : notre atelier prend en charge votre bateau de A à Z, sur place ou en atelier, pour une navigation sûre et performante." },
+          {
+            key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
+            itemFields: [{ key: 'k', label: 'Intitulé', type: 'text' }, { key: 'v', label: 'Valeur', type: 'text' }],
+            defaultList: [
+              { k: 'Mécanique', v: 'Révision moteur & réparation' },
+              { k: 'Carrosserie', v: 'Gel-coat, peinture, structure' },
+              { k: 'Accastillage', v: 'Pose & personnalisation' },
+              { k: 'Moteurs', v: 'Hors-bord & in-board, toutes marques' },
+              { k: 'Bateaux', v: 'Plaisance, ski, wakeboard, voiliers' },
+              { k: 'Zone', v: 'Annecy & Haute-Savoie' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Pourquoi un entretien régulier »',
+        fields: [
+          { key: 'why.eyebrow', label: 'Sur-titre', type: 'text', default: 'Préserver votre bateau' },
+          { key: 'why.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Pourquoi un entretien régulier est essentiel' },
+          { key: 'why.intro', label: 'Introduction', type: 'textarea', default: "Un bateau entretenu, c'est une navigation sereine et un investissement protégé. Un suivi régulier évite les pannes coûteuses et préserve la valeur de votre embarcation, saison après saison." },
+          {
+            key: 'why.cards', label: 'Avantages', type: 'list', itemLabel: 'Avantage',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Sécurité à bord', d: 'Moteur, circuits et équipements contrôlés pour naviguer en toute confiance sur le lac.' },
+              { t: 'Performance optimale', d: 'Un entretien suivi garantit puissance, fiabilité et consommation maîtrisée.' },
+              { t: 'Longévité du bateau', d: 'Prévenir l’usure prolonge la durée de vie de votre moteur et de votre coque.' },
+              { t: 'Valeur de revente', d: 'Un carnet d’entretien à jour rassure les acheteurs et valorise votre bateau.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Nos prestations »',
+        fields: [
+          { key: 'services.eyebrow', label: 'Sur-titre', type: 'text', default: 'Mécanique & carrosserie' },
+          { key: 'services.title', label: 'Titre', type: 'text', default: "Nos prestations d'entretien et de réparation" },
+          {
+            key: 'services.items', label: 'Prestations', type: 'list', itemLabel: 'Prestation',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'items', label: 'Sous-éléments (séparés par | )', type: 'text' }],
+            defaultList: [
+              { t: 'Révision moteur & entretien', items: 'Vidange et huile|Contrôle des systèmes|Diagnostic électronique' },
+              { t: 'Réparation', items: 'Remplacement de pièces|Réparation rapide|Préparation à la saison' },
+              { t: 'Carrosserie & peinture', items: 'Reprise de gel-coat|Peinture & finitions|Réparations structurelles' },
+              { t: 'Accastillage & personnalisation', items: 'Pose d’accessoires|Améliorations esthétiques|Optimisations fonctionnelles' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Déroulement »',
+        fields: [
+          { key: 'process.eyebrow', label: 'Sur-titre', type: 'text', default: 'Simple et transparent' },
+          { key: 'process.title', label: 'Titre', type: 'text', default: 'Comment se déroule votre entretien' },
+          {
+            key: 'process.steps', label: 'Étapes', type: 'list', itemLabel: 'Étape',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Prise de contact', d: 'Vous nous décrivez votre bateau et votre besoin, par téléphone ou via le formulaire.' },
+              { t: 'Diagnostic', d: 'Nos techniciens inspectent le moteur, la coque et les équipements.' },
+              { t: 'Devis gratuit', d: 'Vous recevez un devis clair et détaillé, sans engagement.' },
+              { t: 'Intervention', d: 'Travaux réalisés en atelier ou sur place, avec des pièces de qualité.' },
+              { t: 'Restitution', d: 'Contrôle final et bateau prêt à naviguer, en toute sérénité.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Zone d\'intervention »',
+        fields: [
+          { key: 'zones.eyebrow', label: 'Sur-titre', type: 'text', default: "Zone d'intervention" },
+          { key: 'zones.title', label: 'Titre', type: 'text', default: "En atelier près d'Annecy ou sur place" },
+          { key: 'zones.intro', label: 'Introduction', type: 'textarea', default: "Notre atelier est situé à Saint-Ferréol, à 20 minutes d'Annecy. Nous intervenons aussi directement sur votre bateau, autour du lac d'Annecy, du Léman, du lac du Bourget et dans toute la Haute-Savoie." },
+          {
+            key: 'zones.items', label: 'Zones (badges)', type: 'list', itemLabel: 'Zone',
+            itemFields: [{ key: 'name', label: 'Nom', type: 'text' }],
+            defaultList: [{ name: 'Atelier, Saint-Ferréol' }, { name: 'Annecy & lac d’Annecy' }, { name: 'Lac du Bourget' }, { name: 'Léman' }, { name: 'Haute-Savoie' }],
+          },
+        ],
+      },
+      {
+        title: 'FAQ',
+        fields: [
+          {
+            key: 'faq.items', label: 'Questions / réponses', type: 'list', itemLabel: 'Question',
+            itemFields: [{ key: 'q', label: 'Question', type: 'text' }, { key: 'a', label: 'Réponse', type: 'textarea' }],
+            defaultList: [
+              { q: 'Quels services proposez-vous pour l’entretien des bateaux ?', a: 'Vidange moteur, contrôle des circuits d’eau et de carburant, révision des équipements électriques, nettoyage intérieur/extérieur, polissage de la coque et maintenance des accessoires.' },
+              { q: 'Comment savoir si mon moteur a besoin d’une révision ?', a: 'Signes d’alerte : bruit anormal, perte de puissance, fumée excessive, surconsommation de carburant. Nous réalisons un diagnostic complet pour identifier tout problème.' },
+              { q: 'Réparez-vous les coques et carènes endommagées ?', a: 'Oui. Nous réparons fissures, rayures, éclats de gel-coat et tout dommage sur la coque pour garantir l’étanchéité et la sécurité.' },
+              { q: 'Proposez-vous un entretien hivernal complet ?', a: 'Oui : vidange, protection moteur, nettoyage et stockage sécurisé. Nous avons un service d’hivernage et de stockage dédié.' },
+              { q: 'Combien coûte une révision ou une réparation ?', a: 'Le coût dépend de la prestation, de la taille du bateau et des pièces nécessaires. Nous établissons un devis gratuit et personnalisé.' },
+              { q: 'Sur quels types de bateaux intervenez-vous ?', a: 'Sur tous types de bateaux de plaisance, ski nautique, wakeboard, voiliers et hors-bords, avec ou sans remorque.' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   serviceHero('depannage', 'Service — Dépannage', '/depannage', '/images/services/depannage.webp',
     "Dépannage de bateau sur le Lac d'Annecy · 7j/7 en saison",
     "Une panne sur l'eau ? Chaque minute compte. En Haute-Savoie, MotorBoat 74 intervient rapidement avec un bateau-atelier équipé pour vous remettre en sécurité et reprendre la navigation."),

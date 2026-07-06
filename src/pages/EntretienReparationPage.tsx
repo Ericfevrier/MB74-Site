@@ -28,29 +28,8 @@ import {
   Anchor,
 } from 'lucide-react';
 
-const ZONES = ['Atelier, Saint-Ferréol', 'Annecy & lac d’Annecy', 'Lac du Bourget', 'Léman', 'Haute-Savoie'];
-
-const WHY = [
-  { Icon: ShieldCheck, t: 'Sécurité à bord', d: 'Moteur, circuits et équipements contrôlés pour naviguer en toute confiance sur le lac.' },
-  { Icon: Gauge, t: 'Performance optimale', d: 'Un entretien suivi garantit puissance, fiabilité et consommation maîtrisée.' },
-  { Icon: CalendarCheck, t: 'Longévité du bateau', d: 'Prévenir l’usure prolonge la durée de vie de votre moteur et de votre coque.' },
-  { Icon: BadgeEuro, t: 'Valeur de revente', d: 'Un carnet d’entretien à jour rassure les acheteurs et valorise votre bateau.' },
-];
-
-const STEPS = [
-  { t: 'Prise de contact', d: 'Vous nous décrivez votre bateau et votre besoin, par téléphone ou via le formulaire.' },
-  { t: 'Diagnostic', d: 'Nos techniciens inspectent le moteur, la coque et les équipements.' },
-  { t: 'Devis gratuit', d: 'Vous recevez un devis clair et détaillé, sans engagement.' },
-  { t: 'Intervention', d: 'Travaux réalisés en atelier ou sur place, avec des pièces de qualité.' },
-  { t: 'Restitution', d: 'Contrôle final et bateau prêt à naviguer, en toute sérénité.' },
-];
-
-const SERVICES = [
-  { Icon: Wrench, t: 'Révision moteur & entretien', items: ['Vidange et huile', 'Contrôle des systèmes', 'Diagnostic électronique'] },
-  { Icon: Settings, t: 'Réparation', items: ['Remplacement de pièces', 'Réparation rapide', 'Préparation à la saison'] },
-  { Icon: PaintBucket, t: 'Carrosserie & peinture', items: ['Reprise de gel-coat', 'Peinture & finitions', 'Réparations structurelles'] },
-  { Icon: Sparkles, t: 'Accastillage & personnalisation', items: ['Pose d’accessoires', 'Améliorations esthétiques', 'Optimisations fonctionnelles'] },
-];
+const WHY_ICONS = [ShieldCheck, Gauge, CalendarCheck, BadgeEuro];
+const SERVICE_ICONS = [Wrench, Settings, PaintBucket, Sparkles];
 
 const FAQS = [
   {
@@ -257,10 +236,12 @@ export function EntretienReparationPage() {
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               <div>
                 <p className="text-lg md:text-xl text-brand-dark leading-relaxed font-medium">
-                  <strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> assure l'<strong>entretien et la réparation de bateaux</strong> à Annecy et en Haute-Savoie.
+                  {t.raw('bref.lead')
+                    ? t.raw('bref.lead')
+                    : <><strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> assure l'<strong>entretien et la réparation de bateaux</strong> à Annecy et en Haute-Savoie.</>}
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base">
-                  Révision moteur (hors-bord et in-board, toutes marques), réparation, travaux de carrosserie, peinture, gel-coat et pose d'accastillage : notre atelier prend en charge votre bateau de A à Z, sur place ou en atelier, pour une navigation sûre et performante.
+                  {t('bref.desc')}
                 </p>
                 <div className="flex flex-wrap gap-3 mt-6">
                   <button onClick={scrollToForm} className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition-colors">
@@ -272,22 +253,18 @@ export function EntretienReparationPage() {
                 </div>
               </div>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 content-start">
-                {[
-                  { Icon: Wrench, k: 'Mécanique', v: 'Révision moteur & réparation' },
-                  { Icon: PaintBucket, k: 'Carrosserie', v: 'Gel-coat, peinture, structure' },
-                  { Icon: Sparkles, k: 'Accastillage', v: 'Pose & personnalisation' },
-                  { Icon: Settings, k: 'Moteurs', v: 'Hors-bord & in-board, toutes marques' },
-                  { Icon: Anchor, k: 'Bateaux', v: 'Plaisance, ski, wakeboard, voiliers' },
-                  { Icon: MapPin, k: 'Zone', v: 'Annecy & Haute-Savoie' },
-                ].map(({ Icon, k, v }) => (
-                  <div key={k} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
-                    <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
-                    <div>
-                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{k}</dt>
-                      <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{v}</dd>
+                {t.list<{ k: string; v: string }>('bref.facts').map((f, i) => {
+                  const Icon = [Wrench, PaintBucket, Sparkles, Settings, Anchor, MapPin][i] || Anchor;
+                  return (
+                    <div key={i} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
+                      <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
+                      <div>
+                        <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{f.k}</dt>
+                        <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{f.v}</dd>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </dl>
             </div>
           </div>
@@ -299,25 +276,30 @@ export function EntretienReparationPage() {
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -z-10"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">Préserver votre bateau</span>
+            <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">{t('why.eyebrow')}</span>
             <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-6">
-              Pourquoi un entretien régulier est <span className="text-brand-cyan">essentiel</span>
+              {t.raw('why.title')
+                ? t.raw('why.title')
+                : <>Pourquoi un entretien régulier est <span className="text-brand-cyan">essentiel</span></>}
             </h2>
             <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
-              Un bateau entretenu, c'est une navigation sereine et un investissement protégé. Un suivi régulier évite les pannes coûteuses et préserve la valeur de votre embarcation, saison après saison.
+              {t('why.intro')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {WHY.map(({ Icon, t, d }) => (
-              <div key={t} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
-                <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
-                  <Icon className="w-6 h-6" />
+            {t.list<{ t: string; d: string }>('why.cards').map((c, i) => {
+              const Icon = WHY_ICONS[i] || ShieldCheck;
+              return (
+                <div key={i} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+                  <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{c.t}</h3>
+                  <p className="text-sm text-gray-400 leading-relaxed font-light">{c.d}</p>
                 </div>
-                <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{t}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed font-light">{d}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -330,38 +312,41 @@ export function EntretienReparationPage() {
               {/* Services */}
               <div>
                 <div className="mb-10">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Mécanique & carrosserie</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('services.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Nos prestations d'entretien et de réparation
+                    {t('services.title')}
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {SERVICES.map(({ Icon, t, items }) => (
-                    <div key={t} className="bg-white border border-gray-200 rounded-3xl p-6">
-                      <span className="w-11 h-11 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-4"><Icon className="w-5 h-5" /></span>
-                      <h3 className="font-bold text-brand-dark uppercase tracking-tight text-sm mb-3">{t}</h3>
-                      <ul className="space-y-2">
-                        {items.map((it) => (
-                          <li key={it} className="flex items-start gap-2 text-gray-600 text-sm">
-                            <CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0 mt-0.5" /> {it}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+                  {t.list<{ t: string; items: string }>('services.items').map((s, i) => {
+                    const Icon = SERVICE_ICONS[i] || Wrench;
+                    return (
+                      <div key={i} className="bg-white border border-gray-200 rounded-3xl p-6">
+                        <span className="w-11 h-11 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-4"><Icon className="w-5 h-5" /></span>
+                        <h3 className="font-bold text-brand-dark uppercase tracking-tight text-sm mb-3">{s.t}</h3>
+                        <ul className="space-y-2">
+                          {String(s.items || '').split('|').filter(Boolean).map((it, k) => (
+                            <li key={k} className="flex items-start gap-2 text-gray-600 text-sm">
+                              <CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0 mt-0.5" /> {it}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* Process */}
               <div>
                 <div className="mb-12">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Simple et transparent</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('process.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">
-                    Comment se déroule votre entretien
+                    {t('process.title')}
                   </h2>
                 </div>
                 <div className="relative border-l border-gray-200 ml-4 md:ml-6 space-y-12 pl-8 pb-4">
-                  {STEPS.map((s, i) => (
+                  {t.list<{ t: string; d: string }>('process.steps').map((s, i) => (
                     <div key={i} className="relative">
                       <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">
                         {i + 1}
@@ -376,18 +361,18 @@ export function EntretienReparationPage() {
               {/* Zones */}
               <div>
                 <div className="mb-8">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Zone d'intervention</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('zones.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    En atelier près d'Annecy ou sur place
+                    {t('zones.title')}
                   </h2>
                   <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
-                    Notre atelier est situé à Saint-Ferréol, à 20 minutes d'Annecy. Nous intervenons aussi directement sur votre bateau, autour du lac d'Annecy, du Léman, du lac du Bourget et dans toute la Haute-Savoie.
+                    {t('zones.intro')}
                   </p>
                 </div>
                 <ul role="list" className="flex flex-wrap gap-2.5">
-                  {ZONES.map((z) => (
-                    <li key={z} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-brand-dark text-xs font-semibold px-4 py-2 rounded-full">
-                      <MapPin className="w-3.5 h-3.5 text-brand-cyan" /> {z}
+                  {t.list<{ name: string }>('zones.items').map((z, i) => (
+                    <li key={i} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-brand-dark text-xs font-semibold px-4 py-2 rounded-full">
+                      <MapPin className="w-3.5 h-3.5 text-brand-cyan" /> {z.name}
                     </li>
                   ))}
                 </ul>
@@ -402,7 +387,7 @@ export function EntretienReparationPage() {
                   </h2>
                 </div>
                 <div className="space-y-4">
-                  {FAQS.map((faq, idx) => (
+                  {t.list<{ q: string; a: string }>('faq.items').map((faq, idx) => (
                     <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
                       <h3 className="m-0">
                         <button
