@@ -47,6 +47,9 @@ export default [
   // Fiche modèle (dynamique, 2 segments) — RR7 priorise les routes statiques ci-dessus
   route(':brandId/:modelId', 'routes/model.tsx'),
 
+  // Pages libres (blocs) créées via l'admin — 1 segment, après toutes les routes statiques.
+  route(':slug', 'routes/custom-page.tsx'),
+
   // 404
   route('*', 'routes/notfound.tsx'),
 ] satisfies RouteConfig;

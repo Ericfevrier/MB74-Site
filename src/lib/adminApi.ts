@@ -159,6 +159,12 @@ export const adminApi = {
   listVersions: (type: string, id: number) => req<{ versions: VersionEntry[] }>('GET', `/api/admin/versions/${type}/${id}`),
   restoreVersion: (versionId: number) => req('POST', `/api/admin/versions/${versionId}/restore`),
 
+  listCustomPages: () => req<{ pages: { id: number; slug: string; title: string; status: string }[] }>('GET', '/api/admin/custom-pages'),
+  getCustomPage: (id: number) => req<{ page: any }>('GET', `/api/admin/custom-pages/${id}`),
+  createCustomPage: (p: any) => req<{ ok: boolean; id: number }>('POST', '/api/admin/custom-pages', p),
+  updateCustomPage: (id: number, p: any) => req('PUT', `/api/admin/custom-pages/${id}`, p),
+  deleteCustomPage: (id: number) => req('DELETE', `/api/admin/custom-pages/${id}`),
+
   getPageContent: (page: string) => req<{ fields: Record<string, string> }>('GET', `/api/admin/page-content/${page}`),
   savePageContent: (page: string, fields: Record<string, string>) => req('PUT', `/api/admin/page-content/${page}`, { fields }),
 

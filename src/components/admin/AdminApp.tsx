@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Lock, LogOut, Ship, Inbox, Loader2, LayoutDashboard, Menu, X, ExternalLink,
   FileText, Settings, Users, MapPin, PanelLeftClose, PanelLeft, Anchor, Image as ImageIcon,
-  ScrollText, ShieldCheck, Milestone, FileStack,
+  ScrollText, ShieldCheck, Milestone, FileStack, LayoutTemplate,
 } from 'lucide-react';
 import { adminApi } from '../../lib/adminApi';
 import { OccasionsManager } from './OccasionsManager';
@@ -19,9 +19,10 @@ import { ActivityView } from './ActivityView';
 import { RedirectsManager } from './RedirectsManager';
 import { MenusManager } from './MenusManager';
 import { PagesManager } from './PagesManager';
+import { PageBuilder } from './PageBuilder';
 
 type Auth = { state: 'loading' } | { state: 'out' } | { state: 'in'; username: string; role: string };
-export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'blog' | 'team' | 'cities' | 'media' | 'messages' | 'settings' | 'activity' | 'users' | 'redirects' | 'menus' | 'pages';
+export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'blog' | 'team' | 'cities' | 'media' | 'messages' | 'settings' | 'activity' | 'users' | 'redirects' | 'menus' | 'pages' | 'custompages';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -37,6 +38,7 @@ const NAV: NavEntry[] = [
     label: 'Contenu',
     items: [
       { id: 'pages', label: 'Pages', Icon: FileStack },
+      { id: 'custompages', label: 'Pages libres', Icon: LayoutTemplate },
       { id: 'occasions', label: 'Occasions', Icon: Ship },
       { id: 'brands', label: 'Marques & modèles', Icon: Anchor },
       { id: 'blog', label: 'Blog', Icon: FileText },
@@ -233,6 +235,7 @@ export function AdminApp() {
           {section === 'media' && <MediaManager />}
           {section === 'activity' && <ActivityView />}
           {section === 'pages' && <PagesManager />}
+          {section === 'custompages' && <PageBuilder />}
           {section === 'menus' && <MenusManager />}
           {section === 'redirects' && <RedirectsManager />}
           {section === 'users' && auth.role === 'super-admin' && <UsersManager />}
