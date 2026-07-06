@@ -4,13 +4,24 @@
  * `usePageContent(page)(key)` (repli automatique sur le `default` défini ici), et
  * l'admin génère son formulaire à partir de ce même schéma.
  */
-export type FieldType = 'text' | 'textarea' | 'image' | 'url';
+export type FieldType = 'text' | 'textarea' | 'image' | 'url' | 'list';
+
+export interface ListItemField {
+  key: string;
+  label: string;
+  type: 'text' | 'textarea' | 'image' | 'url';
+}
 
 export interface PageField {
   key: string;
   label: string;
   type: FieldType;
-  default: string;
+  /** Valeur par défaut pour les champs scalaires. */
+  default?: string;
+  /** Pour type 'list' : définition des sous-champs d'un élément + valeurs par défaut. */
+  itemFields?: ListItemField[];
+  itemLabel?: string;
+  defaultList?: any[];
 }
 export interface PageSection {
   title: string;
@@ -103,9 +114,67 @@ export const PAGES: PageDef[] = [
       },
     ],
   },
-  serviceHero('hivernage', 'Service — Hivernage & stockage', '/hivernage-stockage-bateau', '/images/2026-g23-perf-18.jpg',
-    'Hivernage et stockage de bateau à Annecy · Hangar sécurisé 3 000 m²',
-    "Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le Lac d'Annecy, le Léman et toute la région."),
+  {
+    key: 'hivernage',
+    label: 'Service — Hivernage & stockage',
+    path: '/hivernage-stockage-bateau',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/2026-g23-perf-18.jpg' },
+          { key: 'hero.title', label: 'Titre (vide = titre stylé par défaut)', type: 'text', default: 'Hivernage et stockage de bateau à Annecy · Hangar sécurisé 3 000 m²' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le Lac d'Annecy, le Léman et toute la région." },
+          {
+            key: 'hero.usps', label: 'Points forts (bannière)', type: 'list', itemLabel: 'Point fort',
+            itemFields: [{ key: 'title', label: 'Titre', type: 'text' }, { key: 'desc', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { title: 'Hangar 3 000 m²', desc: 'Bâtiment industriel sécurisé & surveillé par alarme 24h/7j.' },
+              { title: 'Moteur Certifié', desc: 'Hivernage moteur de pointe par un concessionnaire officiel.' },
+              { title: 'Prêt au Printemps', desc: 'Notre package inclut la mise à l’eau garantie à date planifiée.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « En bref »',
+        fields: [
+          { key: 'bref.eyebrow', label: 'Sur-titre', type: 'text', default: 'En bref, Hivernage bateau Annecy' },
+          { key: 'bref.lead', label: 'Phrase d’accroche (vide = version stylée)', type: 'textarea', default: "MotorBoat 74 est le spécialiste de l'hivernage et du stockage de bateau en Haute-Savoie, basé à Saint-Ferréol à 20 minutes d'Annecy." },
+          { key: 'bref.desc', label: 'Description', type: 'textarea', default: "L'hivernage consiste à mettre le bateau hors d'eau, purger et protéger le moteur contre le gel, puis le remiser au sec jusqu'au printemps. Notre formule complète couvre la mise hors d'eau, l'hivernage moteur certifié, le stockage en hangar isolé de 3 000 m² et la remise à l'eau, partout sur le Lac d'Annecy, le Lac du Bourget et le Léman." },
+          {
+            key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
+            itemFields: [{ key: 'k', label: 'Intitulé', type: 'text' }, { key: 'v', label: 'Valeur', type: 'text' }],
+            defaultList: [
+              { k: 'Localisation', v: "Saint-Ferréol (74210), 20 min d'Annecy" },
+              { k: 'Hangar', v: '3 000 m² isolé, hors-gel, sous alarme 24/7' },
+              { k: 'Transport', v: 'Récupération à votre port incluse' },
+              { k: 'Devis', v: 'Réponse sous 24 h, gratuit' },
+              { k: 'Zones', v: "Lac d'Annecy, Bourget, Léman" },
+              { k: 'Marques', v: 'Toutes marques · concession. Nautique' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Pourquoi hiverner »',
+        fields: [
+          { key: 'why.title', label: 'Titre (vide = version stylée)', type: 'text', default: "Pourquoi l'hivernage de votre bateau est indispensable en Haute-Savoie" },
+          { key: 'why.intro', label: 'Introduction', type: 'textarea', default: "Le climat alpin de notre belle Haute-Savoie est d'une grande rigueur. Durant l’hiver, les températures chutent durablement sous 0 °C. L’humidité nocturne et le gel provoquent des contraintes thermiques extrêmes sur les coques et la mécanique. Sans une purge rigoureuse, les réparations d’un bloc moteur fissuré coûtent 5 à 10 fois plus cher qu'un hivernage professionnel préventif." },
+          {
+            key: 'why.cards', label: 'Risques', type: 'list', itemLabel: 'Risque',
+            itemFields: [{ key: 'title', label: 'Titre', type: 'text' }, { key: 'text', label: 'Description', type: 'textarea' }, { key: 'resolution', label: 'Résolution', type: 'text' }],
+            defaultList: [
+              { title: 'Gel du bloc moteur', text: "L’eau résiduelle piégée dans les échangeurs ou le carter gèle et augmente de volume, provoquant la fissure définitive du métal du moteur in-board.", resolution: "Purge et injection d'antigel" },
+              { title: 'Humidité & moisissures', text: 'Le confinement prolongé favorise la condensation, altérant les cuirs de sellerie, les plastiques et générant des taches de moisissure.', resolution: 'Hangar ventilé anti-condensation' },
+              { title: 'Rayons UV et intempéries', text: "Le soleil alpin hivernal et la neige altèrent le gelcoat de la coque, ternissent les teintes et craquellent les joints d'étanchéité.", resolution: 'Abri 100% couvert' },
+              { title: 'Décharge de batterie', text: 'Par grand froid, une batterie non maintenue subit une décharge profonde irréversible, rendant le démarrage inopérant au printemps.', resolution: 'Dépose & cycles de charge' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   serviceHero('entretien', 'Service — Entretien & réparation', '/entretien-reparation', '/images/services/entretien.webp',
     'Entretien et réparation de bateaux à Annecy',
     'De la révision moteur aux travaux de carrosserie, MotorBoat 74 garantit performance, sécurité et longévité à votre bateau. Interventions rapides et soignées, en atelier ou sur place.'),
@@ -144,7 +213,10 @@ export const PAGES: PageDef[] = [
   },
 ];
 
-/** Valeurs par défaut aplaties : { pageKey: { fieldKey: default } }. */
-export const PAGE_DEFAULTS: Record<string, Record<string, string>> = Object.fromEntries(
-  PAGES.map((p) => [p.key, Object.fromEntries(p.sections.flatMap((s) => s.fields).map((f) => [f.key, f.default]))]),
+/** Valeurs par défaut aplaties : { pageKey: { fieldKey: default (string | array) } }. */
+export const PAGE_DEFAULTS: Record<string, Record<string, string | any[]>> = Object.fromEntries(
+  PAGES.map((p) => [
+    p.key,
+    Object.fromEntries(p.sections.flatMap((s) => s.fields).map((f) => [f.key, f.type === 'list' ? (f.defaultList || []) : (f.default || '')])),
+  ]),
 );

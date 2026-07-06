@@ -31,7 +31,10 @@ function ensureLoad() {
 
 /** `t(key)` : surcharge admin sinon défaut du schéma. `t.raw(key)` : surcharge seule (''
  *  si absente) — utile pour préserver un rendu par défaut « riche » (titres bi-colores). */
-export type PageT = ((key: string) => string) & { raw: (key: string) => string };
+export type PageT = ((key: string) => string) & {
+  raw: (key: string) => string;
+  list: <T = any>(key: string) => T[];
+};
 
 export function usePageContent(pageKey: string): PageT {
   const [, force] = useReducer((x) => x + 1, 0);
@@ -45,11 +48,23 @@ export function usePageContent(pageKey: string): PageT {
   const t = ((key: string) => {
     const v = overrides[key];
     if (v !== undefined && v !== null && v !== '') return v;
-    return defaults[key] ?? '';
+    const d = defaults[key];
+    return typeof d === 'string' ? d : '';
   }) as PageT;
   t.raw = (key: string) => {
     const v = overrides[key];
     return v == null ? '' : v;
+  };
+  t.list = <T = any>(key: string): T[] => {
+    const v = overrides[key];
+    if (v != null && v !== '') {
+      try {
+        const a = JSON.parse(v);
+        if (Array.isArray(a)) return a as T[];
+      } catch { /* ignore */ }
+    }
+    const d = defaults[key];
+    return Array.isArray(d) ? (d as T[]) : [];
   };
   return t;
 }

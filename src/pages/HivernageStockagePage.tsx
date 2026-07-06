@@ -319,27 +319,18 @@ export function HivernageStockagePage() {
 
             {/* 3 USP as requested */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6 text-left max-w-3xl">
-              <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
-                <Warehouse className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <div>
-                  <p className="font-bold text-white text-base uppercase tracking-tight">Hangar 3 000 m²</p>
-                  <p className="text-xs text-gray-400 mt-1 font-medium">Bâtiment industriel sécurisé & surveillé par alarme 24h/7j.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
-                <Wrench className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <div>
-                  <p className="font-bold text-white text-base uppercase tracking-tight">Moteur Certifié</p>
-                  <p className="text-xs text-gray-400 mt-1 font-medium">Hivernage moteur de pointe par un concessionnaire officiel.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
-                <Anchor className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <div>
-                  <p className="font-bold text-white text-base uppercase tracking-tight">Prêt au Printemps</p>
-                  <p className="text-xs text-gray-400 mt-1 font-medium">Notre package inclut la mise à l’eau garantie à date planifiée.</p>
-                </div>
-              </div>
+              {t.list<{ title: string; desc: string }>('hero.usps').map((u, i) => {
+                const Icon = [Warehouse, Wrench, Anchor][i] || Anchor;
+                return (
+                  <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
+                    <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <p className="font-bold text-white text-base uppercase tracking-tight">{u.title}</p>
+                      <p className="text-xs text-gray-400 mt-1 font-medium">{u.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             {/* CTAs */}
@@ -379,17 +370,19 @@ export function HivernageStockagePage() {
             {/* Bandeau dossier */}
             <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-gray-200 bg-gray-50">
               <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref, Hivernage bateau Annecy</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">{t('bref.eyebrow')}</span>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               {/* Définition citable */}
               <div>
                 <p className="text-lg md:text-xl text-brand-dark leading-relaxed font-medium">
-                  <strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> est le spécialiste de l'<strong>hivernage et du stockage de bateau en Haute-Savoie</strong>, basé à Saint-Ferréol à 20&nbsp;minutes d'Annecy.
+                  {t.raw('bref.lead')
+                    ? t.raw('bref.lead')
+                    : <><strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> est le spécialiste de l'<strong>hivernage et du stockage de bateau en Haute-Savoie</strong>, basé à Saint-Ferréol à 20&nbsp;minutes d'Annecy.</>}
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base">
-                  L'hivernage consiste à mettre le bateau hors d'eau, purger et protéger le moteur contre le gel, puis le remiser au sec jusqu'au printemps. Notre formule complète couvre la mise hors d'eau, l'hivernage moteur certifié, le stockage en hangar isolé de 3&nbsp;000&nbsp;m² et la remise à l'eau, partout sur le Lac d'Annecy, le Lac du Bourget et le Léman.
+                  {t('bref.desc')}
                 </p>
                 <div className="flex flex-wrap gap-3 mt-6">
                   <a href="tel:+33457572727" className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition-colors">
@@ -403,22 +396,18 @@ export function HivernageStockagePage() {
 
               {/* Faits clés (extractibles) */}
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 content-start">
-                {[
-                  { Icon: MapPin, k: "Localisation", v: "Saint-Ferréol (74210), 20 min d'Annecy" },
-                  { Icon: Warehouse, k: "Hangar", v: "3 000 m² isolé, hors-gel, sous alarme 24/7" },
-                  { Icon: Truck, k: "Transport", v: "Récupération à votre port incluse" },
-                  { Icon: Clock, k: "Devis", v: "Réponse sous 24 h, gratuit" },
-                  { Icon: Anchor, k: "Zones", v: "Lac d'Annecy, Bourget, Léman" },
-                  { Icon: Shield, k: "Marques", v: "Toutes marques · concession. Nautique" },
-                ].map(({ Icon, k, v }) => (
-                  <div key={k} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
-                    <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
-                    <div>
-                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{k}</dt>
-                      <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{v}</dd>
+                {t.list<{ k: string; v: string }>('bref.facts').map((f, i) => {
+                  const Icon = [MapPin, Warehouse, Truck, Clock, Anchor, Shield][i] || Anchor;
+                  return (
+                    <div key={i} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
+                      <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
+                      <div>
+                        <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{f.k}</dt>
+                        <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{f.v}</dd>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </dl>
             </div>
           </div>
@@ -432,69 +421,29 @@ export function HivernageStockagePage() {
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-6">
-              Pourquoi l'hivernage de votre bateau est indispensable en <span className="text-brand-cyan">Haute-Savoie</span>
+              {t.raw('why.title')
+                ? t.raw('why.title')
+                : <>Pourquoi l'hivernage de votre bateau est indispensable en <span className="text-brand-cyan">Haute-Savoie</span></>}
             </h2>
             <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
-              Le climat alpin de notre belle Haute-Savoie est d'une grande rigueur. Durant l’hiver, les températures chutent de manière durable sous la barre des 0 °C. L’humidité nocturne persistante et le gel soudain provoquent des contraintes thermiques extrêmes sur les coques et la mécanique. Sans une purge rigoureuse des moteurs et des vannes, <strong>les réparations d’un bloc moteur fissuré coûtent 5 à 10 fois plus cher</strong> qu'un protocole d’hivernage professionnel préventif.
+              {t('why.intro')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Risk Card 1 */}
-            <div className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
-              <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
-                <Snowflake className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">Gel du bloc moteur</h3>
-              <p className="text-sm text-gray-400 leading-relaxed font-light">
-                L’eau résiduelle piégée dans les échangeurs ou le carter gèle et augmente de volume, provoquant la fissure définitive du métal du moteur in-board.
-              </p>
-              <div className="mt-4 pt-4 border-t border-white/5 text-xs text-brand-cyan font-bold tracking-wider uppercase">
-                Résolution : Purge et injection d'antigel
-              </div>
-            </div>
-
-            {/* Risk Card 2 */}
-            <div className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
-              <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
-                <Droplets className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">Humidité & moisissures</h3>
-              <p className="text-sm text-gray-400 leading-relaxed font-light">
-                Le confinement prolongé favorise la condensation, altérant les cuirs de sellerie, les plastiques et générant des taches tenaces de moisissure.
-              </p>
-              <div className="mt-4 pt-4 border-t border-white/5 text-xs text-brand-cyan font-bold tracking-wider uppercase">
-                Résolution : Hangar ventilé anti-condensation
-              </div>
-            </div>
-
-            {/* Risk Card 3 */}
-            <div className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
-              <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
-                <Sun className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">Rayons UV et intempéries</h3>
-              <p className="text-sm text-gray-400 leading-relaxed font-light">
-                La lune, le soleil alpin hivernal et la neige directe altèrent le gelcoat de la coque, ternissent les teintes d'origine et craquellent les joints d'étanchéité.
-              </p>
-              <div className="mt-4 pt-4 border-t border-white/5 text-xs text-brand-cyan font-bold tracking-wider uppercase">
-                Résolution : Abri 100% couvert
-              </div>
-            </div>
-
-            {/* Risk Card 4 */}
-            <div className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
-              <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
-                <BatteryWarning className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">Décharge de batterie</h3>
-              <p className="text-sm text-gray-400 leading-relaxed font-light">
-                Par grand froid, une batterie débranchée non maintenue subit une décharge profonde irréversible, rendant le système de démarrage inopérant au printemps.
-              </p>
-              <div className="mt-4 pt-4 border-t border-white/5 text-xs text-brand-cyan font-bold tracking-wider uppercase">
-                Résolution : Dépose & Cycles de charge
-              </div>
-            </div>
+            {t.list<{ title: string; text: string; resolution: string }>('why.cards').map((c, i) => {
+              const Icon = [Snowflake, Droplets, Sun, BatteryWarning][i] || Snowflake;
+              return (
+                <div key={i} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+                  <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{c.title}</h3>
+                  <p className="text-sm text-gray-400 leading-relaxed font-light">{c.text}</p>
+                  {c.resolution && <div className="mt-4 pt-4 border-t border-white/5 text-xs text-brand-cyan font-bold tracking-wider uppercase">Résolution : {c.resolution}</div>}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
