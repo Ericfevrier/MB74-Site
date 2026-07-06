@@ -167,20 +167,6 @@ CREATE TABLE IF NOT EXISTS content_versions (
   KEY idx_versions_entity (entity_type, entity_id, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Pages libres composées de blocs (éditeur type page-builder, créées depuis l'admin).
-CREATE TABLE IF NOT EXISTS custom_pages (
-  id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  slug       VARCHAR(191) NOT NULL,
-  title      VARCHAR(255) NOT NULL DEFAULT '',
-  blocks     LONGTEXT     NULL,
-  seo        LONGTEXT     NULL,
-  status     VARCHAR(16)  NOT NULL DEFAULT 'published',
-  sort_order INT          NOT NULL DEFAULT 0,
-  created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  UNIQUE KEY uniq_custom_slug (slug)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 -- Contenu éditorial des pages « statiques » (accueil, services, contact…) :
 -- surcharges champ par champ (page + clé → valeur), avec repli sur le code.
 CREATE TABLE IF NOT EXISTS page_content (

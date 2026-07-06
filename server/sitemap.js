@@ -89,10 +89,6 @@ export async function buildSitemap(clientDir) {
       const cities = await query('SELECT slug, status, seo FROM hivernage_cities');
       for (const c of cities) apply(`${SITE}/services/hivernage-bateaux/${c.slug}`, c.status === 'published' && !noindex(c.seo));
     });
-    await step(async () => {
-      const pages = await query('SELECT slug, status, seo FROM custom_pages');
-      for (const p of pages) apply(`${SITE}/${p.slug}`, p.status === 'published' && !noindex(p.seo));
-    });
   }
 
   const today = new Date().toISOString().slice(0, 10);
