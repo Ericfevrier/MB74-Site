@@ -159,9 +159,9 @@ async function handleSubmission(res, { record, subject, fields, replyTo }) {
 /*  API                                                               */
 /* ------------------------------------------------------------------ */
 
-// Upload média : les fichiers (WebP légers) peuvent dépasser 1 Mo → parser dédié,
-// enregistré AVANT le parser global (plus spécifique + prioritaire).
-app.use('/api/admin/media', express.json({ limit: '25mb' }));
+// Upload média : les fichiers (images WebP, PDF, vidéos) dépassent 1 Mo → parser
+// dédié, enregistré AVANT le parser global (plus spécifique + prioritaire).
+app.use('/api/admin/media', express.json({ limit: '45mb' }));
 app.use('/api', express.json({ limit: '1mb' }));
 app.use('/api', express.urlencoded({ extended: true }));
 

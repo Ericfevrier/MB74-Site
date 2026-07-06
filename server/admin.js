@@ -7,7 +7,7 @@
  * Sans base configurée, les écritures renvoient 503 ; la lecture publique renvoie 503
  * aussi → les loaders du site retombent alors sur les données statiques.
  */
-import { promises as fsp, existsSync, mkdirSync, readdirSync, statSync } from 'fs';
+import { promises as fsp, existsSync, mkdirSync, readdirSync, statSync, readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { query, dbConfigured } from './db.js';
@@ -270,21 +270,45 @@ const ROOT_DIR = path.resolve(ADMIN_DIR, '..');
 const UPLOADS_DIR = path.join(ROOT_DIR, 'uploads');
 // Images embarquées dans le build (lecture seule, pour retrouver les visuels existants).
 const SITE_IMAGES_DIR = path.join(ROOT_DIR, 'build', 'client', 'images');
-const IMG_EXT = /\.(webp|jpe?g|png|gif|avif|svg)$/i;
+const MEDIA_EXT = /\.(webp|jpe?g|png|gif|avif|svg|pdf|mp4|webm|mov)$/i;
+const META_FILE = path.join(UPLOADS_DIR, '.mediameta.json');
 
-/** Liste récursive des images d'un dossier, avec URL publique, taille et date. */
-function listImages(dir, baseUrl) {
+/** Type de média à partir de l'extension (pour l'affichage côté admin). */
+const mediaType = (name) => {
+  const e = name.split('.').pop().toLowerCase();
+  if (['webp', 'jpg', 'jpeg', 'png', 'gif', 'avif', 'svg'].includes(e)) return 'image';
+  if (e === 'pdf') return 'pdf';
+  if (['mp4', 'webm', 'mov'].includes(e)) return 'video';
+  return 'file';
+};
+
+// Métadonnées (alt / légende) stockées dans un fichier sidecar JSON du dossier uploads.
+function readMediaMeta() {
+  try {
+    if (existsSync(META_FILE)) return JSON.parse(readFileSync(META_FILE, 'utf8')) || {};
+  } catch { /* ignore */ }
+  return {};
+}
+async function writeMediaMeta(meta) {
+  if (!existsSync(UPLOADS_DIR)) mkdirSync(UPLOADS_DIR, { recursive: true });
+  await fsp.writeFile(META_FILE, JSON.stringify(meta, null, 2));
+}
+
+/** Liste récursive des médias d'un dossier, avec URL, taille, date, type et méta. */
+function listImages(dir, baseUrl, meta = {}) {
   if (!existsSync(dir)) return [];
   const out = [];
   const walk = (d) => {
     for (const ent of readdirSync(d, { withFileTypes: true })) {
+      if (ent.name.startsWith('.')) continue; // ignore .mediameta.json et fichiers cachés
       const fp = path.join(d, ent.name);
       if (ent.isDirectory()) walk(fp);
-      else if (IMG_EXT.test(ent.name)) {
+      else if (MEDIA_EXT.test(ent.name)) {
         try {
           const st = statSync(fp);
           const rel = path.relative(dir, fp).split(path.sep).join('/');
-          out.push({ name: rel, url: `${baseUrl}/${rel}`, size: st.size, mtime: st.mtimeMs });
+          const m = meta[rel] || {};
+          out.push({ name: rel, url: `${baseUrl}/${rel}`, size: st.size, mtime: st.mtimeMs, type: mediaType(rel), alt: m.alt || '', caption: m.caption || '' });
         } catch { /* ignore */ }
       }
     }
@@ -1030,10 +1054,11 @@ export function mountAdmin(app) {
 
   /* ----------------------- Médiathèque (admin) -------------------- */
 
-  // Liste : uploads (gérables) + images du site embarquées (lecture seule).
+  // Liste : uploads (gérables, avec alt/légende) + images du site embarquées (lecture seule).
   app.get('/api/admin/media', requireAuth, (_req, res) => {
     try {
-      const uploads = listImages(UPLOADS_DIR, '/uploads').sort((a, b) => b.mtime - a.mtime);
+      const meta = readMediaMeta();
+      const uploads = listImages(UPLOADS_DIR, '/uploads', meta).sort((a, b) => b.mtime - a.mtime);
       const site = listImages(SITE_IMAGES_DIR, '/images').sort((a, b) => a.name.localeCompare(b.name));
       res.json({ uploads, site });
     } catch (e) {
@@ -1042,31 +1067,49 @@ export function mountAdmin(app) {
     }
   });
 
-  // Upload : l'image est déjà convertie en WebP côté navigateur, envoyée en data URL base64.
+  // Upload : images (déjà converties en WebP côté navigateur) OU fichiers PDF/vidéo bruts.
   app.post('/api/admin/media', requireAuth, async (req, res) => {
     const { filename, dataUrl } = req.body || {};
-    if (!dataUrl || typeof dataUrl !== 'string') return res.status(400).json({ ok: false, error: 'Image manquante.' });
-    const m = /^data:image\/(webp|png|jpe?g|avif);base64,(.+)$/i.exec(dataUrl);
-    if (!m) return res.status(400).json({ ok: false, error: 'Format non supporté (webp, png, jpg).' });
-    const ext = /jpe?g/i.test(m[1]) ? 'jpg' : m[1].toLowerCase();
+    if (!dataUrl || typeof dataUrl !== 'string') return res.status(400).json({ ok: false, error: 'Fichier manquant.' });
+    const m = /^data:(image\/(?:webp|png|jpe?g|avif|gif)|application\/pdf|video\/(?:mp4|webm|quicktime));base64,(.+)$/i.exec(dataUrl);
+    if (!m) return res.status(400).json({ ok: false, error: 'Format non supporté (image, PDF ou vidéo mp4/webm).' });
+    const mime = m[1].toLowerCase();
+    const extMap = { 'image/jpeg': 'jpg', 'image/jpg': 'jpg', 'application/pdf': 'pdf', 'video/quicktime': 'mov' };
+    const ext = extMap[mime] || mime.split('/')[1];
     const buf = Buffer.from(m[2], 'base64');
-    if (!buf.length) return res.status(400).json({ ok: false, error: 'Image vide.' });
-    if (buf.length > 20 * 1024 * 1024) return res.status(413).json({ ok: false, error: 'Fichier trop volumineux (max 20 Mo).' });
+    if (!buf.length) return res.status(400).json({ ok: false, error: 'Fichier vide.' });
+    if (buf.length > 30 * 1024 * 1024) return res.status(413).json({ ok: false, error: 'Fichier trop volumineux (max 30 Mo).' });
     const base =
-      String(filename || 'image')
+      String(filename || 'fichier')
         .toLowerCase()
         .replace(/\.[a-z0-9]+$/i, '')
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '')
-        .slice(0, 60) || 'image';
+        .slice(0, 60) || 'fichier';
     const name = `${base}-${Date.now().toString(36)}.${ext}`;
     try {
       if (!existsSync(UPLOADS_DIR)) mkdirSync(UPLOADS_DIR, { recursive: true });
       await fsp.writeFile(path.join(UPLOADS_DIR, name), buf);
-      res.json({ ok: true, name, url: `/uploads/${name}`, size: buf.length });
+      res.json({ ok: true, name, url: `/uploads/${name}`, size: buf.length, type: mediaType(name) });
     } catch (e) {
       console.error('POST /api/admin/media', e.message);
       res.status(500).json({ ok: false, error: "Échec de l'enregistrement du fichier." });
+    }
+  });
+
+  // Métadonnées (texte alternatif + légende) d'un média uploadé.
+  app.put('/api/admin/media/meta', requireAuth, async (req, res) => {
+    const { name, alt, caption } = req.body || {};
+    const key = path.basename(String(name || ''));
+    if (!key || !existsSync(path.join(UPLOADS_DIR, key))) return res.status(404).json({ ok: false, error: 'Média introuvable.' });
+    try {
+      const meta = readMediaMeta();
+      meta[key] = { alt: String(alt || '').slice(0, 300), caption: String(caption || '').slice(0, 500) };
+      await writeMediaMeta(meta);
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('PUT /api/admin/media/meta', e.message);
+      res.status(500).json({ ok: false, error: 'Enregistrement impossible.' });
     }
   });
 
@@ -1077,6 +1120,11 @@ export function mountAdmin(app) {
     if (!fp.startsWith(UPLOADS_DIR) || !existsSync(fp)) return res.status(404).json({ ok: false, error: 'Introuvable.' });
     try {
       await fsp.unlink(fp);
+      const meta = readMediaMeta();
+      if (meta[name]) {
+        delete meta[name];
+        await writeMediaMeta(meta);
+      }
       res.json({ ok: true });
     } catch (e) {
       console.error('DELETE /api/admin/media', e.message);

@@ -57,6 +57,9 @@ export interface MediaFile {
   url: string;
   size: number;
   mtime: number;
+  type?: 'image' | 'pdf' | 'video' | 'file';
+  alt?: string;
+  caption?: string;
 }
 
 export interface ContactMessage {
@@ -153,6 +156,8 @@ export const adminApi = {
   listMedia: () => req<{ uploads: MediaFile[]; site: MediaFile[] }>('GET', '/api/admin/media'),
   uploadMedia: (filename: string, dataUrl: string) =>
     req<{ ok: boolean; name: string; url: string; size: number }>('POST', '/api/admin/media', { filename, dataUrl }),
+  setMediaMeta: (name: string, alt: string, caption: string) =>
+    req('PUT', '/api/admin/media/meta', { name, alt, caption }),
   deleteMedia: (name: string) => req('DELETE', `/api/admin/media/${encodeURIComponent(name)}`),
 
   listMessages: () => req<{ messages: ContactMessage[] }>('GET', '/api/admin/messages'),

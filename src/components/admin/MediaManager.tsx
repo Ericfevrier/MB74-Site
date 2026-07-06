@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Loader2, UploadCloud, Trash2, Copy, Check, Image as ImageIcon, ChevronDown, RefreshCw } from 'lucide-react';
+import { Loader2, UploadCloud, Trash2, Copy, Check, Image as ImageIcon, ChevronDown, RefreshCw, FileText, Film, Tag, Save } from 'lucide-react';
 import { adminApi, type MediaFile } from '../../lib/adminApi';
-import { fmtSize, toWebp } from '../../lib/media';
+import { fmtSize, toWebp, isImageFile, fileToDataUrl } from '../../lib/media';
+
+function MediaPreview({ f }: { f: MediaFile }) {
+  if (f.type === 'pdf') return <div className="w-full h-full flex flex-col items-center justify-center text-red-500 gap-1"><FileText size={26} /><span className="text-[9px] font-bold uppercase">PDF</span></div>;
+  if (f.type === 'video') return <video src={f.url} className="w-full h-full object-cover" muted />;
+  return <img src={f.url} alt={f.alt || f.name} loading="lazy" className="w-full h-full object-cover" referrerPolicy="no-referrer" />;
+}
 
 function CopyBtn({ url }: { url: string }) {
   const [done, setDone] = useState(false);
@@ -26,24 +32,50 @@ function CopyBtn({ url }: { url: string }) {
   );
 }
 
-function Thumb({ f, onDelete }: { f: MediaFile; onDelete?: () => void }) {
+function Thumb({ f, onDelete, onSavedMeta }: { f: MediaFile; onDelete?: () => void; onSavedMeta?: () => void }) {
+  const [editing, setEditing] = useState(false);
+  const [alt, setAlt] = useState(f.alt || '');
+  const [caption, setCaption] = useState(f.caption || '');
+  const [saving, setSaving] = useState(false);
+  const editable = !!onDelete; // uploads uniquement (pas les images du site)
+
+  const saveMeta = async () => {
+    setSaving(true);
+    try {
+      await adminApi.setMediaMeta(f.name, alt, caption);
+      setEditing(false);
+      onSavedMeta?.();
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <div className="group relative rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
-      <div className="aspect-[4/3] overflow-hidden">
-        <img src={f.url} alt={f.name} loading="lazy" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-      </div>
+      <div className="aspect-[4/3] overflow-hidden bg-gray-100"><MediaPreview f={f} /></div>
       <div className="absolute top-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition">
         <CopyBtn url={f.url} />
+        {editable && (
+          <button onClick={() => setEditing((e) => !e)} title="Texte alternatif / légende" className="p-1.5 rounded-lg bg-white/90 text-gray-600 hover:text-brand-cyan shadow-sm transition"><Tag size={15} /></button>
+        )}
         {onDelete && (
-          <button onClick={onDelete} title="Supprimer" className="p-1.5 rounded-lg bg-white/90 text-gray-600 hover:text-red-600 shadow-sm transition">
-            <Trash2 size={15} />
-          </button>
+          <button onClick={onDelete} title="Supprimer" className="p-1.5 rounded-lg bg-white/90 text-gray-600 hover:text-red-600 shadow-sm transition"><Trash2 size={15} /></button>
         )}
       </div>
+      {f.type && f.type !== 'image' && <span className="absolute top-2 left-2 text-[9px] font-bold uppercase bg-brand-dark/80 text-white px-1.5 py-0.5 rounded">{f.type}</span>}
       <div className="px-2.5 py-2 bg-white">
         <p className="text-[11px] font-medium text-brand-dark truncate" title={f.name}>{f.name}</p>
-        <p className="text-[10px] text-gray-400">{fmtSize(f.size)}</p>
+        <p className="text-[10px] text-gray-400">{fmtSize(f.size)}{f.alt ? ' · alt ✓' : ''}</p>
       </div>
+      {editing && (
+        <div className="p-2.5 border-t border-gray-100 bg-white space-y-2">
+          <input value={alt} onChange={(e) => setAlt(e.target.value)} placeholder="Texte alternatif (SEO / accessibilité)" className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:border-brand-cyan" />
+          <input value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="Légende (optionnelle)" className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:border-brand-cyan" />
+          <button onClick={saveMeta} disabled={saving} className="w-full inline-flex items-center justify-center gap-1.5 bg-brand-dark text-white text-xs font-bold py-1.5 rounded-lg hover:bg-brand-cyan hover:text-brand-dark disabled:opacity-50 transition">
+            {saving ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />} Enregistrer
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -70,7 +102,7 @@ export function MediaManager() {
   useEffect(load, []);
 
   const handleFiles = async (files: FileList | File[]) => {
-    const list = Array.from(files).filter((f) => f.type.startsWith('image/'));
+    const list = Array.from(files).filter((f) => f.type.startsWith('image/') || f.type === 'application/pdf' || f.type.startsWith('video/'));
     if (!list.length) return;
     setBusy(true);
     setError(null);
@@ -79,12 +111,13 @@ export function MediaManager() {
     for (let i = 0; i < list.length; i++) {
       const file = list[i];
       try {
-        const dataUrl = await toWebp(file, quality, maxW);
+        // Images → conversion WebP allégée ; PDF/vidéo → upload brut.
+        const dataUrl = isImageFile(file) ? await toWebp(file, quality, maxW) : await fileToDataUrl(file);
         const approxBytes = Math.round((dataUrl.length - dataUrl.indexOf(',') - 1) * 0.75);
         await adminApi.uploadMedia(file.name, dataUrl);
-        saved += Math.max(0, file.size - approxBytes);
+        if (isImageFile(file)) saved += Math.max(0, file.size - approxBytes);
       } catch (e: any) {
-        setError(`« ${file.name} » : ${e.message || 'conversion/upload impossible'}`);
+        setError(`« ${file.name} » : ${e.message || 'upload impossible'}`);
       }
       setProgress({ done: i + 1, total: list.length, saved });
     }
@@ -135,7 +168,7 @@ export function MediaManager() {
         onClick={() => !busy && inputRef.current?.click()}
         className={`cursor-pointer border-2 border-dashed rounded-2xl p-10 text-center transition ${dragOver ? 'border-brand-cyan bg-brand-cyan/5' : 'border-gray-300 hover:border-brand-cyan bg-white'}`}
       >
-        <input ref={inputRef} type="file" accept="image/*" multiple hidden onChange={(e) => e.target.files && handleFiles(e.target.files)} />
+        <input ref={inputRef} type="file" accept="image/*,application/pdf,video/mp4,video/webm" multiple hidden onChange={(e) => e.target.files && handleFiles(e.target.files)} />
         {busy ? (
           <div className="flex flex-col items-center gap-2 text-gray-500">
             <Loader2 className="animate-spin" />
@@ -145,7 +178,7 @@ export function MediaManager() {
           <div className="flex flex-col items-center gap-2 text-gray-500">
             <UploadCloud size={32} className="text-brand-cyan" />
             <p className="text-sm font-bold text-brand-dark">Glisse tes images ici, ou clique pour choisir</p>
-            <p className="text-xs text-gray-400">JPG, PNG, WebP… converties automatiquement en WebP</p>
+            <p className="text-xs text-gray-400">Images (converties en WebP) · PDF · vidéos mp4/webm — max 30 Mo</p>
           </div>
         )}
       </div>
@@ -166,7 +199,7 @@ export function MediaManager() {
         )}
         {uploads && uploads.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {uploads.map((f) => <Thumb key={f.name} f={f} onDelete={() => del(f)} />)}
+            {uploads.map((f) => <Thumb key={f.name} f={f} onDelete={() => del(f)} onSavedMeta={load} />)}
           </div>
         )}
       </div>

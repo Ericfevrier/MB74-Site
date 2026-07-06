@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Loader2, X, Search, UploadCloud, Check, ImagePlus } from 'lucide-react';
+import { Loader2, X, Search, UploadCloud, Check, ImagePlus, FileText } from 'lucide-react';
 import { adminApi, type MediaFile } from '../../lib/adminApi';
-import { fmtSize, toWebp } from '../../lib/media';
+import { fmtSize, toWebp, isImageFile, fileToDataUrl } from '../../lib/media';
 
 type Source = 'all' | 'uploads' | 'site';
 type Item = MediaFile & { source: 'uploads' | 'site' };
@@ -85,14 +85,14 @@ export function MediaPicker({
   };
 
   const handleFiles = async (files: FileList | File[]) => {
-    const list = Array.from(files).filter((f) => f.type.startsWith('image/'));
+    const list = Array.from(files).filter((f) => f.type.startsWith('image/') || f.type === 'application/pdf' || f.type.startsWith('video/'));
     if (!list.length) return;
     setBusy(true);
     setError(null);
     const newUrls: string[] = [];
     for (const file of list) {
       try {
-        const dataUrl = await toWebp(file);
+        const dataUrl = isImageFile(file) ? await toWebp(file) : await fileToDataUrl(file);
         const r = await adminApi.uploadMedia(file.name, dataUrl);
         newUrls.push(r.url);
       } catch (e: any) {
@@ -148,7 +148,7 @@ export function MediaPicker({
           >
             {busy ? <Loader2 size={16} className="animate-spin" /> : <UploadCloud size={16} />} Importer
           </button>
-          <input ref={inputRef} type="file" accept="image/*" multiple hidden onChange={(e) => e.target.files && handleFiles(e.target.files)} />
+          <input ref={inputRef} type="file" accept="image/*,application/pdf,video/mp4,video/webm" multiple hidden onChange={(e) => e.target.files && handleFiles(e.target.files)} />
         </div>
 
         {/* Grille */}
@@ -177,8 +177,10 @@ export function MediaPicker({
                     className={`group relative rounded-xl overflow-hidden border-2 transition text-left ${active ? 'border-brand-cyan ring-2 ring-brand-cyan/30' : 'border-transparent hover:border-gray-300'}`}
                     title={f.name}
                   >
-                    <div className="aspect-square bg-gray-100 overflow-hidden">
-                      <img src={f.url} alt={f.name} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                    <div className="aspect-square bg-gray-100 overflow-hidden flex items-center justify-center">
+                      {f.type === 'pdf' ? <div className="flex flex-col items-center text-red-500 gap-1"><FileText size={22} /><span className="text-[9px] font-bold">PDF</span></div>
+                        : f.type === 'video' ? <video src={f.url} className="w-full h-full object-cover" muted />
+                        : <img src={f.url} alt={f.alt || f.name} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover" />}
                     </div>
                     {active && (
                       <span className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-brand-cyan text-brand-dark flex items-center justify-center shadow">
