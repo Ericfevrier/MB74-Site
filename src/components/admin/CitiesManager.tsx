@@ -5,6 +5,8 @@ import { hivernageCities, HIVERNAGE_CITY_ORDER, type HivernagePort, type LocalFa
 import { SeoFields } from './SeoFields';
 import type { Seo } from '../../lib/seo';
 import { SearchInput, StatusFilter, matchQuery, useDragReorder } from './AdminToolbar';
+import { VersionHistory } from './VersionHistory';
+import { History } from 'lucide-react';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -156,6 +158,7 @@ export function CitiesManager() {
   const [importing, setImporting] = useState(false);
   const [q, setQ] = useState('');
   const [statusF, setStatusF] = useState('all');
+  const [history, setHistory] = useState<AdminCity | null>(null);
 
   const load = () => {
     setError(null);
@@ -273,12 +276,15 @@ export function CitiesManager() {
                 {c.status === 'draft' && <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Brouillon</span>}
                 <button onClick={() => setEditing(c)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier"><Pencil size={16} /></button>
                 <button onClick={() => duplicate(c)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Dupliquer"><Copy size={16} /></button>
+                <button onClick={() => setHistory(c)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Historique"><History size={16} /></button>
                 <button onClick={() => remove(c)} className="p-2 text-gray-500 hover:text-red-600 transition" title="Supprimer"><Trash2 size={16} /></button>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      <VersionHistory open={!!history} type="cities" id={history?.id || 0} title={history?.city} onClose={() => setHistory(null)} onRestored={load} />
     </div>
   );
 }

@@ -7,6 +7,8 @@ import type { Seo } from '../../lib/seo';
 import { SearchInput, StatusFilter, FilterSelect, matchQuery } from './AdminToolbar';
 import { ScheduleFields, ScheduleBadge } from './Schedule';
 import { MarkdownEditor } from './MarkdownEditor';
+import { VersionHistory } from './VersionHistory';
+import { History } from 'lucide-react';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -150,6 +152,7 @@ export function BlogManager() {
   const [q, setQ] = useState('');
   const [statusF, setStatusF] = useState('all');
   const [catF, setCatF] = useState('all');
+  const [history, setHistory] = useState<AdminArticle | null>(null);
 
   const load = () => {
     setError(null);
@@ -240,12 +243,15 @@ export function BlogManager() {
                 <ScheduleBadge item={a} />
                 <button onClick={() => setEditing(a)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier"><Pencil size={16} /></button>
                 <button onClick={() => duplicate(a)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Dupliquer"><Copy size={16} /></button>
+                <button onClick={() => setHistory(a)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Historique"><History size={16} /></button>
                 <button onClick={() => remove(a)} className="p-2 text-gray-500 hover:text-red-600 transition" title="Supprimer"><Trash2 size={16} /></button>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      <VersionHistory open={!!history} type="blog" id={history?.id || 0} title={history?.title} onClose={() => setHistory(null)} onRestored={load} />
     </div>
   );
 }

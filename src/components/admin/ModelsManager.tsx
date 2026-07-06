@@ -8,6 +8,8 @@ import { BRAND_MODELS } from '../../data/boatBrands';
 import { SeoFields } from './SeoFields';
 import type { Seo } from '../../lib/seo';
 import { SearchInput, StatusFilter, matchQuery } from './AdminToolbar';
+import { VersionHistory } from './VersionHistory';
+import { History } from 'lucide-react';
 import type {
   NautiqueModel, SpecGroup, Highlight, Motorization, Edition, OptionGroup, Milestone, ModelFAQ,
 } from '../../data/nautiqueModels';
@@ -365,6 +367,7 @@ export function ModelsManager({ brand: brandProp }: { brand?: string } = {}) {
   const [importing, setImporting] = useState(false);
   const [q, setQ] = useState('');
   const [statusF, setStatusF] = useState('all');
+  const [history, setHistory] = useState<AdminModel | null>(null);
 
   const load = () => {
     setError(null);
@@ -495,6 +498,7 @@ export function ModelsManager({ brand: brandProp }: { brand?: string } = {}) {
                     {m.status === 'draft' && <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Brouillon</span>}
                     <button onClick={() => { setMsg(null); setEditing(m); }} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier"><Pencil size={16} /></button>
                     <button onClick={() => duplicate(m)} className="p-2 text-gray-400 hover:text-brand-cyan transition" title="Dupliquer"><Copy size={16} /></button>
+                    <button onClick={() => setHistory(m)} className="p-2 text-gray-400 hover:text-brand-cyan transition" title="Historique"><History size={16} /></button>
                     <button onClick={() => remove(m)} className="p-2 text-gray-400 hover:text-red-500 transition" title="Supprimer"><Trash2 size={16} /></button>
                   </div>
                 ))}
@@ -503,6 +507,8 @@ export function ModelsManager({ brand: brandProp }: { brand?: string } = {}) {
           ))}
         </div>
       )}
+
+      <VersionHistory open={!!history} type="models" id={history?.id || 0} title={history?.name} onClose={() => setHistory(null)} onRestored={load} />
     </div>
   );
 }

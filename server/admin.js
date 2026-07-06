@@ -265,6 +265,31 @@ const badSlug = (res) =>
 const tooLong = (res, field, max) =>
   res.status(400).json({ ok: false, error: `Champ « ${field} » trop long (max ${max} caractères).` });
 
+// Historique : enregistre un snapshot (garde les 20 derniers par contenu).
+async function snapshot(entityType, entityId, dataObj, username) {
+  try {
+    await query('INSERT INTO content_versions (entity_type, entity_id, data, username) VALUES (?, ?, ?, ?)', [
+      entityType, entityId, JSON.stringify(dataObj), username || '',
+    ]);
+    await query(
+      `DELETE FROM content_versions WHERE entity_type = ? AND entity_id = ? AND id NOT IN
+       (SELECT id FROM (SELECT id FROM content_versions WHERE entity_type = ? AND entity_id = ? ORDER BY id DESC LIMIT 20) t)`,
+      [entityType, entityId, entityType, entityId],
+    );
+  } catch (e) {
+    console.error('snapshot', e.message);
+  }
+}
+// Lit la ligne courante et l'archive AVANT une modification (mapper → objet admin).
+async function snapshotCurrent(entityType, table, id, mapper, username) {
+  try {
+    const cur = await query(`SELECT * FROM ${table} WHERE id = ?`, [id]);
+    if (cur.length) await snapshot(entityType, id, mapper(cur[0]), username);
+  } catch (e) {
+    console.error('snapshotCurrent', e.message);
+  }
+}
+
 /* ------------------------------ Médiathèque ----------------------------- */
 const ADMIN_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(ADMIN_DIR, '..');
@@ -511,6 +536,7 @@ export function mountAdmin(app) {
     if (!SLUG_RE.test(row.slug)) return badSlug(res);
     if (row.title.length > 255) return tooLong(res, 'titre', 255);
     try {
+      await snapshotCurrent('used-boats', 'used_boats', id, (r) => rowToBoat(r, true), req.admin.username);
       const set = BOAT_FIELDS.map((c) => `${c} = ?`).join(', ');
       const values = [...BOAT_FIELDS.map((c) => row[c]), id];
       const r = await query(`UPDATE used_boats SET ${set} WHERE id = ?`, values);
@@ -625,6 +651,7 @@ export function mountAdmin(app) {
     if (!SLUG_RE.test(row.slug)) return badSlug(res);
     if (row.title.length > 255) return tooLong(res, 'titre', 255);
     try {
+      await snapshotCurrent('blog', 'blog_articles', id, (r) => rowToArticle(r, { admin: true }), req.admin.username);
       const set = BLOG_FIELDS.map((c) => `${c} = ?`).join(', ');
       const r = await query(`UPDATE blog_articles SET ${set} WHERE id = ?`, [...BLOG_FIELDS.map((c) => row[c]), id]);
       if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
@@ -935,6 +962,7 @@ export function mountAdmin(app) {
     if (!row.slug || !row.brand) return res.status(400).json({ ok: false, error: 'Marque et slug requis.' });
     if (!SLUG_RE.test(row.slug)) return badSlug(res);
     try {
+      await snapshotCurrent('models', 'boat_models', id, (r) => rowToModel(r, true), req.admin.username);
       const set = MODEL_FIELDS.map((c) => `${c} = ?`).join(', ');
       const r = await query(`UPDATE boat_models SET ${set} WHERE id = ?`, [...MODEL_FIELDS.map((c) => row[c]), id]);
       if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
@@ -1044,6 +1072,7 @@ export function mountAdmin(app) {
     if (!row.slug || !row.city) return res.status(400).json({ ok: false, error: 'Slug et ville requis.' });
     if (!SLUG_RE.test(row.slug)) return badSlug(res);
     try {
+      await snapshotCurrent('cities', 'hivernage_cities', id, (r) => rowToCity(r, true), req.admin.username);
       const set = CITY_FIELDS.map((c) => `${c} = ?`).join(', ');
       const r = await query(`UPDATE hivernage_cities SET ${set} WHERE id = ?`, [...CITY_FIELDS.map((c) => row[c]), id]);
       if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
@@ -1065,6 +1094,59 @@ export function mountAdmin(app) {
       res.json({ ok: true });
     } catch (e) {
       console.error('DELETE /api/admin/cities', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  /* --------------------- Historique de versions ------------------- */
+
+  // Config par type de contenu versionné (id numérique requis).
+  const VERSIONED = {
+    'used-boats': { table: 'used_boats', fields: BOAT_FIELDS, toRow: boatToRow },
+    blog: { table: 'blog_articles', fields: BLOG_FIELDS, toRow: articleToRow },
+    cities: { table: 'hivernage_cities', fields: CITY_FIELDS, toRow: cityToRow },
+    models: { table: 'boat_models', fields: MODEL_FIELDS, toRow: modelToRow },
+  };
+
+  app.get('/api/admin/versions/:type/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const { type, id } = req.params;
+    if (!VERSIONED[type]) return res.status(400).json({ ok: false, error: 'Type non versionné.' });
+    try {
+      const rows = await query(
+        'SELECT id, username, created_at FROM content_versions WHERE entity_type = ? AND entity_id = ? ORDER BY id DESC',
+        [type, Number(id)],
+      );
+      res.json({ versions: rows });
+    } catch (e) {
+      console.error('GET /api/admin/versions', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.post('/api/admin/versions/:versionId/restore', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const vid = Number(req.params.versionId);
+    try {
+      const rows = await query('SELECT * FROM content_versions WHERE id = ? LIMIT 1', [vid]);
+      if (!rows.length) return res.status(404).json({ ok: false, error: 'Version introuvable.' });
+      const v = rows[0];
+      const cfg = VERSIONED[v.entity_type];
+      const data = parseJson(v.data, null);
+      if (!cfg || !data) return res.status(400).json({ ok: false, error: 'Version non restaurable.' });
+      // Archive l'état courant avant d'écraser (la restauration reste réversible).
+      const mappers = {
+        'used-boats': (r) => rowToBoat(r, true), blog: (r) => rowToArticle(r, { admin: true }),
+        cities: (r) => rowToCity(r, true), models: (r) => rowToModel(r, true),
+      };
+      await snapshotCurrent(v.entity_type, cfg.table, v.entity_id, mappers[v.entity_type], req.admin.username);
+      const row = cfg.toRow(data);
+      const set = cfg.fields.map((c) => `${c} = ?`).join(', ');
+      const r = await query(`UPDATE ${cfg.table} SET ${set} WHERE id = ?`, [...cfg.fields.map((c) => row[c]), v.entity_id]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Contenu introuvable (peut-être supprimé).' });
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('POST /api/admin/versions/restore', e.message);
       res.status(500).json({ ok: false, error: 'Erreur base de données.' });
     }
   });

@@ -8,6 +8,8 @@ import type { Seo } from '../../lib/seo';
 import { SearchInput, StatusFilter, FilterSelect, matchQuery, useDragReorder } from './AdminToolbar';
 import { GripVertical } from 'lucide-react';
 import { ScheduleFields, ScheduleBadge } from './Schedule';
+import { VersionHistory } from './VersionHistory';
+import { History } from 'lucide-react';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -207,6 +209,7 @@ export function OccasionsManager() {
   const [q, setQ] = useState('');
   const [statusF, setStatusF] = useState('all');
   const [soldF, setSoldF] = useState('all');
+  const [history, setHistory] = useState<AdminBoat | null>(null);
 
   const load = () => {
     setError(null);
@@ -394,6 +397,9 @@ export function OccasionsManager() {
                 <button onClick={() => duplicate(b)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Dupliquer">
                   <Copy size={16} />
                 </button>
+                <button onClick={() => setHistory(b)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Historique">
+                  <History size={16} />
+                </button>
                 <button onClick={() => remove(b)} className="p-2 text-gray-500 hover:text-red-600 transition" title="Supprimer">
                   <Trash2 size={16} />
                 </button>
@@ -402,6 +408,8 @@ export function OccasionsManager() {
           ))}
         </div>
       )}
+
+      <VersionHistory open={!!history} type="used-boats" id={history?.id || 0} title={history?.title} onClose={() => setHistory(null)} onRestored={load} />
     </div>
   );
 }

@@ -79,6 +79,12 @@ export interface ActivityEntry {
   created_at: string;
 }
 
+export interface VersionEntry {
+  id: number;
+  username: string;
+  created_at: string;
+}
+
 export interface ContactMessage {
   id: number;
   nom: string;
@@ -134,6 +140,9 @@ export const adminApi = {
   deleteUser: (id: number) => req('DELETE', `/api/admin/users/${id}`),
 
   listActivity: () => req<{ activity: ActivityEntry[] }>('GET', '/api/admin/activity'),
+
+  listVersions: (type: string, id: number) => req<{ versions: VersionEntry[] }>('GET', `/api/admin/versions/${type}/${id}`),
+  restoreVersion: (versionId: number) => req('POST', `/api/admin/versions/${versionId}/restore`),
 
   listBoats: () => req<{ boats: AdminBoat[] }>('GET', '/api/admin/used-boats'),
   createBoat: (b: Partial<AdminBoat>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/used-boats', b),
