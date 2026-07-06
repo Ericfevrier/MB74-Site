@@ -29,35 +29,9 @@ import {
   Anchor,
 } from 'lucide-react';
 
-const ZONES = ['Annecy', 'Aix-les-Bains', 'Thonon-les-Bains', 'Évian-les-Bains', 'Genève', 'Lac de Serre-Ponçon'];
-
-const SIGNES = [
-  { Icon: Sofa, t: 'Mousses affaissées', d: 'Assises qui ne tiennent plus, perte de confort et de maintien au fil des saisons.', fix: 'Remplacement des mousses' },
-  { Icon: Scissors, t: 'Tissus abîmés', d: 'Skaï craquelé, coutures qui lâchent, fermetures défaillantes.', fix: 'Réfection sur mesure' },
-  { Icon: Sun, t: 'Couleurs ternies par les UV', d: 'Le soleil alpin durcit et décolore les revêtements au fil du temps.', fix: 'Finitions anti-UV' },
-  { Icon: Droplets, t: 'Humidité & moisissures', d: 'Taches, odeurs et moisissures dues aux embruns et à la condensation.', fix: 'Matériaux traités anti-humidité' },
-];
-
-const STEPS = [
-  { t: 'Diagnostic & devis', d: 'On étudie votre sellerie existante, vos usages et vos envies, puis on établit un devis personnalisé et gratuit.' },
-  { t: 'Choix des matières & coloris', d: 'Vous sélectionnez tissus marins, mousses et coloris parmi un large choix, avec nos conseils.' },
-  { t: 'Confection sur mesure', d: 'Nos artisans partenaires fabriquent coussins et assises ajustés au millimètre à votre bateau.' },
-  { t: 'Pose & ajustement à bord', d: 'Installation directe sur votre bateau, avec les ajustements esthétiques et fonctionnels nécessaires.' },
-  { t: 'Contrôle & finitions', d: 'Vérification du rendu, des coutures et du confort avant la restitution de votre bateau.' },
-];
-
-const SERVICES = [
-  { Icon: Scissors, t: 'Confection sur mesure', d: 'Coussins et assises fabriqués pour votre bateau, entièrement personnalisables en coloris et matières.' },
-  { Icon: Wrench, t: 'Réparation & remplacement', d: 'Réparation ou remplacement de la sellerie abîmée, avec des ajustements précis pour un confort durable.' },
-  { Icon: Sparkles, t: 'Rénovation complète', d: 'Remise à neuf de tout l’intérieur, en protégeant les matériaux contre l’humidité et les rayons UV.' },
-];
-
-const BENEFITS = [
-  { Icon: Sofa, t: 'Confort retrouvé', d: 'Des assises refaites pour profiter pleinement de vos sorties.' },
-  { Icon: Award, t: 'Matériaux de qualité', d: 'Tissus marins et mousses sélectionnés pour durer dans le temps.' },
-  { Icon: ShieldCheck, t: 'Protection UV & humidité', d: 'Des finitions qui résistent au soleil alpin et aux embruns.' },
-  { Icon: Sparkles, t: 'Finition artisanale', d: 'Le souci du détail d’artisans spécialisés, pour un rendu impeccable.' },
-];
+const SIGNE_ICONS = [Sofa, Scissors, Sun, Droplets];
+const SSERVICE_ICONS = [Scissors, Wrench, Sparkles];
+const BENEFIT_ICONS = [Sofa, Award, ShieldCheck, Sparkles];
 
 const FAQS = [
   {
@@ -205,18 +179,18 @@ export function SelleriePage() {
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">
-              {[
-                { Icon: Ruler, t: 'Sur mesure', d: 'Confection artisanale ajustée à votre bateau.' },
-                { Icon: ShieldCheck, t: 'Anti-UV & humidité', d: 'Matériaux marins traités pour durer.' },
-              ].map(({ Icon, t, d }, i) => (
-                <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
-                  <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <p className="font-bold text-white text-base uppercase tracking-tight">{t}</p>
-                    <p className="text-xs text-gray-400 mt-1 font-medium">{d}</p>
+              {t.list<{ t: string; d: string }>('hero.usps').map((u, i) => {
+                const Icon = [Ruler, ShieldCheck][i] || Ruler;
+                return (
+                  <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
+                    <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <p className="font-bold text-white text-base uppercase tracking-tight">{u.t}</p>
+                      <p className="text-xs text-gray-400 mt-1 font-medium">{u.d}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -256,10 +230,12 @@ export function SelleriePage() {
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               <div>
                 <p className="text-lg md:text-xl text-brand-dark leading-relaxed font-medium">
-                  <strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> réalise la <strong>sellerie de bateau sur mesure</strong> à Annecy : confection, réparation et rénovation complète.
+                  {t.raw('bref.lead')
+                    ? t.raw('bref.lead')
+                    : <><strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> réalise la <strong>sellerie de bateau sur mesure</strong> à Annecy : confection, réparation et rénovation complète.</>}
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base">
-                  En partenariat avec des artisans spécialisés, nous fabriquons coussins et assises personnalisés, réparons la sellerie abîmée et rénovons l'intérieur de votre bateau, avec des matériaux marins résistants aux UV et à l'humidité. La pose est réalisée et ajustée directement à bord.
+                  {t('bref.desc')}
                 </p>
                 <div className="flex flex-wrap gap-3 mt-6">
                   <button onClick={scrollToForm} className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition-colors">
@@ -271,22 +247,18 @@ export function SelleriePage() {
                 </div>
               </div>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 content-start">
-                {[
-                  { Icon: Ruler, k: 'Confection', v: 'Sur mesure, coloris & matières au choix' },
-                  { Icon: Wrench, k: 'Réparation', v: 'Remplacement de sellerie abîmée' },
-                  { Icon: Sparkles, k: 'Rénovation', v: 'Remise à neuf complète de l’intérieur' },
-                  { Icon: ShieldCheck, k: 'Matériaux', v: 'Marins, anti-UV et anti-humidité' },
-                  { Icon: Anchor, k: 'Bateaux', v: 'Du loisir au yacht haut de gamme' },
-                  { Icon: MapPin, k: 'Zone', v: 'Annecy & Haute-Savoie' },
-                ].map(({ Icon, k, v }) => (
-                  <div key={k} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
-                    <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
-                    <div>
-                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{k}</dt>
-                      <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{v}</dd>
+                {t.list<{ k: string; v: string }>('bref.facts').map((f, i) => {
+                  const Icon = [Ruler, Wrench, Sparkles, ShieldCheck, Anchor, MapPin][i] || MapPin;
+                  return (
+                    <div key={i} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
+                      <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
+                      <div>
+                        <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{f.k}</dt>
+                        <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{f.v}</dd>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </dl>
             </div>
           </div>
@@ -298,28 +270,31 @@ export function SelleriePage() {
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -z-10"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">Signes d'usure</span>
+            <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">{t('why.eyebrow')}</span>
             <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-6">
-              Quand refaire la <span className="text-brand-cyan">sellerie</span> de son bateau&nbsp;?
+              {t.raw('why.title')
+                ? t.raw('why.title')
+                : <>Quand refaire la <span className="text-brand-cyan">sellerie</span> de son bateau&nbsp;?</>}
             </h2>
             <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
-              Soleil alpin, embruns et usage répété fatiguent la sellerie au fil des saisons. Voici les signes qui doivent vous alerter, et la solution que nous apportons.
+              {t('why.intro')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {SIGNES.map(({ Icon, t, d, fix }) => (
-              <div key={t} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
-                <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
-                  <Icon className="w-6 h-6" />
+            {t.list<{ t: string; d: string; fix: string }>('why.cards').map((c, i) => {
+              const Icon = SIGNE_ICONS[i] || Sofa;
+              return (
+                <div key={i} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+                  <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{c.t}</h3>
+                  <p className="text-sm text-gray-400 leading-relaxed font-light">{c.d}</p>
+                  {c.fix && <div className="mt-4 pt-4 border-t border-white/5 text-xs text-brand-cyan font-bold tracking-wider uppercase">{c.fix}</div>}
                 </div>
-                <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{t}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed font-light">{d}</p>
-                <div className="mt-4 pt-4 border-t border-white/5 text-xs text-brand-cyan font-bold tracking-wider uppercase">
-                  {fix}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -332,13 +307,13 @@ export function SelleriePage() {
               {/* Process */}
               <div>
                 <div className="mb-12">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">De la conception à la pose</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('process.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">
-                    Comment se déroule un projet de sellerie
+                    {t('process.title')}
                   </h2>
                 </div>
                 <div className="relative border-l border-gray-200 ml-4 md:ml-6 space-y-12 pl-8 pb-4">
-                  {STEPS.map((s, i) => (
+                  {t.list<{ t: string; d: string }>('process.steps').map((s, i) => (
                     <div key={i} className="relative">
                       <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">
                         {i + 1}
@@ -353,58 +328,64 @@ export function SelleriePage() {
               {/* Services de sellerie */}
               <div>
                 <div className="mb-10">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Savoir-faire artisanal</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('services.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Nos services de sellerie
+                    {t('services.title')}
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  {SERVICES.map(({ Icon, t, d }) => (
-                    <div key={t} className="bg-white border border-gray-200 rounded-3xl p-6">
-                      <span className="w-11 h-11 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-4"><Icon className="w-5 h-5" /></span>
-                      <h3 className="font-bold text-brand-dark uppercase tracking-tight text-sm mb-3">{t}</h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">{d}</p>
-                    </div>
-                  ))}
+                  {t.list<{ t: string; d: string }>('services.items').map((s, i) => {
+                    const Icon = SSERVICE_ICONS[i] || Scissors;
+                    return (
+                      <div key={i} className="bg-white border border-gray-200 rounded-3xl p-6">
+                        <span className="w-11 h-11 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-4"><Icon className="w-5 h-5" /></span>
+                        <h3 className="font-bold text-brand-dark uppercase tracking-tight text-sm mb-3">{s.t}</h3>
+                        <p className="text-gray-600 text-sm leading-relaxed">{s.d}</p>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* Bénéfices */}
               <div>
                 <div className="mb-10">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Pourquoi nous confier votre sellerie</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('benefits.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Confort, style et durabilité
+                    {t('benefits.title')}
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {BENEFITS.map(({ Icon, t, d }) => (
-                    <div key={t} className="flex items-start gap-4 bg-white border border-gray-200 rounded-2xl p-5">
-                      <span className="w-11 h-11 shrink-0 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center"><Icon className="w-5 h-5" /></span>
-                      <div>
-                        <h3 className="font-bold text-brand-dark uppercase tracking-tight text-sm mb-1">{t}</h3>
-                        <p className="text-gray-600 text-sm leading-snug">{d}</p>
+                  {t.list<{ t: string; d: string }>('benefits.items').map((b, i) => {
+                    const Icon = BENEFIT_ICONS[i] || Sofa;
+                    return (
+                      <div key={i} className="flex items-start gap-4 bg-white border border-gray-200 rounded-2xl p-5">
+                        <span className="w-11 h-11 shrink-0 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center"><Icon className="w-5 h-5" /></span>
+                        <div>
+                          <h3 className="font-bold text-brand-dark uppercase tracking-tight text-sm mb-1">{b.t}</h3>
+                          <p className="text-gray-600 text-sm leading-snug">{b.d}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
               {/* Zones */}
               <div>
                 <div className="mb-8">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Zone d'intervention</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('zones.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Sellerie de bateau en Haute-Savoie et autour des lacs
+                    {t('zones.title')}
                   </h2>
                   <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
-                    Basés près d'Annecy, nous intervenons autour du lac d'Annecy, du Léman, du lac du Bourget et dans toute la Haute-Savoie.
+                    {t('zones.intro')}
                   </p>
                 </div>
                 <ul role="list" className="flex flex-wrap gap-2.5">
-                  {ZONES.map((z) => (
-                    <li key={z} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-brand-dark text-xs font-semibold px-4 py-2 rounded-full">
-                      <MapPin className="w-3.5 h-3.5 text-brand-cyan" /> {z}
+                  {t.list<{ name: string }>('zones.items').map((z, i) => (
+                    <li key={i} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-brand-dark text-xs font-semibold px-4 py-2 rounded-full">
+                      <MapPin className="w-3.5 h-3.5 text-brand-cyan" /> {z.name}
                     </li>
                   ))}
                 </ul>
@@ -419,7 +400,7 @@ export function SelleriePage() {
                   </h2>
                 </div>
                 <div className="space-y-4">
-                  {FAQS.map((faq, idx) => (
+                  {t.list<{ q: string; a: string }>('faq.items').map((faq, idx) => (
                     <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
                       <h3 className="m-0">
                         <button

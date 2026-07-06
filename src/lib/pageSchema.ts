@@ -560,9 +560,139 @@ export const PAGES: PageDef[] = [
       },
     ],
   },
-  serviceHero('sellerie', 'Service — Sellerie', '/sellerie', '/images/services/sellerie.webp',
-    'Sellerie de bateau sur mesure · confection & rénovation',
-    "Rénover l'intérieur de votre bateau ou remplacer une sellerie usée ? De la conception à la pose, MotorBoat 74 et ses artisans partenaires redonnent confort, style et protection à votre bateau."),
+  {
+    key: 'sellerie',
+    label: 'Service — Sellerie',
+    path: '/sellerie',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/sellerie.webp' },
+          { key: 'hero.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Sellerie de bateau sur mesure · confection & rénovation' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Rénover l'intérieur de votre bateau ou remplacer une sellerie usée ? De la conception à la pose, MotorBoat 74 et ses artisans partenaires redonnent confort, style et protection à votre bateau." },
+          {
+            key: 'hero.usps', label: 'Points forts (bannière)', type: 'list', itemLabel: 'Point fort',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'text' }],
+            defaultList: [{ t: 'Sur mesure', d: 'Confection artisanale ajustée à votre bateau.' }, { t: 'Anti-UV & humidité', d: 'Matériaux marins traités pour durer.' }],
+          },
+        ],
+      },
+      {
+        title: 'Section « En bref »',
+        fields: [
+          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: 'MotorBoat 74 réalise la sellerie de bateau sur mesure à Annecy : confection, réparation et rénovation complète.' },
+          { key: 'bref.desc', label: 'Description', type: 'textarea', default: "En partenariat avec des artisans spécialisés, nous fabriquons coussins et assises personnalisés, réparons la sellerie abîmée et rénovons l'intérieur de votre bateau, avec des matériaux marins résistants aux UV et à l'humidité. La pose est réalisée et ajustée directement à bord." },
+          {
+            key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
+            itemFields: [{ key: 'k', label: 'Intitulé', type: 'text' }, { key: 'v', label: 'Valeur', type: 'text' }],
+            defaultList: [
+              { k: 'Confection', v: 'Sur mesure, coloris & matières au choix' }, { k: 'Réparation', v: 'Remplacement de sellerie abîmée' },
+              { k: 'Rénovation', v: 'Remise à neuf complète de l’intérieur' }, { k: 'Matériaux', v: 'Marins, anti-UV et anti-humidité' },
+              { k: 'Bateaux', v: 'Du loisir au yacht haut de gamme' }, { k: 'Zone', v: 'Annecy & Haute-Savoie' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Signes d\'usure »',
+        fields: [
+          { key: 'why.eyebrow', label: 'Sur-titre', type: 'text', default: "Signes d'usure" },
+          { key: 'why.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Quand refaire la sellerie de son bateau ?' },
+          { key: 'why.intro', label: 'Introduction', type: 'textarea', default: 'Soleil alpin, embruns et usage répété fatiguent la sellerie au fil des saisons. Voici les signes qui doivent vous alerter, et la solution que nous apportons.' },
+          {
+            key: 'why.cards', label: 'Signes', type: 'list', itemLabel: 'Signe',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }, { key: 'fix', label: 'Solution', type: 'text' }],
+            defaultList: [
+              { t: 'Mousses affaissées', d: 'Assises qui ne tiennent plus, perte de confort et de maintien au fil des saisons.', fix: 'Remplacement des mousses' },
+              { t: 'Tissus abîmés', d: 'Skaï craquelé, coutures qui lâchent, fermetures défaillantes.', fix: 'Réfection sur mesure' },
+              { t: 'Couleurs ternies par les UV', d: 'Le soleil alpin durcit et décolore les revêtements au fil du temps.', fix: 'Finitions anti-UV' },
+              { t: 'Humidité & moisissures', d: 'Taches, odeurs et moisissures dues aux embruns et à la condensation.', fix: 'Matériaux traités anti-humidité' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Déroulement »',
+        fields: [
+          { key: 'process.eyebrow', label: 'Sur-titre', type: 'text', default: 'De la conception à la pose' },
+          { key: 'process.title', label: 'Titre', type: 'text', default: 'Comment se déroule un projet de sellerie' },
+          {
+            key: 'process.steps', label: 'Étapes', type: 'list', itemLabel: 'Étape',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Diagnostic & devis', d: 'On étudie votre sellerie existante, vos usages et vos envies, puis on établit un devis personnalisé et gratuit.' },
+              { t: 'Choix des matières & coloris', d: 'Vous sélectionnez tissus marins, mousses et coloris parmi un large choix, avec nos conseils.' },
+              { t: 'Confection sur mesure', d: 'Nos artisans partenaires fabriquent coussins et assises ajustés au millimètre à votre bateau.' },
+              { t: 'Pose & ajustement à bord', d: 'Installation directe sur votre bateau, avec les ajustements esthétiques et fonctionnels nécessaires.' },
+              { t: 'Contrôle & finitions', d: 'Vérification du rendu, des coutures et du confort avant la restitution de votre bateau.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Nos services »',
+        fields: [
+          { key: 'services.eyebrow', label: 'Sur-titre', type: 'text', default: 'Savoir-faire artisanal' },
+          { key: 'services.title', label: 'Titre', type: 'text', default: 'Nos services de sellerie' },
+          {
+            key: 'services.items', label: 'Services', type: 'list', itemLabel: 'Service',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Confection sur mesure', d: 'Coussins et assises fabriqués pour votre bateau, entièrement personnalisables en coloris et matières.' },
+              { t: 'Réparation & remplacement', d: 'Réparation ou remplacement de la sellerie abîmée, avec des ajustements précis pour un confort durable.' },
+              { t: 'Rénovation complète', d: 'Remise à neuf de tout l’intérieur, en protégeant les matériaux contre l’humidité et les rayons UV.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Bénéfices »',
+        fields: [
+          { key: 'benefits.eyebrow', label: 'Sur-titre', type: 'text', default: 'Pourquoi nous confier votre sellerie' },
+          { key: 'benefits.title', label: 'Titre', type: 'text', default: 'Confort, style et durabilité' },
+          {
+            key: 'benefits.items', label: 'Bénéfices', type: 'list', itemLabel: 'Bénéfice',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Confort retrouvé', d: 'Des assises refaites pour profiter pleinement de vos sorties.' },
+              { t: 'Matériaux de qualité', d: 'Tissus marins et mousses sélectionnés pour durer dans le temps.' },
+              { t: 'Protection UV & humidité', d: 'Des finitions qui résistent au soleil alpin et aux embruns.' },
+              { t: 'Finition artisanale', d: 'Le souci du détail d’artisans spécialisés, pour un rendu impeccable.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Zone d\'intervention »',
+        fields: [
+          { key: 'zones.eyebrow', label: 'Sur-titre', type: 'text', default: "Zone d'intervention" },
+          { key: 'zones.title', label: 'Titre', type: 'text', default: 'Sellerie de bateau en Haute-Savoie et autour des lacs' },
+          { key: 'zones.intro', label: 'Introduction', type: 'textarea', default: "Basés près d'Annecy, nous intervenons autour du lac d'Annecy, du Léman, du lac du Bourget et dans toute la Haute-Savoie." },
+          {
+            key: 'zones.items', label: 'Zones (badges)', type: 'list', itemLabel: 'Zone',
+            itemFields: [{ key: 'name', label: 'Nom', type: 'text' }],
+            defaultList: [{ name: 'Annecy' }, { name: 'Aix-les-Bains' }, { name: 'Thonon-les-Bains' }, { name: 'Évian-les-Bains' }, { name: 'Genève' }, { name: 'Lac de Serre-Ponçon' }],
+          },
+        ],
+      },
+      {
+        title: 'FAQ',
+        fields: [
+          {
+            key: 'faq.items', label: 'Questions / réponses', type: 'list', itemLabel: 'Question',
+            itemFields: [{ key: 'q', label: 'Question', type: 'text' }, { key: 'a', label: 'Réponse', type: 'textarea' }],
+            defaultList: [
+              { q: 'Quel type de bateaux pouvez-vous équiper ?', a: 'Nous intervenons sur tous types de bateaux, des petites embarcations de loisir aux yachts haut de gamme, en adaptant la sellerie à chaque taille et configuration.' },
+              { q: 'Combien de temps prend une rénovation de sellerie ?', a: 'Selon l’ampleur du projet, la rénovation complète peut durer de quelques jours à quelques semaines. Un devis précis vous est fourni après étude.' },
+              { q: 'Installez-vous la sellerie directement sur le bateau ?', a: 'Oui, notre équipe effectue l’installation directement sur votre bateau et ajuste chaque élément pour garantir confort et rendu esthétique parfait.' },
+              { q: 'Proposez-vous une protection contre l’humidité et les UV ?', a: 'Absolument. Nos matériaux et finitions sont sélectionnés pour résister à l’humidité, aux UV et aux conditions nautiques.' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   serviceHero('remorques', 'Service — Remorques', '/remorques', '/images/services/remorques.webp',
     'Remorques de bateau sur mesure',
     'Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. MotorBoat 74 sélectionne, règle et prépare une remorque homologuée CE, parfaitement adaptée à votre embarcation.'),
