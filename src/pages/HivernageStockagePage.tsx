@@ -213,57 +213,8 @@ export function HivernageStockagePage() {
     window.scrollTo(0, 0);
   }, []);
 
-  // 12 High-quality FAQS mapped to a structured UI list
-  const faqs = [
-    {
-      q: "Quand faut-il effectuer l'hivernage de son bateau ?",
-      a: "L’hivernage doit idéalement débuter dès la fin de la saison estivale, entre septembre et novembre, avant les premières vagues de froid alpins. Attendre décembre augmente de 75 % le risque d'infiltration d'eau gelée dans la coque ou dans le bloc moteur, provoquant des fissures irréparables."
-    },
-    {
-      q: "Quel est le prix moyen d'un hivernage de bateau à Annecy ?",
-      a: "Le tarif dépend de la taille de votre bateau, de son équipement (ex : ballasts de wakeboard), de sa motorisation (hors-bord ou in-board) et de la formule retenue (hivernage complet ou stockage seul). Nous vous adressons un devis personnalisé et gratuit sous 24 h, sans engagement."
-    },
-    {
-      q: "Quels types de bateaux pouvez-vous hiverner ?",
-      a: "Notre hangar de 3 000 m² à Saint-Ferréol accueille tout type d’unité : bateaux de wakesurf et wakeboard (Nautique, MasterCraft, Tigé, Malibu), bateaux de ski, day-cruisers, hors_bords légers, et semi-rigides de plaisance. Notre pont roulant de levage gère les unités lourdes de manière chirurgicale."
-    },
-    {
-      q: "Comment préparez-vous le moteur pour l'hiver / gel ?",
-      a: "Notre protocole d'hivernage mécanique certifié concessionnaire comprend : la vidange d’huile moteur complète avec remplacement des filtres, la stabilisation chimique du carburant de votre réservoir, l’injection forcée d'antigel marine de haute qualité dans tous les collecteurs, et la déconnexion avec charge cyclique de vos batteries de démarrage et accessoires."
-    },
-    {
-      q: "Vaut-il mieux stocker son bateau en intérieur ou en extérieur ?",
-      a: "En Haute-Savoie, les rigueurs de l’hiver rendent le stockage intérieur isolé indispensable. Un stockage extérieur (même sous bâche thermo-rétractable) expose le bateau aux écarts de température extrêmes, à la condensation constante sous bâche et aux surcharges de neige qui déforment les armatures."
-    },
-    {
-      q: "Comment se déroule la remise à l'eau au printemps ?",
-      a: "Comprise dans notre formule tout-inclus, la mise en service printanière comprend le nettoyage de sortie de stockage, le contrôle des batteries rechargées, le redémarrage des moteurs en bac d'essai de diagnostic, le resserrage des vannes, et la livraison de votre équipement mise à l'eau et prête à naviguer au port convenu."
-    },
-    {
-      q: "Quelle est la durée minimale d'un contrat de stockage ?",
-      a: "Nos contrats hivernaux couvrent généralement une période de 6 à 7 mois (par exemple, d'octobre à avril). Cependant, nous proposons également des contrats de stockage à l'année ou sur-mesure pour vous laisser naviguer l'esprit totalement tranquille."
-    },
-    {
-      q: "Mon bateau est-il assuré de façon sécurisée chez vous ?",
-      a: "Oui, notre centre technique dispose d'un contrat d'assurance multirisque civile professionnelle 'stockage et garde' couvrant notre hangar de 3000 m². Conformément à la législation maritime standard, vous devez maintenir votre propre assurance tous risques en cours de validité (incendie/responsabilité civile plaisance)."
-    },
-    {
-      q: "Puis-je accéder à mon bateau pendant la période d'hivernage ?",
-      a: "Afin de garantir une sécurité ultime 7j/7 sans intrusion extérieure, les accès de notre hangar sont hautement contrôlés. Vous pouvez néanmoins planifier une visite technique ou retirer des effets personnels à bord sur simple rendez-vous fixé 48h à l'avance."
-    },
-    {
-      q: "Prenez-vous en charge toutes les marques de bateaux ?",
-      a: "Absolument. MotorBoat 74 est expert toutes marques. Si nous sommes les techniciens officiels de la prestigieuse marque Nautique en Haute-Savoie, nos mécaniciens possèdent plus de 15 ans d'expérience sur Malibu, MasterCraft, Regal, Sea Ray, Tigé, Chaparral, Jeanneau, Beneteau ou Moomba."
-    },
-    {
-      q: "Quelle est la différence entre un hivernage actif et passif ?",
-      a: "L'hivernage passif est la méthode d'arrêt total que nous appliquons sous hangar, idéale pour les hivers rudes d'Annecy : vidanges complètes, mise au sec et préservation complète. L'hivernage actif consiste à faire tourner régulièrement le moteur à quai ou l'entretenir à flot, ce qui est risqué face aux hivers glacials de Haute-Savoie."
-    },
-    {
-      q: "Gérez-vous la récupération de mon bateau directement au port ?",
-      a: "Oui. C'est l'un de nos services majeurs. Nous nous déplaçons directement à votre place de port ou chenal de mise à l'eau (Annecy, Sevrier, Saint-Jorioz, Talloires, Veyrier, Thonon ou Évian) avec nos remorques adaptées ou notre camion de grutage pour un convoyage sécurisé sans effort de votre part."
-    }
-  ];
+  // FAQ éditable via l'admin (repli sur les valeurs par défaut du schéma).
+  const faqs = t.list<{ q: string; a: string }>('faq.items');
 
   return (
     <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
