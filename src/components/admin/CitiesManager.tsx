@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, X } from 'lucide-react';
 import { adminApi, type AdminCity } from '../../lib/adminApi';
 import { hivernageCities, HIVERNAGE_CITY_ORDER, type HivernagePort, type LocalFact } from '../../data/hivernageCities';
+import { SeoFields } from './SeoFields';
+import type { Seo } from '../../lib/seo';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -75,13 +77,15 @@ function CityForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel: ()
         </div>
       </div>
 
-      <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-6 lg:p-8">
-        <h3 className="font-bold uppercase tracking-tight text-brand-dark mb-5 text-sm">SEO</h3>
-        <div className="grid gap-5">
-          <Field label="Titre SEO (balise title)"><input className={INPUT} value={d.metaTitle || ''} onChange={(e) => set('metaTitle', e.target.value)} /></Field>
-          <Field label="Description SEO"><textarea className={`${INPUT} h-20 resize-y`} value={d.metaDescription || ''} onChange={(e) => set('metaDescription', e.target.value)} /></Field>
-        </div>
-      </div>
+      <SeoFields
+        seo={{ ...((d.seo as Seo) || {}), title: (d.seo as Seo)?.title ?? d.metaTitle, description: (d.seo as Seo)?.description ?? d.metaDescription }}
+        onChange={(v) => setD((p) => ({ ...p, seo: v, metaTitle: v.title || '', metaDescription: v.description || '' }))}
+        path="/services/hivernage-bateaux"
+        slug={d.slug}
+        fallbackTitle={d.h1}
+        fallbackDescription={d.intro}
+        fallbackImage={d.hero}
+      />
 
       <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-6 lg:p-8">
         <div className="flex items-center justify-between mb-5">

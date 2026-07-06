@@ -8,6 +8,7 @@ import { ServiceContactBlock } from '../components/services/ServiceContactBlock'
 import { ZonesMap } from '../components/ZonesMap';
 import { getZones } from '../data/hivernageZones';
 import { pageMeta } from '../lib/meta';
+import { useSeoOverride } from '../lib/seo';
 import { businessNode, breadcrumbSchema } from '../lib/schema';
 
 export function cityPageMeta({ data, params }: { data?: { city?: HivernageCity } | null; params: { slug?: string } }) {
@@ -49,6 +50,7 @@ const SOLUTIONS = [
 export function HivernageCityPage({ city: cityProp }: { city?: HivernageCity | null } = {}) {
   const { slug } = useParams<{ slug: string }>();
   const city = cityProp !== undefined ? cityProp : slug ? getHivernageCity(slug) : undefined;
+  useSeoOverride(city?.seo);
   if (!city) return <Navigate to="/hivernage-stockage-bateau" replace />;
 
   const reasons = [

@@ -8,6 +8,8 @@ import { STATIC_BRANDS_DATA } from '../../data/brands';
 import type { BrandData, BoatModel, ComparisonCategory } from '../../data/brands';
 import { MediaPicker } from './MediaPicker';
 import { ModelsManager } from './ModelsManager';
+import { SeoFields } from './SeoFields';
+import type { Seo } from '../../lib/seo';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -209,6 +211,17 @@ function BrandEditor({ brand, onBack, onSaved }: { brand: AdminBrand; onBack: ()
           <button type="button" onClick={() => setComparisons([...comparisons, { title: '', summary: '', models: [], specs: [] }])} className={BTN_ADD}><Plus size={14} /> Ajouter un comparatif</button>
         </div>
       </Section>
+
+      {/* SEO */}
+      <SeoFields
+        seo={(d.seo as Seo) || {}}
+        onChange={(v) => set('seo', v)}
+        path="/marque"
+        slug={d.brand_id}
+        fallbackTitle={d.fullName ? `${d.fullName} | ${d.role || 'Concessionnaire officiel'} | Motor Boat 74` : undefined}
+        fallbackDescription={d.description}
+        fallbackImage={d.heroImage}
+      />
 
       <div className="flex justify-end pt-1">
         <button onClick={save} disabled={saving} className="flex items-center gap-2 bg-brand-dark text-white px-6 py-3 rounded-xl text-sm font-bold uppercase tracking-wide hover:bg-brand-cyan hover:text-brand-dark disabled:opacity-50 transition">

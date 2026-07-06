@@ -36,6 +36,8 @@ export interface BrandData {
   comparisons?: ComparisonCategory[];
   /** Visuels « la marque » : bateaux sous différents angles, affichés en diaporama dans la 2e section (sinon heroImage). */
   introImages?: string[];
+  /** Overrides SEO éditables (title/description/OG/canonical/noindex). */
+  seo?: import('../lib/seo').Seo;
 }
 
 export const STATIC_BRANDS_DATA: Record<string, BrandData> = {

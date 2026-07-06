@@ -69,6 +69,8 @@ export interface NautiqueModel {
    * sourcées → la section ne s'affiche pas (pas de bloc vide, pas d'invention).
    */
   milestones?: Milestone[];
+  /** Overrides SEO éditables (OG/canonical/noindex ; title/description via metaTitle/metaDescription). */
+  seo?: import('../lib/seo').Seo;
 }
 
 export const MODEL_ORDER: string[] = ["g25-paragon","g23-paragon","super-air-nautique-g25","super-air-nautique-g23","super-air-nautique-g21","super-air-nautique-s25","super-air-nautique-s23","super-air-nautique-s21","super-air-nautique-gs24","super-air-nautique-gs22","super-air-nautique-gs20","ski-nautique"];

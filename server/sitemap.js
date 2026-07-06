@@ -75,8 +75,8 @@ export async function buildSitemap(clientDir) {
       }
     });
     await step(async () => {
-      const cities = await query('SELECT slug, status FROM hivernage_cities');
-      for (const c of cities) apply(`${SITE}/services/hivernage-bateaux/${c.slug}`, c.status === 'published');
+      const cities = await query('SELECT slug, status, seo FROM hivernage_cities');
+      for (const c of cities) apply(`${SITE}/services/hivernage-bateaux/${c.slug}`, c.status === 'published' && !noindex(c.seo));
     });
   }
 

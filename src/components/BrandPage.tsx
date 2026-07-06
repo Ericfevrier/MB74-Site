@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router';
 import { motion } from 'motion/react';
+import { useSeoOverride } from '../lib/seo';
 import { ArrowRight, ChevronRight, ShieldCheck, Waves, Wallet, Wrench } from 'lucide-react';
 import { brandsData, type BrandData } from '../data/brands';
 import { getBrandModels } from '../data/boatBrands';
@@ -63,6 +64,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
   const { id } = useParams<{ id: string }>();
   const brand = brandProp !== undefined ? brandProp : id ? brandsData[id.toLowerCase()] : null;
   const catalogStudio = getBrandModels(id)?.catalogStudio;
+  useSeoOverride(brand?.seo);
 
   useEffect(() => {
     window.scrollTo(0, 0);

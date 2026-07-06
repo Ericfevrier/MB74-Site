@@ -20,6 +20,8 @@ export interface HivernageCity {
   ports: HivernagePort[];
   /** Contenu d'expertise hyper-locale (climat, gel, vents, ports, contraintes du plan d'eau). */
   localExpertise?: { intro: string; facts: LocalFact[] };
+  /** Overrides SEO éditables (title/description/OG/canonical/noindex). */
+  seo?: import('../lib/seo').Seo;
 }
 
 export const HIVERNAGE_CITY_ORDER: string[] = ["annecy","aix-les-bains","evian-les-bains","thonon-les-bains","geneve","lac-de-serre-poncon"];

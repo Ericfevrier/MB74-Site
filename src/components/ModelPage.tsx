@@ -10,6 +10,7 @@ import { getBrandModels } from '../data/boatBrands';
 import type { NautiqueModel } from '../data/nautiqueModels';
 import { usedBoats } from '../data/usedBoats';
 import { useLiveUsedBoats } from '../lib/publicApi';
+import { useSeoOverride } from '../lib/seo';
 import { SITE } from '../data/site';
 import { ServiceContactBlock } from './services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
@@ -131,6 +132,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
   const [openOpt, setOpenOpt] = useState<number | null>(0);
   const [activeAnchor, setActiveAnchor] = useState<string>('');
   const liveBoats = useLiveUsedBoats(); // occasions live (admin) pour le carrousel « similaires »
+  useSeoOverride(model?.seo);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });

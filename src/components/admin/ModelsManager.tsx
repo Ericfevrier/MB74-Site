@@ -5,6 +5,8 @@ import {
 } from 'lucide-react';
 import { adminApi, type AdminModel } from '../../lib/adminApi';
 import { BRAND_MODELS } from '../../data/boatBrands';
+import { SeoFields } from './SeoFields';
+import type { Seo } from '../../lib/seo';
 import type {
   NautiqueModel, SpecGroup, Highlight, Motorization, Edition, OptionGroup, Milestone, ModelFAQ,
 } from '../../data/nautiqueModels';
@@ -179,12 +181,15 @@ function ModelForm({ initial, isNew, onCancel, onSaved }: { initial: Partial<Adm
       </Section>
 
       {/* SEO */}
-      <Section title="SEO">
-        <div className="space-y-4">
-          <div><label className={LABEL}>Titre meta</label><input className={INPUT} value={d.metaTitle || ''} onChange={(e) => set('metaTitle', e.target.value)} /></div>
-          <div><label className={LABEL}>Description meta</label><textarea className={`${INPUT} h-20 resize-y`} value={d.metaDescription || ''} onChange={(e) => set('metaDescription', e.target.value)} /></div>
-        </div>
-      </Section>
+      <SeoFields
+        seo={{ ...((d.seo as Seo) || {}), title: (d.seo as Seo)?.title ?? d.metaTitle, description: (d.seo as Seo)?.description ?? d.metaDescription }}
+        onChange={(v) => setD((p) => ({ ...p, seo: v, metaTitle: v.title || '', metaDescription: v.description || '' }))}
+        path={`/${d.brand || 'nautique'}`}
+        slug={d.slug}
+        fallbackTitle={d.name ? `${d.name} ${d.year || ''} | Motor Boat 74` : undefined}
+        fallbackDescription={d.tagline}
+        fallbackImage={d.hero}
+      />
 
       {/* Médias */}
       <Section title="Médias (photos)" count={(d.gallery || []).length}>

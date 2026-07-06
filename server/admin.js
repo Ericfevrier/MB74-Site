@@ -178,7 +178,7 @@ const parseJson = (v, fallback) => {
 
 const CITY_FIELDS = [
   'slug', 'city', 'h1', 'meta_title', 'meta_description', 'hero', 'intro', 'lake',
-  'zones_intro', 'ports', 'local_expertise', 'sort_order', 'status',
+  'zones_intro', 'ports', 'local_expertise', 'seo', 'sort_order', 'status',
 ];
 
 function rowToCity(r, admin = false) {
@@ -194,6 +194,7 @@ function rowToCity(r, admin = false) {
     zonesIntro: r.zones_intro || '',
     ports: parseJson(r.ports, []),
     localExpertise: parseJson(r.local_expertise, undefined),
+    seo: parseJson(r.seo, undefined),
   };
   if (admin) {
     c.id = r.id;
@@ -222,6 +223,7 @@ function cityToRow(c) {
     zones_intro: s(c.zonesIntro),
     ports: JSON.stringify(arr),
     local_expertise: le ? JSON.stringify(le) : null,
+    seo: c.seo && Object.keys(c.seo).length ? JSON.stringify(c.seo) : null,
     sort_order: Number.isFinite(Number(c.sortOrder)) ? Number(c.sortOrder) : 0,
     status: c.status === 'draft' ? 'draft' : 'published',
   };
