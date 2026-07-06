@@ -162,6 +162,23 @@ export function useLiveModels(): { models: PublicModel[] | null; loaded: boolean
   return state;
 }
 
+/* ----------------------------- Menus ----------------------------- */
+
+export interface MenuLink { label: string; url: string; }
+
+export function useLiveMenus(): { menus: Record<string, MenuLink[]> | null; loaded: boolean } {
+  const [state, setState] = useState<{ menus: Record<string, MenuLink[]> | null; loaded: boolean }>({ menus: null, loaded: false });
+  useEffect(() => {
+    let alive = true;
+    fetch('/api/menus')
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((j) => alive && setState({ menus: j.menus || {}, loaded: true }))
+      .catch(() => alive && setState({ menus: null, loaded: true }));
+    return () => { alive = false; };
+  }, []);
+  return state;
+}
+
 /* ------------------------ Villes (hivernage) --------------------- */
 
 export async function fetchPublicCity(slug: string): Promise<HivernageCity> {

@@ -1170,6 +1170,71 @@ export function mountAdmin(app) {
     }
   });
 
+  /* ------------------------ Menus (footer) ------------------------ */
+
+  const MENU_LOCATIONS = ['footer-services', 'footer-bateaux'];
+
+  // Lecture publique : items groupés par emplacement.
+  app.get('/api/menus', async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT location, label, url FROM menu_items ORDER BY location, sort_order ASC, id ASC');
+      const menus = {};
+      for (const r of rows) (menus[r.location] = menus[r.location] || []).push({ label: r.label, url: r.url });
+      res.json({ menus });
+    } catch (e) {
+      console.error('GET /api/menus', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  app.get('/api/admin/menus', requireAuth, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT * FROM menu_items ORDER BY location, sort_order ASC, id ASC');
+      res.json({ items: rows });
+    } catch (e) {
+      console.error('GET /api/admin/menus', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  const menuSave = async (req, res, id) => {
+    if (!dbConfigured()) return needDb(res);
+    const b = req.body || {};
+    const location = MENU_LOCATIONS.includes(b.location) ? b.location : null;
+    const label = String(b.label || '').trim().slice(0, 191);
+    const url = String(b.url || '').trim().slice(0, 512);
+    if (!location) return res.status(400).json({ ok: false, error: 'Emplacement invalide.' });
+    if (!label || !url) return res.status(400).json({ ok: false, error: 'Libellé et lien requis.' });
+    try {
+      if (id) {
+        const r = await query('UPDATE menu_items SET location = ?, label = ?, url = ? WHERE id = ?', [location, label, url, id]);
+        if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      } else {
+        await query('INSERT INTO menu_items (location, label, url) VALUES (?, ?, ?)', [location, label, url]);
+      }
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('save menu', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  };
+  app.post('/api/admin/menus', requireAuth, (req, res) => menuSave(req, res, null));
+  app.put('/api/admin/menus/:id', requireAuth, (req, res) => menuSave(req, res, Number(req.params.id)));
+
+  app.delete('/api/admin/menus/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const r = await query('DELETE FROM menu_items WHERE id = ?', [Number(req.params.id)]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('DELETE /api/admin/menus', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
   /* ----------------------- Redirections 301 ----------------------- */
 
   app.get('/api/admin/redirects', requireAuth, async (_req, res) => {
@@ -1296,6 +1361,7 @@ export function mountAdmin(app) {
   registerReorder('/api/admin/used-boats/reorder', 'used_boats');
   registerReorder('/api/admin/team/reorder', 'team_members');
   registerReorder('/api/admin/cities/reorder', 'hivernage_cities');
+  registerReorder('/api/admin/menus/reorder', 'menu_items');
 
   /* ----------------------- Médiathèque (admin) -------------------- */
 

@@ -17,9 +17,10 @@ import { SettingsManager } from './SettingsManager';
 import { UsersManager } from './UsersManager';
 import { ActivityView } from './ActivityView';
 import { RedirectsManager } from './RedirectsManager';
+import { MenusManager } from './MenusManager';
 
 type Auth = { state: 'loading' } | { state: 'out' } | { state: 'in'; username: string; role: string };
-export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'blog' | 'team' | 'cities' | 'media' | 'messages' | 'settings' | 'activity' | 'users' | 'redirects';
+export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'blog' | 'team' | 'cities' | 'media' | 'messages' | 'settings' | 'activity' | 'users' | 'redirects' | 'menus';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -46,6 +47,7 @@ const NAV: NavEntry[] = [
     items: [
       { id: 'media', label: 'Médias', Icon: ImageIcon },
       { id: 'messages', label: 'Messages', Icon: Inbox },
+      { id: 'menus', label: 'Menus', Icon: Menu },
       { id: 'activity', label: 'Journal', Icon: ScrollText },
       { id: 'redirects', label: 'Redirections', Icon: Milestone },
       { id: 'settings', label: 'Réglages', Icon: Settings },
@@ -222,6 +224,7 @@ export function AdminApp() {
           {section === 'cities' && <CitiesManager />}
           {section === 'media' && <MediaManager />}
           {section === 'activity' && <ActivityView />}
+          {section === 'menus' && <MenusManager />}
           {section === 'redirects' && <RedirectsManager />}
           {section === 'users' && auth.role === 'super-admin' && <UsersManager />}
           {section === 'messages' && <MessagesInbox onChange={refreshUnread} />}

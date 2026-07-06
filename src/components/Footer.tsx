@@ -2,9 +2,35 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Instagram, Facebook, Youtube, Linkedin, Phone, Lock } from 'lucide-react';
 import { useSiteSettings } from '../lib/settings';
+import { useLiveMenus, type MenuLink } from '../lib/publicApi';
+
+/** Lien de menu : interne (<Link>) ou externe (<a>) selon l'URL. */
+function FooterLink({ label, url }: MenuLink) {
+  const cls = 'hover:text-brand-cyan transition-colors text-[14px] font-medium';
+  if (/^https?:\/\//i.test(url)) return <a href={url} target="_blank" rel="noreferrer" className={cls}>{label}</a>;
+  return <Link to={url} className={cls}>{label}</Link>;
+}
+
+const STATIC_SERVICES: MenuLink[] = [
+  { label: 'Hivernage / Stockage', url: '/hivernage-stockage-bateau' },
+  { label: 'Entretien / Réparation', url: '/services/entretien-reparation' },
+  { label: 'Dépannage', url: '/services/depannage' },
+  { label: 'Transport', url: '/services/transport-de-bateau' },
+  { label: 'Sellerie', url: '/services/sellerie-de-bateau' },
+  { label: 'Remorque', url: '/services/remorques-de-bateau' },
+];
+const STATIC_BATEAUX: MenuLink[] = [
+  { label: 'Tous nos bateaux', url: '/bateaux' },
+  { label: 'Bateaux neufs', url: '/bateaux/neufs' },
+  { label: "Bateaux d'occasion", url: '/bateaux/occasion' },
+  { label: 'Bateaux vendus', url: '/bateaux/vendu' },
+];
 
 export function Footer() {
   const s = useSiteSettings();
+  const { menus } = useLiveMenus();
+  const services = menus?.['footer-services']?.length ? menus['footer-services'] : STATIC_SERVICES;
+  const bateaux = menus?.['footer-bateaux']?.length ? menus['footer-bateaux'] : STATIC_BATEAUX;
   return (
     <footer className="bg-ink-850 text-gray-400 pt-20">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -40,17 +66,8 @@ export function Footer() {
           <div className="col-span-1 lg:col-span-2">
             <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Nos services</h3>
             <ul className="space-y-3">
-              {[
-                { name: 'Hivernage / Stockage', path: '/hivernage-stockage-bateau' },
-                { name: 'Entretien / Réparation', path: '/services/entretien-reparation' },
-                { name: 'Dépannage', path: '/services/depannage' },
-                { name: 'Transport', path: '/services/transport-de-bateau' },
-                { name: 'Sellerie', path: '/services/sellerie-de-bateau' },
-                { name: 'Remorque', path: '/services/remorques-de-bateau' },
-              ].map((item) => (
-                <li key={item.name}>
-                  <Link to={item.path} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
-                </li>
+              {services.map((item, i) => (
+                <li key={i}><FooterLink label={item.label} url={item.url} /></li>
               ))}
             </ul>
           </div>
@@ -59,15 +76,8 @@ export function Footer() {
           <div className="col-span-1 lg:col-span-2">
             <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Nos bateaux</h3>
             <ul className="space-y-3">
-              {[
-                { name: 'Tous nos bateaux', path: '/bateaux' },
-                { name: 'Bateaux neufs', path: '/bateaux/neufs' },
-                { name: "Bateaux d'occasion", path: '/bateaux/occasion' },
-                { name: 'Bateaux vendus', path: '/bateaux/vendu' },
-              ].map((item) => (
-                <li key={item.name}>
-                  <Link to={item.path} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>
-                </li>
+              {bateaux.map((item, i) => (
+                <li key={i}><FooterLink label={item.label} url={item.url} /></li>
               ))}
             </ul>
           </div>

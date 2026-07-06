@@ -92,6 +92,14 @@ export interface Redirect {
   code: 301 | 302;
 }
 
+export interface MenuItem {
+  id: number;
+  location: string;
+  label: string;
+  url: string;
+  sort_order: number;
+}
+
 export interface ContactMessage {
   id: number;
   nom: string;
@@ -150,6 +158,12 @@ export const adminApi = {
 
   listVersions: (type: string, id: number) => req<{ versions: VersionEntry[] }>('GET', `/api/admin/versions/${type}/${id}`),
   restoreVersion: (versionId: number) => req('POST', `/api/admin/versions/${versionId}/restore`),
+
+  listMenus: () => req<{ items: MenuItem[] }>('GET', '/api/admin/menus'),
+  createMenu: (m: { location: string; label: string; url: string }) => req('POST', '/api/admin/menus', m),
+  updateMenu: (id: number, m: { location: string; label: string; url: string }) => req('PUT', `/api/admin/menus/${id}`, m),
+  deleteMenu: (id: number) => req('DELETE', `/api/admin/menus/${id}`),
+  reorderMenus: (ids: number[]) => req('POST', '/api/admin/menus/reorder', { ids }),
 
   listRedirects: () => req<{ redirects: Redirect[] }>('GET', '/api/admin/redirects'),
   createRedirect: (r: { source_path: string; target: string; code: number }) => req('POST', '/api/admin/redirects', r),
