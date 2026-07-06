@@ -24,7 +24,7 @@ import {
 const BOAT_FIELDS = [
   'slug', 'model_slug', 'brand', 'title', 'year', 'capacity', 'power', 'hours',
   'length', 'location', 'price', 'price_value', 'image', 'gallery', 'description',
-  'highlights', 'sold', 'status', 'sort_order', 'seo',
+  'highlights', 'sold', 'status', 'sort_order', 'seo', 'publish_at', 'unpublish_at',
 ];
 
 const parseArr = (v) => {
@@ -64,6 +64,8 @@ function rowToBoat(r, admin = false) {
     boat.id = r.id;
     boat.status = r.status;
     boat.sortOrder = r.sort_order;
+    boat.publishAt = toInputDT(r.publish_at);
+    boat.unpublishAt = toInputDT(r.unpublish_at);
   }
   return boat;
 }
@@ -93,6 +95,8 @@ function boatToRow(b) {
     status: b.status === 'draft' ? 'draft' : 'published',
     sort_order: Number.isFinite(Number(b.sortOrder)) ? Number(b.sortOrder) : 0,
     seo: b.seo && Object.keys(b.seo).length ? JSON.stringify(b.seo) : null,
+    publish_at: toDbDT(b.publishAt),
+    unpublish_at: toDbDT(b.unpublishAt),
   };
 }
 
@@ -102,7 +106,18 @@ const ISO_DATE = (v) => {
   return String(v).slice(0, 10);
 };
 
-const BLOG_FIELDS = ['slug', 'title', 'excerpt', 'category', 'date', 'image', 'reading_time', 'content', 'status', 'seo'];
+// Planification : conversions entre DATETIME base et valeur d'input <input type="datetime-local">.
+const toInputDT = (v) => {
+  if (!v) return undefined;
+  if (v instanceof Date) return new Date(v.getTime() - v.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+  return String(v).replace(' ', 'T').slice(0, 16);
+};
+const toDbDT = (v) => (v ? String(v).replace('T', ' ').slice(0, 19) : null);
+// Fenêtre « en ligne » : publié ET (pas de date de pub future) ET (pas de date de retrait passée).
+const LIVE_WINDOW =
+  "status = 'published' AND (publish_at IS NULL OR publish_at <= NOW()) AND (unpublish_at IS NULL OR unpublish_at > NOW())";
+
+const BLOG_FIELDS = ['slug', 'title', 'excerpt', 'category', 'date', 'image', 'reading_time', 'content', 'status', 'seo', 'publish_at', 'unpublish_at'];
 
 /** Ligne DB → forme `BlogArticle` du site. `opts.full` ajoute le contenu ; `opts.admin` ajoute id/status. */
 function rowToArticle(r, opts = {}) {
@@ -121,6 +136,8 @@ function rowToArticle(r, opts = {}) {
   if (opts.admin) {
     a.id = r.id;
     a.status = r.status;
+    a.publishAt = toInputDT(r.publish_at);
+    a.unpublishAt = toInputDT(r.unpublish_at);
   }
   return a;
 }
@@ -138,6 +155,8 @@ function articleToRow(a) {
     content: a.content != null ? String(a.content) : null,
     status: a.status === 'draft' ? 'draft' : 'published',
     seo: a.seo && Object.keys(a.seo).length ? JSON.stringify(a.seo) : null,
+    publish_at: toDbDT(a.publishAt),
+    unpublish_at: toDbDT(a.unpublishAt),
   };
 }
 
@@ -300,7 +319,7 @@ export function mountAdmin(app) {
     if (!dbConfigured()) return needDb(res);
     try {
       const rows = await query(
-        "SELECT * FROM used_boats WHERE status = 'published' ORDER BY sold ASC, sort_order ASC, id DESC",
+        `SELECT * FROM used_boats WHERE ${LIVE_WINDOW} ORDER BY sold ASC, sort_order ASC, id DESC`,
       );
       res.json({ boats: rows.map((r) => rowToBoat(r)) });
     } catch (e) {
@@ -400,7 +419,7 @@ export function mountAdmin(app) {
   app.get('/api/blog', async (_req, res) => {
     if (!dbConfigured()) return needDb(res);
     try {
-      const rows = await query("SELECT * FROM blog_articles WHERE status = 'published' ORDER BY date DESC, id DESC");
+      const rows = await query(`SELECT * FROM blog_articles WHERE ${LIVE_WINDOW} ORDER BY date DESC, id DESC`);
       res.json({ articles: rows.map((r) => rowToArticle(r)) });
     } catch (e) {
       console.error('GET /api/blog', e.message);
@@ -411,7 +430,7 @@ export function mountAdmin(app) {
   app.get('/api/blog/:slug', async (req, res) => {
     if (!dbConfigured()) return needDb(res);
     try {
-      const rows = await query("SELECT * FROM blog_articles WHERE slug = ? AND status = 'published' LIMIT 1", [req.params.slug]);
+      const rows = await query(`SELECT * FROM blog_articles WHERE slug = ? AND ${LIVE_WINDOW} LIMIT 1`, [req.params.slug]);
       if (!rows.length) return res.status(404).json({ ok: false, error: 'Article introuvable.' });
       res.json({ article: rowToArticle(rows[0], { full: true }) });
     } catch (e) {
@@ -942,6 +961,30 @@ export function mountAdmin(app) {
       res.status(500).json({ ok: false, error: 'Erreur base de données.' });
     }
   });
+
+  /* ----------------------- Réordonnancement ----------------------- */
+
+  // Enregistre un nouvel ordre : sort_order = position dans le tableau `ids`.
+  const registerReorder = (routePath, table) => {
+    app.post(routePath, requireAuth, async (req, res) => {
+      if (!dbConfigured()) return needDb(res);
+      const ids = Array.isArray(req.body && req.body.ids) ? req.body.ids : [];
+      if (!ids.length) return res.status(400).json({ ok: false, error: 'Liste d’identifiants requise.' });
+      try {
+        for (let i = 0; i < ids.length; i++) {
+          const id = Number(ids[i]);
+          if (Number.isInteger(id)) await query(`UPDATE ${table} SET sort_order = ? WHERE id = ?`, [i, id]);
+        }
+        res.json({ ok: true });
+      } catch (e) {
+        console.error(`POST ${routePath}`, e.message);
+        res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+      }
+    });
+  };
+  registerReorder('/api/admin/used-boats/reorder', 'used_boats');
+  registerReorder('/api/admin/team/reorder', 'team_members');
+  registerReorder('/api/admin/cities/reorder', 'hivernage_cities');
 
   /* ----------------------- Médiathèque (admin) -------------------- */
 

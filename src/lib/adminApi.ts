@@ -14,6 +14,9 @@ export interface AdminBoat extends UsedBoat {
   status: 'published' | 'draft';
   sortOrder: number;
   seo?: Seo;
+  /** Planification (format datetime-local "YYYY-MM-DDTHH:MM"). */
+  publishAt?: string;
+  unpublishAt?: string;
 }
 
 export interface AdminArticle extends BlogArticle {
@@ -21,6 +24,8 @@ export interface AdminArticle extends BlogArticle {
   status: 'published' | 'draft';
   content: string;
   seo?: Seo;
+  publishAt?: string;
+  unpublishAt?: string;
 }
 
 export interface AdminMember extends TeamMember {
@@ -94,6 +99,9 @@ export const adminApi = {
   deleteBoat: (id: number) => req('DELETE', `/api/admin/used-boats/${id}`),
   importBoats: (boats: Partial<AdminBoat>[]) =>
     req<{ ok: boolean; imported: number }>('POST', '/api/admin/used-boats/import', { boats }),
+  reorderBoats: (ids: number[]) => req('POST', '/api/admin/used-boats/reorder', { ids }),
+  reorderTeam: (ids: number[]) => req('POST', '/api/admin/team/reorder', { ids }),
+  reorderCities: (ids: number[]) => req('POST', '/api/admin/cities/reorder', { ids }),
 
   listArticles: () => req<{ articles: AdminArticle[] }>('GET', '/api/admin/blog'),
   createArticle: (a: Partial<AdminArticle>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/blog', a),

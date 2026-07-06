@@ -6,6 +6,7 @@ import { BLOG_CATEGORIES } from '../../data/blog';
 import { SeoFields } from './SeoFields';
 import type { Seo } from '../../lib/seo';
 import { SearchInput, StatusFilter, FilterSelect, matchQuery } from './AdminToolbar';
+import { ScheduleFields, ScheduleBadge } from './Schedule';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -137,6 +138,10 @@ function ArticleForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel:
         />
       </div>
 
+      <div className="mt-6">
+        <ScheduleFields publishAt={d.publishAt} unpublishAt={d.unpublishAt} onChange={(p) => setD((prev) => ({ ...prev, ...p }))} />
+      </div>
+
       <label className="flex items-center gap-2 text-sm font-medium text-brand-dark mt-6">
         Statut :
         <select className="border border-gray-300 rounded-lg px-2 py-1.5 text-sm" value={d.status || 'published'} onChange={(e) => set('status', e.target.value)}>
@@ -251,6 +256,7 @@ export function BlogManager() {
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
                 {a.status === 'draft' && <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Brouillon</span>}
+                <ScheduleBadge item={a} />
                 <button onClick={() => setEditing(a)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Modifier"><Pencil size={16} /></button>
                 <button onClick={() => duplicate(a)} className="p-2 text-gray-500 hover:text-brand-cyan transition" title="Dupliquer"><Copy size={16} /></button>
                 <button onClick={() => remove(a)} className="p-2 text-gray-500 hover:text-red-600 transition" title="Supprimer"><Trash2 size={16} /></button>

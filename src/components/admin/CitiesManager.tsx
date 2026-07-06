@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, X, Copy } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, X, Copy, GripVertical } from 'lucide-react';
 import { adminApi, type AdminCity } from '../../lib/adminApi';
 import { hivernageCities, HIVERNAGE_CITY_ORDER, type HivernagePort, type LocalFact } from '../../data/hivernageCities';
 import { SeoFields } from './SeoFields';
 import type { Seo } from '../../lib/seo';
-import { SearchInput, StatusFilter, matchQuery } from './AdminToolbar';
+import { SearchInput, StatusFilter, matchQuery, useDragReorder } from './AdminToolbar';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -171,6 +171,8 @@ export function CitiesManager() {
     if (q && !matchQuery(`${c.city} ${c.slug} ${c.lake}`, q)) return false;
     return true;
   });
+  const dragEnabled = q === '' && statusF === 'all';
+  const dragProps = useDragReorder(cities, setCities, adminApi.reorderCities, dragEnabled);
 
   const duplicate = async (c: AdminCity) => {
     try {
@@ -253,10 +255,13 @@ export function CitiesManager() {
         <p className="text-gray-400 text-sm bg-white border border-dashed border-gray-300 rounded-2xl p-8 text-center">Aucune ville ne correspond.</p>
       )}
 
+      {dragEnabled && filtered.length > 1 && <p className="text-xs text-gray-400 mb-2 flex items-center gap-1.5"><GripVertical size={13} /> Glisse les lignes pour changer l'ordre d'affichage.</p>}
+
       {filtered.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden divide-y divide-gray-100">
-          {filtered.map((c) => (
-            <div key={c.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition">
+          {filtered.map((c, i) => (
+            <div key={c.id} {...dragProps(i)} className={`flex items-center gap-4 p-4 hover:bg-gray-50 transition ${dragEnabled ? 'cursor-move' : ''}`}>
+              {dragEnabled && <GripVertical size={16} className="text-gray-300 flex-shrink-0" />}
               <div className="w-20 h-14 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
                 {c.hero ? <img src={c.hero} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : null}
               </div>

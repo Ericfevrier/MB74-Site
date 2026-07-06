@@ -5,7 +5,9 @@ import { allUsedBoats } from '../../data/usedBoats';
 import { MediaPicker } from './MediaPicker';
 import { SeoFields } from './SeoFields';
 import type { Seo } from '../../lib/seo';
-import { SearchInput, StatusFilter, FilterSelect, matchQuery } from './AdminToolbar';
+import { SearchInput, StatusFilter, FilterSelect, matchQuery, useDragReorder } from './AdminToolbar';
+import { GripVertical } from 'lucide-react';
+import { ScheduleFields, ScheduleBadge } from './Schedule';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -163,6 +165,10 @@ function BoatForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel: ()
         />
       </div>
 
+      <div className="mt-5">
+        <ScheduleFields publishAt={d.publishAt} unpublishAt={d.unpublishAt} onChange={(p) => setD((prev) => ({ ...prev, ...p }))} />
+      </div>
+
       <div className="flex flex-wrap items-center gap-6 mt-6">
         <label className="flex items-center gap-2 text-sm font-medium text-brand-dark">
           <input type="checkbox" className="w-4 h-4 accent-brand-cyan" checked={!!d.sold} onChange={(e) => set('sold', e.target.checked)} /> Vendu
@@ -218,6 +224,8 @@ export function OccasionsManager() {
     if (q && !matchQuery(`${b.title} ${b.slug} ${b.brandId} ${b.year} ${b.price}`, q)) return false;
     return true;
   });
+  const dragEnabled = q === '' && statusF === 'all' && soldF === 'all';
+  const dragProps = useDragReorder(boats, setBoats, adminApi.reorderBoats, dragEnabled);
 
   const remove = async (b: AdminBoat) => {
     if (!confirm(`Supprimer définitivement « ${b.title} » ?`)) return;
@@ -335,10 +343,13 @@ export function OccasionsManager() {
         <p className="text-gray-400 text-sm bg-white border border-dashed border-gray-300 rounded-2xl p-8 text-center">Aucun bateau ne correspond à la recherche.</p>
       )}
 
+      {dragEnabled && filtered.length > 1 && <p className="text-xs text-gray-400 mb-2 flex items-center gap-1.5"><GripVertical size={13} /> Glisse les lignes pour changer l'ordre d'affichage.</p>}
+
       {filtered.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden divide-y divide-gray-100">
-          {filtered.map((b) => (
-            <div key={b.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition">
+          {filtered.map((b, i) => (
+            <div key={b.id} {...dragProps(i)} className={`flex items-center gap-4 p-4 hover:bg-gray-50 transition ${dragEnabled ? 'cursor-move' : ''}`}>
+              {dragEnabled && <GripVertical size={16} className="text-gray-300 flex-shrink-0" />}
               <div className="w-20 h-14 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
                 {b.image ? <img src={b.image} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : null}
               </div>
@@ -354,6 +365,7 @@ export function OccasionsManager() {
                 {b.status === 'draft'
                   ? <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-1 rounded">Brouillon</span>
                   : <span className="text-[10px] font-bold uppercase bg-sky-100 text-sky-700 px-2 py-1 rounded">Publié</span>}
+                <ScheduleBadge item={b} />
                 {b.sold
                   ? <span className="text-[10px] font-bold uppercase bg-red-100 text-red-600 px-2 py-1 rounded">Vendu</span>
                   : <span className="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Dispo</span>}

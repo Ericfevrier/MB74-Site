@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Copy } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, ArrowLeft, Save, Copy, GripVertical } from 'lucide-react';
 import { adminApi, type AdminMember } from '../../lib/adminApi';
-import { SearchInput, matchQuery } from './AdminToolbar';
+import { SearchInput, matchQuery, useDragReorder } from './AdminToolbar';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -102,6 +102,8 @@ export function TeamManager() {
   useEffect(load, []);
 
   const filtered = (members || []).filter((m) => !q || matchQuery(`${m.name} ${m.role}`, q));
+  const dragEnabled = q === '';
+  const dragProps = useDragReorder(members, setMembers, adminApi.reorderTeam, dragEnabled);
 
   const remove = async (m: AdminMember) => {
     if (!confirm(`Supprimer « ${m.name} » de l'équipe ?`)) return;
@@ -154,10 +156,13 @@ export function TeamManager() {
         </div>
       )}
 
+      {dragEnabled && filtered.length > 1 && <p className="text-xs text-gray-400 mb-2 flex items-center gap-1.5"><GripVertical size={13} /> Glisse les lignes pour changer l'ordre d'affichage sur le site.</p>}
+
       {filtered.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden divide-y divide-gray-100">
-          {filtered.map((m) => (
-            <div key={m.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition">
+          {filtered.map((m, i) => (
+            <div key={m.id} {...dragProps(i)} className={`flex items-center gap-4 p-4 hover:bg-gray-50 transition ${dragEnabled ? 'cursor-move' : ''}`}>
+              {dragEnabled && <GripVertical size={16} className="text-gray-300 flex-shrink-0" />}
               <div className="w-14 h-14 rounded-full bg-gray-100 overflow-hidden flex-shrink-0">
                 {m.image ? <img src={m.image} alt="" className="w-full h-full object-cover" style={{ objectPosition: m.position || 'center' }} referrerPolicy="no-referrer" /> : null}
               </div>

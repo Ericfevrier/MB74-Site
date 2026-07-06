@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Search, X } from 'lucide-react';
 
 /** Retire accents + casse pour une recherche tolérante. */
@@ -34,6 +34,40 @@ export function FilterSelect({ value, onChange, options }: { value: string; onCh
       {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
     </select>
   );
+}
+
+/**
+ * Glisser-déposer natif pour réordonner une liste. Renvoie une fonction qui produit
+ * les props DnD d'une ligne selon son index. Désactivé si `enabled` est faux
+ * (ex. quand une recherche/filtre est active → l'ordre affiché ≠ ordre réel).
+ * Persiste le nouvel ordre via `persist(ids)`.
+ */
+export function useDragReorder<T extends { id: number }>(
+  items: T[] | null | undefined,
+  setItems: (v: T[]) => void,
+  persist: (ids: number[]) => Promise<unknown>,
+  enabled: boolean,
+) {
+  const from = useRef<number | null>(null);
+  return (index: number): React.HTMLAttributes<HTMLElement> => {
+    if (!enabled) return {};
+    return {
+      draggable: true,
+      onDragStart: (e) => { from.current = index; (e.dataTransfer as DataTransfer).effectAllowed = 'move'; },
+      onDragOver: (e) => e.preventDefault(),
+      onDrop: (e) => {
+        e.preventDefault();
+        const f = from.current;
+        from.current = null;
+        if (f == null || f === index || !items) return;
+        const next = [...items];
+        const [moved] = next.splice(f, 1);
+        next.splice(index, 0, moved);
+        setItems(next);
+        persist(next.map((x) => x.id)).catch(() => {});
+      },
+    };
+  };
 }
 
 const STATUS_OPTIONS = [

@@ -45,6 +45,16 @@ export async function buildSitemap(clientDir) {
         return false;
       }
     };
+    const now = Date.now();
+    const ts = (v) => (v ? new Date(v).getTime() : null);
+    // En ligne si pas de date de pub future ET pas de date de retrait passée.
+    const inWindow = (pub, unpub) => {
+      const p = ts(pub);
+      const u = ts(unpub);
+      if (p && p > now) return false;
+      if (u && u <= now) return false;
+      return true;
+    };
     // Chaque type est indépendant : si une colonne manque (migration pas encore jouée),
     // on n'invalide pas la réconciliation des autres types.
     const step = async (fn) => {
@@ -56,14 +66,15 @@ export async function buildSitemap(clientDir) {
     };
 
     await step(async () => {
-      const boats = await query('SELECT slug, sold, status, seo FROM used_boats');
-      for (const b of boats) apply(`${SITE}/bateaux/occasion/${b.slug}`, b.status === 'published' && !b.sold && !noindex(b.seo));
+      const boats = await query('SELECT slug, sold, status, seo, publish_at, unpublish_at FROM used_boats');
+      for (const b of boats)
+        apply(`${SITE}/bateaux/occasion/${b.slug}`, b.status === 'published' && !b.sold && !noindex(b.seo) && inWindow(b.publish_at, b.unpublish_at));
     });
     await step(async () => {
-      const arts = await query('SELECT slug, status, date, seo FROM blog_articles');
+      const arts = await query('SELECT slug, status, date, seo, publish_at, unpublish_at FROM blog_articles');
       for (const a of arts) {
         const lm = a.date ? new Date(a.date).toISOString().slice(0, 10) : null;
-        apply(`${SITE}/blog/${a.slug}`, a.status === 'published' && !noindex(a.seo), lm);
+        apply(`${SITE}/blog/${a.slug}`, a.status === 'published' && !noindex(a.seo) && inWindow(a.publish_at, a.unpublish_at), lm);
       }
     });
     await step(async () => {
