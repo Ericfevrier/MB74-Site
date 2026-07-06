@@ -30,6 +30,7 @@ type NavEntry = { kind: 'item'; item: NavItem } | { kind: 'group'; label: string
 
 const NAV: NavEntry[] = [
   { kind: 'item', item: { id: 'dashboard', label: 'Tableau de bord', Icon: LayoutDashboard } },
+  { kind: 'item', item: { id: 'messages', label: 'Messages', Icon: Inbox } },
   {
     kind: 'group',
     label: 'Contenu',
@@ -39,18 +40,23 @@ const NAV: NavEntry[] = [
       { id: 'blog', label: 'Blog', Icon: FileText },
       { id: 'cities', label: 'Villes hivernage', Icon: MapPin },
       { id: 'team', label: 'Équipe', Icon: Users },
+      { id: 'media', label: 'Médias', Icon: ImageIcon },
     ],
   },
   {
     kind: 'group',
-    label: 'Outils',
+    label: 'Structure & SEO',
     items: [
-      { id: 'media', label: 'Médias', Icon: ImageIcon },
-      { id: 'messages', label: 'Messages', Icon: Inbox },
       { id: 'menus', label: 'Menus', Icon: Menu },
-      { id: 'activity', label: 'Journal', Icon: ScrollText },
       { id: 'redirects', label: 'Redirections', Icon: Milestone },
-      { id: 'settings', label: 'Réglages', Icon: Settings },
+      { id: 'settings', label: 'Réglages du site', Icon: Settings },
+    ],
+  },
+  {
+    kind: 'group',
+    label: 'Administration',
+    items: [
+      { id: 'activity', label: "Journal d'activité", Icon: ScrollText },
       { id: 'users', label: 'Utilisateurs', Icon: ShieldCheck, superOnly: true },
     ],
   },
