@@ -1170,6 +1170,59 @@ export function mountAdmin(app) {
     }
   });
 
+  /* ------------------- Contenu des pages (statiques) -------------- */
+
+  // Lecture publique : toutes les surcharges, groupées par page.
+  app.get('/api/page-content', async (_req, res) => {
+    if (!dbConfigured()) return res.json({ pages: {} });
+    try {
+      const rows = await query('SELECT page_key, field_key, value FROM page_content');
+      const pages = {};
+      for (const r of rows) (pages[r.page_key] = pages[r.page_key] || {})[r.field_key] = r.value;
+      res.json({ pages });
+    } catch (e) {
+      console.error('GET /api/page-content', e.message);
+      res.json({ pages: {} });
+    }
+  });
+
+  app.get('/api/admin/page-content/:page', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT field_key, value FROM page_content WHERE page_key = ?', [req.params.page]);
+      const fields = {};
+      for (const r of rows) fields[r.field_key] = r.value;
+      res.json({ fields });
+    } catch (e) {
+      console.error('GET /api/admin/page-content', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  // Enregistrement en masse : { fields: { cle: valeur } }. Valeur vide = repli sur le code (on supprime).
+  app.put('/api/admin/page-content/:page', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    const page = String(req.params.page || '').trim();
+    const fields = (req.body && req.body.fields) || {};
+    try {
+      for (const [key, raw] of Object.entries(fields)) {
+        const value = raw == null ? '' : String(raw);
+        if (value === '') {
+          await query('DELETE FROM page_content WHERE page_key = ? AND field_key = ?', [page, key]);
+        } else {
+          await query(
+            'INSERT INTO page_content (page_key, field_key, value) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE value = VALUES(value)',
+            [page, String(key).slice(0, 128), value],
+          );
+        }
+      }
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('PUT /api/admin/page-content', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
   /* ------------------------ Menus (footer) ------------------------ */
 
   const MENU_LOCATIONS = ['footer-services', 'footer-bateaux'];

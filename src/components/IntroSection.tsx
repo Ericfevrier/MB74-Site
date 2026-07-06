@@ -1,7 +1,9 @@
 import React from 'react';
 import { Info } from 'lucide-react';
+import { usePageContent } from '../lib/pageContent';
 
 export function IntroSection() {
+  const t = usePageContent('accueil');
   return (
     <section className="pt-16 md:pt-24 pb-12 bg-transparent overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
@@ -12,20 +14,14 @@ export function IntroSection() {
             <div className="absolute -top-12 -left-8 w-24 h-24 bg-brand-cyan/10 rounded-full blur-3xl"></div>
             
             <h2 className="text-[32px] md:text-[40px] font-bold text-brand-dark leading-tight tracking-tight">
-              Votre partenaire nautique <br/>
-              <span className="text-brand-cyan font-bold" style={{ fontStyle: 'normal' }}>sur le Lac d'Annecy</span>
+              {t('intro.title1')} <br/>
+              <span className="text-brand-cyan font-bold" style={{ fontStyle: 'normal' }}>{t('intro.title2')}</span>
             </h2>
-            
+
             <div className="text-gray-600 space-y-6 text-base leading-relaxed">
-              <p>
-                Bienvenue chez <strong className="text-brand-dark font-bold">Motor Boat 74</strong>, votre spécialiste nautique sur le Lac d’Annecy.
-              </p>
-              <p>
-                Nous vous proposons un service complet pour votre bateau : hivernage et stockage sécurisés, entretien régulier, réparations toutes marques, ainsi que la vente de bateaux neufs et d’occasion. Passionnés de nautisme, nous mettons notre savoir-faire au service des propriétaires qui souhaitent profiter de leur bateau en toute sérénité, avec une prise en charge professionnelle et personnalisée tout au long de l’année.
-              </p>
-              <p>
-                Faites confiance à Motor Boat 74 pour prendre soin de votre bateau et pour vous fournir des services de qualité tout au long de l’année.
-              </p>
+              <p>{t('intro.p1')}</p>
+              <p>{t('intro.p2')}</p>
+              <p>{t('intro.p3')}</p>
             </div>
           </div>
 
@@ -33,9 +29,9 @@ export function IntroSection() {
           <div className="relative group">
               <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl group-hover:bg-brand-cyan/20 transition-colors duration-500"></div>
               <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.02]">
-                  <img 
-                      src="/images/img-20230924-wa0017-1-11zon-11zon-e1727707593371-11zon.webp" 
-                      alt="Motor Boat 74 - Entretien de bateaux" 
+                  <img
+                      src={t('intro.image')}
+                      alt="Motor Boat 74 - Entretien de bateaux"
                       className="w-full h-full object-cover aspect-[4/3] transition-transform duration-1000 group-hover:scale-110"
                       loading="lazy"
                       referrerPolicy="no-referrer"

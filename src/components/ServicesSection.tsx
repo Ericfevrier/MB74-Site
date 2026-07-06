@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { ArrowRight, Check } from 'lucide-react';
+import { usePageContent } from '../lib/pageContent';
 
 interface ServiceItem {
   title: string;
@@ -81,6 +82,7 @@ const servicesData: ServiceItem[] = [
 ];
 
 export function ServicesSection() {
+  const t = usePageContent('accueil');
   return (
     <section className="py-20 md:py-32 bg-transparent relative overflow-hidden">
       {/* Decorative background elements */}
@@ -91,10 +93,10 @@ export function ServicesSection() {
         <div className="mb-12 md:mb-20 text-center sm:text-left">
           <div className="flex items-center justify-center sm:justify-start space-x-3 text-brand-cyan mb-4">
               <div className="w-8 h-1 bg-brand-cyan rounded-full"></div>
-              <span className="uppercase tracking-widest font-bold text-[15px] leading-[15px]">Un service à 360°</span>
+              <span className="uppercase tracking-widest font-bold text-[15px] leading-[15px]">{t('services.eyebrow')}</span>
           </div>
           <h2 className="text-[32px] md:text-[50px] font-bold text-brand-dark mb-6 tracking-tight">
-            Nos <span className="text-brand-cyan lowercase">Services</span>
+            {t('services.title')}
           </h2>
           <p className="text-gray-500 text-base max-w-2xl leading-relaxed">
             Une gamme complète de solutions nautiques sur-mesure pour vous accompagner tout au long de l'année.

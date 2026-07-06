@@ -167,6 +167,17 @@ CREATE TABLE IF NOT EXISTS content_versions (
   KEY idx_versions_entity (entity_type, entity_id, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Contenu éditorial des pages « statiques » (accueil, services, contact…) :
+-- surcharges champ par champ (page + clé → valeur), avec repli sur le code.
+CREATE TABLE IF NOT EXISTS page_content (
+  id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  page_key   VARCHAR(64)  NOT NULL,
+  field_key  VARCHAR(128) NOT NULL,
+  value      LONGTEXT     NULL,
+  updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uniq_page_field (page_key, field_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Menus de navigation éditables (colonnes de liens du pied de page).
 CREATE TABLE IF NOT EXISTS menu_items (
   id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

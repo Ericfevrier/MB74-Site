@@ -159,6 +159,9 @@ export const adminApi = {
   listVersions: (type: string, id: number) => req<{ versions: VersionEntry[] }>('GET', `/api/admin/versions/${type}/${id}`),
   restoreVersion: (versionId: number) => req('POST', `/api/admin/versions/${versionId}/restore`),
 
+  getPageContent: (page: string) => req<{ fields: Record<string, string> }>('GET', `/api/admin/page-content/${page}`),
+  savePageContent: (page: string, fields: Record<string, string>) => req('PUT', `/api/admin/page-content/${page}`, { fields }),
+
   listMenus: () => req<{ items: MenuItem[] }>('GET', '/api/admin/menus'),
   createMenu: (m: { location: string; label: string; url: string }) => req('POST', '/api/admin/menus', m),
   updateMenu: (id: number, m: { location: string; label: string; url: string }) => req('PUT', `/api/admin/menus/${id}`, m),
