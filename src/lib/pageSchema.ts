@@ -315,9 +315,132 @@ export const PAGES: PageDef[] = [
       },
     ],
   },
-  serviceHero('depannage', 'Service — Dépannage', '/depannage', '/images/services/depannage.webp',
-    "Dépannage de bateau sur le Lac d'Annecy · 7j/7 en saison",
-    "Une panne sur l'eau ? Chaque minute compte. En Haute-Savoie, MotorBoat 74 intervient rapidement avec un bateau-atelier équipé pour vous remettre en sécurité et reprendre la navigation."),
+  {
+    key: 'depannage',
+    label: 'Service — Dépannage',
+    path: '/depannage',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/depannage.webp' },
+          { key: 'hero.title', label: 'Titre (vide = version stylée)', type: 'text', default: "Dépannage de bateau sur le Lac d'Annecy · 7j/7 en saison" },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Une panne sur l'eau ? Chaque minute compte. En Haute-Savoie, MotorBoat 74 intervient rapidement avec un bateau-atelier équipé pour vous remettre en sécurité et reprendre la navigation." },
+          {
+            key: 'hero.usps', label: 'Points forts (bannière)', type: 'list', itemLabel: 'Point fort',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'text' }],
+            defaultList: [{ t: '7j/7', d: 'Équipe mobilisée en haute saison (8h–20h).' }, { t: "Lac d'Annecy", d: 'Expertise locale du plan d’eau et de ses ports.' }],
+          },
+        ],
+      },
+      {
+        title: 'Section « En bref »',
+        fields: [
+          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: "MotorBoat 74 assure le dépannage de bateau sur le lac d'Annecy, 7j/7 en saison, avec un bateau-atelier équipé." },
+          { key: 'bref.desc', label: 'Description', type: 'textarea', default: "En cas de panne moteur, électrique ou d'immobilisation sur l'eau, nous intervenons généralement sous 30 à 60 minutes pour réparer directement à flot. Si nécessaire, nous sécurisons et remorquons votre bateau jusqu'à notre atelier ou au port le plus proche." },
+          {
+            key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
+            itemFields: [{ key: 'k', label: 'Intitulé', type: 'text' }, { key: 'v', label: 'Valeur', type: 'text' }],
+            defaultList: [
+              { k: 'Délai', v: '30 à 60 min sur le lac d’Annecy' }, { k: 'Disponibilité', v: '7j/7 en haute saison (8h–20h)' },
+              { k: 'Sur l’eau', v: 'Réparation à flot (bateau-atelier)' }, { k: 'Si besoin', v: 'Remorquage atelier / port' },
+              { k: 'Marques', v: 'Toutes marques de bateaux' }, { k: 'Zone', v: 'Lac d’Annecy et communes riveraines' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Pannes fréquentes »',
+        fields: [
+          { key: 'why.eyebrow', label: 'Sur-titre', type: 'text', default: 'Pannes fréquentes' },
+          { key: 'why.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Les pannes que nous traitons en urgence sur le lac' },
+          { key: 'why.intro', label: 'Introduction', type: 'textarea', default: "Une immobilisation sur l'eau est toujours stressante, parfois dangereuse. Notre rôle : vous remettre en sécurité au plus vite, puis réparer, sur place quand c'est possible, à l'atelier pour les pannes lourdes." },
+          {
+            key: 'why.cards', label: 'Pannes', type: 'list', itemLabel: 'Panne',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }, { key: 'fix', label: 'Résolution', type: 'text' }],
+            defaultList: [
+              { t: 'Panne moteur', d: 'Refus de démarrage, surchauffe, perte de puissance hors-bord ou in-board.', fix: 'Diagnostic & réparation à flot' },
+              { t: 'Panne électrique', d: 'Batterie déchargée, alternateur HS, coupure d’allumage ou d’électronique.', fix: 'Contrôle batterie / alternateur' },
+              { t: 'Hélice & propulsion', d: 'Hélice endommagée, transmission bloquée, prise dans un obstacle.', fix: 'Dégagement & remise en état' },
+              { t: 'Bateau immobilisé', d: 'Échouement, dérive ou impossibilité de rejoindre le port par vos moyens.', fix: 'Sécurisation & remorquage' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Déroulement »',
+        fields: [
+          { key: 'process.eyebrow', label: 'Sur-titre', type: 'text', default: 'Comment ça marche' },
+          { key: 'process.title', label: 'Titre', type: 'text', default: 'Comment se déroule un dépannage' },
+          {
+            key: 'process.steps', label: 'Étapes', type: 'list', itemLabel: 'Étape',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Votre appel d’urgence', d: 'Vous nous appelez ou remplissez le formulaire. On identifie immédiatement le type de panne et votre position sur le lac.' },
+              { t: 'Localisation & départ', d: 'Notre technicien localise votre embarcation et part vers vous avec le bateau-atelier équipé.' },
+              { t: 'Intervention sur l’eau', d: 'Diagnostic et réparation directement à flot quand c’est possible : moteur, batterie, circuit électrique, hélice.' },
+              { t: 'Remorquage si besoin', d: 'Pour une panne majeure, nous sécurisons et remorquons votre bateau jusqu’à notre atelier ou au port le plus proche.' },
+              { t: 'Remise en route', d: 'Contrôle final, vérification de sécurité et reprise de la navigation, ou prise en charge atelier pour les réparations lourdes.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Nos services de dépannage »',
+        fields: [
+          { key: 'services.eyebrow', label: 'Sur-titre', type: 'text', default: 'Intervention sur l’eau' },
+          { key: 'services.title', label: 'Titre', type: 'text', default: 'Nos services de dépannage' },
+          {
+            key: 'services.items', label: 'Services', type: 'list', itemLabel: 'Service',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'items', label: 'Sous-éléments (séparés par | )', type: 'text' }],
+            defaultList: [
+              { t: 'Mécanique', items: 'Moteurs hors-bord & in-board|Propulsion & transmission|Diagnostic électronique' },
+              { t: 'Électrique', items: 'Batteries & alternateurs|Diagnostic des circuits|Remplacement de composants' },
+              { t: 'Remorquage', items: 'Vers l’atelier ou un port|Aide mise à l’eau / sortie|Sécurisation panne majeure' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Zone d\'intervention »',
+        fields: [
+          { key: 'zones.eyebrow', label: 'Sur-titre', type: 'text', default: "Zone d'intervention" },
+          { key: 'zones.title', label: 'Titre', type: 'text', default: "Nous intervenons sur tout le lac d'Annecy" },
+          { key: 'zones.intro', label: 'Introduction (vide = version stylée)', type: 'textarea', default: "Notre bateau-atelier dépanne les bateaux sur l'ensemble du lac d'Annecy : d'Annecy à Doussard, en passant par Annecy-le-Vieux, Veyrier-du-Lac, Menthon-Saint-Bernard, Talloires-Montmin, Duingt, Saint-Jorioz et Sevrier. Sur le Léman ou le lac du Bourget, contactez-nous." },
+          {
+            key: 'zones.items', label: 'Communes', type: 'list', itemLabel: 'Commune',
+            itemFields: [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'desc', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { name: 'Annecy', desc: 'Au cœur de la ville, port de l’Évêché, Marquisats et canal du Vassé : nous rejoignons votre bateau en quelques minutes.' },
+              { name: 'Annecy-le-Vieux', desc: 'Plage et port d’Albigny : prise en charge rapide sur toute la rive nord-est du lac.' },
+              { name: 'Veyrier-du-Lac', desc: 'Port de Veyrier et rive est, au pied du Mont Veyrier : un secteur que nous connaissons parfaitement.' },
+              { name: 'Menthon-Saint-Bernard', desc: 'Petit port sous le château de Menthon, à l’accès délicat : nous y intervenons en sécurité.' },
+              { name: 'Talloires-Montmin', desc: 'Baie de Talloires et ses roselières, peu profonde par endroits : nous adaptons l’approche.' },
+              { name: 'Duingt', desc: 'Défilé de Duingt, passage étroit entre grand et petit lac : un secteur que nous maîtrisons.' },
+              { name: 'Saint-Jorioz', desc: 'Grande plage et roselières de la rive ouest : dépannage et assistance sur tout le secteur.' },
+              { name: 'Sevrier', desc: 'Port de Sevrier, rive ouest : à quelques minutes de notre base, un délai parmi les plus courts.' },
+              { name: 'Doussard', desc: 'Bout du lac et réserve naturelle : zone sud peu profonde où nous intervenons avec précaution.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'FAQ',
+        fields: [
+          {
+            key: 'faq.items', label: 'Questions / réponses', type: 'list', itemLabel: 'Question',
+            itemFields: [{ key: 'q', label: 'Question', type: 'text' }, { key: 'a', label: 'Réponse', type: 'textarea' }],
+            defaultList: [
+              { q: 'Combien de temps faut-il pour qu’un technicien arrive sur le lac d’Annecy ?', a: 'Notre équipe intervient généralement sous 30 à 60 minutes selon votre localisation et la période. En haute saison, nous sommes mobilisés 7j/7 pour réduire le délai.' },
+              { q: 'Quels types de bateaux pouvez-vous dépanner ?', a: 'Tous types d’embarcations : moteurs hors-bord et in-board, runabouts, wakeboats, pneumatiques et semi-rigides. Nos techniciens interviennent sur la plupart des marques.' },
+              { q: 'Proposez-vous le remorquage ?', a: 'Oui. Lorsque la panne ne peut pas être résolue à flot, nous sécurisons votre bateau et le remorquons jusqu’à notre atelier ou au port le plus proche.' },
+              { q: 'Quels sont vos horaires d’intervention ?', a: 'Nous intervenons 7j/7 en période estivale, de 8h00 à 20h00. En cas d’urgence hors de ces horaires, contactez-nous : nous faisons notre maximum.' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   serviceHero('transport', 'Service — Transport', '/transport', '/images/services/transport.webp',
     'Transport de bateau en France et en Europe',
     'Achat, vente ou simple déplacement ? MotorBoat 74 assure le convoyage sécurisé de votre bateau, avec véhicules et remorques adaptés, partout en France et en Europe.'),

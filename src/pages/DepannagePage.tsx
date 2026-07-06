@@ -27,32 +27,8 @@ import {
   MessageCircle,
 } from 'lucide-react';
 
-const ZONES: { name: string; desc: string }[] = [
-  { name: 'Annecy', desc: 'Au cœur de la ville, port de l’Évêché, Marquisats et canal du Vassé : nous rejoignons votre bateau en quelques minutes pour le dépanner ou le remorquer.' },
-  { name: 'Annecy-le-Vieux', desc: 'Plage et port d’Albigny : prise en charge rapide d’une panne sur toute la rive nord-est du lac.' },
-  { name: 'Veyrier-du-Lac', desc: 'Port de Veyrier et rive est, au pied du Mont Veyrier : un secteur passant que nous connaissons parfaitement pour intervenir vite.' },
-  { name: 'Menthon-Saint-Bernard', desc: 'Petit port sous le château de Menthon, à l’accès délicat : nous y intervenons en sécurité, à flot ou par remorquage.' },
-  { name: 'Talloires-Montmin', desc: 'Baie de Talloires et ses roselières, peu profonde par endroits : nous adaptons l’approche pour vous récupérer sans risque.' },
-  { name: 'Duingt', desc: 'Défilé de Duingt, passage étroit entre grand et petit lac : un secteur que nous maîtrisons pour remorquer en toute sécurité.' },
-  { name: 'Saint-Jorioz', desc: 'Grande plage et roselières de la rive ouest : dépannage et assistance sur tout le secteur jusqu’à la base nautique.' },
-  { name: 'Sevrier', desc: 'Port de Sevrier, rive ouest : à quelques minutes de notre base, l’un de nos délais d’intervention les plus courts.' },
-  { name: 'Doussard', desc: 'Bout du lac et réserve naturelle, près de l’embouchure de l’Eau Morte : zone sud peu profonde où nous intervenons avec précaution.' },
-];
-
-const STEPS = [
-  { t: 'Votre appel d’urgence', d: 'Vous nous appelez ou remplissez le formulaire. On identifie immédiatement le type de panne et votre position sur le lac.' },
-  { t: 'Localisation & départ', d: 'Notre technicien localise votre embarcation et part vers vous avec le bateau-atelier équipé.' },
-  { t: 'Intervention sur l’eau', d: 'Diagnostic et réparation directement à flot quand c’est possible : moteur, batterie, circuit électrique, hélice.' },
-  { t: 'Remorquage si besoin', d: 'Pour une panne majeure, nous sécurisons et remorquons votre bateau jusqu’à notre atelier ou au port le plus proche.' },
-  { t: 'Remise en route', d: 'Contrôle final, vérification de sécurité et reprise de la navigation, ou prise en charge atelier pour les réparations lourdes.' },
-];
-
-const BREAKDOWNS = [
-  { Icon: Wrench, t: 'Panne moteur', d: 'Refus de démarrage, surchauffe, perte de puissance hors-bord ou in-board.', fix: 'Diagnostic & réparation à flot' },
-  { Icon: BatteryWarning, t: 'Panne électrique', d: 'Batterie déchargée, alternateur HS, coupure d’allumage ou d’électronique.', fix: 'Contrôle batterie / alternateur' },
-  { Icon: Anchor, t: 'Hélice & propulsion', d: 'Hélice endommagée, transmission bloquée, prise dans un obstacle.', fix: 'Dégagement & remise en état' },
-  { Icon: LifeBuoy, t: 'Bateau immobilisé', d: 'Échouement, dérive ou impossibilité de rejoindre le port par vos moyens.', fix: 'Sécurisation & remorquage' },
-];
+const BREAKDOWN_ICONS = [Wrench, BatteryWarning, Anchor, LifeBuoy];
+const DSERVICE_ICONS = [Wrench, Zap, Ship];
 
 const FAQS = [
   {
@@ -196,18 +172,18 @@ export function DepannagePage() {
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">
-              {[
-                { Icon: LifeBuoy, t: '7j/7', d: 'Équipe mobilisée en haute saison (8h–20h).' },
-                { Icon: MapPin, t: "Lac d'Annecy", d: 'Expertise locale du plan d’eau et de ses ports.' },
-              ].map(({ Icon, t, d }, i) => (
-                <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
-                  <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <p className="font-bold text-white text-base uppercase tracking-tight">{t}</p>
-                    <p className="text-xs text-gray-400 mt-1 font-medium">{d}</p>
+              {t.list<{ t: string; d: string }>('hero.usps').map((u, i) => {
+                const Icon = [LifeBuoy, MapPin][i] || LifeBuoy;
+                return (
+                  <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
+                    <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <p className="font-bold text-white text-base uppercase tracking-tight">{u.t}</p>
+                      <p className="text-xs text-gray-400 mt-1 font-medium">{u.d}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -242,15 +218,17 @@ export function DepannagePage() {
           <div className="rounded-[2rem] border border-gray-200 bg-white shadow-xl shadow-brand-dark/5 overflow-hidden">
             <div className="flex items-center gap-3 px-6 sm:px-10 py-4 border-b border-gray-200 bg-gray-50">
               <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">En bref, Dépannage bateau Annecy</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand-cyan">{t('bref.eyebrow') || 'En bref, Dépannage bateau Annecy'}</span>
             </div>
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               <div>
                 <p className="text-lg md:text-xl text-brand-dark leading-relaxed font-medium">
-                  <strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> assure le <strong>dépannage de bateau sur le lac d'Annecy</strong>, 7j/7 en saison, avec un bateau-atelier équipé.
+                  {t.raw('bref.lead')
+                    ? t.raw('bref.lead')
+                    : <><strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> assure le <strong>dépannage de bateau sur le lac d'Annecy</strong>, 7j/7 en saison, avec un bateau-atelier équipé.</>}
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base">
-                  En cas de panne moteur, électrique ou d'immobilisation sur l'eau, nous intervenons généralement sous 30 à 60&nbsp;minutes pour réparer directement à flot. Si nécessaire, nous sécurisons et remorquons votre bateau jusqu'à notre atelier ou au port le plus proche.
+                  {t('bref.desc')}
                 </p>
                 <div className="flex flex-wrap gap-3 mt-6">
                   <a href={SITE.phoneHref} className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition-colors">
@@ -262,22 +240,18 @@ export function DepannagePage() {
                 </div>
               </div>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 content-start">
-                {[
-                  { Icon: Clock, k: 'Délai', v: '30 à 60 min sur le lac d’Annecy' },
-                  { Icon: LifeBuoy, k: 'Disponibilité', v: '7j/7 en haute saison (8h–20h)' },
-                  { Icon: PackageCheck, k: 'Sur l’eau', v: 'Réparation à flot (bateau-atelier)' },
-                  { Icon: Ship, k: 'Si besoin', v: 'Remorquage atelier / port' },
-                  { Icon: ShieldCheck, k: 'Marques', v: 'Toutes marques de bateaux' },
-                  { Icon: MapPin, k: 'Zone', v: 'Lac d’Annecy et communes riveraines' },
-                ].map(({ Icon, k, v }) => (
-                  <div key={k} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
-                    <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
-                    <div>
-                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{k}</dt>
-                      <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{v}</dd>
+                {t.list<{ k: string; v: string }>('bref.facts').map((f, i) => {
+                  const Icon = [Clock, LifeBuoy, PackageCheck, Ship, ShieldCheck, MapPin][i] || MapPin;
+                  return (
+                    <div key={i} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
+                      <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
+                      <div>
+                        <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{f.k}</dt>
+                        <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{f.v}</dd>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </dl>
             </div>
           </div>
@@ -289,28 +263,31 @@ export function DepannagePage() {
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -z-10"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">Pannes fréquentes</span>
+            <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">{t('why.eyebrow')}</span>
             <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-6">
-              Les pannes que nous traitons en urgence sur le <span className="text-brand-cyan">lac</span>
+              {t.raw('why.title')
+                ? t.raw('why.title')
+                : <>Les pannes que nous traitons en urgence sur le <span className="text-brand-cyan">lac</span></>}
             </h2>
             <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
-              Une immobilisation sur l'eau est toujours stressante, parfois dangereuse. Notre rôle&nbsp;: vous remettre en sécurité au plus vite, puis réparer, sur place quand c'est possible, à l'atelier pour les pannes lourdes.
+              {t('why.intro')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {BREAKDOWNS.map(({ Icon, t, d, fix }) => (
-              <div key={t} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
-                <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
-                  <Icon className="w-6 h-6" />
+            {t.list<{ t: string; d: string; fix: string }>('why.cards').map((c, i) => {
+              const Icon = BREAKDOWN_ICONS[i] || Wrench;
+              return (
+                <div key={i} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+                  <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{c.t}</h3>
+                  <p className="text-sm text-gray-400 leading-relaxed font-light">{c.d}</p>
+                  {c.fix && <div className="mt-4 pt-4 border-t border-white/5 text-xs text-brand-cyan font-bold tracking-wider uppercase">{c.fix}</div>}
                 </div>
-                <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{t}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed font-light">{d}</p>
-                <div className="mt-4 pt-4 border-t border-white/5 text-xs text-brand-cyan font-bold tracking-wider uppercase">
-                  {fix}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -324,13 +301,13 @@ export function DepannagePage() {
               {/* Process */}
               <div>
                 <div className="mb-12">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Comment ça marche</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('process.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">
-                    Comment se déroule un dépannage
+                    {t('process.title')}
                   </h2>
                 </div>
                 <div className="relative border-l border-gray-200 ml-4 md:ml-6 space-y-12 pl-8 pb-4">
-                  {STEPS.map((s, i) => (
+                  {t.list<{ t: string; d: string }>('process.steps').map((s, i) => (
                     <div key={i} className="relative">
                       <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">
                         {i + 1}
@@ -345,46 +322,47 @@ export function DepannagePage() {
               {/* Services de dépannage */}
               <div>
                 <div className="mb-10">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Intervention sur l’eau</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('services.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Nos services de dépannage
+                    {t('services.title')}
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  {[
-                    { Icon: Wrench, t: 'Mécanique', items: ['Moteurs hors-bord & in-board', 'Propulsion & transmission', 'Diagnostic électronique'] },
-                    { Icon: Zap, t: 'Électrique', items: ['Batteries & alternateurs', 'Diagnostic des circuits', 'Remplacement de composants'] },
-                    { Icon: Ship, t: 'Remorquage', items: ['Vers l’atelier ou un port', 'Aide mise à l’eau / sortie', 'Sécurisation panne majeure'] },
-                  ].map(({ Icon, t, items }) => (
-                    <div key={t} className="bg-white border border-gray-200 rounded-3xl p-6">
-                      <span className="w-11 h-11 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-4"><Icon className="w-5 h-5" /></span>
-                      <h3 className="font-bold text-brand-dark uppercase tracking-tight text-sm mb-3">{t}</h3>
-                      <ul className="space-y-2">
-                        {items.map((it) => (
-                          <li key={it} className="flex items-start gap-2 text-gray-600 text-sm">
-                            <CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0 mt-0.5" /> {it}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+                  {t.list<{ t: string; items: string }>('services.items').map((s, i) => {
+                    const Icon = DSERVICE_ICONS[i] || Wrench;
+                    return (
+                      <div key={i} className="bg-white border border-gray-200 rounded-3xl p-6">
+                        <span className="w-11 h-11 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-4"><Icon className="w-5 h-5" /></span>
+                        <h3 className="font-bold text-brand-dark uppercase tracking-tight text-sm mb-3">{s.t}</h3>
+                        <ul className="space-y-2">
+                          {String(s.items || '').split('|').filter(Boolean).map((it, k) => (
+                            <li key={k} className="flex items-start gap-2 text-gray-600 text-sm">
+                              <CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0 mt-0.5" /> {it}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* Zones d'intervention */}
               <div>
                 <div className="mb-8">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Zone d'intervention</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('zones.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Nous intervenons sur tout le lac d'Annecy
+                    {t('zones.title')}
                   </h2>
                   <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
-                    Notre bateau-atelier dépanne les bateaux sur l'ensemble du lac d'Annecy : d'<strong>Annecy</strong> à <strong>Doussard</strong>, en passant par <strong>Annecy-le-Vieux</strong>, <strong>Veyrier-du-Lac</strong>, <strong>Menthon-Saint-Bernard</strong>, <strong>Talloires-Montmin</strong>, <strong>Duingt</strong>, <strong>Saint-Jorioz</strong> et <strong>Sevrier</strong>. Sur le Léman ou le lac du Bourget, contactez-nous : nous étudions chaque demande.
+                    {t.raw('zones.intro')
+                      ? t.raw('zones.intro')
+                      : <>Notre bateau-atelier dépanne les bateaux sur l'ensemble du lac d'Annecy : d'<strong>Annecy</strong> à <strong>Doussard</strong>, en passant par <strong>Annecy-le-Vieux</strong>, <strong>Veyrier-du-Lac</strong>, <strong>Menthon-Saint-Bernard</strong>, <strong>Talloires-Montmin</strong>, <strong>Duingt</strong>, <strong>Saint-Jorioz</strong> et <strong>Sevrier</strong>. Sur le Léman ou le lac du Bourget, contactez-nous : nous étudions chaque demande.</>}
                   </p>
                 </div>
                 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {ZONES.map((z) => (
-                    <div key={z.name} className="bg-white border border-gray-200 rounded-2xl p-5 flex gap-3">
+                  {t.list<{ name: string; desc: string }>('zones.items').map((z, i) => (
+                    <div key={i} className="bg-white border border-gray-200 rounded-2xl p-5 flex gap-3">
                       <MapPin className="w-4 h-4 text-brand-cyan mt-0.5 shrink-0" />
                       <div>
                         <dt className="font-bold text-brand-dark uppercase tracking-tight text-sm">{z.name}</dt>
@@ -404,7 +382,7 @@ export function DepannagePage() {
                   </h2>
                 </div>
                 <div className="space-y-4">
-                  {FAQS.map((faq, idx) => (
+                  {t.list<{ q: string; a: string }>('faq.items').map((faq, idx) => (
                     <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
                       <h3 className="m-0">
                         <button
