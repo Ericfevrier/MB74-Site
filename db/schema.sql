@@ -167,6 +167,16 @@ CREATE TABLE IF NOT EXISTS content_versions (
   KEY idx_versions_entity (entity_type, entity_id, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Redirections 301/302 (gérées depuis l'admin, appliquées par le serveur).
+CREATE TABLE IF NOT EXISTS redirects (
+  id          INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  source_path VARCHAR(512) NOT NULL,
+  target      VARCHAR(512) NOT NULL,
+  code        SMALLINT     NOT NULL DEFAULT 301,
+  created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uniq_redirect_source (source_path)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Messages de contact (formulaires contact + hivernage).
 CREATE TABLE IF NOT EXISTS contact_submissions (
   id           INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

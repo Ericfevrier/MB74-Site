@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Lock, LogOut, Ship, Inbox, Loader2, LayoutDashboard, Menu, X, ExternalLink,
   FileText, Settings, Users, MapPin, PanelLeftClose, PanelLeft, Anchor, Image as ImageIcon,
-  ScrollText, ShieldCheck,
+  ScrollText, ShieldCheck, Milestone,
 } from 'lucide-react';
 import { adminApi } from '../../lib/adminApi';
 import { OccasionsManager } from './OccasionsManager';
@@ -16,9 +16,10 @@ import { MediaManager } from './MediaManager';
 import { SettingsManager } from './SettingsManager';
 import { UsersManager } from './UsersManager';
 import { ActivityView } from './ActivityView';
+import { RedirectsManager } from './RedirectsManager';
 
 type Auth = { state: 'loading' } | { state: 'out' } | { state: 'in'; username: string; role: string };
-export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'blog' | 'team' | 'cities' | 'media' | 'messages' | 'settings' | 'activity' | 'users';
+export type SectionId = 'dashboard' | 'occasions' | 'brands' | 'blog' | 'team' | 'cities' | 'media' | 'messages' | 'settings' | 'activity' | 'users' | 'redirects';
 
 const INPUT =
   'w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-brand-dark focus:outline-none focus:border-brand-cyan focus:ring-2 focus:ring-brand-cyan/20 transition';
@@ -46,6 +47,7 @@ const NAV: NavEntry[] = [
       { id: 'media', label: 'Médias', Icon: ImageIcon },
       { id: 'messages', label: 'Messages', Icon: Inbox },
       { id: 'activity', label: 'Journal', Icon: ScrollText },
+      { id: 'redirects', label: 'Redirections', Icon: Milestone },
       { id: 'settings', label: 'Réglages', Icon: Settings },
       { id: 'users', label: 'Utilisateurs', Icon: ShieldCheck, superOnly: true },
     ],
@@ -220,6 +222,7 @@ export function AdminApp() {
           {section === 'cities' && <CitiesManager />}
           {section === 'media' && <MediaManager />}
           {section === 'activity' && <ActivityView />}
+          {section === 'redirects' && <RedirectsManager />}
           {section === 'users' && auth.role === 'super-admin' && <UsersManager />}
           {section === 'messages' && <MessagesInbox onChange={refreshUnread} />}
           {section === 'settings' && <SettingsManager />}

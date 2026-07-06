@@ -85,6 +85,13 @@ export interface VersionEntry {
   created_at: string;
 }
 
+export interface Redirect {
+  id: number;
+  source_path: string;
+  target: string;
+  code: 301 | 302;
+}
+
 export interface ContactMessage {
   id: number;
   nom: string;
@@ -143,6 +150,11 @@ export const adminApi = {
 
   listVersions: (type: string, id: number) => req<{ versions: VersionEntry[] }>('GET', `/api/admin/versions/${type}/${id}`),
   restoreVersion: (versionId: number) => req('POST', `/api/admin/versions/${versionId}/restore`),
+
+  listRedirects: () => req<{ redirects: Redirect[] }>('GET', '/api/admin/redirects'),
+  createRedirect: (r: { source_path: string; target: string; code: number }) => req('POST', '/api/admin/redirects', r),
+  updateRedirect: (id: number, r: { source_path: string; target: string; code: number }) => req('PUT', `/api/admin/redirects/${id}`, r),
+  deleteRedirect: (id: number) => req('DELETE', `/api/admin/redirects/${id}`),
 
   listBoats: () => req<{ boats: AdminBoat[] }>('GET', '/api/admin/used-boats'),
   createBoat: (b: Partial<AdminBoat>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/used-boats', b),

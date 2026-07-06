@@ -21,6 +21,7 @@ import nodemailer from 'nodemailer';
 import { dbConfigured, dbHealthy } from './db.js';
 import { mountAdmin, saveSubmissionDb } from './admin.js';
 import { buildSitemap } from './sitemap.js';
+import { redirectMiddleware } from './redirects.js';
 
 dotenv.config({ path: '.env.local' });
 dotenv.config(); // .env en repli
@@ -88,6 +89,9 @@ app.use((req, res, next) => {
   res.set('WWW-Authenticate', 'Basic realm="Motor Boat 74 - preproduction", charset="UTF-8"');
   return res.status(401).send('Acces restreint a la preproduction.');
 });
+
+// Redirections 301/302 gérées en admin (avant tout le reste, hors /api).
+app.use(redirectMiddleware());
 
 /* ------------------------------------------------------------------ */
 /*  E-mail (nodemailer)                                               */

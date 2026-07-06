@@ -12,6 +12,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcryptjs';
 import { query, dbConfigured } from './db.js';
+import { refreshRedirects, normalizePath } from './redirects.js';
 import {
   COOKIE_NAME,
   COOKIE_TTL_MS,
@@ -1147,6 +1148,57 @@ export function mountAdmin(app) {
       res.json({ ok: true });
     } catch (e) {
       console.error('POST /api/admin/versions/restore', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  /* ----------------------- Redirections 301 ----------------------- */
+
+  app.get('/api/admin/redirects', requireAuth, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const rows = await query('SELECT * FROM redirects ORDER BY source_path ASC');
+      res.json({ redirects: rows });
+    } catch (e) {
+      console.error('GET /api/admin/redirects', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
+  const saveRedirect = async (req, res, id) => {
+    if (!dbConfigured()) return needDb(res);
+    const source = normalizePath((req.body && req.body.source_path) || '');
+    const target = String((req.body && req.body.target) || '').trim();
+    const code = Number(req.body && req.body.code) === 302 ? 302 : 301;
+    if (!source || source === '/' || !target) return res.status(400).json({ ok: false, error: 'Source et cible requises.' });
+    if (normalizePath(target) === source) return res.status(400).json({ ok: false, error: 'La source et la cible sont identiques (boucle).' });
+    try {
+      if (id) {
+        const r = await query('UPDATE redirects SET source_path = ?, target = ?, code = ? WHERE id = ?', [source, target, code, id]);
+        if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      } else {
+        await query('INSERT INTO redirects (source_path, target, code) VALUES (?, ?, ?)', [source, target, code]);
+      }
+      await refreshRedirects();
+      res.json({ ok: true });
+    } catch (e) {
+      if (e.code === 'ER_DUP_ENTRY') return res.status(409).json({ ok: false, error: 'Une redirection existe déjà pour cette source.' });
+      console.error('save redirect', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  };
+  app.post('/api/admin/redirects', requireAuth, (req, res) => saveRedirect(req, res, null));
+  app.put('/api/admin/redirects/:id', requireAuth, (req, res) => saveRedirect(req, res, Number(req.params.id)));
+
+  app.delete('/api/admin/redirects/:id', requireAuth, async (req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    try {
+      const r = await query('DELETE FROM redirects WHERE id = ?', [Number(req.params.id)]);
+      if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
+      await refreshRedirects();
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('DELETE /api/admin/redirects', e.message);
       res.status(500).json({ ok: false, error: 'Erreur base de données.' });
     }
   });
