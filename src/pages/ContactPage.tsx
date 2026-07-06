@@ -6,6 +6,7 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { GoogleMapCustom } from '../components/GoogleMapCustom';
 import { pageMeta } from '../lib/meta';
+import { usePageContent } from '../lib/pageContent';
 
 export function contactMeta() {
   const canonical = `${SITE.url}/contact/`;
@@ -42,21 +43,24 @@ export function contactMeta() {
 }
 
 export function ContactPage() {
+  const t = usePageContent('contact');
   return (
     <div className="bg-white">
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/images/2026-p23-ext-09-11zon.jpg" alt="Motor Boat 74" className="w-full h-full object-cover opacity-35" referrerPolicy="no-referrer" />
+          <img src={t('hero.image')} alt="Motor Boat 74" className="w-full h-full object-cover opacity-35" referrerPolicy="no-referrer" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/85 via-brand-dark/85 to-brand-dark" />
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
           <Breadcrumb items={[{ label: 'Accueil', to: '/' }, { label: 'Contact' }]} />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Nous contacter</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">{t('hero.title')}</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mx-auto">
-            Vous pouvez nous joindre via notre formulaire de contact ci-dessous ou par téléphone au{' '}
-            <a href={SITE.phoneHref} className="text-brand-cyan font-bold hover:underline">{SITE.phoneDisplay}</a>. Notre équipe
-            reste à votre disposition pour vous renseigner ou vous établir un devis.
+            {t.raw('hero.subtitle')
+              ? t.raw('hero.subtitle')
+              : <>Vous pouvez nous joindre via notre formulaire de contact ci-dessous ou par téléphone au{' '}
+                <a href={SITE.phoneHref} className="text-brand-cyan font-bold hover:underline">{SITE.phoneDisplay}</a>. Notre équipe
+                reste à votre disposition pour vous renseigner ou vous établir un devis.</>}
           </p>
         </div>
       </header>

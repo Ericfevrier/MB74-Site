@@ -7,6 +7,7 @@ import { soldUsedBoats, type UsedBoat } from '../data/usedBoats';
 import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
+import { usePageContent } from '../lib/pageContent';
 import { breadcrumbSchema } from '../lib/schema';
 
 const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
@@ -31,6 +32,7 @@ export function bateauxVenduMeta() {
 }
 
 export function BateauxVenduPage({ boats: boatsProp }: { boats?: UsedBoat[] } = {}) {
+  const t = usePageContent('bateaux-vendus');
   const boats = boatsProp ?? soldUsedBoats();
 
   // Aucun vendu → on renvoie vers le stock disponible plutôt que d'afficher une page vide.
@@ -48,10 +50,11 @@ export function BateauxVenduPage({ boats: boatsProp }: { boats?: UsedBoat[] } = 
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
           <Breadcrumb className="mb-6 inline-flex" items={[{ label: 'Accueil', to: '/' }, { label: 'Bateaux', to: '/bateaux' }, { label: 'Vendus' }]} />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Bateaux vendus</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">{t('hero.title')}</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mx-auto">
-            Un aperçu des bateaux récemment vendus par Motor Boat 74. Un modèle similaire vous intéresse ?
-            Nous lançons une <strong>recherche sur mesure</strong> et vous alertons dès qu’un bateau correspondant arrive.
+            {t.raw('hero.subtitle')
+              ? t.raw('hero.subtitle')
+              : <>Un aperçu des bateaux récemment vendus par Motor Boat 74. Un modèle similaire vous intéresse ? Nous lançons une <strong>recherche sur mesure</strong> et vous alertons dès qu’un bateau correspondant arrive.</>}
           </p>
           <Link to="/bateaux/occasion" className="inline-flex items-center gap-2 mt-8 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:bg-white transition">
             Voir les occasions disponibles <ArrowRight size={16} />

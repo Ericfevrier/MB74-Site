@@ -43,6 +43,24 @@ function serviceHero(key: string, label: string, path: string, image: string, ti
   };
 }
 
+/** Page avec bannière simple : titre + sous-titre (sans image de fond dédiée). */
+function titleHero(key: string, label: string, path: string, title: string, subtitle: string): PageDef {
+  return {
+    key,
+    label,
+    path,
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.title', label: 'Titre', type: 'text', default: title },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée par défaut)', type: 'textarea', default: subtitle },
+        ],
+      },
+    ],
+  };
+}
+
 export const PAGES: PageDef[] = [
   {
     key: 'accueil',
@@ -103,6 +121,27 @@ export const PAGES: PageDef[] = [
   serviceHero('remorques', 'Service — Remorques', '/remorques', '/images/services/remorques.webp',
     'Remorques de bateau sur mesure',
     'Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. MotorBoat 74 sélectionne, règle et prépare une remorque homologuée CE, parfaitement adaptée à votre embarcation.'),
+  titleHero('bateaux', 'Bateaux — Accueil catalogue', '/bateaux', 'Nos bateaux',
+    "Wakeboats et bateaux de ski nautique Nautique et MasterCraft, neufs et d'occasion, près du lac d'Annecy. Conseil personnalisé, essai sur l'eau, reprise et financement."),
+  titleHero('bateaux-neufs', 'Bateaux — Neufs', '/bateaux/neufs', 'Bateaux neufs',
+    "La dernière génération de wakeboats et de bateaux de ski nautique Nautique et MasterCraft. Configurez votre bateau, essayez-le sur le lac d'Annecy et profitez de notre accompagnement complet."),
+  titleHero('bateaux-vendus', 'Bateaux — Vendus', '/bateaux/vendu', 'Bateaux vendus',
+    "Un aperçu des bateaux récemment vendus par Motor Boat 74. Un modèle similaire vous intéresse ? Nous lançons une recherche sur mesure et vous alertons dès qu'un bateau correspondant arrive."),
+  {
+    key: 'contact',
+    label: 'Contact',
+    path: '/contact',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/2026-p23-ext-09-11zon.jpg' },
+          { key: 'hero.title', label: 'Titre', type: 'text', default: 'Nous contacter' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version par défaut avec téléphone)', type: 'textarea', default: 'Vous pouvez nous joindre via notre formulaire de contact ci-dessous ou par téléphone. Notre équipe reste à votre disposition pour vous renseigner ou vous établir un devis.' },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Valeurs par défaut aplaties : { pageKey: { fieldKey: default } }. */

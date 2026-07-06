@@ -9,6 +9,7 @@ import { brandsData } from '../data/brands';
 import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
+import { usePageContent } from '../lib/pageContent';
 import { breadcrumbSchema } from '../lib/schema';
 
 const HERO = 'https://www.mastercraft.com/media/cwehmhdl/mb-2-3.webp';
@@ -61,6 +62,7 @@ export function bateauxNeufsMeta() {
 }
 
 export function BateauxNeufsPage() {
+  const t = usePageContent('bateaux-neufs');
   const brands = neufsBrands();
   const allModels = brands.flatMap((b) => b.models.map((m) => ({ b, m })));
 
@@ -75,10 +77,11 @@ export function BateauxNeufsPage() {
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
           <Breadcrumb className="mb-6 inline-flex" items={[{ label: 'Accueil', to: '/' }, { label: 'Bateaux', to: '/bateaux' }, { label: 'Neufs' }]} />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Bateaux neufs</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">{t('hero.title')}</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mx-auto">
-            La dernière génération de wakeboats et de bateaux de ski nautique <strong>Nautique</strong> et <strong>MasterCraft</strong>.
-            Configurez votre bateau, essayez-le sur le lac d’Annecy et profitez de notre accompagnement complet.
+            {t.raw('hero.subtitle')
+              ? t.raw('hero.subtitle')
+              : <>La dernière génération de wakeboats et de bateaux de ski nautique <strong>Nautique</strong> et <strong>MasterCraft</strong>. Configurez votre bateau, essayez-le sur le lac d’Annecy et profitez de notre accompagnement complet.</>}
           </p>
           {/* Ancres marques */}
           <nav aria-label="Marques" className="flex flex-wrap items-center justify-center gap-3 mt-9">

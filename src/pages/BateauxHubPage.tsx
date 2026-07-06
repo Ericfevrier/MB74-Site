@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { ArrowRight, Sparkles, Tag, ShieldCheck, Waves, Wallet, ChevronRight } from 'lucide-react';
 import { SITE } from '../data/site';
 import { pageMeta } from '../lib/meta';
+import { usePageContent } from '../lib/pageContent';
 import { breadcrumbSchema, faqSchema } from '../lib/schema';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { brandsData } from '../data/brands';
@@ -61,6 +62,7 @@ export function bateauxHubMeta() {
 }
 
 export function BateauxHubPage() {
+  const t = usePageContent('bateaux');
   const usedCount = availableUsedBoats().length;
   const newCount = BRAND_IDS.reduce((n, id) => n + (BRAND_MODELS[id]?.order.length || 0), 0);
 
@@ -74,10 +76,11 @@ export function BateauxHubPage() {
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
           <Breadcrumb className="mb-6 inline-flex" items={[{ label: 'Accueil', to: '/' }, { label: 'Bateaux' }]} />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Nos bateaux</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">{t('hero.title')}</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mx-auto">
-            Wakeboats et bateaux de ski nautique <strong>Nautique</strong> et <strong>MasterCraft</strong>, neufs et d’occasion,
-            près du lac d’Annecy. Conseil personnalisé, essai sur l’eau, reprise et financement.
+            {t.raw('hero.subtitle')
+              ? t.raw('hero.subtitle')
+              : <>Wakeboats et bateaux de ski nautique <strong>Nautique</strong> et <strong>MasterCraft</strong>, neufs et d’occasion, près du lac d’Annecy. Conseil personnalisé, essai sur l’eau, reprise et financement.</>}
           </p>
         </div>
       </header>
