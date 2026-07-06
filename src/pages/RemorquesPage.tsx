@@ -24,28 +24,7 @@ import {
   MessageCircle,
 } from 'lucide-react';
 
-const ZONES = ['Annecy', 'Lac d’Annecy', 'Lac du Bourget', 'Léman', 'Haute-Savoie'];
-
-const WHY = [
-  { Icon: ShieldCheck, t: 'Sécurité avant tout', d: 'Des remorques fiables et homologuées CE pour transporter sereinement.' },
-  { Icon: Ruler, t: 'Parfaitement adaptée', d: 'Dimensionnée selon la taille et le poids exact de votre bateau.' },
-  { Icon: Award, t: 'Marques partenaires', d: 'Une sélection de fabricants reconnus pour leur durabilité.' },
-  { Icon: Wrench, t: 'Prête à l’emploi', d: 'Réglage, contrôle et conseils de mise à l’eau inclus.' },
-];
-
-const CARACT = [
-  'Remorques simples ou doubles essieux, freinées',
-  'Adaptées wake, pêche, ski nautique',
-  'Homologation CE',
-  'Réglage et mise à l’eau inclus',
-];
-
-const STEPS = [
-  { t: 'Conseil personnalisé', d: 'On étudie votre bateau, vos trajets et votre fréquence d’utilisation pour cibler la bonne remorque.' },
-  { t: 'Sélection de la remorque', d: 'Nous choisissons le modèle adapté parmi nos marques partenaires, dimensionné à votre embarcation.' },
-  { t: 'Réglage & contrôle', d: 'Réglage des supports, vérification des feux, freins et organes de sécurité avant remise.' },
-  { t: 'Retrait ou livraison', d: 'Vous récupérez votre remorque prête à l’emploi, avec nos conseils de mise à l’eau.' },
-];
+const WHY_ICONS = [ShieldCheck, Ruler, Award, Wrench];
 
 const FAQS = [
   {
@@ -177,18 +156,18 @@ export function RemorquesPage() {
                 : <>Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. MotorBoat 74 sélectionne, règle et prépare une remorque <strong className="text-brand-cyan">homologuée CE</strong>, <strong className="text-white">parfaitement adaptée</strong> à votre embarcation.</>}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">
-              {[
-                { Icon: ShieldCheck, t: 'Homologuées CE', d: 'Des remorques fiables et conformes.' },
-                { Icon: Ruler, t: 'Sur mesure', d: 'Dimensionnée selon votre bateau.' },
-              ].map(({ Icon, t, d }, i) => (
-                <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
-                  <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <p className="font-bold text-white text-base uppercase tracking-tight">{t}</p>
-                    <p className="text-xs text-gray-400 mt-1 font-medium">{d}</p>
+              {t.list<{ t: string; d: string }>('hero.usps').map((u, i) => {
+                const Icon = [ShieldCheck, Ruler][i] || ShieldCheck;
+                return (
+                  <div key={i} className="flex items-start gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm transition-colors hover:bg-white/10 group">
+                    <Icon className="text-brand-cyan w-8 h-8 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <p className="font-bold text-white text-base uppercase tracking-tight">{u.t}</p>
+                      <p className="text-xs text-gray-400 mt-1 font-medium">{u.d}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button onClick={scrollToForm} className="bg-brand-cyan text-brand-dark px-10 py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-white transition-all duration-300 shadow-xl shadow-brand-cyan/20 active:translate-y-1 flex items-center justify-center gap-2">
@@ -220,10 +199,12 @@ export function RemorquesPage() {
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 p-6 sm:p-10">
               <div>
                 <p className="text-lg md:text-xl text-brand-dark leading-relaxed font-medium">
-                  <strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> propose des <strong>remorques de bateau sur mesure</strong> à Annecy et en Haute-Savoie.
+                  {t.raw('bref.lead')
+                    ? t.raw('bref.lead')
+                    : <><strong className="text-brand-cyan">MotorBoat&nbsp;74</strong> propose des <strong>remorques de bateau sur mesure</strong> à Annecy et en Haute-Savoie.</>}
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base">
-                  Remorques homologuées CE, simples ou doubles essieux freinées, adaptées au wake, à la pêche ou au ski nautique. Nous sélectionnons le modèle dimensionné à votre bateau parmi nos marques partenaires, et nous l'ajustons, prête à l'emploi.
+                  {t('bref.desc')}
                 </p>
                 <div className="flex flex-wrap gap-3 mt-6">
                   <button onClick={scrollToForm} className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition-colors">
@@ -235,22 +216,18 @@ export function RemorquesPage() {
                 </div>
               </div>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 content-start">
-                {[
-                  { Icon: ShieldCheck, k: 'Homologation', v: 'Norme CE' },
-                  { Icon: Ruler, k: 'Sur mesure', v: 'Selon taille & poids du bateau' },
-                  { Icon: Award, k: 'Marques', v: 'Partenaires reconnues' },
-                  { Icon: Wrench, k: 'Prête à l’emploi', v: 'Réglage & mise à l’eau' },
-                  { Icon: Anchor, k: 'Usages', v: 'Wake, pêche, ski nautique' },
-                  { Icon: MapPin, k: 'Zone', v: 'Annecy & Haute-Savoie' },
-                ].map(({ Icon, k, v }) => (
-                  <div key={k} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
-                    <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
-                    <div>
-                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{k}</dt>
-                      <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{v}</dd>
+                {t.list<{ k: string; v: string }>('bref.facts').map((f, i) => {
+                  const Icon = [ShieldCheck, Ruler, Award, Wrench, Anchor, MapPin][i] || MapPin;
+                  return (
+                    <div key={i} className="flex items-start gap-3 border-l-2 border-brand-cyan/40 pl-4">
+                      <Icon className="w-4 h-4 text-brand-cyan mt-1 flex-shrink-0" />
+                      <div>
+                        <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">{f.k}</dt>
+                        <dd className="text-sm font-semibold text-brand-dark leading-snug mt-0.5">{f.v}</dd>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </dl>
             </div>
           </div>
@@ -262,22 +239,27 @@ export function RemorquesPage() {
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -z-10"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">Voyagez l'esprit tranquille</span>
+            <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">{t('why.eyebrow')}</span>
             <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-6">
-              Pourquoi choisir votre remorque <span className="text-brand-cyan">chez nous</span>
+              {t.raw('why.title')
+                ? t.raw('why.title')
+                : <>Pourquoi choisir votre remorque <span className="text-brand-cyan">chez nous</span></>}
             </h2>
             <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed">
-              Une remorque bien choisie et bien réglée, c'est la garantie d'un transport sûr, et d'un bateau qui reste en parfait état sur la route comme à la mise à l'eau.
+              {t('why.intro')}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {WHY.map(({ Icon, t, d }) => (
-              <div key={t} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
-                <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6"><Icon className="w-6 h-6" /></div>
-                <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{t}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed font-light">{d}</p>
-              </div>
-            ))}
+            {t.list<{ t: string; d: string }>('why.cards').map((c, i) => {
+              const Icon = WHY_ICONS[i] || ShieldCheck;
+              return (
+                <div key={i} className="bg-ink-900 border border-white/5 hover:border-brand-cyan/30 p-8 rounded-3xl transition-all hover:-translate-y-2 duration-300">
+                  <div className="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan mb-6"><Icon className="w-6 h-6" /></div>
+                  <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-3">{c.t}</h3>
+                  <p className="text-sm text-gray-400 leading-relaxed font-light">{c.d}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -290,15 +272,15 @@ export function RemorquesPage() {
               {/* Caractéristiques */}
               <div>
                 <div className="mb-10">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">La remorque qu’il vous faut</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('services.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Des remorques adaptées à chaque bateau
+                    {t('services.title')}
                   </h2>
                 </div>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {CARACT.map((c) => (
-                    <li key={c} className="flex items-start gap-3 bg-white border border-gray-200 rounded-2xl p-5 text-sm text-gray-700">
-                      <CheckCircle className="w-5 h-5 text-brand-cyan flex-shrink-0 mt-0.5" /> {c}
+                  {t.list<{ name: string }>('services.items').map((c, i) => (
+                    <li key={i} className="flex items-start gap-3 bg-white border border-gray-200 rounded-2xl p-5 text-sm text-gray-700">
+                      <CheckCircle className="w-5 h-5 text-brand-cyan flex-shrink-0 mt-0.5" /> {c.name}
                     </li>
                   ))}
                 </ul>
@@ -307,13 +289,13 @@ export function RemorquesPage() {
               {/* Process */}
               <div>
                 <div className="mb-12">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Du conseil à la mise à l’eau</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('process.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">
-                    Comment on choisit votre remorque
+                    {t('process.title')}
                   </h2>
                 </div>
                 <div className="relative border-l border-gray-200 ml-4 md:ml-6 space-y-12 pl-8 pb-4">
-                  {STEPS.map((s, i) => (
+                  {t.list<{ t: string; d: string }>('process.steps').map((s, i) => (
                     <div key={i} className="relative">
                       <span className="absolute -left-[44px] top-0.5 w-8 h-8 rounded-full bg-white text-brand-cyan border border-brand-cyan/40 ring-4 ring-brand-light flex items-center justify-center font-bold text-[13px] tabular-nums shadow-sm">{i + 1}</span>
                       <h3 className="text-lg font-bold uppercase text-brand-dark">{s.t}</h3>
@@ -326,18 +308,18 @@ export function RemorquesPage() {
               {/* Zones */}
               <div>
                 <div className="mb-8">
-                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Zone d'intervention</span>
+                  <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">{t('zones.eyebrow')}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    À Annecy et dans toute la Haute-Savoie
+                    {t('zones.title')}
                   </h2>
                   <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
-                    Remorques disponibles pour retrait ou livraison à Annecy et autour des lacs alpins.
+                    {t('zones.intro')}
                   </p>
                 </div>
                 <ul role="list" className="flex flex-wrap gap-2.5">
-                  {ZONES.map((z) => (
-                    <li key={z} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-brand-dark text-xs font-semibold px-4 py-2 rounded-full">
-                      <MapPin className="w-3.5 h-3.5 text-brand-cyan" /> {z}
+                  {t.list<{ name: string }>('zones.items').map((z, i) => (
+                    <li key={i} className="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-brand-dark text-xs font-semibold px-4 py-2 rounded-full">
+                      <MapPin className="w-3.5 h-3.5 text-brand-cyan" /> {z.name}
                     </li>
                   ))}
                 </ul>
@@ -350,7 +332,7 @@ export function RemorquesPage() {
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">On répond à vos questions</h2>
                 </div>
                 <div className="space-y-4">
-                  {FAQS.map((faq, idx) => (
+                  {t.list<{ q: string; a: string }>('faq.items').map((faq, idx) => (
                     <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
                       <h3 className="m-0">
                         <button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full text-left p-6 flex items-center justify-between gap-4 font-medium text-base text-brand-dark hover:bg-gray-50 transition-colors" aria-expanded={activeFaq === idx}>

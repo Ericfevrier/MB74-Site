@@ -693,9 +693,120 @@ export const PAGES: PageDef[] = [
       },
     ],
   },
-  serviceHero('remorques', 'Service — Remorques', '/remorques', '/images/services/remorques.webp',
-    'Remorques de bateau sur mesure',
-    'Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. MotorBoat 74 sélectionne, règle et prépare une remorque homologuée CE, parfaitement adaptée à votre embarcation.'),
+  {
+    key: 'remorques',
+    label: 'Service — Remorques',
+    path: '/remorques',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/remorques.webp' },
+          { key: 'hero.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Remorques de bateau sur mesure' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: 'Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. MotorBoat 74 sélectionne, règle et prépare une remorque homologuée CE, parfaitement adaptée à votre embarcation.' },
+          {
+            key: 'hero.usps', label: 'Points forts (bannière)', type: 'list', itemLabel: 'Point fort',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'text' }],
+            defaultList: [{ t: 'Homologuées CE', d: 'Des remorques fiables et conformes.' }, { t: 'Sur mesure', d: 'Dimensionnée selon votre bateau.' }],
+          },
+        ],
+      },
+      {
+        title: 'Section « En bref »',
+        fields: [
+          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: 'MotorBoat 74 propose des remorques de bateau sur mesure à Annecy et en Haute-Savoie.' },
+          { key: 'bref.desc', label: 'Description', type: 'textarea', default: "Remorques homologuées CE, simples ou doubles essieux freinées, adaptées au wake, à la pêche ou au ski nautique. Nous sélectionnons le modèle dimensionné à votre bateau parmi nos marques partenaires, et nous l'ajustons, prête à l'emploi." },
+          {
+            key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
+            itemFields: [{ key: 'k', label: 'Intitulé', type: 'text' }, { key: 'v', label: 'Valeur', type: 'text' }],
+            defaultList: [
+              { k: 'Homologation', v: 'Norme CE' }, { k: 'Sur mesure', v: 'Selon taille & poids du bateau' },
+              { k: 'Marques', v: 'Partenaires reconnues' }, { k: 'Prête à l’emploi', v: 'Réglage & mise à l’eau' },
+              { k: 'Usages', v: 'Wake, pêche, ski nautique' }, { k: 'Zone', v: 'Annecy & Haute-Savoie' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Pourquoi choisir »',
+        fields: [
+          { key: 'why.eyebrow', label: 'Sur-titre', type: 'text', default: "Voyagez l'esprit tranquille" },
+          { key: 'why.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Pourquoi choisir votre remorque chez nous' },
+          { key: 'why.intro', label: 'Introduction', type: 'textarea', default: "Une remorque bien choisie et bien réglée, c'est la garantie d'un transport sûr, et d'un bateau qui reste en parfait état sur la route comme à la mise à l'eau." },
+          {
+            key: 'why.cards', label: 'Atouts', type: 'list', itemLabel: 'Atout',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Sécurité avant tout', d: 'Des remorques fiables et homologuées CE pour transporter sereinement.' },
+              { t: 'Parfaitement adaptée', d: 'Dimensionnée selon la taille et le poids exact de votre bateau.' },
+              { t: 'Marques partenaires', d: 'Une sélection de fabricants reconnus pour leur durabilité.' },
+              { t: 'Prête à l’emploi', d: 'Réglage, contrôle et conseils de mise à l’eau inclus.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Caractéristiques »',
+        fields: [
+          { key: 'services.eyebrow', label: 'Sur-titre', type: 'text', default: 'La remorque qu’il vous faut' },
+          { key: 'services.title', label: 'Titre', type: 'text', default: 'Des remorques adaptées à chaque bateau' },
+          {
+            key: 'services.items', label: 'Caractéristiques', type: 'list', itemLabel: 'Caractéristique',
+            itemFields: [{ key: 'name', label: 'Intitulé', type: 'text' }],
+            defaultList: [
+              { name: 'Remorques simples ou doubles essieux, freinées' }, { name: 'Adaptées wake, pêche, ski nautique' },
+              { name: 'Homologation CE' }, { name: 'Réglage et mise à l’eau inclus' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Déroulement »',
+        fields: [
+          { key: 'process.eyebrow', label: 'Sur-titre', type: 'text', default: 'Du conseil à la mise à l’eau' },
+          { key: 'process.title', label: 'Titre', type: 'text', default: 'Comment on choisit votre remorque' },
+          {
+            key: 'process.steps', label: 'Étapes', type: 'list', itemLabel: 'Étape',
+            itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'textarea' }],
+            defaultList: [
+              { t: 'Conseil personnalisé', d: 'On étudie votre bateau, vos trajets et votre fréquence d’utilisation pour cibler la bonne remorque.' },
+              { t: 'Sélection de la remorque', d: 'Nous choisissons le modèle adapté parmi nos marques partenaires, dimensionné à votre embarcation.' },
+              { t: 'Réglage & contrôle', d: 'Réglage des supports, vérification des feux, freins et organes de sécurité avant remise.' },
+              { t: 'Retrait ou livraison', d: 'Vous récupérez votre remorque prête à l’emploi, avec nos conseils de mise à l’eau.' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Section « Zone d\'intervention »',
+        fields: [
+          { key: 'zones.eyebrow', label: 'Sur-titre', type: 'text', default: "Zone d'intervention" },
+          { key: 'zones.title', label: 'Titre', type: 'text', default: 'À Annecy et dans toute la Haute-Savoie' },
+          { key: 'zones.intro', label: 'Introduction', type: 'textarea', default: 'Remorques disponibles pour retrait ou livraison à Annecy et autour des lacs alpins.' },
+          {
+            key: 'zones.items', label: 'Zones (badges)', type: 'list', itemLabel: 'Zone',
+            itemFields: [{ key: 'name', label: 'Nom', type: 'text' }],
+            defaultList: [{ name: 'Annecy' }, { name: 'Lac d’Annecy' }, { name: 'Lac du Bourget' }, { name: 'Léman' }, { name: 'Haute-Savoie' }],
+          },
+        ],
+      },
+      {
+        title: 'FAQ',
+        fields: [
+          {
+            key: 'faq.items', label: 'Questions / réponses', type: 'list', itemLabel: 'Question',
+            itemFields: [{ key: 'q', label: 'Question', type: 'text' }, { key: 'a', label: 'Réponse', type: 'textarea' }],
+            defaultList: [
+              { q: 'Comment choisir la bonne remorque pour mon bateau ?', a: 'Notre équipe vous accompagne pour sélectionner une remorque selon la taille de votre bateau, sa fréquence d’utilisation et vos trajets, pour un transport sécurisé et durable.' },
+              { q: 'Proposez-vous l’installation et la préparation à l’usage ?', a: 'Oui, nous préparons et ajustons chaque remorque pour qu’elle soit prête à l’emploi, avec un contrôle complet des équipements et des conseils.' },
+              { q: 'Où obtenir une remorque sur mesure à Annecy ou en Haute-Savoie ?', a: 'MotorBoat 74 propose des remorques sur mesure, disponibles pour retrait ou livraison à Annecy et dans toute la Haute-Savoie.' },
+              { q: 'Quels sont vos horaires ?', a: 'Nous intervenons 7j/7 en période estivale, de 8h00 à 20h00. En cas d’urgence, contactez-nous.' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   titleHero('bateaux', 'Bateaux — Accueil catalogue', '/bateaux', 'Nos bateaux',
     "Wakeboats et bateaux de ski nautique Nautique et MasterCraft, neufs et d'occasion, près du lac d'Annecy. Conseil personnalisé, essai sur l'eau, reprise et financement."),
   titleHero('bateaux-neufs', 'Bateaux — Neufs', '/bateaux/neufs', 'Bateaux neufs',
