@@ -90,10 +90,52 @@ export function currentAdmin(req) {
   return verifyToken(readCookie(req, COOKIE_NAME));
 }
 
-/** Middleware : 401 si pas de session admin valide. */
+/* ------------------------------ CSRF (stateless) ------------------------------ */
+// Jeton CSRF dérivé en HMAC du token de session (signed double-submit) : pas de
+// stockage, invalidé avec la session. Le client le renvoie dans l'en-tête X-CSRF-Token.
+export function csrfToken(sessionToken) {
+  if (!sessionToken) return '';
+  return crypto.createHmac('sha256', secret()).update(`csrf:${sessionToken}`).digest('base64url');
+}
+export function csrfForReq(req) {
+  return csrfToken(readCookie(req, COOKIE_NAME));
+}
+
+/** Middleware : 401 si pas de session valide ; 403 si mutation sans jeton CSRF valide. */
 export function requireAuth(req, res, next) {
   const user = currentAdmin(req);
   if (!user) return res.status(401).json({ ok: false, error: 'Non authentifié.' });
   req.admin = user;
+  if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
+    const header = req.get('x-csrf-token') || '';
+    const expected = csrfForReq(req);
+    if (!header || !expected || !safeEqualStr(header, expected)) {
+      return res.status(403).json({ ok: false, error: 'Jeton de sécurité invalide ou expiré. Rechargez la page.' });
+    }
+  }
   next();
+}
+
+/* --------------------- Anti-brute-force sur le login (mémoire) ----------------- */
+const attempts = new Map(); // ip -> { count, first, until }
+const MAX_ATTEMPTS = 8;
+const ATTEMPT_WINDOW = 15 * 60 * 1000; // 15 min
+const LOCK_MS = 15 * 60 * 1000;
+
+/** Renvoie le nombre de secondes de blocage restant (0 si non bloqué). */
+export function loginBlockedSeconds(ip) {
+  const a = attempts.get(ip);
+  if (a && a.until && Date.now() < a.until) return Math.ceil((a.until - Date.now()) / 1000);
+  return 0;
+}
+export function recordLoginFailure(ip) {
+  const now = Date.now();
+  let a = attempts.get(ip);
+  if (!a || now - a.first > ATTEMPT_WINDOW) a = { count: 0, first: now, until: 0 };
+  a.count += 1;
+  if (a.count >= MAX_ATTEMPTS) a.until = now + LOCK_MS;
+  attempts.set(ip, a);
+}
+export function recordLoginSuccess(ip) {
+  attempts.delete(ip);
 }

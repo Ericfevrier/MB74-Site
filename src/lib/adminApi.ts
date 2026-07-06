@@ -71,10 +71,19 @@ export interface ContactMessage {
   created_at: string;
 }
 
+// Jeton CSRF courant (fourni par /login et /me), renvoyé dans l'en-tête des mutations.
+let CSRF = '';
+export function setCsrf(t?: string) {
+  CSRF = t || '';
+}
+
 async function req<T = any>(method: string, url: string, body?: unknown): Promise<T> {
+  const headers: Record<string, string> = {};
+  if (body !== undefined) headers['Content-Type'] = 'application/json';
+  if (method !== 'GET' && method !== 'HEAD' && CSRF) headers['X-CSRF-Token'] = CSRF;
   const res = await fetch(url, {
     method,
-    headers: body !== undefined ? { 'Content-Type': 'application/json' } : undefined,
+    headers: Object.keys(headers).length ? headers : undefined,
     body: body !== undefined ? JSON.stringify(body) : undefined,
     credentials: 'same-origin',
   });
@@ -88,10 +97,17 @@ async function req<T = any>(method: string, url: string, body?: unknown): Promis
 }
 
 export const adminApi = {
-  me: () => req<{ ok: boolean; username?: string }>('GET', '/api/admin/me'),
+  me: () =>
+    req<{ ok: boolean; username?: string; csrf?: string }>('GET', '/api/admin/me').then((r) => {
+      setCsrf(r.csrf);
+      return r;
+    }),
   login: (username: string, password: string) =>
-    req<{ ok: boolean; username: string }>('POST', '/api/admin/login', { username, password }),
-  logout: () => req('POST', '/api/admin/logout'),
+    req<{ ok: boolean; username: string; csrf?: string }>('POST', '/api/admin/login', { username, password }).then((r) => {
+      setCsrf(r.csrf);
+      return r;
+    }),
+  logout: () => req('POST', '/api/admin/logout').then((r) => { setCsrf(''); return r; }),
 
   listBoats: () => req<{ boats: AdminBoat[] }>('GET', '/api/admin/used-boats'),
   createBoat: (b: Partial<AdminBoat>) => req<{ ok: boolean; id: number }>('POST', '/api/admin/used-boats', b),

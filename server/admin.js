@@ -19,6 +19,11 @@ import {
   requireAuth,
   currentAdmin,
   authConfigured,
+  csrfToken,
+  csrfForReq,
+  loginBlockedSeconds,
+  recordLoginFailure,
+  recordLoginSuccess,
 } from './auth.js';
 
 const BOAT_FIELDS = [
@@ -251,6 +256,13 @@ function cityToRow(c) {
 const needDb = (res) =>
   res.status(503).json({ ok: false, error: 'Base de données non configurée.' });
 
+// Validation partagée : slug (minuscules/chiffres/tirets) et longueur de champ.
+const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const badSlug = (res) =>
+  res.status(400).json({ ok: false, error: 'Slug invalide : minuscules, chiffres et tirets uniquement (ex. mon-contenu).' });
+const tooLong = (res, field, max) =>
+  res.status(400).json({ ok: false, error: `Champ « ${field} » trop long (max ${max} caractères).` });
+
 /* ------------------------------ Médiathèque ----------------------------- */
 const ADMIN_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(ADMIN_DIR, '..');
@@ -288,17 +300,30 @@ export function mountAdmin(app) {
     if (!authConfigured()) {
       return res.status(503).json({ ok: false, error: 'Compte admin non configuré (ADMIN_USERNAME / ADMIN_PASSWORD_HASH).' });
     }
+    const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown';
+    const wait = loginBlockedSeconds(ip);
+    if (wait) {
+      return res.status(429).set('Retry-After', String(wait)).json({
+        ok: false,
+        error: `Trop de tentatives. Réessayez dans ${Math.ceil(wait / 60)} min.`,
+      });
+    }
     const { username, password } = req.body || {};
     const ok = await checkCredentials(username, password);
-    if (!ok) return res.status(401).json({ ok: false, error: 'Identifiants invalides.' });
-    res.cookie(COOKIE_NAME, createToken(username), {
+    if (!ok) {
+      recordLoginFailure(ip);
+      return res.status(401).json({ ok: false, error: 'Identifiants invalides.' });
+    }
+    recordLoginSuccess(ip);
+    const token = createToken(username);
+    res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
       sameSite: 'lax',
       secure: req.secure,
       path: '/',
       maxAge: COOKIE_TTL_MS,
     });
-    res.json({ ok: true, username });
+    res.json({ ok: true, username, csrf: csrfToken(token) });
   });
 
   app.post('/api/admin/logout', (req, res) => {
@@ -309,7 +334,7 @@ export function mountAdmin(app) {
   app.get('/api/admin/me', (req, res) => {
     const user = currentAdmin(req);
     if (!user) return res.status(401).json({ ok: false });
-    res.json({ ok: true, username: user });
+    res.json({ ok: true, username: user, csrf: csrfForReq(req) });
   });
 
   /* ----------------------- Occasions (public) --------------------- */
@@ -345,6 +370,8 @@ export function mountAdmin(app) {
     if (!dbConfigured()) return needDb(res);
     const row = boatToRow(req.body || {});
     if (!row.slug || !row.title) return res.status(400).json({ ok: false, error: 'Slug et titre requis.' });
+    if (!SLUG_RE.test(row.slug)) return badSlug(res);
+    if (row.title.length > 255) return tooLong(res, 'titre', 255);
     try {
       const cols = BOAT_FIELDS.join(', ');
       const placeholders = BOAT_FIELDS.map(() => '?').join(', ');
@@ -364,6 +391,8 @@ export function mountAdmin(app) {
     if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
     const row = boatToRow(req.body || {});
     if (!row.slug || !row.title) return res.status(400).json({ ok: false, error: 'Slug et titre requis.' });
+    if (!SLUG_RE.test(row.slug)) return badSlug(res);
+    if (row.title.length > 255) return tooLong(res, 'titre', 255);
     try {
       const set = BOAT_FIELDS.map((c) => `${c} = ?`).join(', ');
       const values = [...BOAT_FIELDS.map((c) => row[c]), id];
@@ -456,6 +485,8 @@ export function mountAdmin(app) {
     if (!dbConfigured()) return needDb(res);
     const row = articleToRow(req.body || {});
     if (!row.slug || !row.title) return res.status(400).json({ ok: false, error: 'Slug et titre requis.' });
+    if (!SLUG_RE.test(row.slug)) return badSlug(res);
+    if (row.title.length > 255) return tooLong(res, 'titre', 255);
     try {
       const cols = BLOG_FIELDS.join(', ');
       const placeholders = BLOG_FIELDS.map(() => '?').join(', ');
@@ -474,6 +505,8 @@ export function mountAdmin(app) {
     if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
     const row = articleToRow(req.body || {});
     if (!row.slug || !row.title) return res.status(400).json({ ok: false, error: 'Slug et titre requis.' });
+    if (!SLUG_RE.test(row.slug)) return badSlug(res);
+    if (row.title.length > 255) return tooLong(res, 'titre', 255);
     try {
       const set = BLOG_FIELDS.map((c) => `${c} = ?`).join(', ');
       const r = await query(`UPDATE blog_articles SET ${set} WHERE id = ?`, [...BLOG_FIELDS.map((c) => row[c]), id]);
@@ -688,6 +721,11 @@ export function mountAdmin(app) {
     if (!dbConfigured()) return needDb(res);
     const brandId = String(req.params.brandId || '').trim().toLowerCase();
     try {
+      // Garde-fou : une marque contenant des modèles ne peut pas être supprimée (orphelins).
+      const [{ n } = { n: 0 }] = await query('SELECT COUNT(*) AS n FROM boat_models WHERE brand = ?', [brandId]);
+      if (Number(n) > 0) {
+        return res.status(409).json({ ok: false, error: `Impossible : cette marque contient ${n} modèle(s). Supprime ou déplace-les d'abord.` });
+      }
       const r = await query('DELETE FROM brands WHERE brand_id = ?', [brandId]);
       if (!r.affectedRows) return res.status(404).json({ ok: false, error: 'Introuvable.' });
       res.json({ ok: true });
@@ -759,6 +797,7 @@ export function mountAdmin(app) {
     if (!dbConfigured()) return needDb(res);
     const row = modelToRow(req.body || {});
     if (!row.slug || !row.brand) return res.status(400).json({ ok: false, error: 'Marque et slug requis.' });
+    if (!SLUG_RE.test(row.slug)) return badSlug(res);
     try {
       const cols = MODEL_FIELDS.join(', ');
       const ph = MODEL_FIELDS.map(() => '?').join(', ');
@@ -777,6 +816,7 @@ export function mountAdmin(app) {
     if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
     const row = modelToRow(req.body || {});
     if (!row.slug || !row.brand) return res.status(400).json({ ok: false, error: 'Marque et slug requis.' });
+    if (!SLUG_RE.test(row.slug)) return badSlug(res);
     try {
       const set = MODEL_FIELDS.map((c) => `${c} = ?`).join(', ');
       const r = await query(`UPDATE boat_models SET ${set} WHERE id = ?`, [...MODEL_FIELDS.map((c) => row[c]), id]);
@@ -866,6 +906,7 @@ export function mountAdmin(app) {
     if (!dbConfigured()) return needDb(res);
     const row = cityToRow(req.body || {});
     if (!row.slug || !row.city) return res.status(400).json({ ok: false, error: 'Slug et ville requis.' });
+    if (!SLUG_RE.test(row.slug)) return badSlug(res);
     try {
       const cols = CITY_FIELDS.join(', ');
       const ph = CITY_FIELDS.map(() => '?').join(', ');
@@ -884,6 +925,7 @@ export function mountAdmin(app) {
     if (!Number.isInteger(id)) return res.status(400).json({ ok: false, error: 'ID invalide.' });
     const row = cityToRow(req.body || {});
     if (!row.slug || !row.city) return res.status(400).json({ ok: false, error: 'Slug et ville requis.' });
+    if (!SLUG_RE.test(row.slug)) return badSlug(res);
     try {
       const set = CITY_FIELDS.map((c) => `${c} = ?`).join(', ');
       const r = await query(`UPDATE hivernage_cities SET ${set} WHERE id = ?`, [...CITY_FIELDS.map((c) => row[c]), id]);
