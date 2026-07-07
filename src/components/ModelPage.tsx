@@ -221,7 +221,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
               <span className="text-white text-[13px] font-bold tracking-[0.12em] uppercase whitespace-nowrap">Concessionnaire officiel</span>
               <div className="flex items-center border-l border-white/20 pl-3">
                 <img
-                  src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png"
+                  src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.webp"
                   alt={`${brandName} concessionnaire officiel`}
                   className="h-9 object-contain"
                   referrerPolicy="no-referrer"

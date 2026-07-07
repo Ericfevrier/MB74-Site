@@ -18,7 +18,7 @@ export function BrandsSection() {
     { name: "Wakeboard", img: "/images/wakeboard-connelly-groove.webp" },
     { name: "Wakesurf", img: "/images/habit-87.webp" },
     { name: "Kneeboard", img: "/images/2023-connelly-boost-kneeboard-fib.webp" },
-    { name: "Foil", img: "/images/2026-connelly-pilot-first-roller-bottom-turn.jpg" },
+    { name: "Foil", img: "/images/2026-connelly-pilot-first-roller-bottom-turn.webp" },
     { name: "Paddle", img: "/images/paddle-header.webp" }
   ];
 
@@ -37,7 +37,7 @@ export function BrandsSection() {
               </h2>
               <div className="w-12 h-12 md:w-16 md:h-16 lg:w-24 lg:h-24 flex-shrink-0 rounded-xl md:rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl shadow-black/30">
                 <img 
-                  src="/images/event-listing-boat-shows.png" 
+                  src="/images/event-listing-boat-shows.webp" 
                   alt="Logo Nautique" 
                   className="w-full h-full object-cover" 
                   referrerPolicy="no-referrer" loading="lazy" />
@@ -73,7 +73,7 @@ export function BrandsSection() {
             <div className="relative order-1 lg:order-2 aspect-[4/3] w-full max-w-[700px] mx-auto group/images">
               <div className="absolute top-0 left-0 w-[88%] z-10 transition-transform duration-700 ease-out group-hover/images:-translate-y-1">
                 <img 
-                  src="/images/2026-p23-ext-09-11zon.jpg" 
+                  src="/images/2026-p23-ext-09-11zon.webp" 
                   alt="Nautique Boat sunset" 
                   className="rounded-[2rem] shadow-2xl w-full aspect-video object-cover border border-white/10"
                   loading="lazy"
@@ -82,7 +82,7 @@ export function BrandsSection() {
               </div>
               <div className="absolute bottom-0 right-0 w-[62%] z-20 transition-transform duration-700 ease-out group-hover/images:translate-y-1">
                 <img 
-                  src="/images/2026-p25-ext-16.jpg" 
+                  src="/images/2026-p25-ext-16.webp" 
                   alt="Nautique Boat action" 
                   className="rounded-[2rem] shadow-[0_40px_80px_rgba(0,0,0,0.6)] w-full aspect-video object-cover border-4 border-ink-850"
                   loading="lazy"

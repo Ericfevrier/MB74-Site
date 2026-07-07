@@ -20,7 +20,7 @@ const servicesData: ServiceItem[] = [
   {
     title: "Vente de bateaux neufs et d'occasion",
     desc: "On vous accompagne pour trouver le bateau qui vous correspond vraiment, qu’il soit neuf ou d’occasion.\n\nOn a choisi de travailler avec des marques solides comme Nautique, MasterCraft et Tigé parce qu'on connaît leur fiabilité et ce qu'elles valent sur l'eau.\n\nOn prépare chaque unité avec soin dans nos ateliers pour qu'elle soit prête à naviguer. Notre objectif est simple : vous conseiller honnêtement pour que vous profitiez du lac sans vous soucier du reste.",
-    img: "/images/vente-de-bateaux.jpg",
+    img: "/images/vente-de-bateaux.webp",
     buttons: ["OCCASION", "STOCK NEUF"],
     links: { OCCASION: '/bateaux-occasion', 'STOCK NEUF': '/bateaux-neufs' },
     span: "md:col-span-2"
@@ -28,7 +28,7 @@ const servicesData: ServiceItem[] = [
   {
     title: "Hivernage / Stockage",
     desc: "Protégez votre bateau pendant l'hiver grâce à notre service complet d'hivernage et de stockage sécurisé.",
-    img: "/images/hivernage.jpg",
+    img: "/images/hivernage.webp",
     list: [
       "Hangar de 3 000 m2",
       "Zone sécurisé",
@@ -50,7 +50,7 @@ const servicesData: ServiceItem[] = [
   {
     title: "Dépannage sur le lac",
     desc: "Intervention rapide 7j/7 pour toute panne mécanique ou électrique sur le lac d'Annecy.\n\nNous assurons une assistance sur place ou un remorquage sécurisé vers notre atelier.",
-    img: "/images/de-pannage.jpg",
+    img: "/images/de-pannage.webp",
     buttons: ["EN SAVOIR PLUS"],
     link: "/services/depannage",
     span: "md:col-span-1"
@@ -58,7 +58,7 @@ const servicesData: ServiceItem[] = [
   {
     title: "Transport en Europe",
     desc: "Confiez le transport de votre bateau à nos équipes spécialisées.\n\nNous garantissons un déplacement sûr, rapide et réalisé dans le respect des normes, partout en France et en Europe.",
-    img: "/images/transport.jpg",
+    img: "/images/transport.webp",
     buttons: ["EN SAVOIR PLUS"],
     link: "/services/transport-de-bateau",
     span: "md:col-span-1"

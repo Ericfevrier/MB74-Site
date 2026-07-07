@@ -46,7 +46,7 @@ const STATIC_BLOG_ARTICLES: BlogArticle[] = [
       'Découvrez toutes les étapes essentielles pour protéger votre embarcation pendant la période hivernale et assurer sa longévité : coque, moteur, stockage et entretien.',
     category: 'hivernage',
     date: '2025-10-06',
-    image: '/images/hivernage/annecy.jpg',
+    image: '/images/hivernage/annecy.webp',
     readingTime: '12 min',
   },
 ];

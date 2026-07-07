@@ -45,70 +45,70 @@ export const STATIC_BRANDS_DATA: Record<string, BrandData> = {
     id: "nautique",
     name: "Nautique",
     fullName: "Nautique",
-    logo: "/images/nautique-web-logo-white.png",
+    logo: "/images/nautique-web-logo-white.webp",
     role: "Concessionnaire officiel",
-    heroImage: "/images/2026-p23-ext-09-11zon.jpg",
+    heroImage: "/images/2026-p23-ext-09-11zon.webp",
     tagline: "L'excellence sur l'eau depuis 1925",
     description: "MotorBoat74 vous propose une sélection haut de gamme de bateaux Nautique, spécialement conçus pour le ski nautique, le wakeboard et le wakesurf. Ces bateaux se démarquent par une construction robuste, des matériaux premium et une finition irréprochable.\n\nChaque modèle est pensé pour offrir des sensations de glisse exceptionnelles, une navigation fluide et une ergonomie parfaite à bord. Que vous soyez rider expérimenté ou que vous souhaitiez profiter de moments en famille sur l’eau, la gamme Nautique répond à toutes les envies.\n\nEn tant que concessionnaire officiel, nous vous accompagnons à chaque étape : conseil, choix du modèle, options, financement… avec un seul objectif : trouver le bateau parfaitement adapté à vos besoins et votre style de navigation.",
     models: [
       {
         name: "G25 Paragon",
-        image: "/images/nautique/g25-paragon-1.jpg",
+        image: "/images/nautique/g25-paragon-1.webp",
         description: "L'apogée du luxe et de la performance, avec des finitions artisanales et une technologie sans compromis."
       },
       {
         name: "G23 Paragon",
-        image: "/images/nautique/g23-paragon-1.jpg",
+        image: "/images/nautique/g23-paragon-1.webp",
         description: "L'excellence Nautique concentrée dans le modèle le plus primé de l'industrie."
       },
       {
         name: "Super Air Nautique G25",
-        image: "/images/nautique/super-air-nautique-g25-1.jpg",
+        image: "/images/nautique/super-air-nautique-g25-1.webp",
         description: "Une plateforme spacieuse offrant une performance de vague légendaire pour tout le groupe."
       },
       {
         name: "Super Air Nautique G23",
-        image: "/images/nautique/g23-paragon-2.jpg",
+        image: "/images/nautique/g23-paragon-2.webp",
         description: "La référence mondiale absolue pour le wakeboard et le wakesurf."
       },
       {
         name: "Super Air Nautique G21",
-        image: "/images/nautique/super-air-nautique-g25-2.jpg",
+        image: "/images/nautique/super-air-nautique-g25-2.webp",
         description: "La performance de la série G dans un format polyvalent."
       },
       {
         name: "Super Air Nautique S25",
-        image: "/images/nautique/super-air-nautique-s25-1.jpg",
+        image: "/images/nautique/super-air-nautique-s25-1.webp",
         description: "La nouvelle référence en matière de design moderne et de polyvalence en grand format."
       },
       {
         name: "Super Air Nautique S23",
-        image: "/images/nautique/super-air-nautique-s23-1.jpg",
+        image: "/images/nautique/super-air-nautique-s23-1.webp",
         description: "Un mélange parfait entre tradition et modernité pour une expérience de glisse totale."
       },
       {
         name: "Super Air Nautique S21",
-        image: "/images/nautique/super-air-nautique-s21-1.jpg",
+        image: "/images/nautique/super-air-nautique-s21-1.webp",
         description: "Performance et style dans un format compact et agile."
       },
       {
         name: "Super Air Nautique GS24",
-        image: "/images/nautique/super-air-nautique-gs24-1.jpg",
+        image: "/images/nautique/super-air-nautique-gs24-1.webp",
         description: "La polyvalence multi-sports ultime pour les familles passionnées."
       },
       {
         name: "Super Air Nautique GS22",
-        image: "/images/nautique/super-air-nautique-gs22-1.jpg",
+        image: "/images/nautique/super-air-nautique-gs22-1.webp",
         description: "Le summum de la polyvalence pour le ski, le wake et le surf."
       },
       {
         name: "Super Air Nautique GS20",
-        image: "/images/nautique/super-air-nautique-gs20-1.jpg",
+        image: "/images/nautique/super-air-nautique-gs20-1.webp",
         description: "Toute la performance Nautique dans un format manœuvrable et polyvalent."
       },
       {
         name: "Ski Nautique",
-        image: "/images/nautique/ski-nautique-1.jpg",
+        image: "/images/nautique/ski-nautique-1.webp",
         description: "Le bateau de ski de compétition le plus performant jamais construit."
       }
     ],
@@ -180,7 +180,7 @@ export const STATIC_BRANDS_DATA: Record<string, BrandData> = {
     id: "mastercraft",
     name: "Mastercraft",
     fullName: "MasterCraft Boats",
-    logo: "/images/mcft-70e1d427.png",
+    logo: "/images/mcft-70e1d427.webp",
     role: "Importateur officiel",
     heroWordmark: true,
     heroImage: "https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp",
@@ -277,8 +277,8 @@ export const STATIC_BRANDS_DATA: Record<string, BrandData> = {
     id: "tige",
     name: "Tigé",
     fullName: "Tigé Boats",
-    logo: "/images/tigeboats-logo-black-orange-logo.jpg",
-    heroImage: "/images/stock-1524661135-423995f22d0b-1200.jpg",
+    logo: "/images/tigeboats-logo-black-orange-logo.webp",
+    heroImage: "/images/stock-1524661135-423995f22d0b-1200.webp",
     tagline: "Always leading, never following",
     description: "Tigé est reconnu pour sa polyvalence et son innovation constante dans la création de vagues parfaites.",
     models: []
@@ -287,8 +287,8 @@ export const STATIC_BRANDS_DATA: Record<string, BrandData> = {
     id: "centurion",
     name: "Centurion",
     fullName: "Centurion Boats",
-    logo: "/images/centurion-boats-logo-png-seeklogo-387911.png",
-    heroImage: "/images/stock-1502680390469-be75c86b636f-1200.jpg",
+    logo: "/images/centurion-boats-logo-png-seeklogo-387911.webp",
+    heroImage: "/images/stock-1502680390469-be75c86b636f-1200.webp",
     tagline: "The World's Best Waves and Wakes",
     description: "Centurion Boats est le leader mondial de la technologie de wakesurf, offrant les vagues les plus longues et les plus puissantes du marché.",
     models: []
@@ -297,8 +297,8 @@ export const STATIC_BRANDS_DATA: Record<string, BrandData> = {
     id: "supra",
     name: "Supra",
     fullName: "Supra Boats",
-    logo: "/images/311-3118902-supra-logo-png-transparent-supra-boats-logo-png.png",
-    heroImage: "/images/placeholder-boat.jpg",
+    logo: "/images/311-3118902-supra-logo-png-transparent-supra-boats-logo-png.webp",
+    heroImage: "/images/placeholder-boat.webp",
     tagline: "Performance Beyond Belief",
     description: "Supra allie luxe raffiné et puissance brute pour des sessions mémorables.",
     models: []
@@ -307,8 +307,8 @@ export const STATIC_BRANDS_DATA: Record<string, BrandData> = {
     id: "moomba",
     name: "Moomba",
     fullName: "Moomba Boats",
-    logo: "/images/moomba-roo-logo-bf-vrq-x3v.jpg",
-    heroImage: "/images/placeholder-boat.jpg",
+    logo: "/images/moomba-roo-logo-bf-vrq-x3v.webp",
+    heroImage: "/images/placeholder-boat.webp",
     tagline: "No Worries. Just Fun.",
     description: "Moomba offre le meilleur rapport qualité-prix du marché sans compromis sur le plaisir.",
     models: []
@@ -317,8 +317,8 @@ export const STATIC_BRANDS_DATA: Record<string, BrandData> = {
     id: "axis",
     name: "Axis",
     fullName: "Axis Wake Research",
-    logo: "/images/header-logo.png",
-    heroImage: "/images/placeholder-boat.jpg",
+    logo: "/images/header-logo.webp",
+    heroImage: "/images/placeholder-boat.webp",
     tagline: "Pure Performance",
     description: "Axis se concentre sur l'essentiel : une performance de vague exceptionnelle simplifiée.",
     models: []

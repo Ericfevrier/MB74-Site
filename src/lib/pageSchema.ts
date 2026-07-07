@@ -81,7 +81,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Bannière (hero)',
         fields: [
-          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/2026-g23-perf-18.jpg' },
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/2026-g23-perf-18.webp' },
           { key: 'hero.eyebrow', label: 'Sur-titre', type: 'text', default: 'Expert Nautique Haute-Savoie' },
           { key: 'hero.title1', label: 'Titre — ligne 1', type: 'text', default: 'Concessionnaire nautique' },
           { key: 'hero.title2', label: 'Titre — ligne 2 (cyan)', type: 'text', default: 'haute-savoie' },
@@ -122,7 +122,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Bannière',
         fields: [
-          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/services-hub.jpg' },
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/services-hub.webp' },
           { key: 'hero.title', label: 'Titre', type: 'text', default: 'Nos services' },
           { key: 'hero.subtitle', label: 'Sous-titre', type: 'textarea', default: 'Découvrez notre gamme complète de services nautiques professionnels. De la vente à l’entretien, en passant par l’hivernage, MotorBoat74 vous accompagne dans tous vos projets nautiques.' },
           {
@@ -167,7 +167,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Bannière',
         fields: [
-          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/2026-g23-perf-18.jpg' },
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/2026-g23-perf-18.webp' },
           { key: 'hero.title', label: 'Titre (vide = titre stylé par défaut)', type: 'text', default: 'Hivernage et stockage de bateau à Annecy · Hangar sécurisé 3 000 m²' },
           { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le Lac d'Annecy, le Léman et toute la région." },
           {
@@ -955,7 +955,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Bannière',
         fields: [
-          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/2026-p23-ext-09-11zon.jpg' },
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/2026-p23-ext-09-11zon.webp' },
           { key: 'hero.title', label: 'Titre', type: 'text', default: 'Nous contacter' },
           { key: 'hero.subtitle', label: 'Sous-titre (vide = version par défaut avec téléphone)', type: 'textarea', default: 'Vous pouvez nous joindre via notre formulaire de contact ci-dessous ou par téléphone. Notre équipe reste à votre disposition pour vous renseigner ou vous établir un devis.' },
         ],

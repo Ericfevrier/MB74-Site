@@ -41,7 +41,7 @@ export function Footer() {
           <div className="col-span-2 lg:col-span-3 space-y-8">
             <div className="flex items-center gap-3">
               <img
-                src="/images/logo-transprent.png"
+                src="/images/logo-transprent.webp"
                 alt="Motor Boat 74"
                 className="h-16 w-16 object-contain flex-shrink-0"
                 referrerPolicy="no-referrer" loading="lazy" />
@@ -107,8 +107,8 @@ export function Footer() {
               <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Marques</h3>
               <div className="space-y-5">
                 {[
-                  { name: 'Nautique', slug: 'nautique', logo: '/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png', crop: true },
-                  { name: 'MasterCraft', slug: 'mastercraft', logo: '/images/mcft-70e1d427.png', crop: false },
+                  { name: 'Nautique', slug: 'nautique', logo: '/images/design-sans-titre-10-11zon-e1753865977660-photoroom.webp', crop: true },
+                  { name: 'MasterCraft', slug: 'mastercraft', logo: '/images/mcft-70e1d427.webp', crop: false },
                 ].map((b) => (
                   <Link
                     key={b.slug}

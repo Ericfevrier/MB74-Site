@@ -26,7 +26,7 @@ export function servicesHubMeta() {
     description:
       'Découvrez les services de MotorBoat74 à Annecy : vente de bateaux Nautique, hivernage sécurisé, entretien, dépannage, transport et sellerie en Haute-Savoie.',
     canonical,
-    image: `${SITE.url}/images/services/services-hub.jpg`,
+    image: `${SITE.url}/images/services/services-hub.webp`,
     jsonLd: [
       breadcrumbSchema([
         { name: 'Accueil', url: `${SITE.url}/` },

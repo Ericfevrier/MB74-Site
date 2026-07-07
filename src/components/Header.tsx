@@ -38,8 +38,8 @@ const megaMenuBateaux = [
 
 // Marques affichées dans le menu (réduit à Nautique + Mastercraft pour le moment).
 const megaMenuMarques = [
-  { name: "Nautique", logo: "/images/event-listing-boat-shows.png", crop: false },
-  { name: "Mastercraft", logo: "/images/mcft-70e1d427.png", crop: false },
+  { name: "Nautique", logo: "/images/event-listing-boat-shows.webp", crop: false },
+  { name: "Mastercraft", logo: "/images/mcft-70e1d427.webp", crop: false },
 ];
 
 export function Header() {
@@ -53,7 +53,7 @@ export function Header() {
           
           {/* Logo Area */}
           <Link to="/" className="flex items-center space-x-3 sm:space-x-4 flex-shrink-0 cursor-pointer group ml-0 lg:ml-[-15px]">            <img
-              src="/images/logo-transprent.png"
+              src="/images/logo-transprent.webp"
               alt="Motorboat 74"
               className="h-16 w-16 lg:h-[100px] lg:w-[100px] object-contain transition-transform group-hover:scale-105 duration-300"
               referrerPolicy="no-referrer"

@@ -196,9 +196,9 @@ function ModelForm({ initial, isNew, onCancel, onSaved }: { initial: Partial<Adm
 
       {/* Médias */}
       <Section title="Médias (photos)" count={(d.gallery || []).length}>
-        <div className="mb-4"><label className={LABEL}>Image hero (principale)</label><input className={INPUT} value={d.hero || ''} placeholder="/images/nautique/…-1.jpg" onChange={(e) => set('hero', e.target.value)} /></div>
+        <div className="mb-4"><label className={LABEL}>Image hero (principale)</label><input className={INPUT} value={d.hero || ''} placeholder="/images/nautique/…-1.webp" onChange={(e) => set('hero', e.target.value)} /></div>
         <label className={LABEL}>Galerie (URLs)</label>
-        <StringList items={(d.gallery as string[]) || []} onChange={(v) => set('gallery', v)} placeholder="/images/nautique/…-2.jpg" />
+        <StringList items={(d.gallery as string[]) || []} onChange={(v) => set('gallery', v)} placeholder="/images/nautique/…-2.webp" />
       </Section>
 
       {/* Introduction */}

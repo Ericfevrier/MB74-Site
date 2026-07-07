@@ -74,7 +74,7 @@ function CityForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel: ()
           <Field label="Slug (URL) *"><input className={INPUT} value={d.slug || ''} onChange={(e) => set('slug', e.target.value)} placeholder="annecy" required /></Field>
           <Field label="Titre H1"><input className={INPUT} value={d.h1 || ''} onChange={(e) => set('h1', e.target.value)} /></Field>
           <Field label="Lac / plan d'eau"><input className={INPUT} value={d.lake || ''} onChange={(e) => set('lake', e.target.value)} placeholder="lac d'Annecy" /></Field>
-          <Field label="Image (URL)" full><input className={INPUT} value={d.hero || ''} onChange={(e) => set('hero', e.target.value)} placeholder="/images/hivernage/annecy.jpg" /></Field>
+          <Field label="Image (URL)" full><input className={INPUT} value={d.hero || ''} onChange={(e) => set('hero', e.target.value)} placeholder="/images/hivernage/annecy.webp" /></Field>
           <Field label="Intro" full><textarea className={`${INPUT} h-24 resize-y`} value={d.intro || ''} onChange={(e) => set('intro', e.target.value)} /></Field>
           <Field label="Intro des zones / ports" full><textarea className={`${INPUT} h-24 resize-y`} value={d.zonesIntro || ''} onChange={(e) => set('zonesIntro', e.target.value)} /></Field>
         </div>

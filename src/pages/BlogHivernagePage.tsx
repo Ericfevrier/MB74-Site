@@ -10,7 +10,7 @@ export function blogHivernageMeta() {
   const path = '/blog/hivernage/hivernage-bateau-guide-complet';
   const canonical = `${SITE.url}${path}/`;
   const title = 'Hivernage bateau : le guide complet pour bien préparer votre bateau';
-  const hero = '/images/hivernage/annecy.jpg';
+  const hero = '/images/hivernage/annecy.webp';
   const author = "L'équipe Motor Boat 74";
   const schemaArticle = {
     '@context': 'https://schema.org',
@@ -23,7 +23,7 @@ export function blogHivernageMeta() {
     publisher: {
       '@type': 'Organization',
       name: SITE.name,
-      logo: { '@type': 'ImageObject', url: `${SITE.url}/images/logo-transprent.png` },
+      logo: { '@type': 'ImageObject', url: `${SITE.url}/images/logo-transprent.webp` },
     },
     mainEntityOfPage: canonical,
   };
@@ -94,7 +94,7 @@ const Tip = ({ label, children }: { label: string; children: React.ReactNode }) 
 export function BlogHivernagePage() {
   const path = '/blog/hivernage/hivernage-bateau-guide-complet';
   const title = 'Hivernage bateau : le guide complet pour bien préparer votre bateau';
-  const hero = '/images/hivernage/annecy.jpg';
+  const hero = '/images/hivernage/annecy.webp';
   const author = "L'équipe Motor Boat 74";
 
   const toc: TocItem[] = [

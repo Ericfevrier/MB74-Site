@@ -56,8 +56,8 @@ export function hivernageMeta() {
     description:
       "Concessionnaire et atelier nautique en Haute-Savoie spécialisé dans l'hivernage, le stockage, l'entretien et la vente de bateaux sur le Lac d'Annecy.",
     url: SITE_URL,
-    logo: `${SITE_URL}/images/logo-transprent.png`,
-    image: `${SITE_URL}/images/logo-transprent.png`,
+    logo: `${SITE_URL}/images/logo-transprent.webp`,
+    image: `${SITE_URL}/images/logo-transprent.webp`,
     telephone: '+33457572727',
     email: 'contact@motorboat74.com',
     priceRange: '€€',
@@ -139,7 +139,7 @@ export function hivernageMeta() {
     description:
       "Hivernage et stockage de bateau à Annecy (Haute-Savoie) : hangar sécurisé 3 000 m², hivernage moteur certifié, antigel, remise à l'eau incluse. Devis personnalisé gratuit sous 24 h.",
     canonical: 'https://motorboat74.com/hivernage-stockage-bateau',
-    image: 'https://motorboat74.com/images/2026-g23-perf-18.jpg',
+    image: 'https://motorboat74.com/images/2026-g23-perf-18.webp',
     robots: 'index, follow, max-image-preview:large',
     ogTitle: 'Hivernage & Stockage de Bateau à Annecy, Hangar sécurisé 3 000 m²',
     ogDescription:
@@ -157,7 +157,7 @@ export function hivernageMeta() {
     extra: [
       { name: 'twitter:title', content: 'Hivernage & Stockage de Bateau à Annecy, Hangar 3 000 m²' },
       { name: 'twitter:description', content: "Hivernage moteur certifié et stockage hors-gel sur le Lac d'Annecy. Devis personnalisé gratuit sous 24 h." },
-      { name: 'twitter:image', content: 'https://motorboat74.com/images/2026-g23-perf-18.jpg' },
+      { name: 'twitter:image', content: 'https://motorboat74.com/images/2026-g23-perf-18.webp' },
     ],
   });
 }
@@ -610,7 +610,7 @@ export function HivernageStockagePage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 relative group">
                     <img 
-                      src="/images/placeholder-boat.jpg" 
+                      src="/images/placeholder-boat.webp" 
                       alt="hangar de stockage de bateaux à Annecy avec MotorBoat 74" 
                       className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" 
                       loading="lazy"
@@ -620,7 +620,7 @@ export function HivernageStockagePage() {
                   </div>
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 relative group">
                     <img 
-                      src="/images/stock-1581092160607-ee22621dd758-600.jpg" 
+                      src="/images/stock-1581092160607-ee22621dd758-600.webp" 
                       alt="bateaux neufs et d'occasion en hangar sécurisé à Annecy" 
                       className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" 
                       loading="lazy"
@@ -630,7 +630,7 @@ export function HivernageStockagePage() {
                   </div>
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 relative group">
                     <img 
-                      src="/images/stock-1621905251189-08b45d6a269e-600.jpg" 
+                      src="/images/stock-1621905251189-08b45d6a269e-600.webp" 
                       alt="maintenance mécanique de moteur hors-bord en Haute-Savoie" 
                       className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" 
                       loading="lazy"
@@ -640,7 +640,7 @@ export function HivernageStockagePage() {
                   </div>
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 relative group">
                     <img 
-                      src="/images/placeholder-boat.jpg" 
+                      src="/images/placeholder-boat.webp" 
                       alt="remisage technique sécurisé de bateaux" 
                       className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" 
                       loading="lazy"

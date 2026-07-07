@@ -88,13 +88,13 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "Le Super Air Nautique S21 est un bateau pensé pour ceux qui veulent profiter pleinement de l’eau, que ce soit pour le wakesurf, le wakeboard ou simplement naviguer avec confort et style. Avec ses 6,55 m de longueur et sa technologie Next Gen Surf System, il génère des vagues parfaitement calibrées pour tous les niveaux, des débutants aux riders confirmés. Son moteur puissant et silencieux assure des départs nets et une navigation stable, même avec plusieurs passagers à bord.",
       "À l’intérieur, le S21 mise sur le confort et la praticité : des assises ergonomiques, de l’espace pour tous les passagers, des rangements bien pensés et des finitions solides qui résistent à l’usage quotidien. La conduite est précise et intuitive, ce qui permet de se concentrer sur la glisse ou le plaisir de la balade sans se préoccuper du bateau."
     ],
-    "hero": "/images/nautique/super-air-nautique-s21-1.jpg",
+    "hero": "/images/nautique/super-air-nautique-s21-1.webp",
     "gallery": [
-      "/images/nautique/super-air-nautique-s21-1.jpg",
-      "/images/nautique/super-air-nautique-s21-2.jpg",
-      "/images/nautique/super-air-nautique-s21-3.jpg",
-      "/images/nautique/super-air-nautique-s21-4.jpg",
-      "/images/nautique/super-air-nautique-s21-5.jpg"
+      "/images/nautique/super-air-nautique-s21-1.webp",
+      "/images/nautique/super-air-nautique-s21-2.webp",
+      "/images/nautique/super-air-nautique-s21-3.webp",
+      "/images/nautique/super-air-nautique-s21-4.webp",
+      "/images/nautique/super-air-nautique-s21-5.webp"
     ],
     "specs": [
       {
@@ -286,13 +286,13 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "À bord, tout est pensé pour le confort et la praticité : sièges modulables, rangements intelligents, passages sécurisés et tour de contrôle facile à déployer. Le poste de pilotage centralise les commandes avec l’écran tactile LINC, la direction électrique et la caméra de surveillance, pour que piloter reste naturel et fluide.",
       "Le S23 combine performance et confort de manière intuitive, pour que chaque moment sur l’eau se vive sans complication et en toute convivialité."
     ],
-    "hero": "/images/nautique/super-air-nautique-s23-1.jpg",
+    "hero": "/images/nautique/super-air-nautique-s23-1.webp",
     "gallery": [
-      "/images/nautique/super-air-nautique-s23-1.jpg",
-      "/images/nautique/super-air-nautique-s23-2.jpg",
-      "/images/nautique/super-air-nautique-s23-3.jpg",
-      "/images/nautique/super-air-nautique-s23-4.jpg",
-      "/images/nautique/super-air-nautique-s23-5.jpg"
+      "/images/nautique/super-air-nautique-s23-1.webp",
+      "/images/nautique/super-air-nautique-s23-2.webp",
+      "/images/nautique/super-air-nautique-s23-3.webp",
+      "/images/nautique/super-air-nautique-s23-4.webp",
+      "/images/nautique/super-air-nautique-s23-5.webp"
     ],
     "specs": [
       {
@@ -486,13 +486,13 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "À bord, tout a été imaginé pour le confort et la praticité : des sièges avant et arrière modulables, des espaces de rangement intelligents, un passage arrière antidérapant et des fonctionnalités comme la pompe à air intégrée ou la recharge sans fil. La barre et le poste de pilotage mettent la navigation à portée de main grâce à l’écran tactile panoramique LINC, la direction électrique et la caméra de surveillance, pour que piloter reste simple et sûr.",
       "Que ce soit pour une sortie sportive, un moment de détente ou une journée complète sur le lac, le S25 cherche à rendre chaque instant sur l’eau agréable et accessible, en combinant maniabilité, organisation et sensations naturelles de navigation."
     ],
-    "hero": "/images/nautique/super-air-nautique-s25-1.jpg",
+    "hero": "/images/nautique/super-air-nautique-s25-1.webp",
     "gallery": [
-      "/images/nautique/super-air-nautique-s25-1.jpg",
-      "/images/nautique/super-air-nautique-s25-2.jpg",
-      "/images/nautique/super-air-nautique-s25-3.jpg",
-      "/images/nautique/super-air-nautique-s25-4.jpg",
-      "/images/nautique/super-air-nautique-s25-5.jpg"
+      "/images/nautique/super-air-nautique-s25-1.webp",
+      "/images/nautique/super-air-nautique-s25-2.webp",
+      "/images/nautique/super-air-nautique-s25-3.webp",
+      "/images/nautique/super-air-nautique-s25-4.webp",
+      "/images/nautique/super-air-nautique-s25-5.webp"
     ],
     "specs": [
       {
@@ -677,13 +677,13 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "intro": [
       "Le Air Nautique GS20 se positionne comme un bateau de traction polyvalent, conçu pour le wakesurf, le wakeboard et le ski nautique. Sa coque mono-hull associe l’ADN du Ski Nautique à la conception avancée de la série G, générant des vagues et un sillage modulable selon le niveau et le type de pratique. Le ballast intégré et le système de réglage des plaques permettent d’adapter la forme des vagues et la hauteur du sillage. Doté de technologies embarquées pour la gestion de la propulsion et de l’électronique, et d’un aménagement intérieur étudié pour le confort à bord, le GS20 offre une expérience de navigation complète pour les sports tractés."
     ],
-    "hero": "/images/nautique/super-air-nautique-gs20-1.jpg",
+    "hero": "/images/nautique/super-air-nautique-gs20-1.webp",
     "gallery": [
-      "/images/nautique/super-air-nautique-gs20-1.jpg",
-      "/images/nautique/super-air-nautique-gs20-2.jpg",
-      "/images/nautique/super-air-nautique-gs20-3.jpg",
-      "/images/nautique/super-air-nautique-gs20-4.jpg",
-      "/images/nautique/super-air-nautique-gs20-5.jpg"
+      "/images/nautique/super-air-nautique-gs20-1.webp",
+      "/images/nautique/super-air-nautique-gs20-2.webp",
+      "/images/nautique/super-air-nautique-gs20-3.webp",
+      "/images/nautique/super-air-nautique-gs20-4.webp",
+      "/images/nautique/super-air-nautique-gs20-5.webp"
     ],
     "specs": [
       {
@@ -849,13 +849,13 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "Le Super Air Nautique GS22 est un bateau multisports de 6,70 m pensé pour les vrais passionnés de sports nautiques. Conçu pour exceller en wakesurf, wakeboard et ski nautique, sa coque hybride, issue des séries Ski Nautique et G-Series, permet de créer des vagues précises et modulables, parfaitement adaptées à chaque discipline et à chaque niveau de pratique.",
       "Avec une puissance moteur pouvant atteindre 570 chevaux et une capacité d’accueil jusqu’à 15 personnes, le GS22 allie performance brute et polyvalence. Son système de ballast intégré et réglable offre un contrôle total du sillage, permettant de sculpter la vague idéale pour chaque activité, tandis que le design du cockpit et les finitions premium garantissent un confort et une ergonomie optimisés pour l’utilisateur exigeant."
     ],
-    "hero": "/images/nautique/super-air-nautique-gs22-1.jpg",
+    "hero": "/images/nautique/super-air-nautique-gs22-1.webp",
     "gallery": [
-      "/images/nautique/super-air-nautique-gs22-1.jpg",
-      "/images/nautique/super-air-nautique-gs22-2.jpg",
-      "/images/nautique/super-air-nautique-gs22-3.jpg",
-      "/images/nautique/super-air-nautique-gs22-4.jpg",
-      "/images/nautique/super-air-nautique-gs22-5.jpg"
+      "/images/nautique/super-air-nautique-gs22-1.webp",
+      "/images/nautique/super-air-nautique-gs22-2.webp",
+      "/images/nautique/super-air-nautique-gs22-3.webp",
+      "/images/nautique/super-air-nautique-gs22-4.webp",
+      "/images/nautique/super-air-nautique-gs22-5.webp"
     ],
     "specs": [
       {
@@ -1026,13 +1026,13 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "Le Super Air Nautique GS24 est un bateau de plus de 7 mètres qui mise sur la polyvalence. Sa coque inspirée des Ski Nautique et de la série G lui permet d’exceller aussi bien en wakesurf qu’en wakeboard ou en ski nautique. Avec une capacité d’accueil jusqu’à 17 personnes, il offre un intérieur spacieux et confortable, idéal pour profiter de longues journées en famille ou entre amis.",
       "Côté technologie, il embarque le Nautique Surf System avec WAVEPLATE® pour créer des vagues personnalisées, ainsi que le système NCRS qui adapte automatiquement la coque à l’activité choisie. La motorisation PCM, de 355 à 570 chevaux, assure puissance et fiabilité, tandis que le Nautique Steering Assist facilite les manœuvres à basse vitesse. Enfin, la connectivité MyNautique permet de garder un œil sur le bateau à distance pour plus de simplicité au quotidien."
     ],
-    "hero": "/images/nautique/super-air-nautique-gs24-1.jpg",
+    "hero": "/images/nautique/super-air-nautique-gs24-1.webp",
     "gallery": [
-      "/images/nautique/super-air-nautique-gs24-1.jpg",
-      "/images/nautique/super-air-nautique-gs24-2.jpg",
-      "/images/nautique/super-air-nautique-gs24-3.jpg",
-      "/images/nautique/super-air-nautique-gs24-4.jpg",
-      "/images/nautique/super-air-nautique-gs24-5.jpg"
+      "/images/nautique/super-air-nautique-gs24-1.webp",
+      "/images/nautique/super-air-nautique-gs24-2.webp",
+      "/images/nautique/super-air-nautique-gs24-3.webp",
+      "/images/nautique/super-air-nautique-gs24-4.webp",
+      "/images/nautique/super-air-nautique-gs24-5.webp"
     ],
     "specs": [
       {
@@ -1213,13 +1213,13 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "Sa coque intègre la technologie Nautique Configurable Running Surface® (NCRS), qui ajuste la forme de la vague selon que vous pratiquez le wakesurf ou le wakeboard. Chaque run peut ainsi être parfaitement modulé pour répondre aux besoins des riders, qu’ils soient débutants ou confirmés.",
       "À bord, l’aménagement est pensé pour rendre l’expérience fluide et agréable : sièges modulables pour s’adapter aux groupes, système audio JL Audio® M Series Studio Elite, et connectivité MyNautique™, qui permet de suivre l’état du bateau depuis votre téléphone. Les différentes motorisations disponibles, associées à l’Integrated Steering Assist, offrent une maniabilité précise et un contrôle sûr, même à pleine charge."
     ],
-    "hero": "/images/nautique/super-air-nautique-g25-1.jpg",
+    "hero": "/images/nautique/super-air-nautique-g25-1.webp",
     "gallery": [
-      "/images/nautique/super-air-nautique-g25-1.jpg",
-      "/images/nautique/super-air-nautique-g25-2.jpg",
-      "/images/nautique/super-air-nautique-g25-3.jpg",
-      "/images/nautique/super-air-nautique-g25-4.jpg",
-      "/images/nautique/super-air-nautique-g25-5.jpg"
+      "/images/nautique/super-air-nautique-g25-1.webp",
+      "/images/nautique/super-air-nautique-g25-2.webp",
+      "/images/nautique/super-air-nautique-g25-3.webp",
+      "/images/nautique/super-air-nautique-g25-4.webp",
+      "/images/nautique/super-air-nautique-g25-5.webp"
     ],
     "specs": [
       {
@@ -1433,13 +1433,13 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "Le Super Air Nautique G23 Paragon est un bateau de wake haut de gamme qui incarne à la fois luxe, performance et innovation. Conçu pour les passionnés de wakeboard et de wakesurf, il se distingue par un design angulaire affirmé et des coques multidimensionnelles capables de générer des vagues puissantes et parfaitement modulables. À bord, chaque détail a été pensé pour offrir un confort optimal, dans un cadre élégant et moderne, établissant de nouveaux standards dans l’univers des sports nautiques.",
       "Pour marquer le centenaire de la marque, Nautique dévoile une édition spéciale Centennial du G23. Cette version anniversaire se pare d’éléments exclusifs, comme un logo centenaire finement gravé sur le volant et une teinte de coque inédite baptisée « Centennial Black Metal Flake ». Ce coloris unique marie l’intensité d’un noir onyx profond à des paillettes dorées, offrant un rendu visuel spectaculaire et raffiné, à la hauteur de l’événement."
     ],
-    "hero": "/images/nautique/g23-paragon-1.jpg",
+    "hero": "/images/nautique/g23-paragon-1.webp",
     "gallery": [
-      "/images/nautique/g23-paragon-1.jpg",
-      "/images/nautique/g23-paragon-2.jpg",
-      "/images/nautique/g23-paragon-3.jpg",
-      "/images/nautique/g23-paragon-4.jpg",
-      "/images/nautique/g23-paragon-5.jpg"
+      "/images/nautique/g23-paragon-1.webp",
+      "/images/nautique/g23-paragon-2.webp",
+      "/images/nautique/g23-paragon-3.webp",
+      "/images/nautique/g23-paragon-4.webp",
+      "/images/nautique/g23-paragon-5.webp"
     ],
     "specs": [
       {
@@ -1661,16 +1661,16 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "Le Super Air Nautique G25 Paragon est un bateau de wake conçu pour le wakesurf et le wakeboard. Sa coque et sa conception permettent de créer des vagues modulables adaptées à différents niveaux et styles de navigation. L’aménagement intérieur privilégie le confort et la fonctionnalité, avec des matériaux de qualité et un agencement pensé pour faciliter les déplacements à bord.",
       "Pour le centenaire de Nautique, le G25 propose une édition spéciale Centennial. Cette version se distingue par des détails spécifiques, comme un logo centenaire gravé sur le tableau de bord et une couleur de coque nommée « Centennial Deep Slate », un gris métallisé avec des reflets subtils, apportant une touche d’originalité tout en restant sobre."
     ],
-    "hero": "/images/nautique/g25-paragon-1.jpg",
+    "hero": "/images/nautique/g25-paragon-1.webp",
     "gallery": [
-      "/images/nautique/g25-paragon-1.jpg",
-      "/images/nautique/g25-paragon-2.jpg",
-      "/images/nautique/g25-paragon-3.jpg",
-      "/images/nautique/g25-paragon-4.jpg",
-      "/images/nautique/g25-paragon-5.jpg",
-      "/images/nautique/super-air-nautique-g25-2.jpg",
-      "/images/nautique/super-air-nautique-g25-3.jpg",
-      "/images/nautique/super-air-nautique-g25-4.jpg"
+      "/images/nautique/g25-paragon-1.webp",
+      "/images/nautique/g25-paragon-2.webp",
+      "/images/nautique/g25-paragon-3.webp",
+      "/images/nautique/g25-paragon-4.webp",
+      "/images/nautique/g25-paragon-5.webp",
+      "/images/nautique/super-air-nautique-g25-2.webp",
+      "/images/nautique/super-air-nautique-g25-3.webp",
+      "/images/nautique/super-air-nautique-g25-4.webp"
     ],
     "specs": [
       {
@@ -1865,13 +1865,13 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "Le Ski Nautique combine une coque légère et robuste à des technologies de pointe comme MicroTuner®, Automated HydroGate® et Zero Off®, offrant des wakes stables, précis et adaptés à tous les niveaux. Le poste de pilotage intuitif, la sellerie modulable et la plage arrière optimisée garantissent un confort et une fonctionnalité optimale pour skieurs et coachs.",
       "Le résultat : un bateau performant, précis et élégant, véritable référence pour le ski nautique en compétition comme en loisir."
     ],
-    "hero": "/images/nautique/ski-nautique-1.jpg",
+    "hero": "/images/nautique/ski-nautique-1.webp",
     "gallery": [
-      "/images/nautique/ski-nautique-1.jpg",
-      "/images/nautique/ski-nautique-2.jpg",
-      "/images/nautique/ski-nautique-3.jpg",
-      "/images/nautique/ski-nautique-4.jpg",
-      "/images/nautique/ski-nautique-5.jpg"
+      "/images/nautique/ski-nautique-1.webp",
+      "/images/nautique/ski-nautique-2.webp",
+      "/images/nautique/ski-nautique-3.webp",
+      "/images/nautique/ski-nautique-4.webp",
+      "/images/nautique/ski-nautique-5.webp"
     ],
     "specs": [
       {
@@ -2037,11 +2037,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "Depuis plus de dix ans, le G23 est le wakeboat le plus recherché de l'industrie, avec le palmarès pour le prouver. Ce modèle primé est la référence absolue des riders professionnels qui veulent repousser les limites du possible sur l'eau, tout en s'adaptant aux débutants grâce à des vagues et sillages modulables selon le niveau de chacun.",
       "Le design orienté performance du G23 a été méticuleusement affiné pour incarner le sommet de l'excellence sur l'eau, avec une profusion d'équipements luxueux pour une finition inégalée."
     ],
-    "hero": "/images/nautique/g23-paragon-2.jpg",
+    "hero": "/images/nautique/g23-paragon-2.webp",
     "gallery": [
-      "/images/nautique/g23-paragon-2.jpg",
-      "/images/nautique/g23-paragon-3.jpg",
-      "/images/nautique/g23-paragon-4.jpg"
+      "/images/nautique/g23-paragon-2.webp",
+      "/images/nautique/g23-paragon-3.webp",
+      "/images/nautique/g23-paragon-4.webp"
     ],
     "specs": [
       {
@@ -2186,11 +2186,11 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
       "Le G21 confirme sa réputation de bateau de 21 pieds le plus innovant du marché. Doté de la meilleure coque de l'industrie, ce performeur primé délivre des vagues et sillages de niveau professionnel, modulables pour accueillir tous les passagers à bord.",
       "Ce performeur légendaire affiche une esthétique moderne incomparable et un intérieur iconique typiquement Série G, avec une profusion d'équipements de série premium et d'options pour configurer votre G21 selon vos préférences exactes."
     ],
-    "hero": "/images/nautique/super-air-nautique-g25-2.jpg",
+    "hero": "/images/nautique/super-air-nautique-g25-2.webp",
     "gallery": [
-      "/images/nautique/super-air-nautique-g25-2.jpg",
-      "/images/nautique/super-air-nautique-g25-3.jpg",
-      "/images/nautique/super-air-nautique-g25-4.jpg"
+      "/images/nautique/super-air-nautique-g25-2.webp",
+      "/images/nautique/super-air-nautique-g25-3.webp",
+      "/images/nautique/super-air-nautique-g25-4.webp"
     ],
     "specs": [
       {

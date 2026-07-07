@@ -46,7 +46,7 @@ export function IntroSection() {
           <div className="flex items-center gap-6 text-brand-dark relative z-10 flex-col md:flex-row text-center md:text-left">
             <div className="flex-shrink-0">
                 <div className="w-16 h-16 rounded-2xl bg-white border border-brand-cyan/20 flex items-center justify-center shadow-lg shadow-brand-cyan/20">
-                    <img src="/images/capture-d-e-cran-2026-05-11-a-19-38-17-photoroom.png" alt="Connelly Logo distributeur" className="w-10 h-10 object-contain" loading="lazy" referrerPolicy="no-referrer" />
+                    <img src="/images/capture-d-e-cran-2026-05-11-a-19-38-17-photoroom.webp" alt="Connelly Logo distributeur" className="w-10 h-10 object-contain" loading="lazy" referrerPolicy="no-referrer" />
                 </div>
             </div>
             <div className="flex-1">

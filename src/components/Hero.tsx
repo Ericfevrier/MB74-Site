@@ -51,7 +51,7 @@ export function Hero() {
              <span className="text-white text-[16px] font-bold tracking-[0.12em] uppercase">{t('hero.badgeLeft')}</span>
              <div className="flex items-center border-l border-white/20 pl-3">
                <img 
-                 src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.png" 
+                 src="/images/design-sans-titre-10-11zon-e1753865977660-photoroom.webp" 
                  alt="Nautique Boats concessionnaire officiel" 
                  className="h-10 object-contain" 
                  referrerPolicy="no-referrer"
