@@ -964,6 +964,83 @@ export const PAGES: PageDef[] = [
   },
 ];
 
+/**
+ * Défauts SEO (balise <title> + meta description) par page, repris tels quels des
+ * fonctions `*Meta()`. Une section « Référencement (SEO) » est ajoutée automatiquement
+ * à chaque page ci-dessous ; le hook `useSeo(pageKey)` applique la surcharge côté client.
+ */
+const SEO_DEFAULTS: Record<string, { title: string; description: string }> = {
+  accueil: {
+    title: "Motorboat 74 | Vente et entretien de bateaux sur le Lac d'Annecy",
+    description: "Découvrez une sélection exclusive de bateaux (Nautique, MasterCraft, etc.) au bord du Lac d'Annecy. Hivernage, entretien et réparation.",
+  },
+  'services-hub': {
+    title: 'Nos Services Nautiques | Motor Boat 74',
+    description: 'Découvrez les services de MotorBoat74 à Annecy : vente de bateaux Nautique, hivernage sécurisé, entretien, dépannage, transport et sellerie en Haute-Savoie.',
+  },
+  hivernage: {
+    title: 'Hivernage & Stockage Bateau Annecy, Hangar 3000 m² | MB74',
+    description: "Hivernage et stockage de bateau à Annecy (Haute-Savoie) : hangar sécurisé 3 000 m², hivernage moteur certifié, antigel, remise à l'eau incluse. Devis personnalisé gratuit sous 24 h.",
+  },
+  entretien: {
+    title: 'Réparation & Entretien Bateau Annecy | Motor Boat 74',
+    description: 'Entretien et réparation de bateaux à Annecy : révision moteur, réparation, carrosserie, peinture et accastillage, en atelier ou sur place. Devis gratuit sous 24 h.',
+  },
+  depannage: {
+    title: 'Dépannage Bateau Lac d’Annecy 7j/7 | Motor Boat 74',
+    description: 'Dépannage de bateau sur le lac d’Annecy : intervention rapide 7j/7 (30-60 min) avec bateau-atelier équipé, réparation à flot, remorquage. Appelez Motor Boat 74.',
+  },
+  transport: {
+    title: 'Transport de Bateau en France et Europe | Motor Boat 74',
+    description: 'Transport de bateau partout en France et en Europe : convoyage sécurisé, assurance pro, remorques adaptées. Service clé en main. Devis personnalisé.',
+  },
+  sellerie: {
+    title: 'Sellerie de Bateau Sur Mesure et Rénovation | Motor Boat 74',
+    description: 'Sellerie de bateau à Annecy : confection sur mesure, réparation et rénovation complète. Matériaux marins anti-UV et anti-humidité, pose incluse. Devis gratuit.',
+  },
+  remorques: {
+    title: 'Remorques de Bateau Sur Mesure Haute-Savoie | Motor Boat 74',
+    description: "Remorques de bateau sur mesure à Annecy et en Haute-Savoie : homologuées CE, adaptées à votre bateau, réglage et mise à l'eau inclus. Demandez conseil.",
+  },
+  bateaux: {
+    title: 'Bateaux neufs et d’occasion près d’Annecy | Motor Boat 74',
+    description: 'Bateaux neufs et d’occasion près du lac d’Annecy : wakeboats et bateaux de ski Nautique et MasterCraft. Essai sur l’eau, reprise, financement et entretien chez Motor Boat 74.',
+  },
+  'bateaux-neufs': {
+    title: 'Bateaux neufs Nautique & MasterCraft près d’Annecy | Motor Boat 74',
+    description: 'Découvrez nos bateaux neufs Nautique et MasterCraft : wakeboats et bateaux de ski nautique dernière génération. Configuration, essai sur le lac d’Annecy et devis chez Motor Boat 74.',
+  },
+  'bateaux-vendus': {
+    title: 'Bateaux vendus | Motor Boat 74',
+    description: 'Les bateaux récemment vendus par Motor Boat 74, près du lac d’Annecy. Un modèle similaire vous intéresse ? Nous lançons une recherche sur mesure.',
+  },
+  team: {
+    title: 'La Team | Motor Boat 74, concessionnaire Nautique près d’Annecy',
+    description: 'Rencontrez l’équipe de Motor Boat 74, concessionnaire officiel Nautique et importateur Connelly Ski en Haute-Savoie : vente, hivernage et entretien de bateaux près du lac d’Annecy.',
+  },
+  blog: {
+    title: 'Blog | Conseils & actualités nautiques | Motor Boat 74',
+    description: 'Le blog de Motor Boat 74 : guides d’entretien et d’hivernage, comparatifs, actualités Nautique et MasterCraft, conseils d’achat et de revente, près du lac d’Annecy.',
+  },
+  contact: {
+    title: 'Contactez-nous | Motor Boat 74',
+    description: 'MotorBoat74 vous accompagne pour l’achat, la vente, l’entretien ou l’hivernage de votre bateau. Contactez-nous facilement dès aujourd’hui à Annecy / Saint-Ferréol.',
+  },
+};
+
+// Ajoute la section SEO éditable à chaque page qui a des défauts définis ci-dessus.
+for (const p of PAGES) {
+  const s = SEO_DEFAULTS[p.key];
+  if (!s) continue;
+  p.sections.push({
+    title: 'Référencement (SEO)',
+    fields: [
+      { key: 'seo.title', label: 'Titre SEO — balise <title> (vide = titre optimisé par défaut)', type: 'text', default: s.title },
+      { key: 'seo.description', label: 'Meta description (vide = description par défaut)', type: 'textarea', default: s.description },
+    ],
+  });
+}
+
 /** Valeurs par défaut aplaties : { pageKey: { fieldKey: default (string | array) } }. */
 export const PAGE_DEFAULTS: Record<string, Record<string, string | any[]>> = Object.fromEntries(
   PAGES.map((p) => [

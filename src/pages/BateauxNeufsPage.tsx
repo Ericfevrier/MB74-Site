@@ -9,7 +9,7 @@ import { brandsData } from '../data/brands';
 import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
-import { usePageContent } from '../lib/pageContent';
+import { usePageContent, useSeo } from '../lib/pageContent';
 import { breadcrumbSchema } from '../lib/schema';
 
 const HERO = 'https://www.mastercraft.com/media/cwehmhdl/mb-2-3.webp';
@@ -63,6 +63,7 @@ export function bateauxNeufsMeta() {
 
 export function BateauxNeufsPage() {
   const t = usePageContent('bateaux-neufs');
+  useSeo('bateaux-neufs');
   const brands = neufsBrands();
   const allModels = brands.flatMap((b) => b.models.map((m) => ({ b, m })));
 

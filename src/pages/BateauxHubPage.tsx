@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { ArrowRight, Sparkles, Tag, ShieldCheck, Waves, Wallet, ChevronRight } from 'lucide-react';
 import { SITE } from '../data/site';
 import { pageMeta } from '../lib/meta';
-import { usePageContent } from '../lib/pageContent';
+import { usePageContent, useSeo } from '../lib/pageContent';
 import { breadcrumbSchema, faqSchema } from '../lib/schema';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { brandsData } from '../data/brands';
@@ -63,6 +63,7 @@ export function bateauxHubMeta() {
 
 export function BateauxHubPage() {
   const t = usePageContent('bateaux');
+  useSeo('bateaux');
   const usedCount = availableUsedBoats().length;
   const newCount = BRAND_IDS.reduce((n, id) => n + (BRAND_MODELS[id]?.order.length || 0), 0);
 

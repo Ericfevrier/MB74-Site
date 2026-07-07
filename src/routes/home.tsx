@@ -3,6 +3,7 @@ import { IntroSection } from '../components/IntroSection';
 import { ServicesSection } from '../components/ServicesSection';
 import { BrandsSection } from '../components/BrandsSection';
 import { PartnersLocationSection } from '../components/PartnersLocationSection';
+import { useSeo } from '../lib/pageContent';
 
 export function meta() {
   return [
@@ -16,6 +17,7 @@ export function meta() {
 }
 
 export default function Home() {
+  useSeo('accueil');
   return (
     <>
       <Hero />

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { pageMeta } from '../lib/meta';
-import { usePageContent } from '../lib/pageContent';
+import { usePageContent, useSeo } from '../lib/pageContent';
 import {
   Shield,
   Wrench,
@@ -164,6 +164,7 @@ export function hivernageMeta() {
 
 export function HivernageStockagePage() {
   const t = usePageContent('hivernage');
+  useSeo('hivernage');
   // States of interactive UI
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);

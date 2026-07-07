@@ -7,7 +7,7 @@ import { soldUsedBoats, type UsedBoat } from '../data/usedBoats';
 import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
-import { usePageContent } from '../lib/pageContent';
+import { usePageContent, useSeo } from '../lib/pageContent';
 import { breadcrumbSchema } from '../lib/schema';
 
 const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
@@ -33,6 +33,7 @@ export function bateauxVenduMeta() {
 
 export function BateauxVenduPage({ boats: boatsProp }: { boats?: UsedBoat[] } = {}) {
   const t = usePageContent('bateaux-vendus');
+  useSeo('bateaux-vendus');
   const boats = boatsProp ?? soldUsedBoats();
 
   // Aucun vendu → on renvoie vers le stock disponible plutôt que d'afficher une page vide.

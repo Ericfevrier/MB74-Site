@@ -3,7 +3,7 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { SITE } from '../data/site';
 import { pageMeta } from '../lib/meta';
-import { usePageContent } from '../lib/pageContent';
+import { usePageContent, useSeo } from '../lib/pageContent';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
 import {
   Truck,
@@ -79,6 +79,7 @@ export function transportMeta() {
 
 export function TransportPage() {
   const t = usePageContent('transport');
+  useSeo('transport');
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);

@@ -8,7 +8,7 @@ import { pageMeta } from '../lib/meta';
 import { breadcrumbSchema } from '../lib/schema';
 import { TEAM } from '../data/team';
 import { useLiveTeam } from '../lib/publicApi';
-import { usePageContent } from '../lib/pageContent';
+import { usePageContent, useSeo } from '../lib/pageContent';
 
 const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
 
@@ -49,6 +49,7 @@ export function teamMeta() {
 
 export function TeamPage() {
   const t = usePageContent('team');
+  useSeo('team');
   const live = useLiveTeam();
   const team = live.members && live.members.length ? live.members : TEAM;
   return (

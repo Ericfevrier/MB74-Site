@@ -5,7 +5,7 @@ import { SITE } from '../data/site';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
 import { breadcrumbSchema } from '../lib/schema';
-import { usePageContent } from '../lib/pageContent';
+import { usePageContent, useSeo } from '../lib/pageContent';
 
 // Le lien et l'icône de chaque carte restent fixes (structure de navigation).
 const CARD_META = [
@@ -38,6 +38,7 @@ export function servicesHubMeta() {
 
 export function ServicesHubPage() {
   const t = usePageContent('services-hub');
+  useSeo('services-hub');
   const stats = t.list<{ value: string; label: string }>('hero.stats');
   const cards = t.list<{ title: string; desc: string; bullets: string }>('cards');
   return (

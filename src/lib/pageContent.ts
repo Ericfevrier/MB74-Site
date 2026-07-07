@@ -68,3 +68,35 @@ export function usePageContent(pageKey: string): PageT {
   };
   return t;
 }
+
+function setMetaTag(attr: 'name' | 'property', key: string, content: string) {
+  let el = document.head.querySelector(`meta[${attr}="${key}"]`) as HTMLMetaElement | null;
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+}
+
+/**
+ * Applique la surcharge SEO (balise <title> + meta description) définie dans l'admin.
+ * Le HTML prérendu garde toujours les défauts optimisés (bons pour les crawlers) ;
+ * ce hook ne remplace que si l'admin a saisi une valeur, côté client (Google exécute le JS).
+ */
+export function useSeo(pageKey: string): void {
+  const t = usePageContent(pageKey);
+  const title = t.raw('seo.title');
+  const description = t.raw('seo.description');
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    if (title) {
+      document.title = title;
+      setMetaTag('property', 'og:title', title);
+    }
+    if (description) {
+      setMetaTag('name', 'description', description);
+      setMetaTag('property', 'og:description', description);
+    }
+  }, [title, description]);
+}

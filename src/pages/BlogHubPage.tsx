@@ -8,7 +8,7 @@ import { ServiceContactBlock } from '../components/services/ServiceContactBlock'
 import { pageMeta } from '../lib/meta';
 import { breadcrumbSchema } from '../lib/schema';
 import { useLiveBlog } from '../lib/publicApi';
-import { usePageContent } from '../lib/pageContent';
+import { usePageContent, useSeo } from '../lib/pageContent';
 
 const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
 
@@ -50,6 +50,7 @@ export function blogHubMeta({ data }: { data?: { articles?: BlogArticle[] } } = 
 
 export function BlogHubPage({ articles: articlesProp, categories: categoriesProp }: { articles?: BlogArticle[]; categories?: BlogCategory[] } = {}) {
   const t = usePageContent('blog');
+  useSeo('blog');
   const [active, setActive] = useState<string | null>(null);
   const categories = categoriesProp ?? BLOG_CATEGORIES;
   const live = useLiveBlog();

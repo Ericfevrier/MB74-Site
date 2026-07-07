@@ -6,7 +6,7 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { GoogleMapCustom } from '../components/GoogleMapCustom';
 import { pageMeta } from '../lib/meta';
-import { usePageContent } from '../lib/pageContent';
+import { usePageContent, useSeo } from '../lib/pageContent';
 
 export function contactMeta() {
   const canonical = `${SITE.url}/contact/`;
@@ -44,6 +44,7 @@ export function contactMeta() {
 
 export function ContactPage() {
   const t = usePageContent('contact');
+  useSeo('contact');
   return (
     <div className="bg-white">
       {/* Hero */}
