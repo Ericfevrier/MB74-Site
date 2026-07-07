@@ -1,0 +1,127 @@
+/**
+ * Bandeau de consentement cookies (RGPD) + chargement de Google Analytics 4.
+ *
+ * - L'ID GA est éditable dans l'admin (Réglages → Mesure d'audience) et lu via useSiteSettings().
+ * - AUCUN cookie/analytics n'est chargé tant que le visiteur n'a pas cliqué « Accepter ».
+ * - Le choix est mémorisé dans localStorage ; il est modifiable via le lien « Cookies » du pied de page
+ *   (événement `mb74:open-cookies`).
+ * - En SPA, chaque changement de page envoie un `page_view` à GA.
+ */
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router';
+import { Cookie } from 'lucide-react';
+import { useSiteSettings } from '../lib/settings';
+
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+const KEY = 'mb74_cookie_consent';
+const OPEN_EVENT = 'mb74:open-cookies';
+
+/** Permet de rouvrir le bandeau depuis n'importe où (ex. pied de page). */
+export function openCookieSettings() {
+  window.dispatchEvent(new Event(OPEN_EVENT));
+}
+
+function loadGA(id: string) {
+  if (window.gtag) return;
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer!.push(arguments);
+  };
+  window.gtag('js', new Date());
+  // send_page_view:false → on gère les vues de page manuellement (navigation SPA).
+  window.gtag('config', id, { anonymize_ip: true, send_page_view: false });
+}
+
+export function CookieConsent() {
+  const { gaId } = useSiteSettings();
+  const location = useLocation();
+  const [choice, setChoice] = useState<'granted' | 'denied' | null>(null);
+  const loaded = useRef(false);
+
+  // Lecture du choix mémorisé (client uniquement).
+  useEffect(() => {
+    try {
+      const v = localStorage.getItem(KEY);
+      if (v === 'granted' || v === 'denied') setChoice(v);
+    } catch { /* localStorage indisponible */ }
+  }, []);
+
+  // Chargement de GA une fois le consentement donné et l'ID disponible.
+  useEffect(() => {
+    if (choice === 'granted' && gaId && !loaded.current) {
+      loadGA(gaId);
+      loaded.current = true;
+    }
+  }, [choice, gaId]);
+
+  // Vue de page à chaque navigation (si GA chargé).
+  useEffect(() => {
+    if (loaded.current && window.gtag && gaId) {
+      window.gtag('event', 'page_view', {
+        page_path: location.pathname + location.search,
+        page_location: typeof window !== 'undefined' ? window.location.href : undefined,
+        page_title: typeof document !== 'undefined' ? document.title : undefined,
+      });
+    }
+  }, [location.pathname, location.search, gaId]);
+
+  // Réouverture depuis le pied de page.
+  useEffect(() => {
+    const open = () => setChoice(null);
+    window.addEventListener(OPEN_EVENT, open);
+    return () => window.removeEventListener(OPEN_EVENT, open);
+  }, []);
+
+  const decide = (v: 'granted' | 'denied') => {
+    try { localStorage.setItem(KEY, v); } catch { /* ignore */ }
+    setChoice(v);
+  };
+
+  // Pas d'analytics configuré, ou choix déjà fait → pas de bandeau.
+  if (!gaId || choice !== null) return null;
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-[200] p-4 sm:p-6">
+      <div className="max-w-3xl mx-auto bg-brand-dark text-white rounded-2xl shadow-2xl ring-1 ring-white/10 p-5 sm:p-6">
+        <div className="flex items-start gap-4">
+          <span className="hidden sm:flex w-11 h-11 rounded-xl bg-brand-cyan/15 text-brand-cyan items-center justify-center flex-shrink-0">
+            <Cookie size={22} />
+          </span>
+          <div className="flex-1">
+            <p className="font-bold uppercase tracking-tight mb-1.5">Cookies &amp; mesure d’audience</p>
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Nous utilisons des cookies de mesure d’audience (Google Analytics) pour améliorer votre expérience.
+              Vous pouvez accepter ou refuser. En savoir plus dans notre{' '}
+              <Link to="/politique-de-confidentialite" className="text-brand-cyan underline hover:no-underline">politique de confidentialité</Link>.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 mt-4">
+              <button
+                onClick={() => decide('granted')}
+                className="bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl hover:bg-white transition"
+              >
+                Accepter
+              </button>
+              <button
+                onClick={() => decide('denied')}
+                className="border border-white/25 text-white font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition"
+              >
+                Refuser
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

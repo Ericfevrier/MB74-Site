@@ -20,6 +20,8 @@ export interface SiteSettings {
   facebook: string;
   youtube: string;
   linkedin: string;
+  /** ID de mesure Google Analytics 4 (format G-XXXXXXXXXX). Vide = analytics désactivé. */
+  gaId: string;
 }
 
 export const SETTINGS_DEFAULTS: SiteSettings = {
@@ -35,6 +37,7 @@ export const SETTINGS_DEFAULTS: SiteSettings = {
   facebook: 'https://www.facebook.com/motorboat74/',
   youtube: 'https://www.youtube.com/@MotorBoat74',
   linkedin: 'https://www.linkedin.com/company/motor-boat-74/',
+  gaId: '',
 };
 
 const phoneToHref = (p: string) => `tel:+${p.replace(/\D/g, '').replace(/^0/, '33')}`;
@@ -56,6 +59,7 @@ export function mergeSettings(raw: Record<string, string>): SiteSettings {
   for (const k of ['instagram', 'facebook', 'youtube', 'linkedin'] as const) {
     if (v(k)) o[k] = v(k);
   }
+  if (v('ga_id')) o.gaId = v('ga_id');
   return o;
 }
 

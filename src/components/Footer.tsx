@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { Instagram, Facebook, Youtube, Linkedin, Phone, Lock } from 'lucide-react';
 import { useSiteSettings } from '../lib/settings';
 import { useLiveMenus, type MenuLink } from '../lib/publicApi';
+import { openCookieSettings } from './CookieConsent';
 
 /** Lien de menu : interne (<Link>) ou externe (<a>) selon l'URL. */
 function FooterLink({ label, url }: MenuLink) {
@@ -175,6 +176,13 @@ export function Footer() {
                 {link.name}
               </Link>
             ))}
+            <button
+              type="button"
+              onClick={() => openCookieSettings()}
+              className="text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors"
+            >
+              Cookies
+            </button>
           </div>
           <div className="flex items-center gap-5">
             <p className="text-[11px] font-bold uppercase tracking-widest text-white/20">

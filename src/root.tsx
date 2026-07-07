@@ -2,6 +2,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from 're
 import './index.css';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { CookieConsent } from './components/CookieConsent';
 import { SettingsProvider } from './lib/settings';
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -46,6 +47,7 @@ export default function App() {
           <Outlet />
         </main>
         <Footer />
+        <CookieConsent />
       </div>
     </SettingsProvider>
   );

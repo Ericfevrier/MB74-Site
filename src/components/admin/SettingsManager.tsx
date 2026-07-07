@@ -19,9 +19,10 @@ const FIELDS: { key: string; label: string; placeholder?: string; textarea?: boo
   { key: 'facebook', label: 'Facebook (URL)', placeholder: SETTINGS_DEFAULTS.facebook, group: 'Réseaux sociaux' },
   { key: 'youtube', label: 'YouTube (URL)', placeholder: SETTINGS_DEFAULTS.youtube, group: 'Réseaux sociaux' },
   { key: 'linkedin', label: 'LinkedIn (URL)', placeholder: SETTINGS_DEFAULTS.linkedin, group: 'Réseaux sociaux' },
+  { key: 'ga_id', label: 'ID Google Analytics 4 (G-XXXXXXXXXX) — vide = désactivé', placeholder: 'G-XXXXXXXXXX', group: 'Mesure d’audience' },
 ];
 
-const GROUPS = ['Coordonnées', 'Réseaux sociaux'];
+const GROUPS = ['Coordonnées', 'Réseaux sociaux', 'Mesure d’audience'];
 
 export function SettingsManager() {
   const [values, setValues] = useState<Record<string, string> | null>(null);

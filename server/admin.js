@@ -1491,7 +1491,7 @@ export function mountAdmin(app, { sendMailRaw, mailEnabled } = {}) {
   // Clés autorisées (on ignore toute autre clé envoyée).
   const SETTING_KEYS = [
     'phone', 'email', 'address_street', 'address_locality', 'address_postal', 'address_region',
-    'hours', 'instagram', 'facebook', 'youtube', 'linkedin',
+    'hours', 'instagram', 'facebook', 'youtube', 'linkedin', 'ga_id',
   ];
 
   async function readSettings() {
