@@ -1046,6 +1046,22 @@ export const PAGES: PageDef[] = [
       },
     ],
   },
+  {
+    key: 'notfound',
+    label: 'Page 404 (introuvable)',
+    path: '/',
+    sections: [
+      {
+        title: 'Contenu',
+        fields: [
+          { key: 'eyebrow', label: 'Sur-titre', type: 'text', default: 'Erreur 404' },
+          { key: 'title', label: 'Titre', type: 'text', default: 'Cap perdu' },
+          { key: 'text', label: 'Texte', type: 'textarea', default: "La page que vous cherchez n'existe pas ou a été déplacée. Revenons à bon port." },
+          { key: 'cta', label: 'Bouton — texte', type: 'text', default: "Retour à l'accueil" },
+        ],
+      },
+    ],
+  },
 ];
 
 /**
