@@ -112,6 +112,28 @@ export const PAGES: PageDef[] = [
           { key: 'services.title', label: 'Titre', type: 'text', default: 'Nos services' },
         ],
       },
+      {
+        title: 'Partenaires (logos défilants)',
+        fields: [
+          { key: 'partners.eyebrow', label: 'Sur-titre', type: 'text', default: 'Partenaires & Réseau' },
+          { key: 'partners.title', label: 'Titre', type: 'text', default: 'Ils nous font confiance' },
+          {
+            key: 'partners.logos', label: 'Logos (uploadez un logo ; sinon le nom s’affiche)', type: 'list', itemLabel: 'Partenaire',
+            itemFields: [
+              { key: 'name', label: 'Nom', type: 'text' },
+              { key: 'logo', label: 'Logo (image, fond transparent de préférence)', type: 'image' },
+              { key: 'url', label: 'Lien (optionnel)', type: 'url' },
+            ],
+            defaultList: [
+              { name: 'Nautique', logo: '', url: '/marque/nautique' },
+              { name: 'Connelly', logo: '', url: '' },
+              { name: 'Vanclaes', logo: '', url: '' },
+              { name: 'PCM Marine', logo: '', url: '' },
+              { name: 'Sports Service', logo: '', url: '' },
+            ],
+          },
+        ],
+      },
     ],
   },
   {

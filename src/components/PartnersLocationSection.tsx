@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router';
 import { MapPin, Phone, Mail, ChevronRight } from 'lucide-react';
 import { GoogleMapCustom } from './GoogleMapCustom';
+import { usePageContent } from '../lib/pageContent';
+
+type Partner = { name: string; logo?: string; url?: string };
+
+/** Élément d'un partenaire : logo si fourni, sinon le nom en toutes lettres. */
+function PartnerItem({ p }: { p: Partner }) {
+  const inner = p.logo
+    ? <img src={p.logo} alt={p.name} loading="lazy" className="h-10 sm:h-12 md:h-14 w-auto object-contain" />
+    : <span className="text-lg sm:text-2xl font-bold italic tracking-tighter whitespace-nowrap">{p.name}</span>;
+  const cls = 'flex items-center justify-center grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all';
+  if (p.url) {
+    return /^https?:\/\//i.test(p.url)
+      ? <a href={p.url} target="_blank" rel="noreferrer" className={cls}>{inner}</a>
+      : <Link to={p.url} className={cls}>{inner}</Link>;
+  }
+  return <div className={cls}>{inner}</div>;
+}
 
 export function PartnersLocationSection() {
+  const t = usePageContent('accueil');
+  const partners = t.list<Partner>('partners.logos').filter((p) => p && p.name);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -41,34 +61,33 @@ export function PartnersLocationSection() {
   return (
     <div className="py-20 md:py-32 bg-transparent overflow-hidden">
       {/* Partners Section */}
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-8 text-center text-brand-dark mb-24 md:mb-48">
-        <div className="flex flex-col items-center mb-16 md:mb-24">
+      <div className="text-center text-brand-dark mb-24 md:mb-48">
+        <div className="flex flex-col items-center mb-16 md:mb-24 px-4">
           <div className="flex items-center space-x-3 text-brand-cyan mb-4">
               <div className="w-8 h-1 bg-brand-cyan rounded-full"></div>
-              <span className="uppercase tracking-widest font-bold text-[15px]">Partenaires & Réseau</span>
+              <span className="uppercase tracking-widest font-bold text-[15px]">{t('partners.eyebrow')}</span>
           </div>
           <h2 className="text-[32px] md:text-[50px] font-bold tracking-tight">
-            Ils nous <span className="text-brand-cyan lowercase">font confiance</span>
+            {t('partners.title')}
           </h2>
         </div>
 
-        <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-12 md:gap-24 opacity-40">
-           <div className="flex items-center gap-2 grayscale hover:grayscale-0 transition-all hover:opacity-100 cursor-pointer">
-              <span className="text-lg sm:text-2xl font-bold italic tracking-tighter">NAUTIQUE</span>
-           </div>
-           <div className="flex items-center gap-2 grayscale hover:grayscale-0 transition-all hover:opacity-100 cursor-pointer">
-              <span className="text-lg sm:text-2xl font-bold italic tracking-tighter">CONNELLY</span>
-           </div>
-           <div className="flex items-center gap-2 grayscale hover:grayscale-0 transition-all hover:opacity-100 cursor-pointer">
-              <span className="text-lg sm:text-2xl font-bold border-2 border-brand-dark px-2 leading-none">VANCLAES</span>
-           </div>
-           <div className="flex items-center gap-2 grayscale hover:grayscale-0 transition-all hover:opacity-100 cursor-pointer">
-              <span className="text-lg sm:text-2xl font-bold tracking-tight">PCM Marine</span>
-           </div>
-           <div className="flex items-center gap-2 grayscale hover:grayscale-0 transition-all hover:opacity-100 cursor-pointer">
-              <span className="text-xl sm:text-3xl font-bold italic tracking-tight text-blue-900 border-b-4 border-green-500">SPORTS SERVICE</span>
-           </div>
-        </div>
+        {partners.length > 0 && (
+          /* Bandeau défilant lent, en boucle ; la piste est dupliquée pour un défilement continu. */
+          <div className="mb-marquee relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+            <div className="mb-marquee-track">
+              {[0, 1].map((copy) => (
+                <div key={copy} className="flex items-center shrink-0" aria-hidden={copy === 1}>
+                  {partners.map((p, i) => (
+                    <div key={`${copy}-${i}`} className="px-8 sm:px-14 md:px-20">
+                      <PartnerItem p={p} />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Location & Contact Section */}
