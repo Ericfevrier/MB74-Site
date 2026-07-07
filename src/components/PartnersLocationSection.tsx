@@ -8,9 +8,15 @@ type Partner = { name: string; logo?: string; url?: string };
 
 /** Élément d'un partenaire : logo si fourni, sinon le nom en toutes lettres. */
 function PartnerItem({ p }: { p: Partner }) {
+  // Boîte de taille fixe identique pour chaque partenaire → logos harmonisés
+  // (chaque logo, quelles que soient ses proportions, est mis à l'échelle pour remplir la boîte).
   const inner = p.logo
-    ? <img src={p.logo} alt={p.name} loading="lazy" className="h-12 sm:h-14 md:h-16 w-auto object-contain" />
-    : <span className="text-lg sm:text-2xl font-bold italic tracking-tighter whitespace-nowrap text-brand-dark">{p.name}</span>;
+    ? (
+      <span className="flex items-center justify-center h-16 sm:h-20 md:h-24 w-[150px] sm:w-[190px] md:w-[230px]">
+        <img src={p.logo} alt={p.name} loading="lazy" className="max-h-full max-w-full w-auto h-auto object-contain" />
+      </span>
+    )
+    : <span className="flex items-center justify-center h-16 sm:h-20 md:h-24 w-[150px] sm:w-[190px] md:w-[230px] text-lg sm:text-2xl font-bold italic tracking-tighter whitespace-nowrap text-brand-dark">{p.name}</span>;
   // Logos en couleurs réelles (pas de niveau de gris), léger zoom au survol.
   const cls = 'flex items-center justify-center transition-transform duration-300 hover:scale-105';
   if (p.url) {
@@ -80,7 +86,7 @@ export function PartnersLocationSection() {
               {[0, 1].map((copy) => (
                 <div key={copy} className="flex items-center shrink-0" aria-hidden={copy === 1}>
                   {partners.map((p, i) => (
-                    <div key={`${copy}-${i}`} className="px-8 sm:px-14 md:px-20">
+                    <div key={`${copy}-${i}`} className="px-5 sm:px-8 md:px-10">
                       <PartnerItem p={p} />
                     </div>
                   ))}
