@@ -82,7 +82,7 @@ const PRIVACY: { title: string; updated: string; blocks: Block[] } = {
       h: 'Finalités et base légale',
       p: [
         'Vos données sont utilisées pour répondre à vos demandes, établir un devis, assurer le suivi de la relation commerciale et, le cas échéant, vous adresser nos communications.',
-        'Les bases légales mobilisées sont : l’exécution du contrat ou de mesures précontractuelles, votre consentement (newsletter, cookies non essentiels), l’intérêt légitime de l’entreprise et le respect de ses obligations légales.',
+        'Les bases légales mobilisées sont : l’exécution du contrat ou de mesures précontractuelles, votre consentement (cookies non essentiels), l’intérêt légitime de l’entreprise et le respect de ses obligations légales.',
       ],
     },
     {
@@ -97,7 +97,6 @@ const PRIVACY: { title: string; updated: string; blocks: Block[] } = {
       ul: [
         'Clients : 5 ans à compter de la fin de la relation commerciale',
         'Prospects : 2 ans à compter de la collecte ou du dernier contact',
-        'Abonnés à la newsletter : jusqu’au retrait de votre consentement',
         'Cookies de mesure d’audience : 13 mois maximum',
       ],
     },
