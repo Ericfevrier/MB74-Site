@@ -40,8 +40,7 @@ export function BrandsSection() {
                   src="/images/event-listing-boat-shows.png" 
                   alt="Logo Nautique" 
                   className="w-full h-full object-cover" 
-                  referrerPolicy="no-referrer"
-                />
+                  referrerPolicy="no-referrer" loading="lazy" />
               </div>
               <span className="text-[32px] md:text-[50px] font-bold uppercase tracking-tight leading-none">NAUTIQUE</span>
             </div>

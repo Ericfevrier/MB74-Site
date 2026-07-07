@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+/* Police Inter chargée via <link> dans <head> (voir root.tsx) — évite la chaîne de requêtes bloquante d'un @import CSS. */
 @import "tailwindcss";
 
 @theme {

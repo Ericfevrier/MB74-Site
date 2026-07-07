@@ -51,8 +51,7 @@ export function ServicesHubPage() {
             src={t('hero.image')}
             alt="Services nautiques Motor Boat 74"
             className="w-full h-full object-cover opacity-30"
-            referrerPolicy="no-referrer"
-          />
+            referrerPolicy="no-referrer" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/85 to-brand-dark" />
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">

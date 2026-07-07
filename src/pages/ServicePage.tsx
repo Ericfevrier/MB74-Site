@@ -276,8 +276,7 @@ export function ServicePage() {
             src={service.heroImage}
             alt={service.h1}
             className="w-full h-full object-cover opacity-40"
-            referrerPolicy="no-referrer"
-          />
+            referrerPolicy="no-referrer" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/85 to-brand-dark/40" />
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-72 -mt-72" />
         </div>

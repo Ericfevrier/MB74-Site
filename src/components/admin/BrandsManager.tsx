@@ -46,7 +46,7 @@ function ImageField({ label, value, onChange, onPick }: { label: string; value?:
       <label className={LABEL}>{label}</label>
       <div className="flex items-start gap-3">
         <div className="w-20 h-16 rounded-lg overflow-hidden border border-gray-200 bg-gray-50 flex-shrink-0 flex items-center justify-center">
-          {value ? <img src={value} alt="" className="w-full h-full object-contain" referrerPolicy="no-referrer" /> : <ImageIcon size={18} className="text-gray-300" />}
+          {value ? <img src={value} alt="" className="w-full h-full object-contain" referrerPolicy="no-referrer" loading="lazy" /> : <ImageIcon size={18} className="text-gray-300" />}
         </div>
         <div className="flex-1 flex gap-2">
           <input className={INPUT} value={value || ''} onChange={(e) => onChange(e.target.value)} placeholder="URL, ou « Médias » →" />
@@ -136,7 +136,7 @@ function BrandEditor({ brand, onBack, onSaved }: { brand: AdminBrand; onBack: ()
             <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
               {intro.map((url, i) => (
                 <div key={i} className="relative group rounded-lg overflow-hidden border border-gray-200 aspect-square">
-                  <img src={url} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <img src={url} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" />
                   <button type="button" onClick={() => set('introImages', intro.filter((_, k) => k !== i))} className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-500 transition"><X size={13} /></button>
                 </div>
               ))}
@@ -152,7 +152,7 @@ function BrandEditor({ brand, onBack, onSaved }: { brand: AdminBrand; onBack: ()
           {models.map((m, i) => (
             <div key={i} className="flex items-start gap-3 border border-gray-200 rounded-xl p-3">
               <button type="button" onClick={() => openPicker(false, (u) => setModels(models.map((x, k) => (k === i ? { ...x, image: u[0] } : x))))} className="w-20 h-14 rounded-lg overflow-hidden border border-gray-200 bg-gray-50 flex-shrink-0 flex items-center justify-center" title="Changer l'image">
-                {m.image ? <img src={m.image} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : <ImagePlus size={16} className="text-gray-300" />}
+                {m.image ? <img src={m.image} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" /> : <ImagePlus size={16} className="text-gray-300" />}
               </button>
               <div className="flex-1 space-y-2">
                 <input className={INPUT} value={m.name} placeholder="Nom du modèle" onChange={(e) => setModels(models.map((x, k) => (k === i ? { ...x, name: e.target.value } : x)))} />
@@ -372,7 +372,7 @@ export function BrandsManager() {
           {rows.map((b) => (
             <div key={b.brand_id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition">
               <div className="w-16 h-12 rounded-lg bg-brand-dark flex items-center justify-center overflow-hidden flex-shrink-0 p-2">
-                {b.logo ? <img src={b.logo} alt="" className="max-h-full max-w-full object-contain" referrerPolicy="no-referrer" /> : <ImageIcon size={18} className="text-white/30" />}
+                {b.logo ? <img src={b.logo} alt="" className="max-h-full max-w-full object-contain" referrerPolicy="no-referrer" loading="lazy" /> : <ImageIcon size={18} className="text-white/30" />}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-bold text-brand-dark truncate">{b.name || b.brand_id}</p>

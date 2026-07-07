@@ -146,8 +146,7 @@ export function DepannagePage() {
             src={t('hero.image')}
             alt="Dépannage de bateau sur le lac d'Annecy par Motor Boat 74"
             className="w-full h-full object-cover opacity-60 scale-105"
-            referrerPolicy="no-referrer"
-          />
+            referrerPolicy="no-referrer" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/70 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-transparent to-brand-dark/30"></div>
           <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-cyan/10 rounded-full blur-[150px] -mr-40 -mt-40"></div>

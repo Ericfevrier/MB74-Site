@@ -266,7 +266,7 @@ export function CitiesManager() {
             <div key={c.id} {...dragProps(i)} className={`flex items-center gap-4 p-4 hover:bg-gray-50 transition ${dragEnabled ? 'cursor-move' : ''}`}>
               {dragEnabled && <GripVertical size={16} className="text-gray-300 flex-shrink-0" />}
               <div className="w-20 h-14 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
-                {c.hero ? <img src={c.hero} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : null}
+                {c.hero ? <img src={c.hero} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" /> : null}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-bold text-brand-dark truncate">{c.city}</p>

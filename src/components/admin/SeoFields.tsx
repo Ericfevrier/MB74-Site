@@ -106,7 +106,7 @@ export function SeoFields({
               <div className="pl-3 space-y-4">
                 <div className="flex items-start gap-3">
                   <div className="w-24 h-16 rounded-lg overflow-hidden border border-gray-200 bg-gray-50 flex-shrink-0 flex items-center justify-center">
-                    {(seo.ogImage || fallbackImage) ? <img src={seo.ogImage || fallbackImage} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : <ImagePlus size={16} className="text-gray-300" />}
+                    {(seo.ogImage || fallbackImage) ? <img src={seo.ogImage || fallbackImage} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" /> : <ImagePlus size={16} className="text-gray-300" />}
                   </div>
                   <div className="flex-1">
                     <label className={LABEL}>Image de partage (Open Graph)</label>

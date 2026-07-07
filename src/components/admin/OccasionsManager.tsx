@@ -99,7 +99,7 @@ function BoatForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel: ()
         <label className={LABEL}>Image principale</label>
         <div className="flex items-start gap-3">
           <div className="w-28 h-20 rounded-lg overflow-hidden border border-gray-200 bg-gray-50 flex-shrink-0 flex items-center justify-center">
-            {d.image ? <img src={d.image} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : <ImageIcon size={20} className="text-gray-300" />}
+            {d.image ? <img src={d.image} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" /> : <ImageIcon size={20} className="text-gray-300" />}
           </div>
           <div className="flex-1 flex gap-2">
             <input className={INPUT} value={d.image || ''} onChange={(e) => set('image', e.target.value)} placeholder="URL, ou « Médias » →" />
@@ -122,7 +122,7 @@ function BoatForm({ initial, onCancel, onSaved }: { initial: Draft; onCancel: ()
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
             {gallery.map((url, i) => (
               <div key={i} className="relative group rounded-lg overflow-hidden border border-gray-200 aspect-square">
-                <img src={url} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                <img src={url} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" />
                 <button type="button" onClick={() => setGallery(gallery.filter((_, k) => k !== i))} title="Retirer" className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-500 transition">
                   <X size={13} />
                 </button>
@@ -354,7 +354,7 @@ export function OccasionsManager() {
             <div key={b.id} {...dragProps(i)} className={`flex items-center gap-4 p-4 hover:bg-gray-50 transition ${dragEnabled ? 'cursor-move' : ''}`}>
               {dragEnabled && <GripVertical size={16} className="text-gray-300 flex-shrink-0" />}
               <div className="w-20 h-14 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
-                {b.image ? <img src={b.image} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" /> : null}
+                {b.image ? <img src={b.image} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" /> : null}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-bold text-brand-dark truncate">

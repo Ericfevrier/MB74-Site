@@ -50,7 +50,7 @@ export function ContactPage() {
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">
         <div className="absolute inset-0">
-          <img src={t('hero.image')} alt="Motor Boat 74" className="w-full h-full object-cover opacity-35" referrerPolicy="no-referrer" />
+          <img src={t('hero.image')} alt="Motor Boat 74" className="w-full h-full object-cover opacity-35" referrerPolicy="no-referrer" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/85 via-brand-dark/85 to-brand-dark" />
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">

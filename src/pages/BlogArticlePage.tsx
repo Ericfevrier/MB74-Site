@@ -47,7 +47,7 @@ export function BlogArticlePage() {
       <header className="relative bg-brand-dark text-white overflow-hidden">
         {article.image && (
           <div className="absolute inset-0">
-            <img src={article.image} alt="" className="w-full h-full object-cover opacity-30" referrerPolicy="no-referrer" />
+            <img src={article.image} alt="" className="w-full h-full object-cover opacity-30" referrerPolicy="no-referrer" fetchPriority="high" />
             <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/85 to-brand-dark" />
           </div>
         )}

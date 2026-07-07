@@ -44,8 +44,7 @@ export function Footer() {
                 src="/images/logo-transprent.png"
                 alt="Motor Boat 74"
                 className="h-16 w-16 object-contain flex-shrink-0"
-                referrerPolicy="no-referrer"
-              />
+                referrerPolicy="no-referrer" loading="lazy" />
               <h2 className="text-white text-2xl font-bold uppercase tracking-tight leading-none whitespace-nowrap">
                 Motor Boat 74
               </h2>
@@ -121,8 +120,7 @@ export function Footer() {
                         src={b.logo}
                         alt={`Logo ${b.name}`}
                         className={b.crop ? 'h-full w-full object-cover object-left' : 'h-9 w-auto max-w-[110px] object-contain'}
-                        referrerPolicy="no-referrer"
-                      />
+                        referrerPolicy="no-referrer" loading="lazy" />
                     </span>
                     <span className="text-white font-bold uppercase tracking-tight group-hover:text-brand-cyan transition-colors">{b.name}</span>
                   </Link>

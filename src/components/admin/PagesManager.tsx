@@ -22,7 +22,7 @@ function SubInput({ field, value, onChange, onPick }: { field: ListItemField; va
   if (field.type === 'image') {
     return (
       <div className="flex items-center gap-2">
-        <div className="w-12 h-9 rounded overflow-hidden border border-gray-200 bg-gray-50 flex-shrink-0">{value && <img src={value} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />}</div>
+        <div className="w-12 h-9 rounded overflow-hidden border border-gray-200 bg-gray-50 flex-shrink-0">{value && <img src={value} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" />}</div>
         <input className={INPUT} value={value || ''} placeholder={field.label} onChange={(e) => onChange(e.target.value)} />
         <button type="button" onClick={onPick} className="flex-shrink-0 inline-flex items-center bg-brand-dark text-white px-2.5 py-2 rounded-lg hover:bg-brand-cyan hover:text-brand-dark transition"><ImagePlus size={14} /></button>
       </div>
@@ -87,7 +87,7 @@ function Field({ field, value, onChange, onPick }: { field: PageField; value: st
       ) : field.type === 'image' ? (
         <div className="flex items-start gap-3">
           <div className="w-20 h-16 rounded-lg overflow-hidden border border-gray-200 bg-gray-50 flex-shrink-0">
-            {(value || field.default) && <img src={value || field.default} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />}
+            {(value || field.default) && <img src={value || field.default} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" />}
           </div>
           <div className="flex-1 flex gap-2">
             <input className={INPUT} value={value} placeholder={field.default} onChange={(e) => onChange(e.target.value)} />

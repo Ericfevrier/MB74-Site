@@ -489,7 +489,7 @@ export function ModelsManager({ brand: brandProp }: { brand?: string } = {}) {
                 {list.map((m) => (
                   <div key={m.id} className="flex items-center gap-4 p-3 hover:bg-gray-50 transition">
                     <div className="w-20 h-14 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
-                      {m.hero && <img src={m.hero} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />}
+                      {m.hero && <img src={m.hero} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" loading="lazy" />}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-brand-dark truncate">{m.name || m.slug}</p>

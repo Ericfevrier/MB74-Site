@@ -237,8 +237,7 @@ export function HivernageStockagePage() {
             src={t('hero.image')}
             alt="MotorBoat 74, hivernage et stockage de bateau en Haute-Savoie, sur le Lac d'Annecy"
             className="w-full h-full object-cover opacity-60 scale-105"
-            referrerPolicy="no-referrer"
-          />
+            referrerPolicy="no-referrer" fetchPriority="high" />
           {/* Directional gradient: dark on the text side, image kept visible on the right */}
           <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/70 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-transparent to-brand-dark/30"></div>
