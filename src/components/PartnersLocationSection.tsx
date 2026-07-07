@@ -9,9 +9,10 @@ type Partner = { name: string; logo?: string; url?: string };
 /** Élément d'un partenaire : logo si fourni, sinon le nom en toutes lettres. */
 function PartnerItem({ p }: { p: Partner }) {
   const inner = p.logo
-    ? <img src={p.logo} alt={p.name} loading="lazy" className="h-10 sm:h-12 md:h-14 w-auto object-contain" />
-    : <span className="text-lg sm:text-2xl font-bold italic tracking-tighter whitespace-nowrap">{p.name}</span>;
-  const cls = 'flex items-center justify-center grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all';
+    ? <img src={p.logo} alt={p.name} loading="lazy" className="h-12 sm:h-14 md:h-16 w-auto object-contain" />
+    : <span className="text-lg sm:text-2xl font-bold italic tracking-tighter whitespace-nowrap text-brand-dark">{p.name}</span>;
+  // Logos en couleurs réelles (pas de niveau de gris), léger zoom au survol.
+  const cls = 'flex items-center justify-center transition-transform duration-300 hover:scale-105';
   if (p.url) {
     return /^https?:\/\//i.test(p.url)
       ? <a href={p.url} target="_blank" rel="noreferrer" className={cls}>{inner}</a>
