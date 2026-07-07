@@ -8,6 +8,7 @@ import { ServiceContactBlock } from '../components/services/ServiceContactBlock'
 import { pageMeta } from '../lib/meta';
 import { breadcrumbSchema } from '../lib/schema';
 import { useLiveBlog } from '../lib/publicApi';
+import { usePageContent } from '../lib/pageContent';
 
 const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
 
@@ -48,6 +49,7 @@ export function blogHubMeta({ data }: { data?: { articles?: BlogArticle[] } } = 
 }
 
 export function BlogHubPage({ articles: articlesProp, categories: categoriesProp }: { articles?: BlogArticle[]; categories?: BlogCategory[] } = {}) {
+  const t = usePageContent('blog');
   const [active, setActive] = useState<string | null>(null);
   const categories = categoriesProp ?? BLOG_CATEGORIES;
   const live = useLiveBlog();
@@ -73,15 +75,17 @@ export function BlogHubPage({ articles: articlesProp, categories: categoriesProp
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">
         <div className="absolute inset-0">
-          <img src={HERO} alt="Le blog Motor Boat 74" className="w-full h-full object-cover opacity-30" referrerPolicy="no-referrer" fetchPriority="high" />
+          <img src={t('hero.image')} alt="Le blog Motor Boat 74" className="w-full h-full object-cover opacity-30" referrerPolicy="no-referrer" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/85 to-brand-dark" />
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
           <Breadcrumb className="mb-6 inline-flex" items={[{ label: 'Accueil', to: '/' }, { label: 'Blog' }]} />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Le Blog</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">{t('hero.title')}</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mx-auto">
-            Bienvenue sur le blog de <strong>Motor Boat 74</strong>, la référence pour tous les passionnés de nautisme.
-            Guides, conseils d’experts et actualités autour du wakeboard, du ski nautique et de l’entretien de votre bateau.
+            {t.raw('hero.subtitle')
+              ? t.raw('hero.subtitle')
+              : <>Bienvenue sur le blog de <strong>Motor Boat 74</strong>, la référence pour tous les passionnés de nautisme.
+                Guides, conseils d’experts et actualités autour du wakeboard, du ski nautique et de l’entretien de votre bateau.</>}
           </p>
         </div>
       </header>

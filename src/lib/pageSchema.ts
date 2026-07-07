@@ -115,6 +115,51 @@ export const PAGES: PageDef[] = [
     ],
   },
   {
+    key: 'services-hub',
+    label: 'Services — Page d’accueil',
+    path: '/services',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/services-hub.jpg' },
+          { key: 'hero.title', label: 'Titre', type: 'text', default: 'Nos services' },
+          { key: 'hero.subtitle', label: 'Sous-titre', type: 'textarea', default: 'Découvrez notre gamme complète de services nautiques professionnels. De la vente à l’entretien, en passant par l’hivernage, MotorBoat74 vous accompagne dans tous vos projets nautiques.' },
+          {
+            key: 'hero.stats', label: 'Chiffres clés (bannière)', type: 'list', itemLabel: 'Chiffre',
+            itemFields: [{ key: 'value', label: 'Titre', type: 'text' }, { key: 'label', label: 'Sous-texte', type: 'text' }],
+            defaultList: [
+              { value: 'Hangar sécurisé', label: '1300 m² avec alarme' },
+              { value: 'Dépannage 7j/7', label: 'sur le Lac d’Annecy' },
+              { value: 'Transport', label: 'en France et en Europe' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Cartes services',
+        fields: [
+          {
+            key: 'cards', label: 'Services (le lien et l’icône de chaque carte restent fixes)', type: 'list', itemLabel: 'Service',
+            itemFields: [
+              { key: 'title', label: 'Titre', type: 'text' },
+              { key: 'desc', label: 'Description', type: 'textarea' },
+              { key: 'bullets', label: 'Points clés (séparés par | )', type: 'text' },
+            ],
+            defaultList: [
+              { title: 'Hivernage / Stockage', desc: 'Hivernage bateau sécurisé dans nos hangars de 3000 m² avec alarme sécurisée. Préparation complète moteur et coque incluse.', bullets: 'Stockage intérieur ventilé|Protection humidité & gel|Nettoyage avant remise à l’eau' },
+              { title: 'Entretien / Réparation', desc: 'Entretien moteur bateau toutes marques, réparations mécaniques, électriques et électroniques avec techniciens certifiés.', bullets: 'Révision moteur inboard / hors-bord|Diagnostic électronique|Réparations fibre et gelcoat' },
+              { title: 'Dépannage', desc: 'Dépannage bateau 7j/7 sur le Lac d’Annecy. Intervention sur panne moteur, batterie ou carburant, avec remorquage.', bullets: 'Dépannage sur zone, Lac d’Annecy|Assistance moteur inboard / hors-bord|Remorquage jusqu’au port' },
+              { title: 'Transport en Europe', desc: 'Transport bateau sécurisé avec remorque adaptée, par des professionnels expérimentés. Prise en charge sur site et livraison partout en Europe.', bullets: 'Tous modèles et tailles|Arrimage et calage professionnel|Assurance incluse' },
+              { title: 'Sellerie', desc: 'Sellerie bateau sur-mesure : tauds, coussins, biminis. Réparations ou créations avec tissus techniques marins.', bullets: 'Tissus anti-UV / étanches|Confection personnalisée|Pose à quai ou atelier' },
+              { title: 'Vente de remorques', desc: 'Remorques bateau simples ou doubles essieux, freinées, prêtes à l’emploi. Fournisseurs sélectionnés pour la qualité.', bullets: 'Adaptées wake, pêche, ski|Homologation CE|Réglage et mise à l’eau' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
     key: 'hivernage',
     label: 'Service — Hivernage & stockage',
     path: '/hivernage-stockage-bateau',
@@ -858,6 +903,50 @@ export const PAGES: PageDef[] = [
     "La dernière génération de wakeboats et de bateaux de ski nautique Nautique et MasterCraft. Configurez votre bateau, essayez-le sur le lac d'Annecy et profitez de notre accompagnement complet."),
   titleHero('bateaux-vendus', 'Bateaux — Vendus', '/bateaux/vendu', 'Bateaux vendus',
     "Un aperçu des bateaux récemment vendus par Motor Boat 74. Un modèle similaire vous intéresse ? Nous lançons une recherche sur mesure et vous alertons dès qu'un bateau correspondant arrive."),
+  {
+    key: 'team',
+    label: 'La Team',
+    path: '/la-team',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp' },
+          { key: 'hero.title', label: 'Titre', type: 'text', default: 'La Team' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée par défaut)', type: 'textarea', default: 'Motor Boat 74, concessionnaire officiel de la marque Nautique et importateur de Connelly Ski en Haute-Savoie, est spécialisé dans la vente, l’hivernage et l’entretien de bateaux à moteur. Derrière l’atelier et le showroom, une équipe de passionnés à votre service.' },
+        ],
+      },
+      {
+        title: 'Section « Équipe » (les membres se gèrent dans l’onglet Équipe)',
+        fields: [
+          { key: 'team.eyebrow', label: 'Sur-titre', type: 'text', default: 'Nos passionnés' },
+          { key: 'team.title', label: 'Titre', type: 'text', default: 'Une équipe à votre service' },
+        ],
+      },
+      {
+        title: 'Bloc « Venez nous rencontrer »',
+        fields: [
+          { key: 'cta.title', label: 'Titre', type: 'text', default: 'Venez nous rencontrer' },
+          { key: 'cta.text', label: 'Texte', type: 'textarea', default: 'Poussez la porte de notre showroom au bord du lac d’Annecy : conseil, essai sur l’eau et accompagnement par une équipe qui partage votre passion.' },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'blog',
+    label: 'Blog — Page d’accueil',
+    path: '/blog',
+    sections: [
+      {
+        title: 'Bannière',
+        fields: [
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp' },
+          { key: 'hero.title', label: 'Titre', type: 'text', default: 'Le Blog' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée par défaut)', type: 'textarea', default: 'Bienvenue sur le blog de Motor Boat 74, la référence pour tous les passionnés de nautisme. Guides, conseils d’experts et actualités autour du wakeboard, du ski nautique et de l’entretien de votre bateau.' },
+        ],
+      },
+    ],
+  },
   {
     key: 'contact',
     label: 'Contact',

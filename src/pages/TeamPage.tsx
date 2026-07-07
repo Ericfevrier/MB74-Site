@@ -8,6 +8,7 @@ import { pageMeta } from '../lib/meta';
 import { breadcrumbSchema } from '../lib/schema';
 import { TEAM } from '../data/team';
 import { useLiveTeam } from '../lib/publicApi';
+import { usePageContent } from '../lib/pageContent';
 
 const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
 
@@ -47,6 +48,7 @@ export function teamMeta() {
 }
 
 export function TeamPage() {
+  const t = usePageContent('team');
   const live = useLiveTeam();
   const team = live.members && live.members.length ? live.members : TEAM;
   return (
@@ -55,16 +57,18 @@ export function TeamPage() {
       {/* Hero */}
       <header className="relative bg-brand-dark text-white overflow-hidden">
         <div className="absolute inset-0">
-          <img src={HERO} alt="L’équipe Motor Boat 74 sur le lac" className="w-full h-full object-cover opacity-30" referrerPolicy="no-referrer" fetchPriority="high" />
+          <img src={t('hero.image')} alt="L’équipe Motor Boat 74 sur le lac" className="w-full h-full object-cover opacity-30" referrerPolicy="no-referrer" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/85 to-brand-dark" />
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
           <Breadcrumb className="mb-6 inline-flex" items={[{ label: 'Accueil', to: '/' }, { label: 'La Team' }]} />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">La Team</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">{t('hero.title')}</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mx-auto">
-            Motor Boat 74, concessionnaire officiel de la marque <strong>Nautique</strong> et importateur de <strong>Connelly Ski</strong> en
-            Haute-Savoie, est spécialisé dans la vente, l’hivernage et l’entretien de bateaux à moteur. Derrière l’atelier et le showroom, une
-            équipe de passionnés à votre service.
+            {t.raw('hero.subtitle')
+              ? t.raw('hero.subtitle')
+              : <>Motor Boat 74, concessionnaire officiel de la marque <strong>Nautique</strong> et importateur de <strong>Connelly Ski</strong> en
+                Haute-Savoie, est spécialisé dans la vente, l’hivernage et l’entretien de bateaux à moteur. Derrière l’atelier et le showroom, une
+                équipe de passionnés à votre service.</>}
           </p>
         </div>
       </header>
@@ -73,8 +77,8 @@ export function TeamPage() {
       <section className="py-20 lg:py-24">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="text-center mb-14">
-            <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">Nos passionnés</span>
-            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mt-2">Une équipe à votre service</h2>
+            <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{t('team.eyebrow')}</span>
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mt-2">{t('team.title')}</h2>
           </div>
 
           <div className="grid sm:grid-cols-2 gap-7">
@@ -109,9 +113,9 @@ export function TeamPage() {
       <section className="bg-brand-dark text-white py-20 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-64 -mt-64" />
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 relative z-10 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight mb-6">Venez nous rencontrer</h2>
+          <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight mb-6">{t('cta.title')}</h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
-            Poussez la porte de notre showroom au bord du lac d’Annecy : conseil, essai sur l’eau et accompagnement par une équipe qui partage votre passion.
+            {t('cta.text')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-xl hover:bg-white transition shadow-xl shadow-brand-cyan/20">
