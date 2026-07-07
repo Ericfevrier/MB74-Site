@@ -12,7 +12,7 @@ import { availableUsedBoats } from '../data/usedBoats';
 import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 
-const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
+const HERO = '/images/imported/iujfrvnt-dt-background-image-1.webp';
 
 const BRAND_IDS = ['nautique', 'mastercraft'] as const;
 

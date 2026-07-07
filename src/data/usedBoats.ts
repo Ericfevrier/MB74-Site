@@ -47,9 +47,11 @@ export interface UsedBoat {
   seo?: import('../lib/seo').Seo;
 }
 
-const T = (s: string) => `https://motorboat74.com/wp-content/uploads/elementor/thumbs/${s}`;
+// Images d'occasions rapatriées localement en WebP (public/images/imported/).
+const wpSan = (s: string) => s.replace(/\.(jpg|jpeg|png|webp|avif)$/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const T = (s: string) => `/images/imported/wp-thumb-${wpSan(s)}.webp`;
 /** Image originale pleine résolution (haute netteté), ex. F('2025/09/photo.jpg'). */
-const F = (s: string) => `https://motorboat74.com/wp-content/uploads/${s}`;
+const F = (s: string) => `/images/imported/wp-${wpSan(s)}.webp`;
 
 const STATIC_USED_BOATS: UsedBoat[] = [
   // ---------- Disponibles ----------

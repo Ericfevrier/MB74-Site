@@ -12,7 +12,7 @@ import { pageMeta } from '../lib/meta';
 import { usePageContent, useSeo } from '../lib/pageContent';
 import { breadcrumbSchema } from '../lib/schema';
 
-const HERO = 'https://www.mastercraft.com/media/cwehmhdl/mb-2-3.webp';
+const HERO = '/images/imported/cwehmhdl-mb-2-3.webp';
 const BRAND_IDS = ['nautique', 'mastercraft'] as const;
 
 function neufsBrands() {

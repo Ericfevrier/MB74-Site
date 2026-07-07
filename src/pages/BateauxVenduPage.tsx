@@ -10,7 +10,7 @@ import { pageMeta } from '../lib/meta';
 import { usePageContent, useSeo } from '../lib/pageContent';
 import { breadcrumbSchema } from '../lib/schema';
 
-const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
+const HERO = '/images/imported/0zadabm5-mb-1-3.webp';
 
 export function bateauxVenduMeta() {
   const canonical = `${SITE.url}/bateaux/vendu/`;

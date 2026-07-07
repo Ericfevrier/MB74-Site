@@ -911,7 +911,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Bannière',
         fields: [
-          { key: 'hero.image', label: 'Image de fond', type: 'image', default: 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp' },
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/imported/iujfrvnt-dt-background-image-1.webp' },
           { key: 'hero.title', label: 'Titre', type: 'text', default: 'La Team' },
           { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée par défaut)', type: 'textarea', default: 'Motor Boat 74, concessionnaire officiel de la marque Nautique et importateur de Connelly Ski en Haute-Savoie, est spécialisé dans la vente, l’hivernage et l’entretien de bateaux à moteur. Derrière l’atelier et le showroom, une équipe de passionnés à votre service.' },
         ],
@@ -940,7 +940,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Bannière',
         fields: [
-          { key: 'hero.image', label: 'Image de fond', type: 'image', default: 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp' },
+          { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/imported/iujfrvnt-dt-background-image-1.webp' },
           { key: 'hero.title', label: 'Titre', type: 'text', default: 'Le Blog' },
           { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée par défaut)', type: 'textarea', default: 'Bienvenue sur le blog de Motor Boat 74, la référence pour tous les passionnés de nautisme. Guides, conseils d’experts et actualités autour du wakeboard, du ski nautique et de l’entretien de votre bateau.' },
         ],

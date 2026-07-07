@@ -8,7 +8,7 @@ import { ServiceContactBlock } from '../components/services/ServiceContactBlock'
 import { availableUsedBoats, soldUsedBoats } from '../data/usedBoats';
 import { useLiveUsedBoats } from '../lib/publicApi';
 
-const HERO = 'https://www.mastercraft.com/media/0zadabm5/mb-1-3.jpg';
+const HERO = '/images/imported/0zadabm5-mb-1-3.webp';
 
 /** Données statiques au prerender (SEO) ; le composant rafraîchit en live depuis /api. */
 export function clientLoader() {

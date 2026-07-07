@@ -10,7 +10,7 @@ import { TEAM } from '../data/team';
 import { useLiveTeam } from '../lib/publicApi';
 import { usePageContent, useSeo } from '../lib/pageContent';
 
-const HERO = 'https://www.mastercraft.com/media/iujfrvnt/dt-background-image-1.webp';
+const HERO = '/images/imported/iujfrvnt-dt-background-image-1.webp';
 
 
 export function teamMeta() {

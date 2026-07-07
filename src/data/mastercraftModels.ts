@@ -25,7 +25,10 @@ const USAGE: Record<Series, string> = {
   prostar: 'Le ProStar est un bateau de ski nautique de compétition, conçu pour la précision du slalom et les figures, du débutant au champion.',
 };
 
-const M = (s: string) => `https://www.mastercraft.com/media/${s}`;
+// Images MasterCraft rapatriées localement en WebP (public/images/imported/).
+// Le nom de fichier = chemin CDN « <id>/<fichier> » aplati et normalisé.
+const M = (s: string) =>
+  `/images/imported/${s.replace(/\.(jpg|jpeg|png|webp|avif)$/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.webp`;
 
 interface HL { title: string; text: string; img: string; }
 
