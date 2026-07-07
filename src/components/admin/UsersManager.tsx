@@ -60,7 +60,7 @@ export function UsersManager() {
       <form onSubmit={create} className="bg-white rounded-2xl border border-gray-200 p-5 mb-6">
         <p className="font-bold text-brand-dark mb-3 text-sm">Ajouter un accès</p>
         <div className="grid sm:grid-cols-3 gap-3">
-          <div><label className={LABEL}>Identifiant</label><input className={INPUT} value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="off" required /></div>
+          <div><label className={LABEL}>Identifiant (e-mail @motorboat74.com)</label><input type="email" className={INPUT} value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="off" placeholder="prenom@motorboat74.com" required /></div>
           <div><label className={LABEL}>Mot de passe</label><input type="password" className={INPUT} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" required /></div>
           <div>
             <label className={LABEL}>Rôle</label>

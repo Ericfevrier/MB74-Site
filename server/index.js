@@ -119,6 +119,19 @@ function escapeHtml(str = '') {
     .replace(/"/g, '&quot;');
 }
 
+/**
+ * Envoi d'e-mail générique (destinataire libre) — utilisé pour la réinitialisation
+ * de mot de passe admin. Renvoie { simulated:true } si le SMTP n'est pas configuré.
+ */
+async function sendMailRaw({ to, subject, html, text, replyTo }) {
+  if (!transporter) {
+    console.log(`[mail simulé → ${to}] ${subject}\n${text || ''}\n`);
+    return { simulated: true };
+  }
+  await transporter.sendMail({ from: MAIL_FROM, to, replyTo: replyTo || MAIL_FROM, subject, text, html });
+  return { simulated: false };
+}
+
 async function sendMail({ subject, fields, replyTo }) {
   const rows = Object.entries(fields)
     .map(
@@ -174,7 +187,7 @@ app.get('/api/health', async (_req, res) => {
 });
 
 // API admin (auth + CRUD occasions + messages) et lecture publique /api/used-boats.
-mountAdmin(app);
+mountAdmin(app, { sendMailRaw, mailEnabled });
 
 // Formulaire de contact (toutes pages)
 app.post('/api/contact', async (req, res) => {

@@ -149,6 +149,10 @@ export const adminApi = {
       return r;
     }),
   logout: () => req('POST', '/api/admin/logout').then((r) => { setCsrf(''); return r; }),
+  forgotPassword: (email: string) =>
+    req<{ ok: boolean; message?: string }>('POST', '/api/admin/forgot-password', { email }),
+  resetPassword: (token: string, password: string) =>
+    req<{ ok: boolean }>('POST', '/api/admin/reset-password', { token, password }),
 
   listUsers: () => req<{ users: AdminUser[]; superAdmin: string | null }>('GET', '/api/admin/users'),
   createUser: (username: string, password: string, role: string) => req('POST', '/api/admin/users', { username, password, role }),

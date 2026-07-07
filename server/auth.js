@@ -50,6 +50,38 @@ export function verifyToken(token) {
 export const authConfigured = () =>
   Boolean(process.env.ADMIN_USERNAME && (process.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD_HASH));
 
+/* --------------------- Réinitialisation de mot de passe ---------------------- */
+// Jeton de reset sans état : HMAC signé, lié au hash courant du compte (`bind`).
+// Dès que le mot de passe change, `bind` change → tout ancien lien devient invalide
+// (usage unique de fait). TTL court porté dans la charge utile.
+export const RESET_TTL_MS = 30 * 60 * 1000; // 30 min
+
+export function createResetToken(username, bind, ttlMs = RESET_TTL_MS) {
+  const payload = b64url(JSON.stringify({ u: username, e: Date.now() + ttlMs }));
+  const sig = crypto.createHmac('sha256', secret()).update(`reset:${payload}:${bind || ''}`).digest('base64url');
+  return `${payload}.${sig}`;
+}
+
+/** Vérifie le jeton avec le `bind` courant → username ou null. */
+export function verifyResetToken(token, bind) {
+  if (!token) return null;
+  const i = token.lastIndexOf('.');
+  if (i < 0) return null;
+  const payload = token.slice(0, i);
+  const sig = token.slice(i + 1);
+  const expected = crypto.createHmac('sha256', secret()).update(`reset:${payload}:${bind || ''}`).digest('base64url');
+  const a = Buffer.from(sig);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+  try {
+    const { u, e } = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    if (!u || !e || Date.now() > Number(e)) return null;
+    return u;
+  } catch {
+    return null;
+  }
+}
+
 function safeEqualStr(a, b) {
   const ba = Buffer.from(String(a));
   const bb = Buffer.from(String(b));

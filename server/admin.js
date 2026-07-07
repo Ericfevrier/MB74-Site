@@ -27,7 +27,11 @@ import {
   loginBlockedSeconds,
   recordLoginFailure,
   recordLoginSuccess,
+  createResetToken,
+  verifyResetToken,
+  RESET_TTL_MS,
 } from './auth.js';
+import crypto from 'crypto';
 
 const BOAT_FIELDS = [
   'slug', 'model_slug', 'brand', 'title', 'year', 'capacity', 'power', 'hours',
@@ -345,7 +349,66 @@ function listImages(dir, baseUrl, meta = {}) {
   return out;
 }
 
-export function mountAdmin(app) {
+/* -------- Réinitialisation de mot de passe : helpers partagés ----------- */
+const RESET_DOMAIN = '@motorboat74.com';
+// Les identifiants sont des e-mails → comparaison insensible à la casse.
+const superUsername = () => String(process.env.ADMIN_USERNAME || '').toLowerCase();
+const isSuper = (username) => Boolean(username) && String(username).toLowerCase() === superUsername();
+
+/** Hash de surcharge du super-admin (défini via un reset), ou null. */
+async function superOverrideHash(username) {
+  if (!dbConfigured() || !isSuper(username)) return null;
+  try {
+    const rows = await query('SELECT password_hash FROM admin_credentials WHERE username = ? LIMIT 1', [String(username).toLowerCase()]);
+    return rows.length ? rows[0].password_hash : null;
+  } catch { return null; }
+}
+
+/**
+ * Empreinte du credential courant d'un compte, servant de « bind » au jeton de reset :
+ * dès qu'elle change (mot de passe modifié), les anciens liens sont invalidés.
+ */
+async function currentCredHash(username) {
+  if (isSuper(username)) {
+    const ov = await superOverrideHash(username);
+    if (ov) return ov;
+    if (process.env.ADMIN_PASSWORD_HASH) return process.env.ADMIN_PASSWORD_HASH;
+    if (process.env.ADMIN_PASSWORD) return crypto.createHash('sha256').update(process.env.ADMIN_PASSWORD).digest('hex');
+    return 'env';
+  }
+  if (dbConfigured()) {
+    try {
+      const rows = await query('SELECT password_hash FROM admin_users WHERE username = ? LIMIT 1', [username]);
+      if (rows.length) return rows[0].password_hash;
+    } catch { /* ignore */ }
+  }
+  return null;
+}
+
+/** Le compte existe-t-il (super-admin d'env ou compte en base) ? → rôle ou null. */
+async function accountRole(username) {
+  if (isSuper(username)) return 'super-admin';
+  if (dbConfigured()) {
+    try {
+      const rows = await query('SELECT role FROM admin_users WHERE username = ? LIMIT 1', [username]);
+      if (rows.length) return rows[0].role === 'super-admin' ? 'super-admin' : 'admin';
+    } catch { /* ignore */ }
+  }
+  return null;
+}
+
+// Limiteur simple des demandes « mot de passe oublié » (par IP) : 5 / 15 min.
+const forgotHits = new Map();
+function forgotAllowed(ip) {
+  const now = Date.now();
+  let a = forgotHits.get(ip);
+  if (!a || now - a.first > 15 * 60 * 1000) a = { n: 0, first: now };
+  a.n += 1;
+  forgotHits.set(ip, a);
+  return a.n <= 5;
+}
+
+export function mountAdmin(app, { sendMailRaw, mailEnabled } = {}) {
   /* --------------------- Journal d'activité (auto) ---------------- */
   // Enregistre chaque mutation admin réussie (qui/quoi/quand), sans code par route.
   app.use('/api/admin', (req, res, next) => {
@@ -353,7 +416,7 @@ export function mountAdmin(app) {
     const p = req.originalUrl.split('?')[0].replace(/^\/api\/admin\/?/, '');
     const seg = p.split('/').filter(Boolean);
     const entity = seg[0] || '';
-    if (['login', 'logout', 'me', 'activity'].includes(entity)) return next();
+    if (['login', 'logout', 'me', 'activity', 'forgot-password', 'reset-password'].includes(entity)) return next();
     res.on('finish', () => {
       if (res.statusCode >= 400 || !dbConfigured()) return;
       const username = (req.admin && req.admin.username) || 'inconnu';
@@ -392,12 +455,18 @@ export function mountAdmin(app) {
       });
     }
     const { username, password } = req.body || {};
-    // 1) Compte des variables d'env → super-admin (bootstrap, toujours disponible).
     let role = null;
-    if (await checkCredentials(username, password)) {
+    // 0) Surcharge en base du mot de passe du super-admin (après réinitialisation) :
+    //    si elle existe, elle PRIME sur ADMIN_PASSWORD/ADMIN_PASSWORD_HASH (l'ancien mdp env devient inerte).
+    const override = await superOverrideHash(String(username || ''));
+    if (override) {
+      if (await bcrypt.compare(String(password || ''), override)) role = 'super-admin';
+    } else if (await checkCredentials(username, password)) {
+      // 1) Compte des variables d'env → super-admin (bootstrap, toujours disponible).
       role = 'super-admin';
-    } else if (dbConfigured()) {
-      // 2) Comptes additionnels en base (rôle admin/super-admin).
+    }
+    // 2) Comptes additionnels en base (rôle admin/super-admin).
+    if (!role && dbConfigured()) {
       try {
         const rows = await query('SELECT password_hash, role FROM admin_users WHERE username = ? LIMIT 1', [String(username || '')]);
         if (rows.length && (await bcrypt.compare(String(password || ''), rows[0].password_hash))) {
@@ -434,6 +503,80 @@ export function mountAdmin(app) {
     res.json({ ok: true, username: user.username, role: user.role, csrf: csrfForReq(req) });
   });
 
+  /* -------------------- Mot de passe oublié / reset ---------------- */
+
+  // Demande : envoie un lien de reset à l'e-mail SI c'est un compte @motorboat74.com existant.
+  // Réponse toujours générique (anti-énumération de comptes).
+  app.post('/api/admin/forgot-password', async (req, res) => {
+    const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown';
+    if (!forgotAllowed(ip)) {
+      return res.status(429).json({ ok: false, error: 'Trop de demandes. Réessayez dans quelques minutes.' });
+    }
+    const email = String((req.body && req.body.email) || '').trim().toLowerCase();
+    const generic = {
+      ok: true,
+      message: 'Si un compte existe pour cette adresse, un e-mail de réinitialisation vient d’être envoyé.',
+    };
+    try {
+      const role = email.endsWith(RESET_DOMAIN) ? await accountRole(email) : null;
+      if (role && sendMailRaw) {
+        const bind = await currentCredHash(email);
+        const token = createResetToken(email, bind);
+        const origin = `${req.protocol}://${req.get('host')}`;
+        const link = `${origin}/admin?reset=${encodeURIComponent(token)}`;
+        const mins = Math.round(RESET_TTL_MS / 60000);
+        await sendMailRaw({
+          to: email,
+          subject: 'Réinitialisation de votre mot de passe — Admin Motor Boat 74',
+          text: `Vous avez demandé à réinitialiser votre mot de passe administrateur.\n\nOuvrez ce lien (valable ${mins} min) pour choisir un nouveau mot de passe :\n${link}\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail : votre mot de passe reste inchangé.`,
+          html: `<p>Vous avez demandé à réinitialiser votre mot de passe administrateur.</p>
+<p><a href="${link}" style="background:#00b4d8;color:#03202a;font-weight:bold;padding:12px 20px;border-radius:8px;text-decoration:none;display:inline-block">Choisir un nouveau mot de passe</a></p>
+<p style="color:#888">Lien valable ${mins} minutes. Si vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail : votre mot de passe reste inchangé.</p>`,
+        }).catch((e) => console.error('reset mail', e.message));
+      }
+    } catch (e) {
+      console.error('forgot-password', e.message);
+    }
+    // Léger délai constant pour lisser le temps de réponse (anti-oracle temporel).
+    setTimeout(() => res.json(generic), 300);
+  });
+
+  // Applique le nouveau mot de passe à partir d'un jeton valide.
+  app.post('/api/admin/reset-password', async (req, res) => {
+    const token = String((req.body && req.body.token) || '');
+    const password = String((req.body && req.body.password) || '');
+    if (password.length < 8) return res.status(400).json({ ok: false, error: 'Mot de passe trop court (min 8 caractères).' });
+    // Username porté par le jeton (lu sans confiance) → sert à calculer le bind ; la
+    // signature HMAC reste la seule garantie d'authenticité.
+    let username = null;
+    try {
+      const payload = token.slice(0, token.lastIndexOf('.'));
+      username = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')).u;
+    } catch { /* ignore */ }
+    if (!username) return res.status(400).json({ ok: false, error: 'Lien invalide ou expiré.' });
+    const bind = await currentCredHash(username);
+    if (verifyResetToken(token, bind) !== username) {
+      return res.status(400).json({ ok: false, error: 'Lien invalide ou expiré. Redemandez un e-mail de réinitialisation.' });
+    }
+    if (!dbConfigured()) return res.status(503).json({ ok: false, error: 'Base de données indisponible.' });
+    try {
+      const hash = await bcrypt.hash(password, 10);
+      if (isSuper(username)) {
+        await query(
+          'INSERT INTO admin_credentials (username, password_hash) VALUES (?, ?) ON DUPLICATE KEY UPDATE password_hash = VALUES(password_hash)',
+          [superUsername(), hash],
+        );
+      } else {
+        const r = await query('UPDATE admin_users SET password_hash = ? WHERE username = ?', [hash, username]);
+        if (!r || r.affectedRows === 0) return res.status(400).json({ ok: false, error: 'Compte introuvable.' });
+      }
+      res.json({ ok: true });
+    } catch (e) {
+      console.error('reset-password', e.message);
+      res.status(500).json({ ok: false, error: 'Erreur base de données.' });
+    }
+  });
+
   /* ------------------- Utilisateurs (super-admin) ----------------- */
 
   app.get('/api/admin/users', requireSuperAdmin, async (_req, res) => {
@@ -449,12 +592,16 @@ export function mountAdmin(app) {
 
   app.post('/api/admin/users', requireSuperAdmin, async (req, res) => {
     if (!dbConfigured()) return needDb(res);
-    const username = String((req.body && req.body.username) || '').trim();
+    // L'identifiant est une adresse e-mail @motorboat74.com : c'est aussi la destination
+    // du lien « mot de passe oublié ». (Casse ignorée → normalisée en minuscules.)
+    const username = String((req.body && req.body.username) || '').trim().toLowerCase();
     const password = String((req.body && req.body.password) || '');
     const role = (req.body && req.body.role) === 'super-admin' ? 'super-admin' : 'admin';
-    if (!/^[a-zA-Z0-9._-]{3,64}$/.test(username)) return res.status(400).json({ ok: false, error: 'Identifiant invalide (3–64 car. : lettres, chiffres, . _ -).' });
+    if (!/^[a-z0-9._%+-]+@motorboat74\.com$/.test(username) || username.length > 64) {
+      return res.status(400).json({ ok: false, error: 'Identifiant invalide : utilisez une adresse e-mail @motorboat74.com.' });
+    }
     if (password.length < 8) return res.status(400).json({ ok: false, error: 'Mot de passe trop court (min 8 caractères).' });
-    if (username === process.env.ADMIN_USERNAME) return res.status(409).json({ ok: false, error: 'Cet identifiant est déjà celui du super-admin principal.' });
+    if (username === String(process.env.ADMIN_USERNAME || '').toLowerCase()) return res.status(409).json({ ok: false, error: 'Cet identifiant est déjà celui du super-admin principal.' });
     try {
       const hash = await bcrypt.hash(password, 10);
       await query('INSERT INTO admin_users (username, password_hash, role) VALUES (?, ?, ?)', [username, hash, role]);

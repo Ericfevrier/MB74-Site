@@ -144,6 +144,15 @@ CREATE TABLE IF NOT EXISTS admin_users (
   UNIQUE KEY uniq_admin_user (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Surcharge du mot de passe du super-admin « bootstrap » (défini via variables d'env).
+-- Permet la réinitialisation en self-service : si une ligne existe ici pour l'identifiant
+-- du super-admin, elle prime sur ADMIN_PASSWORD / ADMIN_PASSWORD_HASH.
+CREATE TABLE IF NOT EXISTS admin_credentials (
+  username      VARCHAR(190) NOT NULL PRIMARY KEY,
+  password_hash VARCHAR(255) NOT NULL,
+  updated_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Journal d'activité (qui a modifié quoi et quand).
 CREATE TABLE IF NOT EXISTS activity_log (
   id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

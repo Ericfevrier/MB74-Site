@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Lock, LogOut, Ship, Inbox, Loader2, LayoutDashboard, Menu, X, ExternalLink,
   FileText, Settings, Users, MapPin, PanelLeftClose, PanelLeft, Anchor, Image as ImageIcon,
-  ScrollText, ShieldCheck, Milestone, FileStack,
+  ScrollText, ShieldCheck, Milestone, FileStack, ArrowLeft, Mail, KeyRound, CheckCircle2,
 } from 'lucide-react';
 import { adminApi } from '../../lib/adminApi';
 import { OccasionsManager } from './OccasionsManager';
@@ -64,11 +64,31 @@ const NAV: NavEntry[] = [
   },
 ];
 
+const AUTH_CARD = 'w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8';
+const AUTH_WRAP = 'min-h-screen flex items-center justify-center bg-[#0e0e10] px-4';
+const AUTH_BTN =
+  'w-full bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm py-3.5 rounded-xl hover:brightness-110 disabled:opacity-50 transition flex items-center justify-center gap-2';
+
+function AuthHeader({ icon, title, subtitle }: { icon: React.ReactNode; title: string; subtitle: string }) {
+  return (
+    <div className="flex items-center gap-3 mb-8">
+      <span className="w-11 h-11 rounded-2xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center">{icon}</span>
+      <div>
+        <h1 className="font-bold uppercase tracking-tight text-brand-dark leading-tight">{title}</h1>
+        <p className="text-xs text-gray-500">{subtitle}</p>
+      </div>
+    </div>
+  );
+}
+
 function LoginScreen({ onIn }: { onIn: (u: string, role: string) => void }) {
+  const [mode, setMode] = useState<'login' | 'forgot'>('login');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sent, setSent] = useState<string | null>(null);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,24 +104,119 @@ function LoginScreen({ onIn }: { onIn: (u: string, role: string) => void }) {
     }
   };
 
+  const submitForgot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+    try {
+      const r = await adminApi.forgotPassword(email.trim());
+      setSent(r.message || 'Si un compte existe pour cette adresse, un e-mail vient d’être envoyé.');
+    } catch (err: any) {
+      setError(err.message || 'Envoi impossible. Réessayez plus tard.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (mode === 'forgot') {
+    return (
+      <div className={AUTH_WRAP}>
+        <form onSubmit={submitForgot} className={AUTH_CARD}>
+          <AuthHeader icon={<KeyRound size={20} />} title="Mot de passe oublié" subtitle="Motor Boat 74" />
+          {sent ? (
+            <div className="text-center">
+              <CheckCircle2 size={40} className="text-green-500 mx-auto mb-4" />
+              <p className="text-gray-600 text-sm leading-relaxed mb-6">{sent}</p>
+              <button type="button" onClick={() => { setMode('login'); setSent(null); }} className={AUTH_BTN}>
+                Retour à la connexion
+              </button>
+            </div>
+          ) : (
+            <>
+              <p className="text-gray-500 text-sm leading-relaxed mb-5">
+                Saisissez l’adresse e-mail <strong>@motorboat74.com</strong> de votre compte. Vous recevrez un lien pour choisir un nouveau mot de passe.
+              </p>
+              <label className="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2">Adresse e-mail</label>
+              <input type="email" className={`${INPUT} mb-6`} value={email} onChange={(e) => setEmail(e.target.value)} autoFocus autoComplete="email" placeholder="prenom@motorboat74.com" />
+              {error && <p className="text-red-600 text-sm font-medium mb-4 text-center">{error}</p>}
+              <button type="submit" disabled={loading} className={AUTH_BTN}>
+                {loading ? <Loader2 size={16} className="animate-spin" /> : <Mail size={16} />} Envoyer le lien
+              </button>
+              <button type="button" onClick={() => { setMode('login'); setError(null); }} className="w-full mt-3 text-gray-500 hover:text-brand-dark text-xs font-semibold uppercase tracking-widest flex items-center justify-center gap-1.5 transition">
+                <ArrowLeft size={13} /> Retour
+              </button>
+            </>
+          )}
+        </form>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0e0e10] px-4">
-      <form onSubmit={submit} className="w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8">
-        <div className="flex items-center gap-3 mb-8">
-          <span className="w-11 h-11 rounded-2xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center"><Lock size={20} /></span>
-          <div>
-            <h1 className="font-bold uppercase tracking-tight text-brand-dark leading-tight">Administration</h1>
-            <p className="text-xs text-gray-500">Motor Boat 74</p>
-          </div>
-        </div>
+    <div className={AUTH_WRAP}>
+      <form onSubmit={submit} className={AUTH_CARD}>
+        <AuthHeader icon={<Lock size={20} />} title="Administration" subtitle="Motor Boat 74" />
         <label className="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2">Identifiant</label>
         <input className={`${INPUT} mb-4`} value={username} onChange={(e) => setUsername(e.target.value)} autoFocus autoComplete="username" />
         <label className="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2">Mot de passe</label>
         <input type="password" className={`${INPUT} mb-6`} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
         {error && <p className="text-red-600 text-sm font-medium mb-4 text-center">{error}</p>}
-        <button type="submit" disabled={loading} className="w-full bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm py-3.5 rounded-xl hover:brightness-110 disabled:opacity-50 transition flex items-center justify-center gap-2">
+        <button type="submit" disabled={loading} className={AUTH_BTN}>
           {loading ? <Loader2 size={16} className="animate-spin" /> : null} Se connecter
         </button>
+        <button type="button" onClick={() => { setMode('forgot'); setError(null); }} className="w-full mt-4 text-gray-500 hover:text-brand-dark text-xs font-semibold uppercase tracking-widest transition">
+          Mot de passe oublié ?
+        </button>
+      </form>
+    </div>
+  );
+}
+
+function ResetScreen({ token, onDone }: { token: string; onDone: () => void }) {
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [done, setDone] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    if (password.length < 8) { setError('Le mot de passe doit contenir au moins 8 caractères.'); return; }
+    if (password !== confirm) { setError('Les deux mots de passe ne correspondent pas.'); return; }
+    setLoading(true);
+    try {
+      await adminApi.resetPassword(token, password);
+      setDone(true);
+    } catch (err: any) {
+      setError(err.message || 'Réinitialisation impossible.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className={AUTH_WRAP}>
+      <form onSubmit={submit} className={AUTH_CARD}>
+        <AuthHeader icon={<KeyRound size={20} />} title="Nouveau mot de passe" subtitle="Motor Boat 74" />
+        {done ? (
+          <div className="text-center">
+            <CheckCircle2 size={40} className="text-green-500 mx-auto mb-4" />
+            <p className="text-gray-600 text-sm leading-relaxed mb-6">Votre mot de passe a été mis à jour. Vous pouvez maintenant vous connecter.</p>
+            <button type="button" onClick={onDone} className={AUTH_BTN}>Aller à la connexion</button>
+          </div>
+        ) : (
+          <>
+            <label className="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2">Nouveau mot de passe</label>
+            <input type="password" className={`${INPUT} mb-4`} value={password} onChange={(e) => setPassword(e.target.value)} autoFocus autoComplete="new-password" />
+            <label className="block text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2">Confirmer</label>
+            <input type="password" className={`${INPUT} mb-6`} value={confirm} onChange={(e) => setConfirm(e.target.value)} autoComplete="new-password" />
+            {error && <p className="text-red-600 text-sm font-medium mb-4 text-center">{error}</p>}
+            <button type="submit" disabled={loading} className={AUTH_BTN}>
+              {loading ? <Loader2 size={16} className="animate-spin" /> : null} Enregistrer
+            </button>
+          </>
+        )}
       </form>
     </div>
   );
@@ -113,13 +228,32 @@ export function AdminApp() {
   const [navOpen, setNavOpen] = useState(false); // drawer mobile
   const [collapsed, setCollapsed] = useState(false); // repli desktop
   const [unread, setUnread] = useState(0);
+  const [resetToken, setResetToken] = useState<string | null>(null);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const t = new URLSearchParams(window.location.search).get('reset');
+      if (t) setResetToken(t);
+    }
     adminApi
       .me()
       .then((r) => setAuth(r.ok && r.username ? { state: 'in', username: r.username, role: r.role || 'admin' } : { state: 'out' }))
       .catch(() => setAuth({ state: 'out' }));
   }, []);
+
+  // Lien « mot de passe oublié » ouvert (?reset=…) → écran dédié, avant toute auth.
+  if (resetToken) {
+    return (
+      <ResetScreen
+        token={resetToken}
+        onDone={() => {
+          if (typeof window !== 'undefined') window.history.replaceState({}, '', '/admin');
+          setResetToken(null);
+          setAuth({ state: 'out' });
+        }}
+      />
+    );
+  }
 
   const refreshUnread = React.useCallback(() => {
     adminApi.listMessages().then((r) => setUnread(r.messages.filter((m) => !m.is_read).length)).catch(() => {});
