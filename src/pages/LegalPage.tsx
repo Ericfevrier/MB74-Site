@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { pageMeta } from '../lib/meta';
+import { usePageContent } from '../lib/pageContent';
 
 type Block = { h?: string; p?: string[]; ul?: string[] };
 
@@ -181,6 +182,7 @@ const CGV: { title: string; updated: string; blocks: Block[] } = {
 };
 
 const DOCS = { mentions: MENTIONS, privacy: PRIVACY, cgv: CGV } as const;
+const PAGE_KEYS = { mentions: 'legal-mentions', privacy: 'legal-privacy', cgv: 'legal-cgv' } as const;
 const SLUGS = {
   mentions: 'mentions-legales',
   privacy: 'politique-de-confidentialite',
@@ -199,7 +201,10 @@ export function legalMeta(doc: 'mentions' | 'privacy' | 'cgv') {
 }
 
 export function LegalPage({ doc }: { doc: 'mentions' | 'privacy' | 'cgv' }) {
-  const data = DOCS[doc];
+  const t = usePageContent(PAGE_KEYS[doc]);
+  const title = t('title');
+  const updated = t('updated');
+  const blocks = t.list<{ h: string; body: string; bullets: string }>('blocks');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -210,28 +215,32 @@ export function LegalPage({ doc }: { doc: 'mentions' | 'privacy' | 'cgv' }) {
 
       <header className="bg-brand-dark text-white">
         <div className="max-w-4xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
-          <Breadcrumb size="sm" items={[{ label: 'Accueil', to: '/' }, { label: data.title }]} />
-          <h1 className="text-3xl md:text-4xl font-bold uppercase tracking-tight leading-tight">{data.title}</h1>
-          <p className="text-gray-400 text-sm mt-3">Dernière mise à jour : {data.updated}</p>
+          <Breadcrumb size="sm" items={[{ label: 'Accueil', to: '/' }, { label: title }]} />
+          <h1 className="text-3xl md:text-4xl font-bold uppercase tracking-tight leading-tight">{title}</h1>
+          {updated && <p className="text-gray-400 text-sm mt-3">Dernière mise à jour : {updated}</p>}
         </div>
       </header>
 
       <article className="max-w-4xl mx-auto px-4 lg:px-8 py-16">
-        {data.blocks.map((b, i) => (
-          <section key={i} className="mb-10">
-            {b.h && <h2 className="text-xl font-bold uppercase tracking-tight text-brand-dark mb-4">{b.h}</h2>}
-            {b.p?.map((para, j) => (
-              <p key={j} className="text-gray-600 leading-relaxed mb-3">{para}</p>
-            ))}
-            {b.ul && (
-              <ul className="list-disc pl-6 space-y-1.5 text-gray-600">
-                {b.ul.map((li, j) => (
-                  <li key={j}>{li}</li>
-                ))}
-              </ul>
-            )}
-          </section>
-        ))}
+        {blocks.map((b, i) => {
+          const paras = String(b.body || '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+          const bullets = String(b.bullets || '').split('|').map((s) => s.trim()).filter(Boolean);
+          return (
+            <section key={i} className="mb-10">
+              {b.h && <h2 className="text-xl font-bold uppercase tracking-tight text-brand-dark mb-4">{b.h}</h2>}
+              {paras.map((para, j) => (
+                <p key={j} className="text-gray-600 leading-relaxed mb-3">{para}</p>
+              ))}
+              {bullets.length > 0 && (
+                <ul className="list-disc pl-6 space-y-1.5 text-gray-600">
+                  {bullets.map((li, j) => (
+                    <li key={j}>{li}</li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          );
+        })}
       </article>
     </div>
   );
