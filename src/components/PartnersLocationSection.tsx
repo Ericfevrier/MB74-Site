@@ -11,7 +11,7 @@ function PartnerItem({ p }: { p: Partner }) {
   // Hauteur commune (harmonisée) + largeur naturelle → logos serrés, sans marge inutile.
   // Angles arrondis (visibles pour les logos ayant un fond).
   const inner = p.logo
-    ? <img src={p.logo} alt={p.name} loading="lazy" className="max-h-20 sm:max-h-28 lg:max-h-32 w-auto max-w-full object-contain rounded-2xl" />
+    ? <img src={p.logo} alt={p.name} loading="lazy" className="max-h-24 sm:max-h-36 lg:max-h-40 w-auto max-w-full object-contain rounded-2xl" />
     : <span className="text-2xl sm:text-4xl font-bold italic tracking-tighter whitespace-nowrap text-brand-dark">{p.name}</span>;
   // Logos en couleurs réelles (pas de niveau de gris), léger zoom au survol.
   const cls = 'flex items-center justify-center transition-transform duration-300 hover:scale-105';
@@ -83,7 +83,7 @@ export function PartnersLocationSection() {
                 <div key={copy} className="flex items-center shrink-0" aria-hidden={copy === 1}>
                   {partners.map((p, i) => (
                     /* Créneau de largeur fixe : ~5 logos visibles à la fois (20vw sur desktop). */
-                    <div key={`${copy}-${i}`} className="shrink-0 flex items-center justify-center w-[50vw] sm:w-[33vw] lg:w-[20vw] px-4 sm:px-6">
+                    <div key={`${copy}-${i}`} className="shrink-0 flex items-center justify-center w-[50vw] sm:w-[33vw] lg:w-[20vw] px-1.5 sm:px-2.5">
                       <PartnerItem p={p} />
                     </div>
                   ))}
