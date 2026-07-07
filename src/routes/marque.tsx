@@ -1,6 +1,7 @@
 import { useParams } from 'react-router';
 import { BrandPage } from '../components/BrandPage';
-import { STATIC_BRANDS_DATA, mergeFullBrands } from '../data/brands';
+import { NotFound } from '../components/NotFound';
+import { STATIC_BRANDS_DATA, mergeFullBrands, isActiveBrand } from '../data/brands';
 import { useLiveBrands } from '../lib/publicApi';
 export { brandPageMeta as meta } from '../components/BrandPage';
 
@@ -12,6 +13,9 @@ export function clientLoader() {
 export default function Marque() {
   const { id } = useParams<{ id: string }>();
   const live = useLiveBrands();
+
+  // Seules les marques affichées (Nautique, MasterCraft) sont accessibles ; les autres → 404.
+  if (!isActiveBrand(id)) return <NotFound />;
 
   if (live.brands && live.brands.length) {
     const merged = mergeFullBrands(STATIC_BRANDS_DATA, live.brands);

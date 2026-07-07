@@ -382,3 +382,12 @@ export function mergeFullBrands(
 }
 
 export const brandsData: Record<string, BrandData> = mergeBrands(STATIC_BRANDS_DATA, GENERATED_BRANDS);
+
+/**
+ * Marques réellement affichées sur le site public. Les autres marques présentes dans les
+ * données (Tige, Centurion, Supra, Moomba, Axis…) restent en réserve mais leur page
+ * `/marque/:id` renvoie une 404 tant qu'elles ne sont pas ajoutées ici.
+ */
+export const ACTIVE_BRAND_IDS = ['nautique', 'mastercraft'] as const;
+export const isActiveBrand = (id?: string) =>
+  !!id && (ACTIVE_BRAND_IDS as readonly string[]).includes(id.toLowerCase());
