@@ -440,6 +440,57 @@ export function mountAdmin(app, { sendMailRaw, mailEnabled } = {}) {
     }
   });
 
+  /* --------------------- Maintenance : URLs .jpg → .webp ----------- */
+  // Migration ponctuelle : après la conversion des images du site en WebP, les
+  // URLs stockées en base (galeries de modèles, marques, occasions, blog…) pointent
+  // encore vers d'anciens .jpg/.png supprimés → images cassées. On réécrit UNIQUEMENT
+  // les chemins /images/… (on ne touche pas aux /uploads/ réels ni aux URLs externes).
+  app.post('/api/admin/maintenance/migrate-images-webp', requireSuperAdmin, async (_req, res) => {
+    if (!dbConfigured()) return needDb(res);
+    // /images/<chemin>.jpg|jpeg|png  →  /images/<chemin>.webp  (borne de fin stricte)
+    const RX = /(\/images\/[^\s"'`)\]]+?)\.(?:jpe?g|png)(?=["'`)\]\s?#]|$)/gi;
+    const fix = (str) => str.replace(RX, '$1.webp');
+    const targets = [
+      { table: 'brands', id: 'brand_id', cols: ['logo', 'hero_image', 'data'] },
+      { table: 'boat_models', id: 'id', cols: ['data'] },
+      { table: 'used_boats', id: 'id', cols: ['image', 'gallery', 'highlights'] },
+      { table: 'hivernage_cities', id: 'id', cols: ['hero'] },
+      { table: 'blog_articles', id: 'id', cols: ['image', 'data'] },
+      { table: 'team_members', id: 'id', cols: ['image'] },
+      { table: 'page_content', id: 'id', cols: ['value'] },
+      { table: 'settings', id: 'name', cols: ['value'] },
+    ];
+    const report = {};
+    try {
+      for (const t of targets) {
+        const rows = await query(`SELECT \`${t.id}\` AS __id, ${t.cols.map((c) => `\`${c}\``).join(', ')} FROM \`${t.table}\``);
+        let changed = 0;
+        for (const row of rows) {
+          const sets = [];
+          const params = [];
+          for (const c of t.cols) {
+            const cur = row[c];
+            if (cur == null) continue;
+            // Colonnes JSON (mysql2 renvoie un objet/tableau) vs TEXT (chaîne).
+            const before = typeof cur === 'string' ? cur : JSON.stringify(cur);
+            const after = fix(before);
+            if (after !== before) { sets.push(`\`${c}\` = ?`); params.push(after); }
+          }
+          if (sets.length) {
+            params.push(row.__id);
+            await query(`UPDATE \`${t.table}\` SET ${sets.join(', ')} WHERE \`${t.id}\` = ?`, params);
+            changed++;
+          }
+        }
+        report[t.table] = changed;
+      }
+      res.json({ ok: true, report });
+    } catch (e) {
+      console.error('migrate-images-webp', e.message);
+      res.status(500).json({ ok: false, error: e.message });
+    }
+  });
+
   /* ----------------------------- Auth ----------------------------- */
 
   app.post('/api/admin/login', async (req, res) => {
