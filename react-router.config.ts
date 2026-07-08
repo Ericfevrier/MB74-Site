@@ -32,6 +32,11 @@ function prerenderPaths(): string[] {
     '/mentions-legales',
     '/politique-de-confidentialite',
     '/cgv-pro',
+    // Admin : prerendré en shell statique (login) pour que les hard-loads —
+    // notamment le lien e-mail /admin?reset=… — soient servis comme une vraie
+    // page (build/client/admin/index.html) au lieu du SPA fallback, qui casse
+    // l'hydratation sur une route non prerendrée. noindex via meta().
+    '/admin',
   ]);
 
   for (const brandId of ['nautique', 'mastercraft']) {
