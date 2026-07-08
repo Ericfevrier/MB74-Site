@@ -105,6 +105,10 @@ const transporter = mailEnabled
       port: Number(process.env.SMTP_PORT || 465),
       secure: String(process.env.SMTP_SECURE ?? 'true') === 'true',
       auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+      // Remise locale o2switch : le serveur mail (localhost) présente un certificat
+      // auto-signé / au nom d'hôte différent → sans ceci, la validation TLS échoue
+      // et l'envoi est rejeté silencieusement.
+      tls: { rejectUnauthorized: false },
     })
   : null;
 
@@ -184,6 +188,26 @@ app.use('/api', express.urlencoded({ extended: true }));
 
 app.get('/api/health', async (_req, res) => {
   res.json({ ok: true, mailEnabled, db: dbConfigured() ? await dbHealthy() : false });
+});
+
+// Diagnostic SMTP : teste réellement la connexion + l'auth et renvoie l'erreur
+// exacte en cas d'échec. Protégé en prod par la Basic Auth de staging.
+app.get('/api/health/mail', async (_req, res) => {
+  const cfg = {
+    host: process.env.SMTP_HOST || null,
+    port: Number(process.env.SMTP_PORT || 465),
+    secure: String(process.env.SMTP_SECURE ?? 'true') === 'true',
+    user: process.env.SMTP_USER || null,
+    from: MAIL_FROM,
+    to: MAIL_TO,
+  };
+  if (!transporter) return res.json({ mailEnabled: false, cfg });
+  try {
+    await transporter.verify();
+    res.json({ mailEnabled: true, verify: 'ok', cfg });
+  } catch (e) {
+    res.json({ mailEnabled: true, verify: 'error', error: e.message, code: e.code || null, cfg });
+  }
 });
 
 // API admin (auth + CRUD occasions + messages) et lecture publique /api/used-boats.
