@@ -455,7 +455,7 @@ export function mountAdmin(app, { sendMailRaw, mailEnabled } = {}) {
       { table: 'boat_models', id: 'id', cols: ['data'] },
       { table: 'used_boats', id: 'id', cols: ['image', 'gallery', 'highlights'] },
       { table: 'hivernage_cities', id: 'id', cols: ['hero'] },
-      { table: 'blog_articles', id: 'id', cols: ['image', 'data'] },
+      { table: 'blog_articles', id: 'id', cols: ['image', 'content', 'seo'] },
       { table: 'team_members', id: 'id', cols: ['image'] },
       { table: 'page_content', id: 'id', cols: ['value'] },
       { table: 'settings', id: 'name', cols: ['value'] },
