@@ -6,11 +6,7 @@ import { isActiveBrand } from '../data/brands';
 import { useLiveModels } from '../lib/publicApi';
 export { modelPageMeta as meta } from '../components/ModelPage';
 
-/** Statique au prerender (SEO) ; la fiche live (base) est fusionnée côté navigateur. */
-export function clientLoader() {
-  return null;
-}
-
+// Pas de clientLoader : voir marque.tsx — il empêchait le prerender et vidait le HTML.
 export default function Model() {
   const { brandId, modelId } = useParams<{ brandId: string; modelId: string }>();
   const { models, loaded } = useLiveModels();

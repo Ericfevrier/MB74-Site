@@ -5,11 +5,10 @@ import { STATIC_BRANDS_DATA, mergeFullBrands, isActiveBrand } from '../data/bran
 import { useLiveBrands } from '../lib/publicApi';
 export { brandPageMeta as meta } from '../components/BrandPage';
 
-/** Statique au prerender (SEO) ; la page marque live (base) est fusionnée côté navigateur. */
-export function clientLoader() {
-  return null;
-}
-
+// Pas de clientLoader ici : sous `ssr: false`, une route qui en déclare un ne peut
+// pas être prérendue (le chargeur est côté navigateur par définition) et son HTML
+// sort vide. La page se calcule via useParams, puis useLiveBrands fusionne la base
+// côté navigateur — aucun chargeur n'est nécessaire.
 export default function Marque() {
   const { id } = useParams<{ id: string }>();
   const live = useLiveBrands();

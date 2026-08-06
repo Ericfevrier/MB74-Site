@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from 'react-router';
+import { Link } from 'react-router';
 import { ArrowRight, ShieldCheck, Wallet, Wrench } from 'lucide-react';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
@@ -9,11 +9,6 @@ import { availableUsedBoats, soldUsedBoats } from '../data/usedBoats';
 import { useLiveUsedBoats } from '../lib/publicApi';
 
 const HERO = '/images/imported/0zadabm5-mb-1-3.webp';
-
-/** Données statiques au prerender (SEO) ; le composant rafraîchit en live depuis /api. */
-export function clientLoader() {
-  return { boats: availableUsedBoats(), soldCount: soldUsedBoats().length };
-}
 
 export function meta() {
   const canonical = `${SITE.url}/bateaux/occasion/`;
@@ -27,13 +22,15 @@ export function meta() {
   ];
 }
 
+// Pas de clientLoader : voir marque.tsx — il empêchait le prerender et vidait le HTML.
+// availableUsedBoats() et soldUsedBoats() sont synchrones et sans base : les appeler
+// directement rend le catalogue dans le HTML statique, indexable sans JavaScript.
 export default function Occasion() {
-  const initial = useLoaderData<typeof clientLoader>();
   const live = useLiveUsedBoats();
   // On n'utilise le live que si la base renvoie des bateaux (sinon on garde le statique).
   const all = live.boats && live.boats.length ? live.boats : null;
-  const boats = all ? all.filter((b) => !b.sold) : initial.boats;
-  const soldCount = all ? all.filter((b) => b.sold).length : initial.soldCount;
+  const boats = all ? all.filter((b) => !b.sold) : availableUsedBoats();
+  const soldCount = all ? all.filter((b) => b.sold).length : soldUsedBoats().length;
 
   return (
     <div className="bg-brand-light">

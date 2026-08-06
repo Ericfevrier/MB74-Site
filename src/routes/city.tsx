@@ -5,11 +5,7 @@ import { getHivernageCity } from '../data/hivernageCities';
 import { useLiveCity } from '../lib/publicApi';
 export { cityPageMeta as meta } from '../pages/HivernageCityPage';
 
-/** Statique au prerender (SEO) : la page calcule via useParams ; refresh live dans le composant. */
-export function clientLoader() {
-  return null;
-}
-
+// Pas de clientLoader : voir marque.tsx — il empêchait le prerender et vidait le HTML.
 export default function City() {
   const { slug } = useParams<{ slug: string }>();
   const live = useLiveCity(slug);

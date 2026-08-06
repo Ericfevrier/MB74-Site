@@ -6,11 +6,7 @@ import { getUsedBoatBySlug, type UsedBoat } from '../data/usedBoats';
 import { useLiveUsedBoats, fetchPublicBoat } from '../lib/publicApi';
 export { occasionDetailMeta as meta } from '../pages/OccasionDetailPage';
 
-/** Statique au prerender (SEO) : la fiche est calculée par la page via useParams. */
-export function clientLoader() {
-  return null;
-}
-
+// Pas de clientLoader : voir marque.tsx — il empêchait le prerender et vidait le HTML.
 export default function OccasionDetail() {
   const { slug } = useParams<{ slug: string }>();
   const live = useLiveUsedBoats();
