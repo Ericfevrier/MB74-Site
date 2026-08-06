@@ -7,6 +7,9 @@ coverage/
 .env*
 !.env.example
 .claude/
-git.sh
-setup-auth.sh
 
+# Outillage local — jamais versionné : le dépôt est public et ces fichiers
+# désignent l'accès SSH au serveur.
+.deploy.env
+.deploy.env.example
+setup-auth.sh
