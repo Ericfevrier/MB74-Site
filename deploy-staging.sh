@@ -66,6 +66,11 @@ if [ ! -f "$ROOT/dist/index.html" ]; then
   exit 1
 fi
 
+# Le prebuild reecrit public/sitemap.xml (toutes les dates lastmod du jour).
+# dist/ a deja recu la version fraiche : on restaure le fichier versionne
+# pour ne pas salir le depot a chaque deploiement.
+"$ROOT/git.sh" checkout -- public/sitemap.xml 2>/dev/null || true
+
 # Garde-fou : on refuse d'envoyer un build ou des pages sont vides.
 echo ""
 echo "=== Controle qualite du prerender ==="
@@ -97,11 +102,6 @@ rsync $RSYNC_OPTS \
   -e "ssh -p $SSH_PORT" \
   "$ROOT/dist/" \
   "$SSH_USER@$SSH_HOST:$STAGING_PATH/"
-
-# Le prebuild reecrit public/sitemap.xml (toutes les dates lastmod du jour).
-# dist/ a deja recu la version fraiche : on restaure le fichier versionne
-# pour ne pas salir le depot a chaque deploiement.
-"$ROOT/git.sh" checkout -- public/sitemap.xml 2>/dev/null || true
 
 echo ""
 if [ "$MODE" = "--dry-run" ]; then
