@@ -22,5 +22,14 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  // Sans cette liste, `tsc` analyse aussi build/ et dist/ — donc les bundles
+  // JavaScript minifiés, `allowJs` étant actif. Le typecheck saturait alors la
+  // mémoire et n'aboutissait jamais dès qu'un build avait été fait.
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    ".deploy-work"
+  ]
 }
