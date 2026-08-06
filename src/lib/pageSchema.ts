@@ -89,7 +89,7 @@ export const PAGES: PageDef[] = [
           { key: 'hero.cta1.label', label: 'Bouton 1 — texte', type: 'text', default: 'Découvrir nos services' },
           { key: 'hero.cta1.url', label: 'Bouton 1 — lien', type: 'url', default: '/services' },
           { key: 'hero.cta2.label', label: 'Bouton 2 — texte', type: 'text', default: 'Bateaux en vente' },
-          { key: 'hero.cta2.url', label: 'Bouton 2 — lien', type: 'url', default: '/bateaux-occasion' },
+          { key: 'hero.cta2.url', label: 'Bouton 2 — lien', type: 'url', default: '/bateaux/occasion' },
           { key: 'hero.badgeLeft', label: 'Badge gauche', type: 'text', default: 'Concessionnaire' },
           { key: 'hero.badgeRight', label: 'Badge droite', type: 'text', default: 'Importateur Exclusif' },
         ],

@@ -7,6 +7,28 @@ import { query, dbConfigured } from './db.js';
 
 let cache = { map: new Map(), at: 0 };
 
+/**
+ * Redirections permanentes définies dans le code : toujours actives, y compris
+ * sans base de données, et non supprimables par erreur depuis l'admin.
+ *
+ * Chaque service existe sous deux URL : la route générique `/services/<slug>`
+ * (non prérendue) et la page dédiée (prérendue, indexable). Le header et le pied
+ * de page pointaient vers la première sur les 69 pages du site — 350 liens
+ * internes n'atteignaient donc aucune page indexable, et `/depannage` ne recevait
+ * que 6 liens au lieu de 75. Les liens sont corrigés ; ces 301 rattrapent les
+ * liens externes et les favoris déjà émis vers les anciennes adresses.
+ */
+const STATIC_REDIRECTS = new Map([
+  ['/services/entretien-reparation', '/entretien-reparation'],
+  ['/services/depannage', '/depannage'],
+  ['/services/transport-de-bateau', '/transport'],
+  ['/services/sellerie-de-bateau', '/sellerie'],
+  ['/services/remorques-de-bateau', '/remorques'],
+  ['/bateaux-neufs', '/bateaux/neufs'],
+  ['/bateaux-occasion', '/bateaux/occasion'],
+  ['/shop', '/blog'],
+]);
+
 export function normalizePath(p) {
   let s = String(p || '').split('?')[0].trim();
   if (!s.startsWith('/') && !/^https?:\/\//i.test(s)) s = `/${s}`;
@@ -36,8 +58,13 @@ export function redirectMiddleware() {
     if (req.method !== 'GET' && req.method !== 'HEAD') return next();
     if (req.path.startsWith('/api/')) return next();
     if (Date.now() - cache.at > 60000) await refreshRedirects();
-    const hit = cache.map.get(normalizePath(req.path));
+    const from = normalizePath(req.path);
+    // La base d'abord : une redirection saisie dans l'admin doit pouvoir
+    // surcharger celle du code.
+    const hit = cache.map.get(from);
     if (hit && hit.target) return res.redirect(hit.code, hit.target);
+    const staticTarget = STATIC_REDIRECTS.get(from);
+    if (staticTarget) return res.redirect(301, staticTarget);
     next();
   };
 }

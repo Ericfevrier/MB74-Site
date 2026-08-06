@@ -24,11 +24,15 @@ import {
 
 const megaMenuServices = [
   { name: "Hivernage / Stockage", desc: "Stockage sécurisé, au sec", icon: Shield, path: "/hivernage-stockage-bateau" },
-  { name: "Entretien / Réparation", desc: "Expertise technique complète", icon: Wrench, path: "/services/entretien-reparation" },
-  { name: "Dépannage", desc: "7j/7 durant la saison sur le Lac", icon: LifeBuoy, path: "/services/depannage" },
-  { name: "Transport", desc: "En France et en Europe", icon: Package, path: "/services/transport-de-bateau" },
-  { name: "Sellerie", desc: "Rénovation sur-mesure", icon: Anchor, path: "/services/sellerie-de-bateau" },
-  { name: "Remorque", desc: "Pour tout type de bateau", icon: Settings, path: "/services/remorques-de-bateau" },
+  // Chemins vers les pages DÉDIÉES et prérendues, pas vers la route générique
+  // /services/<slug> qui n'est pas prérendue : le header étant sur les 69 pages,
+  // ces cinq liens représentaient à eux seuls 350 liens internes n'atteignant
+  // aucune page indexable. Les anciennes URL sont redirigées (server/redirects.js).
+  { name: "Entretien / Réparation", desc: "Expertise technique complète", icon: Wrench, path: "/entretien-reparation" },
+  { name: "Dépannage", desc: "7j/7 durant la saison sur le Lac", icon: LifeBuoy, path: "/depannage" },
+  { name: "Transport", desc: "En France et en Europe", icon: Package, path: "/transport" },
+  { name: "Sellerie", desc: "Rénovation sur-mesure", icon: Anchor, path: "/sellerie" },
+  { name: "Remorque", desc: "Pour tout type de bateau", icon: Settings, path: "/remorques" },
 ];
 
 const megaMenuBateaux = [

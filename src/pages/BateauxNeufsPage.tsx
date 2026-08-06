@@ -122,6 +122,9 @@ export function BateauxNeufsPage() {
                     {m.tagline && <p className="text-gray-500 text-sm mb-6 leading-relaxed line-clamp-3 flex-1">{m.tagline}</p>}
                     <Link
                       to={`/${b.id}/${m.slug}`}
+                      // Voir BrandPage.tsx : libellé visible court, cible explicitée
+                      // pour les lecteurs d'écran et les moteurs.
+                      aria-label={`Découvrir le ${m.fullName || m.name}`}
                       className="mt-auto inline-flex items-center justify-center gap-2 bg-brand-light border border-gray-200 text-brand-dark font-bold uppercase tracking-widest text-xs py-3.5 rounded-xl group-hover:bg-brand-cyan group-hover:border-brand-cyan transition-all min-h-[44px]"
                     >
                       Découvrir le modèle <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />

@@ -265,6 +265,10 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
                     </p>
                     <Link
                       to={`/${id}/${slug}`}
+                      // Le libellé visible reste court pour le design, mais « Découvrir
+                      // le modèle » ne dit rien de la cible : répété 54 fois, il gâchait
+                      // le seul signal sémantique vers les fiches modèles.
+                      aria-label={`Découvrir le ${model.name}`}
                       className="mt-auto inline-flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-widest text-xs py-3.5 rounded-xl group-hover:bg-brand-cyan group-hover:text-brand-dark group-hover:border-brand-cyan transition-all duration-300 min-h-[44px]"
                     >
                       Découvrir le modèle <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />

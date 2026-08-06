@@ -14,11 +14,12 @@ function FooterLink({ label, url }: MenuLink) {
 
 const STATIC_SERVICES: MenuLink[] = [
   { label: 'Hivernage / Stockage', url: '/hivernage-stockage-bateau' },
-  { label: 'Entretien / Réparation', url: '/services/entretien-reparation' },
-  { label: 'Dépannage', url: '/services/depannage' },
-  { label: 'Transport', url: '/services/transport-de-bateau' },
-  { label: 'Sellerie', url: '/services/sellerie-de-bateau' },
-  { label: 'Remorque', url: '/services/remorques-de-bateau' },
+  // Pages dédiées et prérendues — voir le commentaire dans Header.tsx.
+  { label: 'Entretien / Réparation', url: '/entretien-reparation' },
+  { label: 'Dépannage', url: '/depannage' },
+  { label: 'Transport', url: '/transport' },
+  { label: 'Sellerie', url: '/sellerie' },
+  { label: 'Remorque', url: '/remorques' },
 ];
 const STATIC_BATEAUX: MenuLink[] = [
   { label: 'Tous nos bateaux', url: '/bateaux' },

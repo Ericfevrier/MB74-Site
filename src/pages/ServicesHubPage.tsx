@@ -10,11 +10,11 @@ import { usePageContent, useSeo } from '../lib/pageContent';
 // Le lien et l'icône de chaque carte restent fixes (structure de navigation).
 const CARD_META = [
   { path: '/hivernage-stockage-bateau', icon: Shield },
-  { path: '/services/entretien-reparation', icon: Wrench },
-  { path: '/services/depannage', icon: LifeBuoy },
-  { path: '/services/transport-de-bateau', icon: Truck },
-  { path: '/services/sellerie-de-bateau', icon: Sofa },
-  { path: '/services/remorques-de-bateau', icon: Caravan },
+  { path: '/entretien-reparation', icon: Wrench },
+  { path: '/depannage', icon: LifeBuoy },
+  { path: '/transport', icon: Truck },
+  { path: '/sellerie', icon: Sofa },
+  { path: '/remorques', icon: Caravan },
 ];
 
 const STAT_ICONS = [Warehouse, Clock, MapPin];
