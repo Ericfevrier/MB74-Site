@@ -92,18 +92,28 @@ printf 'node_modules/\ntmp/\n.env\n.env.local\n' > "$ROOT/$WORK/.gitignore"
 
 SHA=$("$GIT" rev-parse --short HEAD)
 "$GIT" -C "$WORK" add -A
+NEEDS_INSTALL=0
 if "$GIT" -C "$WORK" diff --cached --quiet 2>/dev/null; then
-  echo "  Rien de nouveau a publier."
+  echo "  Rien de nouveau a publier (le bundle en ligne est deja a jour)."
+  PUBLISHED=0
 else
+  # Les dependances d'execution ont-elles change ? Se lit AVANT le commit, sur
+  # ce qui est reellement mis en scene, sinon on compare le mauvais couple de
+  # commits et on annonce un npm install a tort.
+  if ! "$GIT" -C "$WORK" diff --cached --quiet -- package.json package-lock.json 2>/dev/null; then
+    NEEDS_INSTALL=1
+  fi
   "$GIT" -C "$WORK" commit -q -m "deploy: bundle SSR depuis $SHA"
   GIT_TERMINAL_PROMPT=0 "$GIT" -C "$WORK" push -q -f origin HEAD:deploy
   echo "  Branche deploy mise a jour ($SHA)."
+  PUBLISHED=1
 fi
 
-# Les dependances d'execution ont-elles change ? Determine si npm install est requis.
-NEEDS_INSTALL=$("$GIT" -C "$WORK" diff --name-only HEAD~1 HEAD 2>/dev/null | grep -c 'package.json\|package-lock.json' || echo 0)
-
 echo ""
+if [ "$PUBLISHED" = "0" ]; then
+  echo "Rien a faire sur o2switch : le serveur sert deja ce bundle."
+  exit 0
+fi
 echo "============================================================"
 echo " A COLLER SUR LE TERMINAL o2switch :"
 echo ""
