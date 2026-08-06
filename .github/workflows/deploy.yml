@@ -7,7 +7,7 @@ name: Build & publish bundle SSR (o2switch)
 
 on:
   push:
-    branches: [ssr-migration, main]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
