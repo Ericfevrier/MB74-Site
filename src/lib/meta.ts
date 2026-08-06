@@ -31,18 +31,35 @@ export interface PageMetaInput {
   extra?: MetaDescriptor[];
 }
 
+/**
+ * Normalise une URL canonique : jamais de barre finale, sauf sur la racine.
+ *
+ * Les canoniques étaient écrites à la main page par page, certaines avec barre
+ * finale (`/services/`) et d'autres sans (`/depannage`), alors que le sitemap
+ * n'en met jamais. Deux URL se trouvaient donc déclarées pour une même page.
+ * On tranche ici, en un point de passage unique, plutôt qu'en seize endroits.
+ * Le serveur redirige en 301 la forme avec barre (voir server/index.js).
+ */
+export function canonicalUrl(url: string): string {
+  const m = url.match(/^(https?:\/\/[^/]+)(\/.*)?$/);
+  if (!m) return url;
+  const path = (m[2] ?? '/').replace(/\/+$/, '');
+  return path === '' ? `${m[1]}/` : `${m[1]}${path}`;
+}
+
 export function pageMeta(i: PageMetaInput): MetaDescriptor[] {
   const m: MetaDescriptor[] = [{ title: i.title }];
+  const canonical = i.canonical ? canonicalUrl(i.canonical) : undefined;
 
   if (i.description) m.push({ name: 'description', content: i.description });
-  if (i.canonical) m.push({ tagName: 'link', rel: 'canonical', href: i.canonical });
+  if (canonical) m.push({ tagName: 'link', rel: 'canonical', href: canonical });
   if (i.robots) m.push({ name: 'robots', content: i.robots });
 
   m.push({ property: 'og:type', content: i.ogType ?? 'website' });
   m.push({ property: 'og:title', content: i.ogTitle ?? i.title });
   const ogDesc = i.ogDescription ?? i.description;
   if (ogDesc) m.push({ property: 'og:description', content: ogDesc });
-  if (i.canonical) m.push({ property: 'og:url', content: i.canonical });
+  if (canonical) m.push({ property: 'og:url', content: canonical });
   if (i.image) m.push({ property: 'og:image', content: i.image });
   if (i.ogSiteName) m.push({ property: 'og:site_name', content: i.ogSiteName });
   if (i.ogLocale) m.push({ property: 'og:locale', content: i.ogLocale });

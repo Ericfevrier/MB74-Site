@@ -7,11 +7,12 @@ import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { availableUsedBoats, soldUsedBoats } from '../data/usedBoats';
 import { useLiveUsedBoats } from '../lib/publicApi';
+import { canonicalUrl } from '../lib/meta';
 
 const HERO = '/images/imported/0zadabm5-mb-1-3.webp';
 
 export function meta() {
-  const canonical = `${SITE.url}/bateaux/occasion/`;
+  const canonical = canonicalUrl(`${SITE.url}/bateaux/occasion/`);
   return [
     { title: 'Bateaux d’occasion Nautique & MasterCraft près d’Annecy | Motor Boat 74' },
     { name: 'description', content: 'Wakeboats et bateaux de ski nautique d’occasion révisés et garantis, près du lac d’Annecy. Nautique, MasterCraft : prix, année, heures moteur.' },

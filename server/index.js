@@ -93,6 +93,18 @@ app.use((req, res, next) => {
 // Redirections 301/302 gérées en admin (avant tout le reste, hors /api).
 app.use(redirectMiddleware());
 
+// Une seule forme d'URL fait autorité : SANS barre finale — celle du sitemap et
+// des liens internes. Toute variante avec barre finale est redirigée en 301, pour
+// ne jamais exposer deux URL servant la même page (contenu dupliqué).
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  if (req.path.length > 1 && req.path.endsWith('/')) {
+    const query = req.originalUrl.slice(req.path.length); // conserve ?a=b#c
+    return res.redirect(301, req.path.replace(/\/+$/, '') + query);
+  }
+  next();
+});
+
 /* ------------------------------------------------------------------ */
 /*  E-mail (nodemailer)                                               */
 /* ------------------------------------------------------------------ */
@@ -305,7 +317,16 @@ app.get('*', (req, res) => {
   if (candidate.startsWith(clientDir) && existsSync(candidate)) {
     return res.sendFile(candidate);
   }
-  res.sendFile(existsSync(spaFallback) ? spaFallback : indexHtml);
+
+  // Aucune page prérendue pour cette URL. Deux cas très différents :
+  //   - les sous-routes de l'admin (/admin/blog…) existent bel et bien, elles sont
+  //     simplement routées côté client → shell SPA en 200 ;
+  //   - tout le reste est une URL inconnue → vrai 404. Sans ça, on renvoie un
+  //     « soft 404 » (page d'erreur servie en 200) : Google gaspille son budget
+  //     d'exploration et peut indexer des pages fantômes.
+  const isAdminRoute = rel === '/admin' || rel.startsWith('/admin/');
+  const fallback = existsSync(spaFallback) ? spaFallback : indexHtml;
+  return res.status(isAdminRoute ? 200 : 404).sendFile(fallback);
 });
 
 const port = process.env.PORT || 3000;
