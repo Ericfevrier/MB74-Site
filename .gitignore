@@ -7,3 +7,7 @@ coverage/
 .env*
 !.env.example
 .claude/
+
+# Outillage local et arbre de travail de la branche deploy (jamais versionnes)
+git.sh
+.deploy-work/
