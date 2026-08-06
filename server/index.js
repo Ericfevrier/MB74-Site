@@ -10,6 +10,8 @@
  */
 import express from 'express';
 import path from 'path';
+import { existsSync } from 'fs';
+import { timingSafeEqual } from 'crypto';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
@@ -22,6 +24,33 @@ const distDir = path.resolve(__dirname, '..', 'dist');
 
 const app = express();
 app.disable('x-powered-by');
+
+/* ------------------------------------------------------------------ */
+/*  Protection de la préproduction                                    */
+/* ------------------------------------------------------------------ */
+
+// Activée par STAGING_PROTECT=1 (variables d'environnement o2switch).
+// Tant qu'elle est active, le site exige un mot de passe et se déclare
+// non indexable. À désactiver le jour de la bascule en production.
+const stagingProtect = String(process.env.STAGING_PROTECT || '') === '1';
+const stagingUser = process.env.STAGING_USER || '';
+const stagingPass = process.env.STAGING_PASS || '';
+
+if (stagingProtect && stagingUser && stagingPass) {
+  const expected = Buffer.from(
+    'Basic ' + Buffer.from(`${stagingUser}:${stagingPass}`).toString('base64'),
+  );
+  app.use((req, res, next) => {
+    res.set('X-Robots-Tag', 'noindex, nofollow');
+    const given = Buffer.from(req.headers.authorization || '');
+    // Comparaison à temps constant (les longueurs doivent correspondre).
+    if (given.length === expected.length && timingSafeEqual(given, expected)) return next();
+    res.set('WWW-Authenticate', 'Basic realm="Motor Boat 74 - preproduction", charset="UTF-8"');
+    res.status(401).send('Authentification requise.');
+  });
+  console.log('Preproduction : acces protege par mot de passe, noindex actif.');
+}
+
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -144,11 +173,39 @@ app.post('/api/hivernage', async (req, res) => {
 /*  Fichiers statiques + fallback SPA                                 */
 /* ------------------------------------------------------------------ */
 
-app.use(express.static(distDir, { index: false, maxAge: '1y' }));
+// Fichiers réels (assets fingerprintés, images, sitemap...).
+// index:false + redirect:false : les dossiers ne sont pas traités ici, c'est
+// le gestionnaire ci-dessous qui choisit la bonne page prérendue.
+app.use(express.static(distDir, { index: false, redirect: false, maxAge: '1y' }));
 
-// Toute autre route renvoie l'app React (react-router gère le routage).
-app.get('*', (_req, res) => {
-  res.sendFile(path.join(distDir, 'index.html'));
+// Le HTML ne doit pas être mis en cache, sinon un déploiement reste invisible.
+const sendPage = (res, file, status = 200) =>
+  res.status(status).set('Cache-Control', 'no-cache, must-revalidate').sendFile(file);
+
+/**
+ * Sert la page prérendue correspondant exactement à l'URL demandée.
+ * Sans cela, toutes les routes renverraient la page d'accueil : les 68 pages
+ * générées par le prerender existent dans dist/ mais ne seraient jamais lues.
+ * Une URL inconnue renvoie un vrai 404 (et non un « soft 404 » en 200).
+ */
+app.get('*', (req, res) => {
+  const home = path.join(distDir, 'index.html');
+  let rel;
+  try {
+    rel = decodeURIComponent(req.path);
+  } catch {
+    return sendPage(res, home, 404); // URL mal encodée
+  }
+  rel = rel.replace(/^\/+/, '').replace(/\/+$/, '');
+
+  if (!rel) return sendPage(res, home);
+
+  const candidate = path.resolve(distDir, rel, 'index.html');
+  // Garde-fou : interdit toute sortie de dist/ (traversée de répertoire).
+  if (candidate.startsWith(distDir + path.sep) && existsSync(candidate)) {
+    return sendPage(res, candidate);
+  }
+  return sendPage(res, home, 404);
 });
 
 const port = process.env.PORT || 3000;
