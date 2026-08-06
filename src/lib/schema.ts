@@ -3,8 +3,45 @@
  * Centralise ce qui était dupliqué dans chaque page (via react-helmet-async).
  */
 import { SITE } from '../data/site';
+import { SETTINGS_DEFAULTS } from './settings';
 
-/** Nœud LocalBusiness réutilisé comme `provider` dans les schémas Service. */
+/**
+ * Horaires d'ouverture. Ils n'apparaissaient nulle part sur le site, ni en JSON-LD
+ * ni en clair : c'est le signal local que Google recoupe directement avec la fiche
+ * Google Business. Toute modification ici doit être répercutée sur la fiche.
+ */
+export const OPENING_HOURS = [
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '09:00',
+    closes: '12:00',
+  },
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '14:00',
+    closes: '18:00',
+  },
+];
+
+/** Profils officiels — `sameAs` relie le site, la fiche Google et les réseaux. */
+export const SAME_AS = [
+  SETTINGS_DEFAULTS.instagram,
+  SETTINGS_DEFAULTS.facebook,
+  SETTINGS_DEFAULTS.youtube,
+  SETTINGS_DEFAULTS.linkedin,
+].filter(Boolean);
+
+/**
+ * Nœud LocalBusiness réutilisé comme `provider` dans les schémas Service, et
+ * référencé par `@id` depuis les autres pages.
+ *
+ * Google consolide les entités par `@id` : une seule déclaration complète doit
+ * exister, et toutes les pages doivent s'y rattacher. Le nom vient de SITE.name
+ * pour qu'une seule graphie circule — le site en comptait six, dont deux sur ce
+ * même `@id`, ce qui affaiblissait la correspondance avec la fiche Google.
+ */
 export const businessNode = {
   '@type': 'LocalBusiness',
   '@id': `${SITE.url}/#business`,
@@ -20,6 +57,13 @@ export const businessNode = {
     addressRegion: SITE.addressRegion,
     addressCountry: SITE.addressCountry,
   },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: SITE.geo.lat,
+    longitude: SITE.geo.lng,
+  },
+  openingHoursSpecification: OPENING_HOURS,
+  sameAs: SAME_AS,
 };
 
 const DEFAULT_AREA = [

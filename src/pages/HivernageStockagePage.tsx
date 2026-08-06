@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { pageMeta } from '../lib/meta';
+import { SITE } from '../data/site';
+import { OPENING_HOURS, SAME_AS } from '../lib/schema';
 import { usePageContent, useSeo } from '../lib/pageContent';
 import {
   Shield,
@@ -34,8 +36,18 @@ import {
 } from 'lucide-react';
 
 export function hivernageMeta() {
-  const SITE_URL = 'https://motorboat74.com';
-  const GOOGLE_RATING = { value: '4.7', count: 20 };
+  const SITE_URL = SITE.url;
+  // Note désactivée volontairement (count: 0 → aucun aggregateRating émis).
+  //
+  // Une note agrégée était déclarée en dur (4,7 / 20 avis) sans qu'aucun avis ne
+  // soit balisé ni affiché sur le site. Google n'accorde plus de résultat enrichi
+  // à une note auto-attribuée pour un LocalBusiness, et une note invérifiable
+  // expose à une action manuelle pour « données structurées trompeuses ».
+  //
+  // Pour la réactiver proprement : afficher de vrais avis sur la page avec un
+  // balisage Review nominatif (auteur, date, texte), puis renseigner ici la note
+  // et le nombre correspondant EXACTEMENT à ce qui est affiché.
+  const GOOGLE_RATING = { value: '4.7', count: 0 };
   const areaServed = [
     { '@type': 'City', name: 'Annecy' },
     { '@type': 'AdministrativeArea', name: 'Haute-Savoie' },
@@ -52,7 +64,10 @@ export function hivernageMeta() {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     '@id': `${SITE_URL}/#business`,
-    name: 'MotorBoat 74',
+    // Le nom vient de SITE.name : cette page en déclarait une autre graphie sur
+    // le même `@id` que le reste du site, ce qui envoyait à Google deux raisons
+    // sociales pour une seule entité.
+    name: SITE.name,
     description:
       "Concessionnaire et atelier nautique en Haute-Savoie spécialisé dans l'hivernage, le stockage, l'entretien et la vente de bateaux sur le Lac d'Annecy.",
     url: SITE_URL,
@@ -70,7 +85,9 @@ export function hivernageMeta() {
       addressRegion: 'Haute-Savoie',
       addressCountry: 'FR',
     },
-    geo: { '@type': 'GeoCoordinates', latitude: 45.7466, longitude: 6.3036 },
+    geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.lat, longitude: SITE.geo.lng },
+    openingHoursSpecification: OPENING_HOURS,
+    sameAs: SAME_AS,
     areaServed,
     hasMap:
       'https://www.google.com/maps/dir/?api=1&destination=179+All%C3%A9e+des+Edelweiss+74210+Saint-Ferr%C3%A9ol',

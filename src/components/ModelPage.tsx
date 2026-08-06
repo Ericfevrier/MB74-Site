@@ -14,7 +14,7 @@ import { useSeoOverride } from '../lib/seo';
 import { SITE } from '../data/site';
 import { ServiceContactBlock } from './services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
-import { breadcrumbSchema, faqSchema } from '../lib/schema';
+import { breadcrumbSchema, faqSchema, businessNode } from '../lib/schema';
 
 const GROUP_ICON: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Dimensions: Ruler,
@@ -34,22 +34,11 @@ export function modelPageMeta({ data, params }: { data?: { model?: NautiqueModel
   const heroAbs = model.hero.startsWith('http') ? model.hero : `${SITE.url}${model.hero}`;
   const milestones = (model.milestones ?? []).slice().sort((a, b) => Number(b.year) - Number(a.year));
 
-  const business = {
-    '@type': 'AutoDealer',
-    '@id': `${SITE.url}/#business`,
-    name: SITE.name,
-    telephone: SITE.phoneHref.replace('tel:', ''),
-    email: SITE.email,
-    url: SITE.url,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: SITE.addressStreet,
-      postalCode: SITE.addressPostal,
-      addressLocality: SITE.addressLocality,
-      addressRegion: SITE.addressRegion,
-      addressCountry: SITE.addressCountry,
-    },
-  };
+  // Réutilise le nœud central plutôt que d'en redéclarer un : cette page annonçait
+  // `AutoDealer` — un type automobile, sémantiquement faux pour un bateau — sur le
+  // MÊME `@id` que le `LocalBusiness` du reste du site, soit deux types
+  // contradictoires pour une seule entité. Google consolide par `@id`.
+  const business = businessNode;
   const schemaProduct = {
     '@context': 'https://schema.org',
     '@type': 'Product',

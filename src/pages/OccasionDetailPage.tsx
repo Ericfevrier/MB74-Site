@@ -100,7 +100,10 @@ export function occasionDetailMeta({ data, params }: { data?: { boat?: UsedBoat 
           availability: boat.sold ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
           itemCondition: 'https://schema.org/UsedCondition',
           url: canonical,
-          seller: { '@type': 'AutoDealer', name: SITE.name, telephone: SITE.phoneDisplay },
+          // Vendeur : on référence l'entité unique par `@id` plutôt que d'en
+          // redéclarer une variante (le type était AutoDealer et le téléphone au
+          // format national, là où le reste du site utilise E.164).
+          seller: { '@id': `${SITE.url}/#business` },
         },
       },
       breadcrumbSchema([

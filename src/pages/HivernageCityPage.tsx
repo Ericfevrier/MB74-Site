@@ -11,16 +11,37 @@ import { pageMeta } from '../lib/meta';
 import { useSeoOverride } from '../lib/seo';
 import { businessNode, breadcrumbSchema } from '../lib/schema';
 
+/**
+ * Rattachement administratif réel de chaque ville.
+ *
+ * Le code déclarait `FR-74 / Haute-Savoie` pour TOUTES les villes : Genève était
+ * donc annoncée en Haute-Savoie alors qu'elle est suisse, Aix-les-Bains est en
+ * Savoie et Serre-Ponçon dans les Hautes-Alpes. Envoyer une région fausse à
+ * Google est une contradiction géographique qui dessert la page.
+ *
+ * Table tenue à la main, volontairement séparée de hivernageCities.ts qui est
+ * régénéré par script.
+ */
+const CITY_GEO: Record<string, { region: string; area: string }> = {
+  annecy: { region: 'FR-74', area: 'Haute-Savoie' },
+  'aix-les-bains': { region: 'FR-73', area: 'Savoie' },
+  'evian-les-bains': { region: 'FR-74', area: 'Haute-Savoie' },
+  'thonon-les-bains': { region: 'FR-74', area: 'Haute-Savoie' },
+  geneve: { region: 'CH-GE', area: 'Canton de Genève, Suisse' },
+  'lac-de-serre-poncon': { region: 'FR-05', area: 'Hautes-Alpes' },
+};
+
 export function cityPageMeta({ data, params }: { data?: { city?: HivernageCity } | null; params: { slug?: string } }) {
   const city = data?.city ?? (params.slug ? getHivernageCity(params.slug) : undefined);
   if (!city) return [{ title: `Hivernage & stockage de bateau | ${SITE.name}` }];
   const canonical = `${SITE.url}/services/hivernage-bateaux/${city.slug}/`;
+  const geo = CITY_GEO[city.slug] ?? { region: 'FR-74', area: 'Haute-Savoie' };
   return pageMeta({
     title: city.metaTitle,
     description: city.metaDescription,
     canonical,
     image: `${SITE.url}${city.hero}`,
-    geo: { region: 'FR-74', placename: `${city.city}, Haute-Savoie` },
+    geo: { region: geo.region, placename: `${city.city}, ${geo.area}` },
     jsonLd: [
       {
         '@context': 'https://schema.org',
