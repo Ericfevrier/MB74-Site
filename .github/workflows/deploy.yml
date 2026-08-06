@@ -4,9 +4,21 @@ name: Build & Deploy (statique prerendu)
 # - Déclenchement manuel "Deploy production" -> déploie sur la PROD (quand prêt à remplacer WordPress).
 # - repository_dispatch (type: rebuild) -> permet à Directus de relancer un build à la publication.
 
+# ------------------------------------------------------------------
+#  WORKFLOW INACTIF — conservé pour référence.
+#
+#  Le déploiement ne passe plus par GitHub Actions : le staging est une
+#  application Node.js sur o2switch qui tire la branche `deploy`.
+#  Voir publish.sh à la racine du dépôt.
+#
+#  Les déclencheurs automatiques (push sur main, repository_dispatch depuis
+#  Directus) ont été retirés : ils échouaient sur l'étape « Charger la clé
+#  SSH » et envoyaient un mail d'échec à chaque push.
+#  Seul le lancement manuel reste possible, pour le jour où l'on rebranchera
+#  un déploiement automatisé — il faudra alors corriger le secret
+#  SSH_PRIVATE_KEY et réintroduire les déclencheurs ci-dessous.
+# ------------------------------------------------------------------
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       target:
@@ -15,8 +27,6 @@ on:
         default: staging
         type: choice
         options: [staging, production]
-  repository_dispatch:
-    types: [rebuild]
 
 concurrency:
   group: deploy-${{ github.ref }}
