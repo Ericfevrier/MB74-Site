@@ -13,3 +13,6 @@ coverage/
 .deploy.env
 .deploy.env.example
 setup-auth.sh
+
+# Arbre de travail de la branche deploy (genere par publish.sh)
+.deploy-work/
