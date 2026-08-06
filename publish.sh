@@ -96,6 +96,15 @@ require("fs").writeFileSync(".deploy-work/package.json", JSON.stringify({
 },null,2)+"\n");
 '
 
+# Le serveur o2switch a son node_modules et son tmp/ (redemarrage Passenger) :
+# ils ne doivent jamais entrer en conflit avec un git pull.
+cat > "$ROOT/$WORK/.gitignore" <<'TXT'
+node_modules/
+tmp/
+.env
+.env.local
+TXT
+
 cat > "$ROOT/$WORK/README.md" <<'TXT'
 # MB74-Site — branche `deploy`
 
@@ -122,6 +131,6 @@ echo ""
 echo "============================================================"
 echo " A COLLER SUR LE TERMINAL o2switch :"
 echo ""
-echo "   cd ~/mb74-site && git pull && touch tmp/restart.txt"
+echo "   cd ~/mb74-site && git pull && mkdir -p tmp && touch tmp/restart.txt"
 echo ""
 echo "============================================================"
