@@ -15,13 +15,14 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import { dbConfigured, dbHealthy } from './db.js';
 import { mountAdmin, saveSubmissionDb } from './admin.js';
 import { buildSitemap } from './sitemap.js';
 import { redirectMiddleware } from './redirects.js';
+import { seoForPath, applySeo } from './seoInject.js';
 
 dotenv.config({ path: '.env.local' });
 dotenv.config(); // .env en repli
@@ -308,13 +309,25 @@ app.use(express.static(clientDir, { maxAge: '1h', index: false, redirect: false 
 
 // Route → HTML prérendu de la page si présent (SEO), sinon shell SPA (React Router
 // gère alors le routage côté client, y compris la page 404).
-app.get('*', (req, res) => {
+app.get('*', async (req, res) => {
   const rel = decodeURIComponent(req.path).replace(/\/+$/, ''); // '/contact/' → '/contact'
   const candidate = rel === '' ? indexHtml : path.join(clientDir, rel, 'index.html');
   // HTML peu caché : un nouveau déploiement doit être pris en compte rapidement.
   res.set('Cache-Control', 'no-cache');
   // Garde-fou anti-traversal : le fichier servi doit rester sous clientDir.
   if (candidate.startsWith(clientDir) && existsSync(candidate)) {
+    // Les réglages SEO saisis dans l'admin sont injectés ici, dans le HTML
+    // prérendu : sans cela ils n'étaient appliqués que côté navigateur et
+    // restaient donc invisibles des moteurs. Voir server/seoInject.js.
+    try {
+      const seo = await seoForPath(rel || '/');
+      if (seo) {
+        const html = applySeo(readFileSync(candidate, 'utf8'), seo);
+        return res.type('html').send(html);
+      }
+    } catch (e) {
+      console.error('injection SEO', rel, e.message); // on sert la page telle quelle
+    }
     return res.sendFile(candidate);
   }
 

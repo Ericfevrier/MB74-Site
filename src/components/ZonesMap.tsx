@@ -49,5 +49,29 @@ export function ZonesMap({ zones, ariaLabel }: { zones: Zone[]; ariaLabel?: stri
     };
   }, [zones]);
 
-  return <div ref={ref} className="h-full w-full" role="application" aria-label={ariaLabel || "Carte des zones d'intervention"} />;
+  const label = ariaLabel || "Carte des zones d'intervention";
+
+  return (
+    <div className="relative h-full w-full">
+      <div ref={ref} className="h-full w-full" role="application" aria-label={label} />
+      {/*
+        Alternative textuelle à la carte.
+
+        Les noms de zones n'existaient que dans les tooltips Leaflet, créés par un
+        effet côté navigateur : 33 des 41 communes desservies étaient donc absentes
+        du HTML — invisibles pour un lecteur d'écran comme pour un moteur, alors
+        qu'elles sont déjà saisies dans hivernageZones.ts.
+
+        Rendue côté serveur, donc présente dans le HTML prérendu. Masquée
+        visuellement (`sr-only`) pour ne pas dupliquer l'information à l'écran :
+        c'est bien le contenu équivalent à ce que la carte montre, pas du
+        remplissage.
+      */}
+      <ul className="sr-only">
+        {zones.map((z) => (
+          <li key={z.name}>{z.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
 }
