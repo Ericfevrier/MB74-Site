@@ -64,6 +64,43 @@ export const businessNode = {
   },
   openingHoursSpecification: OPENING_HOURS,
   sameAs: SAME_AS,
+  // Rattache l'atelier à l'établissement principal : deux lieux, une entreprise.
+  subOrganization: { '@id': `${SITE.url}/#atelier` },
+};
+
+/**
+ * L'atelier et le hangar d'hivernage de Saint-Ferréol.
+ *
+ * C'est un lieu réel de l'entreprise, mais PAS l'établissement principal : ni
+ * l'accueil client ni les bureaux n'y sont. Il porte donc son propre `@id`,
+ * rattaché au principal par `parentOrganization`, plutôt que de partager le
+ * `@id` du siège — deux adresses sur une même entité brouilleraient le signal
+ * local au lieu de l'enrichir.
+ *
+ * À déclarer uniquement sur les pages dont l'atelier est réellement le sujet
+ * (hivernage, stockage, entretien), pas partout.
+ */
+export const workshopNode = {
+  '@type': 'LocalBusiness',
+  '@id': `${SITE.url}/#atelier`,
+  name: `${SITE.name} — ${SITE.workshop.name}`,
+  parentOrganization: { '@id': `${SITE.url}/#business` },
+  telephone: SITE.phoneHref.replace('tel:', ''),
+  email: SITE.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.workshop.addressStreet,
+    postalCode: SITE.workshop.addressPostal,
+    addressLocality: SITE.workshop.addressLocality,
+    addressRegion: SITE.workshop.addressRegion,
+    addressCountry: SITE.workshop.addressCountry,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: SITE.workshop.geo.lat,
+    longitude: SITE.workshop.geo.lng,
+  },
+  openingHoursSpecification: OPENING_HOURS,
 };
 
 const DEFAULT_AREA = [

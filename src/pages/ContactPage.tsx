@@ -13,7 +13,7 @@ export function contactMeta() {
   return pageMeta({
     title: 'Contactez-nous | Motor Boat 74',
     description:
-      'MotorBoat74 vous accompagne pour l’achat, la vente, l’entretien ou l’hivernage de votre bateau. Contactez-nous facilement dès aujourd’hui à Annecy / Saint-Ferréol.',
+      'MotorBoat74 vous accompagne pour l’achat, la vente, l’entretien ou l’hivernage de votre bateau. Notre shop et nos bureaux sont à Saint-Jorioz, à 8 minutes d’Annecy, et notre atelier à Saint-Ferréol.',
     canonical,
     jsonLd: [
       {

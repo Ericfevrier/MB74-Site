@@ -33,7 +33,7 @@ export const FAQS_BY_BRAND: Record<string, FAQItem[]> = {
     },
     {
       question: "Où acheter un bateau Nautique en Haute-Savoie ?",
-      answer: "Motor Boat 74 est concessionnaire officiel Nautique en Haute-Savoie. Nous vous accueillons à Saint-Ferréol, près du lac d'Annecy, pour un essai sur l'eau.",
+      answer: "Motor Boat 74 est concessionnaire officiel Nautique en Haute-Savoie. Notre shop est à Saint-Jorioz, sur la rive ouest du lac d'Annecy, où nous vous accueillons pour un essai sur l'eau.",
     },
     {
       question: "Où trouver des pièces détachées et des accessoires Nautique ?",
@@ -51,7 +51,7 @@ export const FAQS_BY_BRAND: Record<string, FAQItem[]> = {
     },
     {
       question: "Où acheter un bateau MasterCraft en Haute-Savoie ?",
-      answer: "Motor Boat 74 est importateur officiel MasterCraft. Nous vous accueillons à Saint-Ferréol, près du lac d'Annecy, avec essai sur le lac, financement et reprise de votre bateau actuel.",
+      answer: "Motor Boat 74 est importateur officiel MasterCraft. Notre shop est à Saint-Jorioz, sur la rive ouest du lac d'Annecy : essai sur le lac, financement et reprise de votre bateau actuel.",
     },
     {
       question: "Où trouver des pièces détachées et des accessoires MasterCraft ?",

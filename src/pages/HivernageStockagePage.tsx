@@ -5,7 +5,7 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { pageMeta } from '../lib/meta';
 import { SITE } from '../data/site';
-import { OPENING_HOURS, SAME_AS } from '../lib/schema';
+import { OPENING_HOURS, SAME_AS, workshopNode } from '../lib/schema';
 import { usePageContent, useSeo } from '../lib/pageContent';
 import {
   Shield,
@@ -77,20 +77,28 @@ export function hivernageMeta() {
     email: 'contact@motorboat74.com',
     priceRange: '€€',
     currenciesAccepted: 'EUR',
+    // L'adresse de l'ÉTABLISSEMENT PRINCIPAL (le shop de Saint-Jorioz), pas
+    // celle du hangar : ce nœud porte l'`@id` /#business, partagé avec tout le
+    // site. Y mettre l'adresse de Saint-Ferréol revenait à déclarer deux
+    // adresses pour une même entité. Le hangar est décrit à part, par
+    // `workshopNode`, et rattaché en `location` du service ci-dessous.
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '179 Allée des Edelweiss',
-      addressLocality: 'Saint-Ferréol',
-      postalCode: '74210',
-      addressRegion: 'Haute-Savoie',
-      addressCountry: 'FR',
+      streetAddress: SITE.addressStreet,
+      addressLocality: SITE.addressLocality,
+      postalCode: SITE.addressPostal,
+      addressRegion: SITE.addressRegion,
+      addressCountry: SITE.addressCountry,
     },
     geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.lat, longitude: SITE.geo.lng },
     openingHoursSpecification: OPENING_HOURS,
     sameAs: SAME_AS,
     areaServed,
-    hasMap:
-      'https://www.google.com/maps/dir/?api=1&destination=179+All%C3%A9e+des+Edelweiss+74210+Saint-Ferr%C3%A9ol',
+    // Itinéraire vers l'établissement principal, cohérent avec l'adresse
+    // déclarée juste au-dessus sur ce même nœud.
+    hasMap: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+      `${SITE.addressStreet} ${SITE.addressPostal} ${SITE.addressLocality}`,
+    )}`,
     ...(GOOGLE_RATING.count > 0
       ? {
           aggregateRating: {
@@ -109,6 +117,9 @@ export function hivernageMeta() {
     name: 'Hivernage et stockage de bateau à Annecy (Haute-Savoie)',
     serviceType: 'Hivernage, stockage et entretien hivernal de bateaux',
     provider: { '@id': `${SITE_URL}/#business` },
+    // Le service s'exécute au hangar de Saint-Ferréol, décrit ici en entier :
+    // c'est la page dont il est le sujet.
+    location: workshopNode,
     areaServed,
     url: `${SITE_URL}/hivernage-stockage-bateau`,
     offers: {
@@ -164,11 +175,14 @@ export function hivernageMeta() {
     ogLocale: 'fr_FR',
     ogSiteName: 'MotorBoat 74',
     twitterCard: true,
+    // Cette page a pour sujet le hangar : on géolocalise sur l'atelier, mais
+    // depuis SITE.workshop. La page portait ici une TROISIÈME paire de
+    // coordonnées, écrite en dur et différente des deux autres du site.
     geo: {
       region: 'FR-74',
-      placename: 'Saint-Ferréol, Annecy, Haute-Savoie',
-      position: '45.7365;6.2772',
-      icbm: '45.7365, 6.2772',
+      placename: `${SITE.workshop.addressLocality}, Haute-Savoie`,
+      position: `${SITE.workshop.geo.lat};${SITE.workshop.geo.lng}`,
+      icbm: `${SITE.workshop.geo.lat}, ${SITE.workshop.geo.lng}`,
     },
     jsonLd: [schemaLocalBusiness, schemaService, schemaFAQ, schemaBreadcrumb],
     extra: [

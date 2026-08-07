@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { MapPin, Phone, Mail, ChevronRight } from 'lucide-react';
 import { GoogleMapCustom } from './GoogleMapCustom';
 import { usePageContent } from '../lib/pageContent';
+import { SITE } from '../data/site';
 
 type Partner = { name: string; logo?: string; role?: string; url?: string };
 
@@ -266,7 +267,7 @@ export function PartnersLocationSection() {
                          <p className="text-lg font-bold text-white uppercase tracking-tight">Motorboat 74</p>
                       </div>
                       <a 
-                        href="https://www.google.com/maps/dir/?api=1&destination=179+Allée+des+Edelweiss+74210+Saint-Ferréol"
+                        href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${SITE.addressStreet} ${SITE.addressPostal} ${SITE.addressLocality}`)}`}
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="bg-brand-cyan text-brand-dark font-bold px-6 py-3 rounded-xl hover:scale-110 transition-transform uppercase text-[10px] tracking-widest"

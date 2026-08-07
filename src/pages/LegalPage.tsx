@@ -8,7 +8,14 @@ import { usePageContent } from '../lib/pageContent';
 
 type Block = { h?: string; p?: string[]; ul?: string[] };
 
-const FULL_ADDRESS = `${SITE.addressStreet}, ${SITE.addressPostal} ${SITE.addressLocality}`;
+/**
+ * Siège social déclaré au RCS — et NON l'adresse commerciale mise en avant
+ * ailleurs sur le site. Les deux ont divergé le jour où le shop de Saint-Jorioz
+ * est devenu l'établissement principal ; le siège, lui, ne bouge qu'avec un
+ * transfert effectif. Cette page lisait `SITE.address*` : elle aurait donc suivi
+ * le changement commercial et déclaré un siège social inexact.
+ */
+const FULL_ADDRESS = `${SITE.legal.addressStreet}, ${SITE.legal.addressPostal} ${SITE.legal.addressLocality}`;
 
 const MENTIONS: { title: string; updated: string; blocks: Block[] } = {
   title: 'Mentions légales',
@@ -30,8 +37,11 @@ const MENTIONS: { title: string; updated: string; blocks: Block[] } = {
     {
       h: 'Hébergement',
       p: [
-        'Le site est hébergé par la société OVH SAS, au capital de 50 000 000 €, immatriculée au RCS de Lille Métropole sous le numéro 424 761 419, dont le siège social est situé 2 rue Kellermann, 59100 Roubaix, France.',
-        'Site : https://www.ovhcloud.com',
+        // L'ancienne mention désignait OVH, qui n'héberge pas ce site : la loi
+        // pour la confiance dans l'économie numérique impose l'identité réelle
+        // de l'hébergeur.
+        'Le site est hébergé par la société o2switch SAS, immatriculée au RCS de Clermont-Ferrand sous le numéro 510 909 807, dont le siège social est situé 222-224 boulevard Gustave Flaubert, 63000 Clermont-Ferrand, France.',
+        'Site : https://www.o2switch.fr',
       ],
     },
     {
