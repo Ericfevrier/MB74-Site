@@ -1,10 +1,15 @@
 #!/bin/sh
 # ============================================================
-#  Publication STAGING — Motor Boat 74
+#  Publication EN LIGNE — Motor Boat 74
 #
 #  Construit le bundle SSR sur cette machine et le publie sur la branche
 #  `deploy`, que le serveur o2switch tire ensuite. Reproduit ce que fait
 #  .github/workflows/deploy.yml, en s'en passant quand Actions est indisponible.
+#
+#  ATTENTION : `deploy` alimente motorboat74.com, PAS une preprod. Ce script
+#  s'appelait « publication STAGING » du temps ou ~/mb74-site servait
+#  staging.motorboat74.com ; depuis la bascule du 2026-08-07, le domaine public
+#  est servi par cette meme application. Ce qui part d'ici est en ligne.
 #
 #  SECOURS, PAS ROUTINE. Depuis que GitHub Actions refonctionne, le workflow
 #  publie automatiquement `deploy` a chaque push sur main. Lancer ce script en

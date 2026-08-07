@@ -5,14 +5,16 @@ name: Build & publish bundle SSR (o2switch)
 # publie un bundle PRÊT À L'EMPLOI (pur JS au runtime) sur une branche de déploiement.
 # o2switch n'a plus qu'à : git fetch && git reset --hard && restart.
 #
-# DEUX ENVIRONNEMENTS
-#   main       -> branche `deploy`      -> préprod  (staging.motorboat74.com)
-#   production -> branche `deploy-prod` -> prod     (motorboat74.com)
+# UN SEUL ENVIRONNEMENT, depuis le 2026-08-07
+#   main -> branche `deploy` -> application ~/mb74-site -> motorboat74.com
 #
-# Mettre en ligne = `git push origin main:production` une fois la préprod validée.
-# Le bundle est identique dans les deux cas : ce sont les variables d'environnement
-# de chaque application cPanel (base, SESSION_SECRET, STAGING_PROTECT) qui les
-# distinguent, jamais le code. Une préprod qui diffère du code de prod ne prouve rien.
+# La préprod a été retirée : staging.motorboat74.com ne sert plus l'application et
+# le domaine public a été basculé sur ~/mb74-site. Pousser sur `main` publie donc
+# directement ce que verront les visiteurs.
+#
+# La branche `production` -> `deploy-prod` -> ~/mb74-prod est conservée ci-dessous
+# mais plus rien ne la sert. Ne pas la réactiver sans avoir d'abord rebranché un
+# domaine dessus, sinon on publie dans le vide en croyant mettre en ligne.
 
 on:
   push:
@@ -22,8 +24,8 @@ on:
 permissions:
   contents: write
 
-# Une file par environnement : publier en prod ne doit pas annuler une publication
-# de préprod en cours, et réciproquement.
+# Une file par branche source : deux publications successives sur `main` ne se
+# marchent pas dessus, seule la plus récente aboutit.
 concurrency:
   group: deploy-bundle-${{ github.ref_name }}
   cancel-in-progress: true
@@ -85,21 +87,22 @@ jobs:
           # connexion. Mélanger Apache (assets symlinkés) et Passenger (document) provoquait
           # des 421 (Misdirected Request) en HTTP/2. Express sert les assets via express.static.
 
-      # La branche cible dépend de la branche source. `git init` à chaque passage
-      # réécrit l'historique en force : on ne peut donc PAS figer la prod sur un
-      # ancien commit de `deploy`, il n'existe plus après la publication suivante.
-      # D'où deux branches distinctes plutôt qu'un pointeur mobile.
+      # `git init` à chaque passage réécrit l'historique en force : la branche
+      # publiée ne garde aucun bundle antérieur. Pour revenir en arrière, on
+      # revient sur `main` et on republie.
+      #
+      # La branche `deploy-prod` n'alimente plus aucun domaine depuis la bascule.
       - name: Choisir l'environnement
         id: env
         run: |
           if [ "${GITHUB_REF_NAME}" = "production" ]; then
             echo "branch=deploy-prod" >> "$GITHUB_OUTPUT"
             echo "dir=~/mb74-prod"    >> "$GITHUB_OUTPUT"
-            echo "label=PRODUCTION (motorboat74.com)" >> "$GITHUB_OUTPUT"
+            echo "label=INACTIF — aucun domaine ne sert ~/mb74-prod" >> "$GITHUB_OUTPUT"
           else
             echo "branch=deploy"      >> "$GITHUB_OUTPUT"
             echo "dir=~/mb74-site"    >> "$GITHUB_OUTPUT"
-            echo "label=préprod (staging.motorboat74.com)" >> "$GITHUB_OUTPUT"
+            echo "label=EN LIGNE (motorboat74.com)" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Publier sur la branche de déploiement
