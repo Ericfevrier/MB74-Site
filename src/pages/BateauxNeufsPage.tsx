@@ -107,7 +107,7 @@ export function BateauxNeufsPage() {
                 <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">La gamme</span>
                 <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mt-1">{b.name}</h2>
               </div>
-              <Link to={`/marque/${b.id}`} className="hidden sm:inline-flex items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline whitespace-nowrap">
+              <Link to={`/marque/${b.id}`} className="hidden sm:inline-flex min-h-11 items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline whitespace-nowrap">
                 Tout sur {b.name} <ArrowRight size={14} />
               </Link>
             </div>

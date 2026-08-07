@@ -262,7 +262,7 @@ export function OccasionDetailPage({ boat: boatProp, related: relatedProp }: { b
               ) : (
                 <div className="bg-ink-900 border border-white/10 rounded-2xl p-6">
                   <p className="text-gray-300 mb-4">Ce bateau est vendu. Nous pouvons rechercher un modèle équivalent pour vous.</p>
-                  <Link to="/bateaux/occasion" className="inline-flex items-center gap-2 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
+                  <Link to="/bateaux/occasion" className="inline-flex min-h-11 items-center gap-2 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
                     Voir les occasions disponibles <ArrowRight size={14} />
                   </Link>
                 </div>
@@ -360,7 +360,7 @@ export function OccasionDetailPage({ boat: boatProp, related: relatedProp }: { b
                 <p className="text-gray-300 text-sm leading-relaxed mb-5">
                   Caractéristiques, équipements et points forts du {model.fullName || model.name} neuf.
                 </p>
-                <Link to={modelPath} className="inline-flex items-center gap-2 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
+                <Link to={modelPath} className="inline-flex min-h-11 items-center gap-2 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
                   Voir le {model.short} neuf <ArrowRight size={14} />
                 </Link>
               </div>
@@ -396,9 +396,12 @@ export function OccasionDetailPage({ boat: boatProp, related: relatedProp }: { b
       {related.length > 0 && (
         <section className="bg-brand-light py-16 lg:py-20">
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
-            <div className="flex items-end justify-between gap-4 mb-10">
+            {/* En dessous de 640 px, le titre et le lien ne tiennent pas sur une
+                même ligne : le lien étant en `whitespace-nowrap`, il sortait de
+                l'écran de 35 px (mesuré à 320 px). Ils s'empilent désormais. */}
+            <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4 mb-10">
               <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-brand-dark">Bateaux similaires</h2>
-              <Link to="/bateaux/occasion" className="inline-flex items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline whitespace-nowrap">
+              <Link to="/bateaux/occasion" className="inline-flex min-h-11 items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline whitespace-nowrap">
                 Toutes les occasions <ArrowRight size={14} />
               </Link>
             </div>

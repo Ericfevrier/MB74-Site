@@ -26,9 +26,53 @@ html {
   scroll-behavior: smooth;
 }
 
+/*
+ * Mouvement réduit — respecté globalement, plus seulement sur le défilement.
+ *
+ * Cette règle ne couvrait que `scroll-behavior` et le bandeau de logos, alors
+ * que le site anime en permanence : transitions Tailwind (survol, ouverture
+ * d'accordéon, changement d'état) et révélations au défilement. Un utilisateur
+ * sujet au mal des transports recevait donc l'essentiel des animations.
+ *
+ * On neutralise la durée plutôt que l'animation elle-même : une animation
+ * supprimée ne déclenche jamais son `animationend`/`transitionend`, et tout
+ * composant qui attend cet événement pour révéler son contenu resterait bloqué.
+ * Ramenée à 0,01 ms, elle se termine immédiatement mais se termine.
+ *
+ * Les animations pilotées par `motion/react` passent par JavaScript et ignorent
+ * le CSS : elles sont traitées par `<MotionConfig reducedMotion="user">` dans
+ * root.tsx. Les deux sont nécessaires, aucune ne remplace l'autre.
+ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Contraste renforcé — demandé par le système (réglage d'accessibilité).
+ * On raffermit ce que le design atténue volontairement : les textes gris clair
+ * du pied de page et les bordures translucides, qui descendent sous le seuil
+ * lisible dès que l'utilisateur réclame plus de contraste.
+ */
+@media (prefers-contrast: more) {
+  .text-white\/40,
+  .text-white\/20,
+  .text-mute {
+    color: rgb(255 255 255 / 0.85) !important;
+  }
+  .border-white\/5,
+  .border-white\/10,
+  .border-white\/15 {
+    border-color: rgb(255 255 255 / 0.4) !important;
   }
 }
 
@@ -66,6 +110,77 @@ iframe {
   }
 }
 
+/* ===========================================================================
+ * ZONES SÛRES (encoche, Dynamic Island, barre d'accueil)
+ *
+ * Le <head> déclare `viewport-fit=cover`, qui étend délibérément la page sous
+ * les zones non rectangulaires de l'écran. C'est ce qu'on veut pour les fonds
+ * et les visuels — mais aucun `env(safe-area-inset-*)` n'existait dans le code,
+ * si bien que le CONTENU passait dessous lui aussi : barres d'action basses
+ * masquées par la barre d'accueil, et en paysage, texte sous l'encoche.
+ *
+ * Le fallback `0px` de chaque `env()` est indispensable : sans lui, tout
+ * navigateur ignorant la fonction rend le `calc()` entier invalide et la marge
+ * disparaît complètement.
+ * ======================================================================== */
+
+/* Barre d'action fixe collée en bas (fiches modèle). Le padding bas remplace
+   celui de l'utilitaire Tailwind, qu'on retire du JSX pour éviter le conflit. */
+.mb-fixed-bar {
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  padding-left: calc(0.75rem + env(safe-area-inset-left, 0px));
+  padding-right: calc(0.75rem + env(safe-area-inset-right, 0px));
+}
+
+/* Bouton flottant décollé du bas (pages service, bandeau cookies) : c'est
+   `bottom` qu'on repousse, pas le padding, sinon le bouton grandit. */
+.mb-float-bottom {
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+}
+.mb-safe-bottom {
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Marges latérales sûres pour l'en-tête collant — le seul bloc d'interface
+   fixe du site, et donc le seul dont les commandes puissent tomber sous
+   l'encoche quand le téléphone est tenu en paysage.
+   `max()` conserve la marge de base (1rem, celle de `px-4`) tant qu'aucun inset
+   n'existe : sur desktop et en portrait, ces valeurs sont nulles et rien ne
+   bouge. Les sections pleine largeur, elles, gardent volontairement leur fond
+   d'un bord à l'autre — c'est ce que `viewport-fit=cover` sert à obtenir. */
+.mb-safe-x {
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 1024px) {
+  .mb-safe-x {
+    padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
+    padding-right: max(3rem, env(safe-area-inset-right, 0px));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Dégagement du pied de page sous une barre d'action fixe.
+ *
+ * Une barre `fixed` ne réserve aucune place dans le flux : mesuré au navigateur
+ * à 390 px, la ligne « © Tous droits réservés » passait sous la barre sur les
+ * 30 fiches modèle et les 6 pages service — 33 à 38 px de contenu recouverts,
+ * avant même d'ajouter les 34 px de barre d'accueil d'un iPhone.
+ *
+ * Les pages concernées portent `data-mobile-cta` sur leur racine ; `:has()`
+ * permet au pied de page de réagir sans que chaque page ait à le savoir.
+ * Les pages sans barre ne gagnent aucun espace superflu.
+ * ------------------------------------------------------------------------ */
+body:has([data-mobile-cta]) footer {
+  padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
+}
+@media (min-width: 1024px) {
+  /* Les barres sont en `lg:hidden` : au-delà, plus rien à dégager. */
+  body:has([data-mobile-cta]) footer {
+    padding-bottom: 0;
+  }
+}
+
 /* ===== Bandeau de logos partenaires : défilement lent et continu ===== */
 @keyframes mb-marquee {
   from { transform: translateX(0); }
@@ -90,6 +205,22 @@ iframe {
   background: #e8eef2;
   font-family: inherit;
 }
+/* Commandes de zoom Leaflet : 30 px de base, sous le minimum tactile.
+   Élargies au doigt uniquement (`pointer: coarse`), pour ne pas alourdir la
+   carte à la souris, où 30 px se visent sans difficulté. */
+@media (pointer: coarse) {
+  /* `!important` assumé : Leaflet fixe cette taille depuis
+     `.leaflet-touch .leaflet-bar a`, plus spécifique que tout sélecteur
+     raisonnable écrit ici, et dont l'ordre de chargement dépend du bundler.
+     Vérifié au navigateur : sans lui, la règle est ignorée et on reste à 30 px. */
+  .leaflet-control-zoom a {
+    width: 44px !important;
+    height: 44px !important;
+    line-height: 44px !important;
+    font-size: 20px !important;
+  }
+}
+
 /* Pin cyan avec halo */
 .mb-pin {
   display: block;

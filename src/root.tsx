@@ -1,5 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation, useRouteError, isRouteErrorResponse, Link } from 'react-router';
 import { Compass, RotateCcw, ArrowLeft } from 'lucide-react';
+import { MotionConfig } from 'motion/react';
 import './index.css';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -21,6 +22,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
         <Meta />
         <Links />
+        {/*
+         * Filet sans JavaScript.
+         *
+         * Les révélations au défilement (`motion/react`) sont prérendues avec
+         * leur état de DÉPART inline : le HTML livré contient
+         * `style="opacity:0;transform:translateY(30px)"` sur, entre autres,
+         * les 15 cartes modèle des pages de marque et les héros. Le contenu est
+         * bien là — c'est tout l'intérêt du prérendu — mais invisible tant que
+         * le script n'a pas pris la main.
+         *
+         * Ces trois règles rendent la page lisible telle quelle. Elles ne
+         * s'appliquent que si JavaScript est absent ; dès qu'il tourne,
+         * `<noscript>` est ignoré et l'animation reprend normalement.
+         *
+         * `height:0px` vise les accordéons FAQ : sans script on ne peut pas les
+         * ouvrir, donc on affiche les réponses dépliées.
+         */}
+        <noscript>
+          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}[style*="height:0px"]{height:auto!important}`}</style>
+        </noscript>
       </head>
       <body>
         {children}
@@ -47,7 +68,7 @@ export function ErrorBoundary() {
   const detail = isDev && error instanceof Error ? error.stack || error.message : null;
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-brand-dark text-white px-4 py-14 sm:py-24 relative overflow-hidden">
+    <section className="min-h-dvh flex items-center justify-center bg-brand-dark text-white px-4 py-14 sm:py-24 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-64 -mt-64" />
       <div className="relative z-10 text-center max-w-xl">
         <div className="w-20 h-20 rounded-3xl bg-brand-cyan/10 flex items-center justify-center text-brand-cyan mx-auto mb-8">
@@ -79,21 +100,36 @@ export default function App() {
   const isAdmin = useLocation().pathname.startsWith('/admin');
   if (isAdmin) {
     return (
-      <main className="min-h-screen bg-brand-light">
+      <main className="min-h-dvh bg-brand-light">
         <Outlet />
       </main>
     );
   }
   return (
-    <SettingsProvider>
-      <div className="min-h-screen flex flex-col bg-brand-light">
-        <Header />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        <Footer />
-        <CookieConsent />
-      </div>
-    </SettingsProvider>
+    /*
+     * `reducedMotion="user"` fait respecter le réglage système à TOUTES les
+     * animations `motion/react` du site, sans avoir à les reprendre une par une.
+     * Elles sont pilotées en JavaScript et échappent donc à la règle CSS
+     * `prefers-reduced-motion` d'index.css — il faut bien les deux.
+     *
+     * Framer conserve volontairement les fondus d'opacité et ne neutralise que
+     * les déplacements : les blocs en `whileInView` (initial opacity 0) continuent
+     * de se révéler. Les couper aurait laissé du contenu invisible à l'écran.
+     */
+    <MotionConfig reducedMotion="user">
+      <SettingsProvider>
+        {/* `min-h-dvh` et non `min-h-screen` : sur iOS, `100vh` vaut le viewport
+            barre d'adresse masquée, soit ~60 px de plus que la hauteur réellement
+            visible au chargement. L'unité dynamique suit la barre. */}
+        <div className="min-h-dvh flex flex-col bg-brand-light">
+          <Header />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <Footer />
+          <CookieConsent />
+        </div>
+      </SettingsProvider>
+    </MotionConfig>
   );
 }

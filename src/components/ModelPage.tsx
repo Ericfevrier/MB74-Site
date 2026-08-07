@@ -246,7 +246,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
           </div>
         )}
 
-        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 lg:py-10 lg:min-h-[68vh] grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 lg:py-10 lg:min-h-[68dvh] grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="order-2 lg:order-1">
             <Breadcrumb
               className="mb-8"
@@ -290,7 +290,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
                 <a
                   href={`#${a.id}`}
                   aria-current={activeAnchor === a.id ? 'true' : undefined}
-                  className={`block px-4 py-2 rounded-full transition-colors ${
+                  className={`flex min-h-11 items-center px-4 rounded-full transition-colors ${
                     activeAnchor === a.id
                       ? 'text-brand-cyan bg-brand-cyan/10'
                       : 'text-gray-400 hover:text-brand-cyan hover:bg-white/[0.07]'
@@ -652,7 +652,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
               <SectionEyebrow label="Alternative" />
               <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white">{model.name} d’occasion</h2>
             </div>
-            <Link to="/bateaux/occasion" className="inline-flex items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
+            <Link to="/bateaux/occasion" className="inline-flex min-h-11 items-center gap-1.5 text-brand-cyan font-bold uppercase tracking-widest text-xs hover:underline">
               Toutes nos occasions {brandName} <ArrowRight size={14} />
             </Link>
           </div>
@@ -770,8 +770,14 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
       </section>
 
       {/* ===================== CTA STICKY PERMANENT ===================== */}
-      {/* Mobile : barre basse */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-ink-950/95 backdrop-blur-md border-t border-white/10 p-3 flex gap-3">
+      {/* Mobile : barre basse.
+          `data-mobile-cta` fait réserver au pied de page la hauteur de cette
+          barre (règle `:has()` dans index.css) : `fixed` ne prend aucune place
+          dans le flux, et la ligne de copyright passait dessous — 33 px
+          recouverts, mesurés à 390 px.
+          `mb-fixed-bar` remplace le padding bas de `p-3` par un padding qui
+          intègre la barre d'accueil iOS ; d'où `px-3 pt-3` seulement ici. */}
+      <div data-mobile-cta className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-ink-950/95 backdrop-blur-md border-t border-white/10 px-3 pt-3 mb-fixed-bar flex gap-3">
         <a href={SITE.phoneHref} className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-xl border border-white/20 text-white">
           <Phone size={18} />
         </a>
@@ -796,7 +802,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
               alt={`${fullName}, photo ${lightbox + 1}`}
               referrerPolicy="no-referrer"
               onClick={(e) => e.stopPropagation()}
-              className="max-w-full max-h-[85vh] rounded-2xl object-contain"
+              className="max-w-full max-h-[85dvh] rounded-2xl object-contain"
             />
           </motion.div>
         )}
@@ -852,7 +858,7 @@ function PresentationSlider({ images, alt, studio }: { images: string[]; alt: st
                 onClick={() => setIdx(i)}
                 aria-label={`Afficher l’image ${i + 1}`}
                 aria-current={i === idx}
-                className="group flex h-6 min-w-6 items-center justify-center px-1"
+                className="group flex h-11 min-w-11 items-center justify-center px-1"
               >
                 <span
                   className={`block h-2 rounded-full transition-all duration-300 ${

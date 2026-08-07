@@ -32,7 +32,7 @@ export function BlogArticlePage() {
 
   if (status === 'loading') {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-brand-light">
+      <div className="min-h-[60dvh] flex items-center justify-center bg-brand-light">
         <Loader2 className="w-8 h-8 animate-spin text-brand-cyan" />
       </div>
     );
@@ -78,7 +78,7 @@ export function BlogArticlePage() {
         <div className="prose-mb74" dangerouslySetInnerHTML={{ __html: html }} />
 
         <div className="mt-14 pt-8 border-t border-gray-200">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-brand-cyan font-bold uppercase tracking-widest text-sm hover:underline">
+          <Link to="/blog" className="inline-flex min-h-11 items-center gap-2 text-brand-cyan font-bold uppercase tracking-widest text-sm hover:underline">
             <ArrowLeft size={16} /> Retour au blog
           </Link>
         </div>

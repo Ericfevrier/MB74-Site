@@ -135,9 +135,9 @@ export function SelleriePage() {
   const labelCls = 'block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2';
 
   return (
-    <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
+    <div className="bg-brand-light min-h-dvh text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
       {/* Mobile sticky CTA */}
-      <div className="lg:hidden fixed bottom-6 inset-x-0 mx-auto px-6 z-50 pointer-events-none">
+      <div data-mobile-cta className="lg:hidden fixed mb-float-bottom inset-x-0 mx-auto px-6 z-50 pointer-events-none">
         <button
           onClick={scrollToForm}
           className="w-full bg-brand-cyan text-brand-dark font-extrabold py-4 px-6 rounded-2xl shadow-2xl flex items-center justify-center gap-2 text-sm uppercase tracking-wider active:scale-95 transition-all pointer-events-auto border border-white/20"
@@ -241,7 +241,7 @@ export function SelleriePage() {
                   <button onClick={scrollToForm} className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition-colors">
                     <Send className="w-4 h-4" /> Devis gratuit
                   </button>
-                  <a href={SITE.phoneHref} className="inline-flex items-center gap-2 border border-gray-300 text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition-colors">
+                  <a href={SITE.phoneHref} className="inline-flex items-center gap-2 border border-gray-300 text-brand-dark font-bold text-xs uppercase tracking-widest min-h-11 px-6 py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition-colors">
                     <Phone className="w-4 h-4 text-brand-cyan" /> {SITE.phoneDisplay}
                   </a>
                 </div>
@@ -424,7 +424,7 @@ export function SelleriePage() {
             {/* Formulaire sticky (clair) */}
             <aside
               ref={formRef}
-              className="lg:col-span-1 lg:sticky lg:top-32 lg:max-h-[calc(100vh-9rem)] lg:overflow-y-auto hide-scrollbar bg-white border border-gray-200 ring-1 ring-black/[0.03] rounded-3xl p-8 shadow-xl shadow-gray-400/10"
+              className="lg:col-span-1 lg:sticky lg:top-32 lg:max-h-[calc(100dvh-9rem)] lg:overflow-y-auto hide-scrollbar bg-white border border-gray-200 ring-1 ring-black/[0.03] rounded-3xl p-8 shadow-xl shadow-gray-400/10"
             >
               <div className="relative">
                 <div className="absolute top-0 left-0 w-2 h-16 bg-brand-cyan"></div>

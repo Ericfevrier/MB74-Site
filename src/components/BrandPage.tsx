@@ -143,15 +143,23 @@ function AngleSlider({ images, alt }: { images: string[]; alt: string }) {
         />
       ))}
       <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 via-transparent to-transparent pointer-events-none" />
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+      {/* La puce visible reste à 8 px de haut ; c'est le bouton qui l'entoure
+          qui fait 44×44. Une cible de 8×8 px se rate systématiquement au doigt.
+          `-mx-2` absorbe l'élargissement pour que l'espacement entre puces
+          reste celui d'origine. */}
+      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex items-center">
         {images.map((_, i) => (
           <button
             key={i}
             type="button"
             aria-label={`Voir la photo ${i + 1}`}
             onClick={() => setIdx(i)}
-            className={`h-2 rounded-full transition-all duration-300 ${i === idx ? 'w-7 bg-brand-cyan' : 'w-2 bg-white/50 hover:bg-white/80'}`}
-          />
+            className="group flex h-11 min-w-11 items-center justify-center px-1"
+          >
+            <span
+              className={`block h-2 rounded-full transition-all duration-300 ${i === idx ? 'w-7 bg-brand-cyan' : 'w-2 bg-white/50 group-hover:bg-white/80'}`}
+            />
+          </button>
         ))}
       </div>
     </div>
@@ -170,7 +178,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
 
   if (!brand) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-brand-dark text-white p-4">
+      <div className="min-h-dvh flex items-center justify-center bg-brand-dark text-white p-4">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Marque non trouvée</h1>
           <Link to="/" className="text-brand-cyan hover:underline flex items-center justify-center gap-2">
@@ -186,7 +194,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
   return (
     <div className="bg-brand-light">
       {/* Brand Hero */}
-      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-brand-dark cursor-default">
+      <section className="relative h-[80svh] flex items-center justify-center overflow-hidden bg-brand-dark cursor-default">
         <div className="absolute inset-0 z-0">
           <img
             src={brand.heroImage}
@@ -297,7 +305,18 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-2xl" />
+              {/* Halo décoratif. `-inset-4` le faisait dépasser de 16 px de
+                  chaque côté de son conteneur, débordement rattrapé par le seul
+                  garde-fou `overflow-x: clip` global — donc masqué plutôt que
+                  réglé.
+                  Il est supprimé sur l'axe horizontal uniquement : le flou
+                  continue de déborder à la peinture, l'effet visuel est
+                  identique.
+                  (À ne pas confondre avec le décalage de 30 px que la révélation
+                  au défilement applique brièvement à tout ce bloc : celui-là est
+                  invisible, l'élément étant encore à opacity 0, et disparaît dès
+                  la révélation. Vérifié au navigateur.) */}
+              <div className="absolute -inset-y-4 inset-x-0 bg-brand-cyan/10 rounded-[3rem] blur-2xl" />
               {brand.introImages && brand.introImages.length > 0 ? (
                 <AngleSlider images={brand.introImages} alt={`${brand.name}, vues sous différents angles`} />
               ) : (

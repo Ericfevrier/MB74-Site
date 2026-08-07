@@ -221,10 +221,10 @@ export function ArticleLayout({
               </Link>
               <div className="p-6 flex flex-col flex-1">
                 <h3 className="text-base font-bold text-brand-dark leading-snug mb-2">
-                  <Link to={a.path} className="hover:text-brand-cyan transition-colors">{a.title}</Link>
+                  <Link to={a.path} className="hover:text-brand-cyan transition-colors inline-flex min-h-11 items-center">{a.title}</Link>
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4 flex-1 line-clamp-3">{a.excerpt}</p>
-                <Link to={a.path} className="inline-flex items-center gap-2 text-brand-dark font-bold uppercase tracking-widest text-xs hover:text-brand-cyan transition mt-auto">
+                <Link to={a.path} className="inline-flex min-h-11 items-center gap-2 text-brand-dark font-bold uppercase tracking-widest text-xs hover:text-brand-cyan transition mt-auto">
                   Lire l’article <ChevronRight size={15} />
                 </Link>
               </div>
@@ -240,7 +240,7 @@ export function ArticleLayout({
       <div className="relative">
         <p className="font-bold uppercase tracking-tight text-sm mb-2">Un projet, une question ?</p>
         <p className="text-gray-400 text-xs leading-relaxed mb-5">Nos experts vous répondent et établissent un devis gratuit sous 24 h.</p>
-        <a href={SITE.phoneHref} className="flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-xs px-4 py-3 rounded-xl hover:bg-white transition">
+        <a href={SITE.phoneHref} className="flex min-h-11 items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-xs px-4 py-3 rounded-xl hover:bg-white transition">
           <Phone size={14} /> {SITE.phoneDisplay}
         </a>
         <Link to="/contact" className="mt-2 flex items-center justify-center gap-2 border border-white/15 text-white/80 font-bold uppercase tracking-widest text-[11px] px-4 py-2.5 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition">
@@ -288,7 +288,7 @@ export function ArticleLayout({
               {toc.length > 0 && <SommaireCard />}
               <LinksCard />
               <CtaCard />
-              <Link to="/blog" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-brand-dark transition px-1">
+              <Link to="/blog" className="inline-flex min-h-11 items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-brand-dark transition px-1">
                 <ArrowLeft size={14} /> Tous les articles
               </Link>
             </div>
@@ -324,14 +324,14 @@ export function ArticleLayout({
 
             {/* Pied d'article : retour + partage */}
             <div className="mt-12 pt-8 border-t border-gray-200/70 flex flex-wrap items-center justify-between gap-4 px-1">
-              <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-brand-dark transition">
+              <Link to="/blog" className="inline-flex min-h-11 items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-brand-dark transition">
                 <ArrowLeft size={15} /> Retour au blog
               </Link>
               <a
                 href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(canonical)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-brand-cyan transition"
+                className="inline-flex min-h-11 items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-brand-cyan transition"
               >
                 <Share2 size={14} /> Partager
               </a>

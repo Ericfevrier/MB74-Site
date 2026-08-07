@@ -141,7 +141,7 @@ export function BlogHubPage({ articles: articlesProp, categories: categoriesProp
                       <Link to={a.path} className="hover:text-brand-cyan transition-colors">{a.title}</Link>
                     </h2>
                     <p className="text-gray-600 text-sm leading-relaxed mb-5 flex-1">{a.excerpt}</p>
-                    <Link to={a.path} className="inline-flex items-center gap-2 text-brand-dark font-bold uppercase tracking-widest text-xs hover:text-brand-cyan transition mt-auto">
+                    <Link to={a.path} className="inline-flex min-h-11 items-center gap-2 text-brand-dark font-bold uppercase tracking-widest text-xs hover:text-brand-cyan transition mt-auto">
                       Lire l’article <ArrowRight size={15} />
                     </Link>
                   </div>

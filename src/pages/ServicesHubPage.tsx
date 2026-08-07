@@ -104,7 +104,7 @@ export function ServicesHubPage() {
                   </ul>
                   <Link
                     to={meta.path}
-                    className="mt-auto inline-flex items-center gap-2 text-brand-cyan font-bold text-xs uppercase tracking-widest group"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 text-brand-cyan font-bold text-xs uppercase tracking-widest group"
                   >
                     En savoir plus
                     <ArrowRight size={14} className="group-hover:translate-x-1 transition" />

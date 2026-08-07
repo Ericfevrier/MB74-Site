@@ -235,7 +235,7 @@ export function PartnersLocationSection() {
                     </div>
                     <div>
                       <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Appelez-nous</h4>
-                      <a href="tel:+33457572727" className="font-bold hover:text-brand-cyan transition-colors">04 57 57 27 27</a>
+                      <a href="tel:+33457572727" className="inline-flex min-h-11 items-center font-bold hover:text-brand-cyan transition-colors">04 57 57 27 27</a>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -244,7 +244,7 @@ export function PartnersLocationSection() {
                     </div>
                     <div>
                       <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Email direct</h4>
-                      <a href="mailto:contact@motorboat74.com" className="font-bold hover:text-brand-cyan transition-colors">contact@motorboat74.com</a>
+                      <a href="mailto:contact@motorboat74.com" className="inline-flex min-h-11 items-center font-bold hover:text-brand-cyan transition-colors">contact@motorboat74.com</a>
                     </div>
                   </div>
                </div>

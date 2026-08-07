@@ -14,7 +14,7 @@ export default function City() {
   if (live.city) return <HivernageCityPage city={live.city} />;
   if (!live.loaded && !staticCity) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-white">
+      <div className="min-h-[60dvh] flex items-center justify-center bg-white">
         <Loader2 className="w-8 h-8 animate-spin text-brand-cyan" />
       </div>
     );

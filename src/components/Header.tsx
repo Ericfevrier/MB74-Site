@@ -52,7 +52,9 @@ export function Header() {
 
   return (
     <header className="bg-brand-dark/95 backdrop-blur-md text-white sticky top-0 z-[100] h-20 lg:h-[120px] flex items-center shadow-2xl border-b border-white/5">
-      <div className="w-full px-4 lg:pl-6 lg:pr-12">
+      {/* `mb-safe-x` reprend exactement les marges de `px-4 lg:pl-6 lg:pr-12` et
+          ne les élargit que si l'encoche l'exige (paysage sur iPhone). */}
+      <div className="w-full mb-safe-x">
         <div className="flex items-center justify-between">
           
           {/* Logo Area */}
@@ -70,13 +72,15 @@ export function Header() {
 
           {/* Main Navigation with Mega Menus */}
           <nav className="hidden lg:flex flex-1 justify-center relative">
-            <ul className="flex items-center space-x-10 text-white text-[15px] font-bold tracking-widest">
+            {/* Même resserrement que le bloc de droite : c'est la somme des deux
+                qui débordait à 1024 px. */}
+            <ul className="flex items-center gap-5 xl:gap-10 text-white text-[15px] font-bold tracking-widest">
               <li 
                 className="relative cursor-pointer flex items-center h-[120px] group"
                 onMouseEnter={() => setActiveMenu('services')}
                 onMouseLeave={() => setActiveMenu(null)}
               >
-                <Link to="/services" className={`group-hover:text-brand-cyan transition-colors py-2 flex items-center gap-1.5 ${activeMenu === 'services' ? 'text-brand-cyan' : ''}`}>
+                <Link to="/services" className={`group-hover:text-brand-cyan transition-colors flex min-h-11 items-center gap-1.5 ${activeMenu === 'services' ? 'text-brand-cyan' : ''}`}>
                   NOS SERVICES
                   <ChevronDown size={14} className={`opacity-50 transition-transform duration-300 ${activeMenu === 'services' ? 'rotate-180 opacity-100' : ''}`} />
                 </Link>
@@ -86,7 +90,7 @@ export function Header() {
                 onMouseEnter={() => setActiveMenu('bateaux')}
                 onMouseLeave={() => setActiveMenu(null)}
               >
-                <Link to="/bateaux" className={`group-hover:text-brand-cyan transition-colors py-2 flex items-center gap-1.5 ${activeMenu === 'bateaux' ? 'text-brand-cyan' : ''}`}>
+                <Link to="/bateaux" className={`group-hover:text-brand-cyan transition-colors flex min-h-11 items-center gap-1.5 ${activeMenu === 'bateaux' ? 'text-brand-cyan' : ''}`}>
                   BATEAUX
                   <ChevronDown size={14} className={`opacity-50 transition-transform duration-300 ${activeMenu === 'bateaux' ? 'rotate-180 opacity-100' : ''}`} />
                 </Link>
@@ -96,14 +100,14 @@ export function Header() {
                 onMouseEnter={() => setActiveMenu('marques')}
                 onMouseLeave={() => setActiveMenu(null)}
               >
-                <span className={`group-hover:text-brand-cyan transition-colors py-2 flex items-center gap-1.5 ${activeMenu === 'marques' ? 'text-brand-cyan' : ''}`}>
+                <span className={`group-hover:text-brand-cyan transition-colors flex min-h-11 items-center gap-1.5 ${activeMenu === 'marques' ? 'text-brand-cyan' : ''}`}>
                   MARQUES
                   <ChevronDown size={14} className={`opacity-50 transition-transform duration-300 ${activeMenu === 'marques' ? 'rotate-180 opacity-100' : ''}`} />
                 </span>
               </li>
               {[{ name: "Blog", path: "/blog" }, { name: "La Team", path: "/la-team" }].map((item) => (
                 <li key={item.name} className="h-[120px] flex items-center">
-                  <Link to={item.path} className="hover:text-brand-cyan transition-colors uppercase py-2">
+                  <Link to={item.path} className="hover:text-brand-cyan transition-colors uppercase flex min-h-11 items-center">
                     {item.name}
                   </Link>
                 </li>
@@ -190,19 +194,27 @@ export function Header() {
 
 
           {/* Contact Actions */}
-          <div className="hidden lg:flex items-center space-x-10 -mr-[25px]">
-            <div className="text-right mr-[25px]">
+          {/* Espacements resserrés entre 1024 et 1279 px, élargis au-delà.
+              Mesuré au navigateur : à 1024 px — l'iPad en paysage — ce bloc
+              s'arrêtait à 1074 px, soit 50 px de bouton « Contactez-nous »
+              hors écran. La navigation desktop s'active à `lg` mais la largeur
+              disponible n'y suffisait pas.
+              Le couple `-mr-[25px]` / `mr-[25px]` est supprimé : il poussait le
+              bouton 25 px au-delà de la marge du conteneur, ce qui aggravait
+              exactement ce débordement. */}
+          <div className="hidden lg:flex items-center gap-5 xl:gap-10">
+            <div className="text-right">
               <p className="text-brand-cyan text-[10px] font-bold tracking-widest mb-1 leading-none">NOUS APPELER</p>
-              <a href="tel:+33457572727" className="block text-white font-bold text-xl leading-none hover:text-brand-cyan transition-colors cursor-pointer tracking-tight">04 57 57 27 27</a>
+              <a href="tel:+33457572727" className="flex min-h-11 items-center justify-end text-white font-bold text-xl leading-none hover:text-brand-cyan transition-colors cursor-pointer tracking-tight">04 57 57 27 27</a>
             </div>
-            <Link to="/contact" className="bg-brand-cyan text-brand-dark font-bold py-4 px-8 rounded-2xl uppercase text-[11px] tracking-widest hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-brand-cyan/40 transition-all duration-300">
+            <Link to="/contact" className="bg-brand-cyan text-brand-dark font-bold py-4 px-5 xl:px-8 rounded-2xl uppercase text-[11px] tracking-widest whitespace-nowrap hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-brand-cyan/40 transition-all duration-300">
               Contactez-nous
             </Link>
           </div>
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center gap-4">
-             <a href="tel:+33457572727" className="bg-brand-cyan text-brand-dark px-5 py-2.5 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:brightness-110 active:scale-95 transition-all whitespace-nowrap">
+             <a href="tel:+33457572727" className="bg-brand-cyan text-brand-dark inline-flex min-h-11 items-center px-5 rounded-xl font-bold uppercase text-[11px] tracking-widest hover:brightness-110 active:scale-95 transition-all whitespace-nowrap">
               Nous appeler
             </a>
             <button aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={`p-3 rounded-xl border transition-all active:scale-95 ${isMobileMenuOpen ? 'bg-brand-cyan text-brand-dark border-brand-cyan' : 'text-white bg-white/10 border-white/15 hover:bg-brand-cyan hover:text-brand-dark hover:border-brand-cyan'}`}>
@@ -214,7 +226,7 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-ink-950 border-t-2 border-brand-cyan/40 absolute top-full left-0 w-full shadow-2xl h-[calc(100vh-80px)] overflow-y-auto overscroll-contain z-50">
+        <div className="lg:hidden bg-ink-950 border-t-2 border-brand-cyan/40 absolute top-full left-0 w-full shadow-2xl h-[calc(100dvh-80px)] overflow-y-auto overscroll-contain z-50">
           <nav aria-label="Menu principal mobile" className="flex flex-col py-8 px-6 gap-10">
             <a href="tel:+33457572727" className="flex items-center gap-3 font-bold text-brand-cyan justify-center pb-8 border-b border-white/5">
               <div className="bg-brand-cyan/10 p-3 rounded-xl">

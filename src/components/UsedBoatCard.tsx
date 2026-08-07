@@ -77,7 +77,11 @@ export function UsedBoatCard({ boat, variant }: { boat: UsedBoat; variant: 'avai
             <div key={s.label} className="flex items-center gap-2.5 bg-brand-light rounded-xl px-3 py-2.5 min-w-0">
               <s.Icon size={15} className="text-brand-cyan flex-shrink-0" />
               <div className="min-w-0">
-                <dt className="text-[9px] uppercase tracking-widest text-gray-400 leading-none mb-0.5">{s.label}</dt>
+                {/* 9 px était la plus petite taille du site, sur les libellés de
+                    specs des cartes d'occasion (Heures, Moteur, Longueur,
+                    Capacité) — illisible en majuscules espacées. 11 px aligne
+                    ces libellés sur le reste des micro-titres. */}
+                <dt className="text-[11px] uppercase tracking-widest text-gray-400 leading-none mb-0.5">{s.label}</dt>
                 <dd className="text-[12px] font-semibold text-brand-dark leading-tight truncate">{s.value}</dd>
               </div>
             </div>
@@ -88,7 +92,7 @@ export function UsedBoatCard({ boat, variant }: { boat: UsedBoat; variant: 'avai
         {sold ? (
           <Link
             to={detailUrl}
-            className="mt-auto inline-flex items-center justify-center gap-2 border border-gray-200 text-brand-dark font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition"
+            className="mt-auto inline-flex items-center justify-center gap-2 border border-gray-200 text-brand-dark font-bold uppercase text-[11px] tracking-widest min-h-11 py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition"
           >
             Voir le détail <ArrowRight size={14} />
           </Link>
@@ -96,13 +100,13 @@ export function UsedBoatCard({ boat, variant }: { boat: UsedBoat; variant: 'avai
           <div className="mt-auto flex flex-col sm:flex-row gap-2 sm:gap-2.5">
             <a
               href={SITE.phoneHref}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 bg-brand-cyan text-brand-dark font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:bg-brand-dark hover:text-white transition"
+              className="flex-1 inline-flex items-center justify-center gap-1.5 bg-brand-cyan text-brand-dark font-bold uppercase text-[11px] tracking-widest min-h-11 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition"
             >
               <Phone size={14} /> Appeler
             </a>
             <Link
               to={detailUrl}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 border border-gray-200 text-brand-dark font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition"
+              className="flex-1 inline-flex items-center justify-center gap-1.5 border border-gray-200 text-brand-dark font-bold uppercase text-[11px] tracking-widest min-h-11 py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition"
             >
               Détail <ArrowRight size={13} />
             </Link>

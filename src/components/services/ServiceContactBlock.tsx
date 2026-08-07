@@ -192,7 +192,7 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
                     required
                     checked={consent}
                     onChange={(e) => setConsent(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 accent-brand-cyan focus:ring-brand-cyan/30"
+                    className="mt-0.5 h-5 w-5 shrink-0 rounded border-gray-300 accent-brand-cyan focus:ring-brand-cyan/30"
                   />
                   <span className="text-[12px] text-gray-500 leading-snug">
                     J’accepte que mes données soient utilisées par {SITE.name} pour traiter ma demande, conformément à la{' '}
@@ -210,7 +210,8 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
                   {loading ? 'Envoi…' : 'Envoyer'}
                   {!loading && <Send size={15} />}
                 </button>
-                <p className="text-[11px] text-gray-400 text-center leading-relaxed">
+                {/* 151 caractères par ligne à 1024 px, le pire du site. */}
+                <p className="text-[11px] text-gray-400 text-center leading-relaxed max-w-[70ch] mx-auto">
                   Vos données (nom, e-mail, téléphone, message) servent uniquement à traiter votre demande et ne sont jamais cédées à des tiers.
                   Conformément au RGPD, vous disposez d’un droit d’accès, de rectification et de suppression de vos données, voir notre{' '}
                   <Link to="/politique-de-confidentialite" className="underline hover:text-brand-cyan">politique de confidentialité</Link>.

@@ -250,9 +250,9 @@ export function HivernageStockagePage() {
   const faqs = t.list<{ q: string; a: string }>('faq.items');
 
   return (
-    <div className="bg-brand-light min-h-screen text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
+    <div className="bg-brand-light min-h-dvh text-gray-700 selection:bg-brand-cyan selection:text-brand-dark">
       {/* 🟢 Mobile Sticky bottom CTA floating - scrolls to form */}
-      <div className="lg:hidden fixed bottom-6 inset-x-0 mx-auto px-6 z-50 pointer-events-none">
+      <div data-mobile-cta className="lg:hidden fixed mb-float-bottom inset-x-0 mx-auto px-6 z-50 pointer-events-none">
         <button 
           onClick={scrollToForm}
           className="w-full bg-brand-cyan text-brand-dark font-extrabold py-4 px-6 rounded-2xl shadow-2xl flex items-center justify-center gap-2 text-sm uppercase tracking-wider active:scale-95 transition-all pointer-events-auto border border-white/20"
@@ -371,7 +371,7 @@ export function HivernageStockagePage() {
                   <a href="tel:+33457572727" className="inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition-colors">
                     <Phone className="w-4 h-4" /> 04 57 57 27 27
                   </a>
-                  <button onClick={scrollToForm} className="inline-flex items-center gap-2 border border-gray-300 text-brand-dark font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition-colors">
+                  <button onClick={scrollToForm} className="inline-flex items-center gap-2 border border-gray-300 text-brand-dark font-bold text-xs uppercase tracking-widest min-h-11 px-6 py-3 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition-colors">
                     <FileCheck className="w-4 h-4 text-brand-cyan" /> Devis sous 24 h
                   </button>
                 </div>
@@ -767,7 +767,7 @@ export function HivernageStockagePage() {
                     <Info className="text-brand-cyan w-6 h-6 flex-shrink-0" />
                     <p className="text-xs text-gray-600 font-medium">Vous hésitez entre l'intérieur et l'extérieur ? Notre consultant est disponible.</p>
                   </div>
-                  <button onClick={scrollToForm} className="text-xs text-brand-cyan font-bold uppercase tracking-wider hover:underline flex items-center gap-1">
+                  <button onClick={scrollToForm} className="text-xs text-brand-cyan font-bold uppercase tracking-wider hover:underline flex min-h-11 items-center gap-1">
                     Nous joindre <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -960,7 +960,7 @@ export function HivernageStockagePage() {
             {/* RIGHT COLUMN: Sticky Form (Block 13 - CTA final) */}
             <aside
               ref={formulationFormRef}
-              className="lg:col-span-1 lg:sticky lg:top-32 lg:max-h-[calc(100vh-9rem)] lg:overflow-y-auto hide-scrollbar bg-white border border-gray-200 ring-1 ring-black/[0.03] rounded-3xl p-8 shadow-xl shadow-gray-400/10"
+              className="lg:col-span-1 lg:sticky lg:top-32 lg:max-h-[calc(100dvh-9rem)] lg:overflow-y-auto hide-scrollbar bg-white border border-gray-200 ring-1 ring-black/[0.03] rounded-3xl p-8 shadow-xl shadow-gray-400/10"
             >
               <div className="relative">
                 {/* Decorative border accent */}

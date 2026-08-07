@@ -123,8 +123,10 @@ export function CookieConsent() {
   // Pas d'analytics configuré, ou choix déjà fait → pas de bandeau.
   if (!gaId || choice !== null) return null;
 
+  // `mb-safe-bottom` : sans lui, le bandeau et ses boutons passent sous la
+  // barre d'accueil de l'iPhone, `viewport-fit=cover` étant déclaré.
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[200] p-4 sm:p-6">
+    <div className="fixed inset-x-0 bottom-0 z-[200] p-4 sm:p-6 mb-safe-bottom">
       <div className="max-w-3xl mx-auto bg-brand-dark text-white rounded-2xl shadow-2xl ring-1 ring-white/10 p-5 sm:p-6">
         <div className="flex items-start gap-4">
           <span className="hidden sm:flex w-11 h-11 rounded-xl bg-brand-cyan/15 text-brand-cyan items-center justify-center flex-shrink-0">

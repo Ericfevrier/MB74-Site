@@ -80,8 +80,8 @@ export function ContactPage() {
             <h2 className="text-xl font-bold uppercase tracking-tight mb-4">Showroom</h2>
             <p className="text-gray-300 leading-relaxed mb-2">{SITE.addressStreet}<br />{SITE.addressPostal} {SITE.addressLocality}</p>
             <p className="text-gray-400 text-sm mb-6">À 20 minutes d’Annecy, au cœur de la Haute-Savoie.</p>
-            <a href={SITE.phoneHref} className="text-brand-cyan font-bold text-lg hover:underline">{SITE.phoneDisplay}</a>
-            <a href={SITE.emailHref} className="text-gray-300 hover:text-brand-cyan transition">{SITE.email}</a>
+            <a href={SITE.phoneHref} className="inline-flex min-h-11 items-center text-brand-cyan font-bold text-lg hover:underline">{SITE.phoneDisplay}</a>
+            <a href={SITE.emailHref} className="inline-flex min-h-11 items-center text-gray-300 hover:text-brand-cyan transition">{SITE.email}</a>
           </div>
         </div>
       </section>

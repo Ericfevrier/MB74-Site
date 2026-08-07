@@ -26,7 +26,7 @@ export default function OccasionDetail() {
 
   if (preview) {
     if (previewBoat === undefined) {
-      return <div className="min-h-[60vh] flex items-center justify-center bg-brand-light"><Loader2 className="w-8 h-8 animate-spin text-brand-cyan" /></div>;
+      return <div className="min-h-[60dvh] flex items-center justify-center bg-brand-light"><Loader2 className="w-8 h-8 animate-spin text-brand-cyan" /></div>;
     }
     if (previewBoat) return <OccasionDetailPage boat={previewBoat} />;
   }
@@ -47,7 +47,7 @@ export default function OccasionDetail() {
   // (évite une redirection prématurée pour un bateau qui n'existe qu'en base).
   if (!live.loaded && !staticBoat) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-brand-light">
+      <div className="min-h-[60dvh] flex items-center justify-center bg-brand-light">
         <Loader2 className="w-8 h-8 animate-spin text-brand-cyan" />
       </div>
     );

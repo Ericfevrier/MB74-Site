@@ -120,7 +120,7 @@ export function MediaPicker({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-5xl max-h-[88vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+      <div className="relative z-10 w-full max-w-5xl max-h-[88dvh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden">
         {/* En-tête */}
         <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
           <ImagePlus size={20} className="text-brand-cyan" />

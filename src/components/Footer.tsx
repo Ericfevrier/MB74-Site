@@ -51,7 +51,10 @@ export function Footer() {
               </h2>
             </div>
 
-            <p className="text-sm leading-relaxed text-gray-300 font-medium">
+            {/* `max-w-[65ch]` : mesurée au navigateur, cette ligne atteignait
+                103 caractères sur grand écran, loin au-delà des 75 au-delà
+                desquels l'œil perd le début de la ligne suivante. */}
+            <p className="text-sm leading-relaxed text-gray-300 font-medium max-w-[65ch]">
               Motor Boat 74, concessionnaire officiel de la marque Nautique et importateur de Connelly Ski en Haute-Savoie, est spécialisé dans la vente, l'hivernage et l'entretien de bateaux à moteur. Nous vous accompagnons dans tous vos projets nautiques sur le Lac d'Annecy et ses environs.
             </p>
 
@@ -167,10 +170,12 @@ export function Footer() {
         
         {/* Footer Bottom Bar */}
         <div className="pt-8 pb-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          {/* `py-1.5` : ces liens ne faisaient que 17 px de haut, mesuré au
-              navigateur — sous le minimum de 24 px pour une cible tactile. Le
-              texte reste identique, seule la zone atteignable au doigt grandit.
-              L'espacement vertical est réduit d'autant pour compenser. */}
+          {/* Ces liens ne faisaient que 17 px de haut, mesuré au navigateur.
+              Un premier passage les avait portés à 29 px via `py-1.5` ; ils sont
+              désormais à 32 px fermes (`min-h-8`), au-dessus du minimum WCAG 2.2
+              de 24 px. Le texte reste à 11 px : seule la zone atteignable au
+              doigt grandit, la densité du pied de page ne bouge pas.
+              Les actions principales du site, elles, sont à 44 px. */}
           <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-1">
             {[
               { name: 'Mentions légales', path: '/mentions-legales' },
@@ -178,14 +183,14 @@ export function Footer() {
               { name: 'CGV Pro', path: '/cgv-pro' },
               { name: 'Contact', path: '/contact' },
             ].map((link) => (
-              <Link key={link.name} to={link.path} className="inline-flex items-center py-1.5 text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">
+              <Link key={link.name} to={link.path} className="inline-flex min-h-8 items-center text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">
                 {link.name}
               </Link>
             ))}
             <button
               type="button"
               onClick={() => openCookieSettings()}
-              className="inline-flex items-center py-1.5 text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors"
+              className="inline-flex min-h-8 items-center text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors"
             >
               Cookies
             </button>
@@ -194,13 +199,14 @@ export function Footer() {
             <p className="text-[11px] font-bold uppercase tracking-widest text-white/20">
               © {new Date().getFullYear()} Tous droits réservés
             </p>
-            {/* Le cadenas reste à 13 px ; c'est la zone cliquable qui passe à 24,
-                via le padding. Une cible de 13×13 px se rate une fois sur deux au doigt. */}
+            {/* Le cadenas reste à 13 px ; c'est la zone cliquable qui passe à 32.
+                La marge négative absorbe l'agrandissement pour que l'alignement
+                avec la ligne de copyright reste inchangé. */}
             <Link
               to="/admin"
               aria-label="Espace administration"
               title="Administration"
-              className="-m-1.5 grid h-6 w-6 place-items-center p-1.5 text-white/20 hover:text-brand-cyan transition-colors"
+              className="-m-2.5 grid h-8 w-8 shrink-0 place-items-center text-white/20 hover:text-brand-cyan transition-colors"
             >
               <Lock size={13} />
             </Link>

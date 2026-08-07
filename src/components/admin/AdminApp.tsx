@@ -65,7 +65,7 @@ const NAV: NavEntry[] = [
 ];
 
 const AUTH_CARD = 'w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8';
-const AUTH_WRAP = 'min-h-screen flex items-center justify-center bg-[#0e0e10] px-4';
+const AUTH_WRAP = 'min-h-dvh flex items-center justify-center bg-[#0e0e10] px-4';
 const AUTH_BTN =
   'w-full bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-sm py-3.5 rounded-xl hover:brightness-110 disabled:opacity-50 transition flex items-center justify-center gap-2';
 
@@ -263,7 +263,7 @@ export function AdminApp() {
   }, [auth.state, refreshUnread]);
 
   if (auth.state === 'loading') {
-    return <div className="min-h-screen flex items-center justify-center bg-[#0e0e10] text-white"><Loader2 className="animate-spin" /></div>;
+    return <div className="min-h-dvh flex items-center justify-center bg-[#0e0e10] text-white"><Loader2 className="animate-spin" /></div>;
   }
   if (auth.state === 'out') return <LoginScreen onIn={(u, role) => setAuth({ state: 'in', username: u, role })} />;
 
@@ -341,7 +341,7 @@ export function AdminApp() {
   );
 
   return (
-    <div className="min-h-screen bg-brand-light flex">
+    <div className="min-h-dvh bg-brand-light flex">
       <div className="hidden lg:block fixed inset-y-0 left-0 z-30">{Sidebar}</div>
 
       {navOpen && (
