@@ -76,6 +76,23 @@ const STATIC_REDIRECTS = new Map([
   ['/blog/hivernage', '/hivernage-stockage-bateau'],
   ['/blog/entretien-et-reparation', '/entretien-reparation'],
   ['/blog/bateau-en-panne-lac-annecy', '/depannage'],
+
+  // Plomberie Yoast : Search Console a `sitemap_index.xml` enregistré comme
+  // sitemap du site, et Google recrawle les sous-sitemaps longtemps après leur
+  // disparition. Un 404 sur le sitemap déclare au robot que le plan du site
+  // n'existe plus ; on l'envoie sur le nouveau. (Ce middleware passe avant la
+  // route GET /sitemap.xml, la redirection est donc bien appliquée.)
+  ['/sitemap_index.xml', '/sitemap.xml'],
+  ['/post-sitemap.xml', '/sitemap.xml'],
+  ['/page-sitemap.xml', '/sitemap.xml'],
+  ['/product-sitemap.xml', '/sitemap.xml'],
+  ['/category-sitemap.xml', '/sitemap.xml'],
+  ['/product_cat-sitemap.xml', '/sitemap.xml'],
+
+  // Flux RSS WordPress : plus de flux sur le nouveau site. 301 vers l'accueil
+  // plutôt qu'un 404, pour les agrégateurs et les liens déjà émis.
+  ['/feed', '/'],
+  ['/comments/feed', '/'],
 ]);
 
 export function normalizePath(p) {
