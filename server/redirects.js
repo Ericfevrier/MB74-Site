@@ -18,7 +18,7 @@ let cache = { map: new Map(), at: 0 };
  * que 6 liens au lieu de 75. Les liens sont corrigés ; ces 301 rattrapent les
  * liens externes et les favoris déjà émis vers les anciennes adresses.
  */
-const STATIC_REDIRECTS = new Map([
+export const STATIC_REDIRECTS = new Map([
   ['/services/entretien-reparation', '/entretien-reparation'],
   ['/services/depannage', '/depannage'],
   ['/services/transport-de-bateau', '/transport'],

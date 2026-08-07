@@ -92,6 +92,13 @@ export interface Redirect {
   code: 301 | 302;
 }
 
+/** Redirection définie dans le code : active en permanence, sans identifiant ni suppression possible. */
+export interface BuiltinRedirect {
+  source_path: string;
+  target: string;
+  code: number;
+}
+
 export interface MenuItem {
   id: number;
   location: string;
@@ -172,7 +179,9 @@ export const adminApi = {
   deleteMenu: (id: number) => req('DELETE', `/api/admin/menus/${id}`),
   reorderMenus: (ids: number[]) => req('POST', '/api/admin/menus/reorder', { ids }),
 
-  listRedirects: () => req<{ redirects: Redirect[] }>('GET', '/api/admin/redirects'),
+  // `builtin` : redirections définies dans le code, toujours actives, non modifiables.
+  listRedirects: () =>
+    req<{ redirects: Redirect[]; builtin?: BuiltinRedirect[] }>('GET', '/api/admin/redirects'),
   createRedirect: (r: { source_path: string; target: string; code: number }) => req('POST', '/api/admin/redirects', r),
   updateRedirect: (id: number, r: { source_path: string; target: string; code: number }) => req('PUT', `/api/admin/redirects/${id}`, r),
   deleteRedirect: (id: number) => req('DELETE', `/api/admin/redirects/${id}`),

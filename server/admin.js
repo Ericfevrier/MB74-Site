@@ -12,7 +12,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcryptjs';
 import { query, dbConfigured } from './db.js';
-import { refreshRedirects, normalizePath } from './redirects.js';
+import { refreshRedirects, normalizePath, STATIC_REDIRECTS } from './redirects.js';
 import {
   COOKIE_NAME,
   COOKIE_TTL_MS,
@@ -1488,11 +1488,21 @@ export function mountAdmin(app, { sendMailRaw, mailEnabled } = {}) {
 
   /* ----------------------- Redirections 301 ----------------------- */
 
+  // `builtin` : les redirections définies dans le code (migration WordPress,
+  // anciennes URL de services…). Elles sont toujours actives mais n'ont jamais
+  // été visibles ici : la page affichait « Aucune redirection » alors qu'une
+  // trentaine tournait. On les renvoie en lecture seule pour que cet écran dise
+  // la vérité sur ce qui redirige réellement.
+  const builtinRedirects = () =>
+    [...STATIC_REDIRECTS].map(([source_path, target]) => ({ source_path, target, code: 301 }));
+
   app.get('/api/admin/redirects', requireAuth, async (_req, res) => {
-    if (!dbConfigured()) return needDb(res);
+    const builtin = builtinRedirects();
+    // Sans base, les redirections du code fonctionnent quand même : on les montre.
+    if (!dbConfigured()) return res.json({ redirects: [], builtin });
     try {
       const rows = await query('SELECT * FROM redirects ORDER BY source_path ASC');
-      res.json({ redirects: rows });
+      res.json({ redirects: rows, builtin });
     } catch (e) {
       console.error('GET /api/admin/redirects', e.message);
       res.status(500).json({ ok: false, error: 'Erreur base de données.' });
