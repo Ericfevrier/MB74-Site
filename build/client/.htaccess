@@ -1,0 +1,62 @@
+# ============================================================
+#  Motor Boat 74 — configuration serveur (o2switch / LiteSpeed-Apache)
+#  Placé à la racine du build (copié depuis public/ par Vite).
+# ============================================================
+
+RewriteEngine On
+
+# --- 1. Forcer HTTPS ---
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# --- 2. Forcer le domaine sans www ---
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+# --- 3. Redirections 301 des anciennes URLs ---
+RewriteRule ^bateaux-neufs/?$ /bateaux/neufs [R=301,L]
+RewriteRule ^bateaux-occasion/?$ /bateaux/occasion [R=301,L]
+RewriteRule ^shop/?$ /blog [R=301,L]
+
+# --- 4. Fallback SPA (React Router) ---
+# On ne réécrit pas les fichiers/dossiers réels ni l'API ; tout le reste -> index.html
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
+
+# --- 5. En-têtes de sécurité ---
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(self), camera=(), microphone=()"
+  # Ne pas mettre en cache le HTML (pour que les déploiements soient pris en compte)
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# --- 6. Compression ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml \
+    application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+# --- 7. Cache navigateur (assets fingerprintés par Vite) ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/avif "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# --- 8. Pages d'erreur (servies par la SPA) ---
+ErrorDocument 404 /index.html
