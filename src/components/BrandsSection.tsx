@@ -155,11 +155,18 @@ export function BrandsSection() {
                   to="/contact"
                   className="relative group/card overflow-hidden block aspect-[4/5] rounded-[2rem] shadow-2xl transition-all duration-500 hover:translate-y-[-10px] hover:shadow-brand-cyan/20 flex-shrink-0 w-[240px] md:w-[300px] snap-center lg:snap-start"
                 >
-                  <img 
-                    src={sport.img} 
-                    alt={`Équipement ${sport.name} Connelly`} 
+                  {/* Les deux premières vignettes sont visibles d'emblée, les quatre
+                      autres attendent hors de l'écran À DROITE. Le chargement différé
+                      se déclenche mal dans un conteneur à défilement horizontal :
+                      mesuré, ces quatre images restaient indéfiniment en attente et
+                      la carte s'affichait vide. Seules les deux premières restent
+                      différées — elles, le navigateur les voit. */}
+                  <img
+                    src={sport.img}
+                    alt={`Équipement ${sport.name} Connelly`}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-110"
-                    loading="lazy"
+                    loading={idx < 2 ? 'lazy' : undefined}
+                    decoding="async"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent"></div>

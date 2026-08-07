@@ -652,7 +652,10 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
               {occasions.map((b, i) => (
                 <article key={i} className="flex-shrink-0 w-[300px] md:w-[340px] snap-start bg-ink-900 border border-white/10 rounded-3xl overflow-hidden">
                   <div className="relative aspect-[4/3] overflow-hidden">
-                    <img src={b.image} alt={`${b.title} ${b.year} d'occasion`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                    {/* Même règle que le carrousel de l'accueil : au-delà de la
+                        première vignette, les suivantes attendent hors écran à
+                        droite et le chargement différé ne se déclenche pas. */}
+                    <img src={b.image} alt={`${b.title} ${b.year} d'occasion`} loading={i === 0 ? 'lazy' : undefined} decoding="async" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                     {b.sold && (
                       <span className="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">Vendu</span>
                     )}
