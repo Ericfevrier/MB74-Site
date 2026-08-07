@@ -6,6 +6,12 @@
 #  `deploy`, que le serveur o2switch tire ensuite. Reproduit ce que fait
 #  .github/workflows/deploy.yml, en s'en passant quand Actions est indisponible.
 #
+#  SECOURS, PAS ROUTINE. Depuis que GitHub Actions refonctionne, le workflow
+#  publie automatiquement `deploy` a chaque push sur main. Lancer ce script en
+#  plus fait courir DEUX publieurs sur la meme branche : chacun la reecrit en
+#  force, et le dernier arrive ecrase l'autre. Ne l'utiliser que si Actions est
+#  en panne ou pour publier sans passer par un push.
+#
 #  o2switch ne construit jamais : ses outils natifs (esbuild, Tailwind) sont
 #  incompatibles avec le mutualise.
 #
@@ -117,12 +123,21 @@ fi
 echo "============================================================"
 echo " A COLLER SUR LE TERMINAL o2switch :"
 echo ""
+# `git pull` NE PEUT PAS marcher ici, et c'est structurel : la branche deploy est
+# reconstruite de zero a chaque publication (ici comme dans le workflow, qui fait
+# `git init` dans un dossier neuf). Son historique est donc reecrit a chaque fois,
+# et le serveur voit deux branches divergentes qu'il refuse de fusionner.
+# `fetch` + `reset --hard` aligne le serveur sur la branche publiee, ce qui est
+# exactement l'intention. Un reset ne touche pas aux fichiers non suivis :
+# .env et node_modules restent en place.
 if [ "$NEEDS_INSTALL" != "0" ]; then
-  echo "   cd ~/mb74-site && git pull && source ~/nodevenv/mb74-site/22/bin/activate \\"
+  echo "   cd ~/mb74-site && git fetch origin && git reset --hard origin/deploy \\"
+  echo "     && source ~/nodevenv/mb74-site/22/bin/activate \\"
   echo "     && npm install --omit=dev && mkdir -p tmp && touch tmp/restart.txt"
   echo ""
   echo " (les dependances ont change -> npm install necessaire)"
 else
-  echo "   cd ~/mb74-site && git pull && mkdir -p tmp && touch tmp/restart.txt"
+  echo "   cd ~/mb74-site && git fetch origin && git reset --hard origin/deploy \\"
+  echo "     && mkdir -p tmp && touch tmp/restart.txt"
 fi
 echo "============================================================"
