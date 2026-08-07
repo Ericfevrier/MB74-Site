@@ -48,9 +48,14 @@ const STATIC_SITE = {
    * seconde iframe de repli se chargeait par-dessus. Deux cartes par page.
    * Cette URL pointe le lieu par son identifiant, pas par une recherche
    * textuelle qui peut tomber à côté.
+   *
+   * `!5e0` = carte routière. L'URL fournie était en `!5e1`, vue satellite :
+   * une photo aérienne ne se teinte pas, aucun filtre ne l'accorde à la charte.
+   * La carte routière, elle, accepte le traitement colorimétrique du site.
+   * Tout le reste de l'URL — dont l'ancrage sur le lieu — est inchangé.
    */
   mapsEmbed:
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3062.333921962156!2d6.175403776589482!3d45.831460871082385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478b914222776873%3A0x319712d38fa97bc9!2s1099%20Imp.%20du%20Semnoz%2C%2074410%20Saint-Jorioz!5e1!3m2!1sfr!2sfr!4v1786088021235!5m2!1sfr!2sfr',
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3062.333921962156!2d6.175403776589482!3d45.831460871082385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478b914222776873%3A0x319712d38fa97bc9!2s1099%20Imp.%20du%20Semnoz%2C%2074410%20Saint-Jorioz!5e0!3m2!1sfr!2sfr!4v1786088021235!5m2!1sfr!2sfr',
 
   // --- 2. Atelier / hangar d'hivernage ---
   workshop: {

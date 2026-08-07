@@ -120,11 +120,6 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
               </ul>
             </div>
 
-            {showMap && (
-              <div className={`mt-6 ${wide ? 'h-72' : 'h-60'} rounded-3xl overflow-hidden border border-gray-200/80 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]`}>
-                <GoogleMapCustom light />
-              </div>
-            )}
           </div>
 
           {/* Formulaire */}
@@ -201,6 +196,38 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
             </div>
           </div>
         </div>
+
+        {/*
+          Carte en bande pleine largeur, sous les deux colonnes.
+
+          Elle était coincée sous les coordonnées, dans la colonne étroite, en
+          240 px de haut : trop petite pour situer quoi que ce soit. Ici elle
+          occupe toute la largeur du bloc et respire, avec l'adresse et
+          l'itinéraire posés dessus plutôt qu'à côté.
+        */}
+        {showMap && (
+          <div className="mt-10 relative h-[380px] md:h-[460px] rounded-3xl overflow-hidden border border-gray-200/80 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]">
+            <GoogleMapCustom light />
+            <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-auto md:max-w-md bg-white/95 backdrop-blur-xl rounded-2xl border border-gray-200/80 shadow-xl p-5 flex items-center justify-between gap-4">
+              <span className="min-w-0">
+                <span className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400">Showroom</span>
+                <span className="block font-bold text-brand-dark text-sm leading-snug">
+                  {s.addressStreet}, {s.addressPostal} {s.addressLocality}
+                </span>
+              </span>
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                  `${s.addressStreet} ${s.addressPostal} ${s.addressLocality}`,
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex-shrink-0 inline-flex items-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-[10px] px-5 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition"
+              >
+                Itinéraire
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

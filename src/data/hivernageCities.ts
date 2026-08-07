@@ -201,7 +201,7 @@ const STATIC_CITIES: Record<string, HivernageCity> = {
     "hero": "/images/hivernage/evian-les-bains.webp",
     "intro": "Profitez de notre service complet d’hivernage pour votre bateau à Évian-les-Bains sur le lac Léman. Motor Boat 74 se charge du transport sécurisé et du stockage en intérieur, avec un entretien sur mesure pour tous types d’embarcations, afin de garantir à votre bateau une protection optimale tout au long de l’hiver.",
     "lake": "Lac Léman",
-    "zonesIntro": "Nous intervenons dans l’ensemble des principaux ports et zones d’amarrage du lac Léman, y compris autour d'Évian-les-Bains. Que votre bateau soit déjà amarré sur place ou nécessite un transport, nous prenons en charge toute la logistique pour son hivernage. La mise à l’eau est réalisée en fonction du gabarit de chaque embarcation, afin de garantir le respect des normes de sécurité et d’assurer une opération fluide et sans risque.",
+    "zonesIntro": "Nous hivernons chaque année des bateaux venus d’Évian et de toute la rive sud du Léman. La formule la plus simple : vous nous amenez le bateau à l’atelier, nous nous occupons du reste — mise hors d’eau, hivernage moteur, stockage hors-gel et remise en service au printemps. Le convoyage depuis le Léman reste possible : parlez-nous du gabarit et du port, nous vous disons aussitôt si nous pouvons le prendre en charge.",
     "ports": [
       {
         "title": "Port des Mouettes",
@@ -247,7 +247,7 @@ const STATIC_CITIES: Record<string, HivernageCity> = {
     "hero": "/images/hivernage/thonon-les-bains.webp",
     "intro": "Profitez de notre service complet d’hivernage pour votre bateau à Thonon-les-Bains sur le lac Léman. Motor Boat 74 se charge du transport sécurisé et du stockage en intérieur, avec un entretien sur mesure pour tous types d’embarcations, afin de garantir à votre bateau une protection optimale tout au long de l’hiver.",
     "lake": "Lac Léman",
-    "zonesIntro": "Nous intervenons dans l’ensemble des principaux ports et zones d’amarrage, notamment le port de Rives et le port Ripaille. Que votre bateau soit déjà sur place ou doive être transporté, nous prenons en charge toute la logistique liée à l’hivernage. La mise à l’eau est effectuée selon les dimensions et caractéristiques de chaque embarcation, afin d’assurer une opération sécurisée, fluide et conforme aux normes.",
+    "zonesIntro": "Nous accueillons chaque hiver des bateaux du Chablais, du port de Rives comme du port de Ripaille. Le plus direct : vous nous amenez le bateau à l’atelier, nous prenons la suite — mise hors d’eau, hivernage moteur, stockage hors-gel et remise en service au printemps. Le convoyage depuis le Léman reste possible : indiquez-nous le gabarit et le port, nous vous répondons aussitôt.",
     "ports": [
       {
         "title": "Port de Rives",
