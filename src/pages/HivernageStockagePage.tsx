@@ -7,6 +7,7 @@ import { pageMeta } from '../lib/meta';
 import { SITE } from '../data/site';
 import { OPENING_HOURS, SAME_AS, workshopNode } from '../lib/schema';
 import { usePageContent, useSeo } from '../lib/pageContent';
+import { hivernageSeason } from '../lib/season';
 import {
   Shield,
   Wrench,
@@ -966,7 +967,7 @@ export function HivernageStockagePage() {
                 <div className="absolute top-0 left-0 w-2 h-16 bg-brand-cyan"></div>
                 <div className="pl-4">
                   <h2 className="text-xl font-sans font-bold uppercase text-brand-dark tracking-tight leading-tight">
-                    Réservez votre hivernage 2025/2026 dès aujourd'hui
+                    Réservez votre hivernage {hivernageSeason()} dès aujourd'hui
                   </h2>
                   <p className="text-xs text-gray-500 mt-2 font-medium">
                     Complétez notre formulaire allégé en 24h. Un technicien qualifié Motor Boat 74 chiffre votre proposition sur-mesure.
