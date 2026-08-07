@@ -1,11 +1,14 @@
 /**
- * Bandeau de consentement cookies (RGPD) + chargement de Google Analytics 4.
+ * Bandeau de consentement cookies (RGPD) + chargement de la mesure d'audience.
  *
- * - L'ID GA est éditable dans l'admin (Réglages → Mesure d'audience) et lu via useSiteSettings().
+ * - L'identifiant est éditable dans l'admin (Réglages → Mesure d'audience) et lu
+ *   via useSiteSettings(). Deux formats : GA4 (`G-…`) ou Tag Manager (`GTM-…`).
  * - AUCUN cookie/analytics n'est chargé tant que le visiteur n'a pas cliqué « Accepter ».
+ *   C'est pour ça qu'on ne colle pas l'extrait fourni par Google directement dans
+ *   le HTML : il se déclencherait avant tout consentement.
  * - Le choix est mémorisé dans localStorage ; il est modifiable via le lien « Cookies » du pied de page
  *   (événement `mb74:open-cookies`).
- * - En SPA, chaque changement de page envoie un `page_view` à GA.
+ * - En SPA, chaque changement de page envoie un `page_view`.
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
@@ -27,13 +30,37 @@ export function openCookieSettings() {
   window.dispatchEvent(new Event(OPEN_EVENT));
 }
 
-function loadGA(id: string) {
-  if (window.gtag) return;
+/** Un conteneur Tag Manager (GTM-…) ne se charge pas comme une propriété GA4 (G-…). */
+const isTagManager = (id: string) => /^GTM-/i.test(id.trim());
+
+/**
+ * Charge la mesure d'audience, UNIQUEMENT après consentement.
+ *
+ * Deux formats acceptés dans Réglages → Mesure d'audience :
+ *   - `G-XXXXXXXXXX`  : propriété GA4, chargée via gtag.js
+ *   - `GTM-XXXXXXX`   : conteneur Tag Manager, chargé via gtm.js
+ *
+ * Le `<noscript>` fourni par Google n'est pas repris : c'est un iframe de repli
+ * pour les visiteurs sans JavaScript, or ce site est une application React qui
+ * ne s'affiche pas du tout sans JavaScript. Il ne mesurerait personne.
+ */
+function loadAudience(id: string) {
+  if (window.gtag || window.dataLayer?.length) return;
+  window.dataLayer = window.dataLayer || [];
+
+  if (isTagManager(id)) {
+    window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(id)}`;
+    document.head.appendChild(s);
+    return;
+  }
+
   const s = document.createElement('script');
   s.async = true;
   s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
   document.head.appendChild(s);
-  window.dataLayer = window.dataLayer || [];
   window.gtag = function gtag() {
     // eslint-disable-next-line prefer-rest-params
     window.dataLayer!.push(arguments);
@@ -60,20 +87,25 @@ export function CookieConsent() {
   // Chargement de GA une fois le consentement donné et l'ID disponible.
   useEffect(() => {
     if (choice === 'granted' && gaId && !loaded.current) {
-      loadGA(gaId);
+      loadAudience(gaId);
       loaded.current = true;
     }
   }, [choice, gaId]);
 
-  // Vue de page à chaque navigation (si GA chargé).
+  // Vue de page à chaque navigation. En SPA, seul le premier chargement est vu
+  // par le navigateur : sans cet envoi manuel, toute la navigation interne est
+  // invisible dans les statistiques.
   useEffect(() => {
-    if (loaded.current && window.gtag && gaId) {
-      window.gtag('event', 'page_view', {
-        page_path: location.pathname + location.search,
-        page_location: typeof window !== 'undefined' ? window.location.href : undefined,
-        page_title: typeof document !== 'undefined' ? document.title : undefined,
-      });
-    }
+    if (!loaded.current || !gaId) return;
+    const payload = {
+      page_path: location.pathname + location.search,
+      page_location: typeof window !== 'undefined' ? window.location.href : undefined,
+      page_title: typeof document !== 'undefined' ? document.title : undefined,
+    };
+    // Tag Manager n'expose pas gtag() : on pousse l'événement dans le dataLayer,
+    // où un déclencheur « Événement personnalisé : page_view » le récupère.
+    if (isTagManager(gaId)) window.dataLayer?.push({ event: 'page_view', ...payload });
+    else if (window.gtag) window.gtag('event', 'page_view', payload);
   }, [location.pathname, location.search, gaId]);
 
   // Réouverture depuis le pied de page.
