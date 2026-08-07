@@ -325,6 +325,38 @@ app.get('/robots.txt', (req, res) => {
   );
 });
 
+/* ------------------- Médias hérités de WordPress (migration) ------------------- */
+// Les images de l'ancien site vivent sous /wp-content/uploads/. Elles sont
+// indexées dans Google Images et référencées par des sites tiers : les laisser
+// tomber en 404 perd cette visibilité-là, distincte du référencement des pages.
+//
+// On les sert depuis leur dossier d'origine plutôt que d'en dupliquer 1,3 Go.
+// Les fichiers restent sur le compte après la mise hors ligne de WordPress ;
+// seul le routage du domaine change.
+//
+// ⚠️ Liste blanche d'extensions obligatoire : `wp-content/uploads` héberge aussi
+// les archives de certains plugins de sauvegarde (.sql, .zip), qui contiennent
+// les identifiants de la base. Servir le dossier entier les exposerait
+// publiquement. Tout ce qui n'est pas un média répond 404.
+const WP_UPLOADS = process.env.WP_UPLOADS_DIR || '';
+if (WP_UPLOADS && existsSync(WP_UPLOADS)) {
+  const MEDIA = /\.(jpe?g|png|gif|webp|avif|svgz?|ico|bmp|tiff?|pdf|mp4|webm|mov|mp3|woff2?|ttf|otf)$/i;
+  app.use(
+    '/wp-content/uploads',
+    (req, res, next) => (MEDIA.test(req.path) ? next() : res.status(404).end()),
+    express.static(WP_UPLOADS, {
+      maxAge: '30d',
+      index: false,
+      redirect: false,
+      dotfiles: 'deny',
+      fallthrough: false, // un média absent doit faire 404, pas retomber sur la SPA
+    }),
+  );
+  console.log(`[wp] médias hérités servis depuis ${WP_UPLOADS}`);
+} else if (WP_UPLOADS) {
+  console.warn(`[wp] WP_UPLOADS_DIR introuvable : ${WP_UPLOADS} — les anciennes images feront 404.`);
+}
+
 // Médiathèque : uploads admin (dossier persistant hors build).
 app.use('/uploads', express.static(path.join(rootDir, 'uploads'), { maxAge: '1y' }));
 // Assets fingerprintés → cache immuable ; autres fichiers publics → cache court.
