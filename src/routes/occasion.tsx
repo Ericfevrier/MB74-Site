@@ -7,20 +7,77 @@ import { ShowroomSection } from '../components/ShowroomSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { availableUsedBoats, soldUsedBoats } from '../data/usedBoats';
 import { useLiveUsedBoats } from '../lib/publicApi';
-import { canonicalUrl } from '../lib/meta';
+import { pageMeta } from '../lib/meta';
+import { breadcrumbSchema } from '../lib/schema';
 
 const HERO = '/images/imported/0zadabm5-mb-1-3.webp';
 
 export function meta() {
-  const canonical = canonicalUrl(`${SITE.url}/bateaux/occasion/`);
-  return [
-    { title: 'Bateaux d’occasion Nautique & MasterCraft près d’Annecy | Motor Boat 74' },
-    { name: 'description', content: 'Wakeboats et bateaux de ski nautique d’occasion révisés et garantis, près du lac d’Annecy. Nautique, MasterCraft : prix, année, heures moteur.' },
-    { tagName: 'link', rel: 'canonical', href: canonical },
-    { property: 'og:title', content: 'Bateaux d’occasion Nautique & MasterCraft | Motor Boat 74' },
-    { property: 'og:url', content: canonical },
-    { property: 'og:image', content: HERO },
-  ];
+  const canonical = `${SITE.url}/bateaux/occasion`;
+  const boats = availableUsedBoats();
+  const abs = (p: string) => (p.startsWith('http') ? p : `${SITE.url}${p}`);
+
+  // Le catalogue listait ses bateaux — millésime, heures moteur, prix — sans
+  // aucune donnée structurée, alors que chaque fiche détail en porte trois.
+  // L'`ItemList` de Product/Offer est ce qui rend un prix éligible aux résultats
+  // enrichis ; sans lui, ces prix n'existent que comme du texte parmi d'autres.
+  const schemaCatalog = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Bateaux d’occasion',
+    url: canonical,
+    description: 'Wakeboats et bateaux de ski nautique d’occasion révisés et garantis, près du lac d’Annecy.',
+    provider: { '@id': `${SITE.url}/#business` },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: boats.length,
+      itemListElement: boats.map((b, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'Product',
+          name: b.title,
+          url: `${SITE.url}/bateaux/occasion/${b.slug}`,
+          image: abs(b.image),
+          category: 'Wakeboat / Bateau de sport nautique d’occasion',
+          ...(b.description ? { description: b.description } : {}),
+          ...(b.year ? { productionDate: b.year } : {}),
+          itemCondition: 'https://schema.org/UsedCondition',
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'EUR',
+            // Sans prix numérique (« Prix sur demande »), on n'invente pas de
+            // valeur : l'offre reste valide, seul le montant est omis.
+            ...(b.priceValue ? { price: b.priceValue } : {}),
+            availability: 'https://schema.org/InStock',
+            itemCondition: 'https://schema.org/UsedCondition',
+            url: `${SITE.url}/bateaux/occasion/${b.slug}`,
+            seller: { '@id': `${SITE.url}/#business` },
+          },
+        },
+      })),
+    },
+  };
+
+  return pageMeta({
+    title: 'Bateaux d’occasion Nautique & MasterCraft près d’Annecy | Motor Boat 74',
+    description:
+      'Wakeboats et bateaux de ski nautique d’occasion révisés et garantis, près du lac d’Annecy. Nautique, MasterCraft : prix, année, heures moteur.',
+    canonical,
+    image: abs(HERO),
+    ogTitle: 'Bateaux d’occasion Nautique & MasterCraft | Motor Boat 74',
+    geo: { region: 'FR-74', placename: "Lac d'Annecy, Haute-Savoie" },
+    jsonLd: [
+      schemaCatalog,
+      // Pas de redéclaration du LocalBusiness ici : il est décrit une seule fois
+      // (accueil) et référencé partout ailleurs par `@id`, comme fixé au lot 3.
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Bateaux', url: `${SITE.url}/bateaux` },
+        { name: 'Occasion', url: canonical },
+      ]),
+    ],
+  });
 }
 
 // Pas de clientLoader : voir marque.tsx — il empêchait le prerender et vidait le HTML.

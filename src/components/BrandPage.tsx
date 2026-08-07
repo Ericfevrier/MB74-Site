@@ -7,16 +7,89 @@ import { brandsData, type BrandData } from '../data/brands';
 import { getBrandModels } from '../data/boatBrands';
 import { SITE } from '../data/site';
 import { pageMeta } from '../lib/meta';
+import { businessNode, breadcrumbSchema, faqSchema } from '../lib/schema';
+import { FAQS_BY_BRAND } from './FAQSection';
 
 export function brandPageMeta({ data, params }: { data?: { brand?: BrandData } | null; params: { id?: string } }) {
   const id = (params.id || '').toLowerCase();
   const brand = data?.brand ?? (id ? brandsData[id] : undefined);
   if (!brand) return [{ title: 'Marque non trouvée | Motorboat 74' }, { name: 'robots', content: 'noindex' }];
   const role = brand.role || 'Concessionnaire officiel';
+  const canonical = `${SITE.url}/marque/${id}`;
+
+  // Ces deux pages de marque sont les hubs les plus liés du site (2e et 3e rang
+  // sur le maillage interne) et ne portaient AUCUN JSON-LD, là où chaque fiche
+  // modèle en porte quatre à cinq. Rien ne reliait donc explicitement le hub à
+  // ses fiches, ni la marque au concessionnaire.
+  const catalog = getBrandModels(id);
+  const models = catalog ? catalog.order.map((slug) => catalog.models[slug]).filter(Boolean) : [];
+
+  const brandNode = {
+    '@type': 'Brand',
+    '@id': `${canonical}#brand`,
+    name: brand.name,
+    logo: brand.logo.startsWith('http') ? brand.logo : `${SITE.url}${brand.logo}`,
+  };
+
+  // `ItemList` déclare le hub comme point d'entrée de ses fiches modèle : c'est
+  // la relation que le maillage HTML exprime déjà, rendue explicite.
+  const schemaCollection = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `Gamme ${brand.name}`,
+    url: canonical,
+    description: brand.tagline || brand.description.slice(0, 160),
+    about: brandNode,
+    // `role` est la position commerciale réelle (concessionnaire / importateur) ;
+    // schema.org n'a pas de propriété dédiée, on la porte par le nom de l'offre.
+    provider: { '@id': `${SITE.url}/#business` },
+    ...(models.length
+      ? {
+          mainEntity: {
+            '@type': 'ItemList',
+            numberOfItems: models.length,
+            itemListElement: models.map((m, i) => ({
+              '@type': 'ListItem',
+              position: i + 1,
+              name: m.fullName || m.name,
+              url: `${SITE.url}/${id}/${m.slug}`,
+            })),
+          },
+        }
+      : {}),
+  };
+
+  const schemaOffer = {
+    '@context': 'https://schema.org',
+    '@type': 'OfferCatalog',
+    name: `${role} ${brand.name} — ${SITE.name}`,
+    url: canonical,
+    seller: businessNode,
+    itemListElement: models.map((m) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Product', name: m.fullName || m.name, brand: { '@id': brandNode['@id'] } },
+      url: `${SITE.url}/${id}/${m.slug}`,
+    })),
+  };
+
   return pageMeta({
     title: `${brand.fullName} | ${role} ${brand.name} | Motorboat 74`,
     description: `Découvrez la gamme ${brand.name}. ${brand.description.substring(0, 100)}...`,
-    canonical: `${SITE.url}/marque/${params.id}`,
+    canonical,
+    image: brand.heroImage?.startsWith('http') ? brand.heroImage : `${SITE.url}${brand.heroImage}`,
+    geo: { region: 'FR-74', placename: "Lac d'Annecy, Haute-Savoie" },
+    jsonLd: [
+      schemaCollection,
+      ...(models.length ? [schemaOffer] : []),
+      // Même traitement que les fiches modèle, qui portent déjà un `faqSchema` :
+      // les questions affichées sur la page sont déclarées telles quelles.
+      ...(FAQS_BY_BRAND[id] ? [faqSchema(FAQS_BY_BRAND[id].map((f) => ({ q: f.question, a: f.answer })))] : []),
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: 'Bateaux', url: `${SITE.url}/bateaux` },
+        { name: brand.name, url: canonical },
+      ]),
+    ],
   });
 }
 import { ModelComparison } from './ModelComparison';

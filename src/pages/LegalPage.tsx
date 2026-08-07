@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { pageMeta } from '../lib/meta';
+import { breadcrumbSchema } from '../lib/schema';
 import { usePageContent } from '../lib/pageContent';
 
 type Block = { h?: string; p?: string[]; ul?: string[] };
@@ -191,11 +192,20 @@ const SLUGS = {
 export function legalMeta(doc: 'mentions' | 'privacy' | 'cgv') {
   const data = DOCS[doc];
   const slug = SLUGS[doc];
+  const canonical = `${SITE.url}/${slug}`;
   return pageMeta({
     title: `${data.title} | ${SITE.name}`,
     description: `${data.title} de ${SITE.name}.`,
-    canonical: `${SITE.url}/${slug}/`,
+    canonical,
     robots: 'index, follow',
+    // Un fil d'Ariane, rien de plus : sur des pages légales, tout autre schéma
+    // serait du balisage sans contrepartie dans les résultats de recherche.
+    jsonLd: [
+      breadcrumbSchema([
+        { name: 'Accueil', url: `${SITE.url}/` },
+        { name: data.title, url: canonical },
+      ]),
+    ],
   });
 }
 
