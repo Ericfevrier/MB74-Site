@@ -13,9 +13,42 @@ import bcrypt from 'bcryptjs';
 export const COOKIE_NAME = 'mb74_admin';
 export const COOKIE_TTL_MS = 1000 * 60 * 60 * 12; // 12 h
 
+/**
+ * Clé de secours tirée au sort AU DÉMARRAGE, jamais écrite nulle part.
+ *
+ * Le repli était une chaîne écrite en dur dans le code. Le dépôt étant public,
+ * cette clé l'était aussi : n'importe qui pouvait forger un cookie de session
+ * `{u:…, r:'super-admin'}` correctement signé et obtenir l'administration
+ * complète sans jamais connaître le mot de passe. Vérifié : le jeton forgé
+ * passait, /api/admin/me répondait « super-admin ».
+ *
+ * Une clé aléatoire par processus invalide les sessions à chaque redémarrage —
+ * il faut se reconnecter après un `touch tmp/restart.txt` — mais aucun secret
+ * connu ne circule. C'est le repli, pas la configuration visée : renseigner
+ * SESSION_SECRET rend les sessions durables.
+ */
+const BOOT_SECRET = crypto.randomBytes(32).toString('hex');
+let warned = false;
+
 function secret() {
-  // Repli sur le hash du mot de passe : si le mdp change, les sessions sont invalidées (souhaitable).
-  return process.env.SESSION_SECRET || process.env.ADMIN_PASSWORD_HASH || 'mb74-dev-secret-change-me';
+  // 1. Clé dédiée, explicitement configurée. C'est le cas nominal.
+  if (process.env.SESSION_SECRET) return process.env.SESSION_SECRET;
+  // 2. Hash bcrypt du mot de passe : secret, et le changer invalide les sessions.
+  if (process.env.ADMIN_PASSWORD_HASH) return process.env.ADMIN_PASSWORD_HASH;
+  // 3. Dérivée du mot de passe en clair (option recommandée sur cPanel) : stable
+  //    d'un redémarrage à l'autre, et jamais transmise telle quelle.
+  if (process.env.ADMIN_PASSWORD) {
+    return crypto.createHash('sha256').update(`mb74|${process.env.ADMIN_PASSWORD}`).digest('hex');
+  }
+  // 4. Rien de configuré : on ne retombe JAMAIS sur une valeur devinable.
+  if (!warned) {
+    warned = true;
+    console.warn(
+      '[auth] Ni SESSION_SECRET ni ADMIN_PASSWORD configurés : clé de session aléatoire, ' +
+        'les sessions ne survivront pas au redémarrage. Renseignez SESSION_SECRET dans .env.',
+    );
+  }
+  return BOOT_SECRET;
 }
 
 const b64url = (s) => Buffer.from(s).toString('base64url');
