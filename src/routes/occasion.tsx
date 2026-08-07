@@ -4,6 +4,7 @@ import { SITE } from '../data/site';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ShowroomSection } from '../components/ShowroomSection';
+import { RepriseSection } from '../components/RepriseSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { availableUsedBoats, soldUsedBoats } from '../data/usedBoats';
 import { useLiveUsedBoats } from '../lib/publicApi';
@@ -26,7 +27,7 @@ export function meta() {
     '@type': 'CollectionPage',
     name: 'Bateaux d’occasion',
     url: canonical,
-    description: 'Wakeboats et bateaux de ski nautique d’occasion révisés et garantis, près du lac d’Annecy.',
+    description: 'Wakeboats et bateaux de ski nautique d’occasion, toutes marques, révisés et garantis par nos ateliers.',
     provider: { '@id': `${SITE.url}/#business` },
     mainEntity: {
       '@type': 'ItemList',
@@ -60,14 +61,19 @@ export function meta() {
   };
 
   return pageMeta({
-    // Mot-clé principal : « bateau d'occasion ». Secondaires : wakeboat,
-    // Nautique, MasterCraft. Territoire national : pas de qualificatif local.
-    title: 'Bateaux d’occasion Nautique & MasterCraft | Motor Boat 74',
+    // Mot-clé principal : « bateau d'occasion ». Secondaires : toutes marques,
+    // Nautique, MasterCraft, reprise. Territoire national, pas d'ancrage local.
+    //
+    // Le titre annonçait « Nautique & MasterCraft » : c'est la gamme du NEUF,
+    // pas celle de l'occasion. L'inventaire a compté du Malibu, du Heyday et du
+    // Correct Craft — restreindre le titre aux deux marques distribuées fermait
+    // la porte à tout acheteur cherchant une autre marque d'occasion.
+    title: 'Bateaux d’occasion toutes marques | Motor Boat 74',
     description:
-      'Wakeboats d’occasion Nautique et MasterCraft révisés et garantis par nos ateliers : millésime, heures moteur et prix. Livraison France.',
+      'Wakeboats et bateaux de ski nautique d’occasion révisés et garantis par nos ateliers : Nautique, MasterCraft, Malibu. Reprise toutes marques.',
     canonical,
     image: abs(HERO),
-    ogTitle: 'Bateaux d’occasion Nautique & MasterCraft | Motor Boat 74',
+    ogTitle: 'Bateaux d’occasion toutes marques | Motor Boat 74',
     geo: { region: 'FR-74', placename: "Lac d'Annecy, Haute-Savoie" },
     jsonLd: [
       schemaCatalog,
@@ -101,7 +107,7 @@ export default function Occasion() {
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
           <Breadcrumb className="mb-6 inline-flex" items={[{ label: 'Accueil', to: '/' }, { label: 'Bateaux', to: '/bateaux' }, { label: 'Occasion' }]} />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Bateaux d’occasion Nautique et MasterCraft</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Bateaux d’occasion toutes marques</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mx-auto">
             Des wakeboats et bateaux de ski nautique <strong>révisés et garantis</strong>, suivis par nos ateliers.
             Accédez à un modèle haut de gamme à budget maîtrisé, près du lac d’Annecy.
@@ -137,7 +143,7 @@ export default function Occasion() {
             {[
               { Icon: Wrench, t: 'Révisés avant la vente', d: 'Contrôle mécanique, coque et sellerie par nos techniciens avant la mise en vente.' },
               { Icon: ShieldCheck, t: 'Historique transparent', d: 'Millésime, heures moteur et entretien communiqués sans détour.' },
-              { Icon: Wallet, t: 'Reprise & financement', d: 'Nous reprenons votre bateau actuel et proposons un financement adapté.' },
+              { Icon: Wallet, t: 'Reprise toutes marques', d: 'Nous reprenons votre bateau actuel, quelle que soit sa marque, et proposons un financement adapté.' },
             ].map(({ Icon, t, d }, i) => (
               <div key={i} className="bg-brand-light border border-gray-200 rounded-3xl p-7">
                 <span className="w-12 h-12 rounded-2xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-5"><Icon size={22} /></span>
@@ -163,6 +169,7 @@ export default function Occasion() {
         </section>
       )}
 
+      <RepriseSection />
       <ShowroomSection />
       <ServiceContactBlock subject="Bateau d’occasion" title="Une occasion en vue ?" />
     </div>

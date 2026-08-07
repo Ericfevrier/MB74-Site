@@ -4,12 +4,13 @@ import { ArrowRight, Sparkles, Tag, ShieldCheck, Waves, Wallet, ChevronRight } f
 import { SITE } from '../data/site';
 import { pageMeta } from '../lib/meta';
 import { usePageContent, useSeo } from '../lib/pageContent';
-import { breadcrumbSchema, faqSchema } from '../lib/schema';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '../lib/schema';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { brandsData } from '../data/brands';
 import { BRAND_MODELS } from '../data/boatBrands';
 import { availableUsedBoats } from '../data/usedBoats';
 import { ShowroomSection } from '../components/ShowroomSection';
+import { RepriseSection } from '../components/RepriseSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 
 const HERO = '/images/imported/iujfrvnt-dt-background-image-1.webp';
@@ -27,7 +28,7 @@ const faqs = [
   },
   {
     q: 'Proposez-vous la reprise et le financement ?',
-    a: "Oui. Nous reprenons votre bateau actuel et proposons des solutions de financement sur mesure, que vous achetiez neuf ou d’occasion. Nous assurons aussi l’entretien et l’hivernage de votre bateau après l’achat.",
+    a: "Oui. Nous reprenons votre bateau actuel quelle que soit sa marque — Malibu, Tigé, Centurion, Supra, Axis, Moomba… — même si nous ne la distribuons pas en neuf. L’estimation est faite par l’atelier qui prépare nos occasions, et la reprise vient en déduction de votre achat, avec un financement adapté si besoin.",
   },
   {
     q: 'Quelles marques de bateaux proposez-vous ?',
@@ -45,7 +46,7 @@ export function bateauxHubMeta() {
     // géographique. Les pages de service, elles, le gardent.
     title: 'Wakeboats Nautique & MasterCraft | Motor Boat 74',
     description:
-      'Wakeboats et bateaux de ski nautique Nautique et MasterCraft, neufs et d’occasion. Essai sur le lac d’Annecy, livraison partout en France.',
+      'Wakeboats Nautique et MasterCraft neufs, occasions toutes marques, reprise et financement. Essai sur le lac d’Annecy, livraison France.',
     canonical,
     image: HERO,
     jsonLd: [
@@ -62,6 +63,17 @@ export function bateauxHubMeta() {
         { name: 'Bateaux', url: canonical },
       ]),
       faqSchema(faqs),
+      // La reprise est un service à part entière, rendu sur des marques que
+      // l'entreprise ne distribue PAS en neuf. Le déclarer permet d'exister sur
+      // ces marques sans prétendre les vendre — ce que serait une page de marque.
+      serviceSchema({
+        name: 'Reprise de bateau, toutes marques',
+        serviceType: 'Reprise et estimation de bateau',
+        url: `${SITE.url}/bateaux`,
+        description:
+          "Estimation et reprise de votre bateau actuel, quelle que soit sa marque, en déduction de l'achat d'un bateau neuf ou d'occasion. Évaluation par l'atelier : coque, moteur, heures et sellerie.",
+        areaServed: [{ '@type': 'Country', name: 'France' }],
+      }),
     ],
   });
 }
@@ -190,6 +202,7 @@ export function BateauxHubPage() {
         </div>
       </section>
 
+      <RepriseSection />
       <ShowroomSection />
       <ServiceContactBlock subject="Bateaux" title="Un projet d’achat ?" />
     </div>

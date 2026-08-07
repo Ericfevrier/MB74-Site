@@ -7,6 +7,7 @@ import { BRAND_MODELS } from '../data/boatBrands';
 import { NautiqueModel } from '../data/nautiqueModels';
 import { brandsData } from '../data/brands';
 import { ShowroomSection } from '../components/ShowroomSection';
+import { RepriseSection } from '../components/RepriseSection';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
 import { pageMeta } from '../lib/meta';
 import { usePageContent, useSeo } from '../lib/pageContent';
@@ -33,7 +34,7 @@ export function bateauxNeufsMeta() {
     // MasterCraft. Territoire national : pas de qualificatif local dans le titre.
     title: 'Bateaux neufs Nautique & MasterCraft | Motor Boat 74',
     description:
-      'Wakeboats et bateaux de ski nautique neufs Nautique et MasterCraft : configuration, essai sur le lac d’Annecy, livraison partout en France.',
+      'Wakeboats et bateaux de ski nautique neufs Nautique et MasterCraft. Reprise de votre bateau toutes marques, essai sur le lac d’Annecy.',
     canonical,
     image: HERO,
     ogTitle: 'Bateaux neufs Nautique & MasterCraft | Motor Boat 74',
@@ -139,6 +140,7 @@ export function BateauxNeufsPage() {
         </section>
       ))}
 
+      <RepriseSection />
       <ShowroomSection />
       <ServiceContactBlock subject="Bateau neuf" title="Configurez votre bateau neuf" />
     </div>
