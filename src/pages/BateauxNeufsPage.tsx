@@ -140,7 +140,7 @@ export function BateauxNeufsPage() {
       ))}
 
       <ShowroomSection />
-      <ServiceContactBlock subject="Bateau neuf" title="Configurez votre bateau neuf" showMap />
+      <ServiceContactBlock subject="Bateau neuf" title="Configurez votre bateau neuf" />
     </div>
   );
 }

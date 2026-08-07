@@ -191,7 +191,7 @@ export function BateauxHubPage() {
       </section>
 
       <ShowroomSection />
-      <ServiceContactBlock subject="Bateaux" title="Un projet d’achat ?" showMap />
+      <ServiceContactBlock subject="Bateaux" title="Un projet d’achat ?" />
     </div>
   );
 }

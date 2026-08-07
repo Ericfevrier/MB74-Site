@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, ArrowRight, Phone } from 'lucide-react';
+import { GoogleMapCustom } from './GoogleMapCustom';
 import { SITE } from '../data/site';
 
 export function ShowroomSection() {
@@ -22,13 +23,16 @@ export function ShowroomSection() {
         </div>
 
         {/*
-          Cette section portait une carte, doublonnée avec celle du bloc de
-          contact plus bas sur la même page : deux iframes Google pour la même
-          adresse. On garde ici la photo, agrandie, et on remplace la carte par
-          l'adresse et les deux actions utiles — s'y rendre, ou appeler.
+          La carte appartient à CETTE section : « Visitez notre showroom » est le
+          seul endroit de la page où situer le lieu répond à la question qu'on se
+          pose. Elle avait été déplacée sous le formulaire de contact, donc après
+          l'appel à l'action — au mauvais moment de la lecture.
+
+          Les pages qui affichent cette section ne passent plus `showMap` au bloc
+          de contact : la carte n'apparaît qu'une fois par page.
         */}
-        <div className="grid lg:grid-cols-5 gap-12 items-center">
-          <div className="lg:col-span-3 h-[400px] rounded-3xl overflow-hidden shadow-2xl">
+        <div className="grid lg:grid-cols-2 gap-8">
+          <div className="h-[300px] lg:h-[420px] rounded-3xl overflow-hidden shadow-2xl">
             <img
                src="/images/img-20230924-wa0017-1-11zon-11zon-e1727707593371-11zon.webp"
                alt={`Showroom ${SITE.name} à ${SITE.addressLocality}`}
@@ -37,39 +41,44 @@ export function ShowroomSection() {
                referrerPolicy="no-referrer"
             />
           </div>
-
-          <div className="lg:col-span-2 space-y-6">
-            <div className="flex items-start gap-4">
-              <span className="w-11 h-11 rounded-2xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center flex-shrink-0">
-                <MapPin size={19} />
-              </span>
-              <span>
-                <span className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-1">Notre showroom</span>
-                <span className="block font-bold text-white leading-snug">{SITE.addressStreet}</span>
-                <span className="block text-gray-400 text-sm">{SITE.addressPostal} {SITE.addressLocality}</span>
-                <span className="block text-gray-500 text-sm mt-1">Sur la rive ouest du lac d’Annecy, à 8 minutes du centre.</span>
-              </span>
-            </div>
-
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
-              <a
-                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                  `${SITE.addressStreet} ${SITE.addressPostal} ${SITE.addressLocality}`,
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-[11px] px-7 py-4 rounded-xl hover:bg-white transition"
-              >
-                Itinéraire <ArrowRight size={15} />
-              </a>
-              <a
-                href={SITE.phoneHref}
-                className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-bold uppercase tracking-widest text-[11px] px-7 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition"
-              >
-                <Phone size={15} /> {SITE.phoneDisplay}
-              </a>
-            </div>
+          <div className="h-[300px] lg:h-[420px] rounded-3xl overflow-hidden shadow-2xl">
+            <GoogleMapCustom />
           </div>
+        </div>
+
+        {/* Adresse et actions, sous les deux panneaux : une seule ligne de lecture. */}
+        <div className="mt-8 bg-white/[0.04] border border-white/10 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
+          <span className="flex items-start gap-4 flex-1 min-w-0">
+            <span className="w-11 h-11 rounded-2xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center flex-shrink-0">
+              <MapPin size={19} />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-1">Notre showroom</span>
+              <span className="block font-bold text-white leading-snug">
+                {SITE.addressStreet}, {SITE.addressPostal} {SITE.addressLocality}
+              </span>
+              <span className="block text-gray-400 text-sm mt-1">Sur la rive ouest du lac d’Annecy, à 8 minutes du centre.</span>
+            </span>
+          </span>
+
+          <span className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                `${SITE.addressStreet} ${SITE.addressPostal} ${SITE.addressLocality}`,
+              )}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-brand-cyan text-brand-dark font-bold uppercase tracking-widest text-[11px] px-7 py-4 rounded-xl hover:bg-white transition"
+            >
+              Itinéraire <ArrowRight size={15} />
+            </a>
+            <a
+              href={SITE.phoneHref}
+              className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-bold uppercase tracking-widest text-[11px] px-7 py-4 rounded-xl hover:border-brand-cyan hover:text-brand-cyan transition"
+            >
+              <Phone size={15} /> {SITE.phoneDisplay}
+            </a>
+          </span>
         </div>
       </div>
     </section>

@@ -164,7 +164,7 @@ export default function Occasion() {
       )}
 
       <ShowroomSection />
-      <ServiceContactBlock subject="Bateau d’occasion" title="Une occasion en vue ?" showMap />
+      <ServiceContactBlock subject="Bateau d’occasion" title="Une occasion en vue ?" />
     </div>
   );
 }
