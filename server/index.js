@@ -94,6 +94,20 @@ function exemptFromStagingGate(p) {
   return last.includes('.'); // fichier statique (a une extension)
 }
 
+// Un seul HÔTE fait autorité : sans « www ». C'est WordPress qui assurait cette
+// redirection via .htaccess ; quand Passenger prend la main sur le domaine, la
+// règle disparaît et www.motorboat74.com servirait le site à l'identique. Deux
+// hôtes pour le même contenu, c'est du duplicata, et l'autorité des liens se
+// scinde entre les deux. Placé avant le portail de préprod : inutile de demander
+// des identifiants juste avant de rediriger ailleurs.
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const host = req.hostname || '';
+  if (!host.startsWith('www.')) return next();
+  // `trust proxy` est actif : req.protocol suit X-Forwarded-Proto derrière Passenger.
+  return res.redirect(301, `${req.protocol}://${host.slice(4)}${req.originalUrl}`);
+});
+
 app.use((req, res, next) => {
   if (!STAGING_PROTECT && req.hostname !== STAGING_HOST) return next(); // prod → libre
   if (exemptFromStagingGate(req.path)) return next();
