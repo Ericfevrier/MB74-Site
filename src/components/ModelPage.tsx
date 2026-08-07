@@ -34,54 +34,47 @@ export function modelPageMeta({ data, params }: { data?: { model?: NautiqueModel
   const heroAbs = model.hero.startsWith('http') ? model.hero : `${SITE.url}${model.hero}`;
   const milestones = (model.milestones ?? []).slice().sort((a, b) => Number(b.year) - Number(a.year));
 
-  // Réutilise le nœud central plutôt que d'en redéclarer un : cette page annonçait
-  // `AutoDealer` — un type automobile, sémantiquement faux pour un bateau — sur le
-  // MÊME `@id` que le `LocalBusiness` du reste du site, soit deux types
-  // contradictoires pour une seule entité. Google consolide par `@id`.
   /**
-   * Un seul nœud décrit le bateau, et ce n'est plus un `Product`.
+   * La fiche modèle se déclare comme une PAGE, pas comme un objet vendable.
    *
-   * La page en portait deux — `Product` et `Vehicle` — pour le même objet. Le
-   * `Product` annonçait une `Offer` sans prix : Google la juge incomplète, la
-   * fiche n'est éligible à aucun résultat enrichi et la Search Console remonte
-   * une erreur. Et le prix ne peut pas être ajouté : les bateaux neufs se
-   * vendent sur devis selon motorisation et options (c'est la réponse de la FAQ
-   * juste en dessous). Un balisage qui ne peut structurellement jamais devenir
-   * valide ne rapporte rien : il est retiré.
+   * Historique, en trois temps. Elle portait d'abord un `Product` et un
+   * `Vehicle` pour le même bateau. Le `Product` annonçait une `Offer` sans
+   * prix : offre incomplète, aucun résultat enrichi possible, erreur en Search
+   * Console. Il a été retiré, `Vehicle` gardé — puis la console a remonté le
+   * `Vehicle` à son tour, avec exactement le même message, parce que `Vehicle`
+   * dérive de `Product` dans schema.org. Tout ce qui descend de `Product` est
+   * évalué comme un produit et réclame un prix, un avis ou une note.
    *
-   * `Vehicle` reste, parce qu'il porte ce que `Product` ne portait pas — la
-   * motorisation, la gamme — et qu'il décrit correctement l'objet sans réclamer
-   * de prix. Ce qui n'existait que sur le `Product` (visuel, description,
-   * millésimes) est repris ici pour ne rien perdre.
+   * Or le prix ne peut pas être fourni : les bateaux neufs se vendent sur devis
+   * selon motorisation et options, c'est ce que répond la FAQ juste en dessous.
+   * Toute la branche `Product` est donc inutilisable ici, sous n'importe lequel
+   * de ses sous-types.
    *
-   * À surveiller : `Vehicle` dérive de `Product` dans schema.org. Si la Search
-   * Console venait à le remonter à son tour dans le rapport Produits, c'est ce
-   * bloc entier qu'il faudrait supprimer — la page garderait Vehicle en moins
-   * ses FAQ, fil d'Ariane et vidéo, qui sont les balisages réellement utiles.
+   * D'où `WebPage` : ce que la page est réellement — une fiche éditoriale qui
+   * documente un modèle et invite à l'essai. Aucun héritage de `Product`, donc
+   * plus rien à déclarer en prix.
+   *
+   * Ce qu'on perd : `vehicleEngine` et `vehicleConfiguration`, seules propriétés
+   * sans équivalent hors de la branche `Product`. Perte théorique — Google n'en
+   * tire aucun affichage pour un bateau, et les mêmes caractéristiques sont
+   * lisibles en clair dans le tableau de specs de la page, que les robots lisent.
    */
-  const schemaVehicle = {
+  const schemaWebPage = {
     '@context': 'https://schema.org',
-    '@type': 'Vehicle',
+    '@type': 'WebPage',
+    '@id': `${canonical}#page`,
+    url: canonical,
     name: `${fullName} ${model.year}`,
-    brand: { '@type': 'Brand', name: brandName },
-    category: 'Wakeboat / Bateau de sport nautique',
-    image: [heroAbs],
     description: model.metaDescription,
-    productionDate: model.year,
-    vehicleConfiguration: model.gamme,
-    ...(milestones.length
-      ? { additionalProperty: { '@type': 'PropertyValue', name: 'Millésimes documentés', value: milestones.map((m) => m.year).join(', ') } }
-      : {}),
-    ...(model.motorizations && model.motorizations.length
-      ? {
-          vehicleEngine: model.motorizations.map((m) => ({
-            '@type': 'EngineSpecification',
-            name: m.name,
-            fuelType: m.fuel,
-            enginePower: m.power,
-          })),
-        }
-      : {}),
+    inLanguage: 'fr-FR',
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    primaryImageOfPage: { '@type': 'ImageObject', url: heroAbs },
+    // `about` pointe la marque, pas le bateau : `Brand` est un `Intangible`,
+    // hors de la branche `Product`. Nommer le modèle en `about` supposerait un
+    // type produit, ce qui ramènerait l'erreur qu'on vient de supprimer.
+    about: { '@type': 'Brand', name: brandName },
+    publisher: { '@id': `${SITE.url}/#business` },
+    ...(milestones.length ? { datePublished: `${milestones[milestones.length - 1].year}-01-01` } : {}),
   };
   const schemaVideo = model.videoId
     ? {
@@ -123,10 +116,13 @@ export function modelPageMeta({ data, params }: { data?: { model?: NautiqueModel
     twitterCard: true,
     geo: { region: 'FR-74', placename: "Lac d'Annecy, Haute-Savoie" },
     jsonLd: [
-      schemaVehicle,
+      schemaWebPage,
       // Le concessionnaire était déclaré ici en tant que `seller` de l'offre
       // supprimée. Il reste déclaré en propre : Google consolide par `@id`, et
       // ces fiches sont les pages d'atterrissage les plus fréquentes du site.
+      // On réutilise le nœud central plutôt que d'en redéclarer un : la page
+      // annonçait autrefois `AutoDealer` — un type automobile, faux pour un
+      // bateau — sur ce MÊME `@id`, soit deux types pour une seule entité.
       // Le `@context` est ajouté ici : `businessNode` n'en porte pas, il était
       // jusqu'ici toujours imbriqué dans un nœud qui en fournissait un.
       { '@context': 'https://schema.org', ...businessNode },
