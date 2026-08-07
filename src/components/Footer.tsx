@@ -85,7 +85,10 @@ export function Footer() {
 
           {/* Column 4: Zones d'interventions */}
           <div className="col-span-1 lg:col-span-2">
-            <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8">Zones d'interventions</h3>
+            {/* `break-words` : mesuré à 390 px, le titre dépassait de sa colonne
+                (160 px de contenu pour 151 px disponibles). En majuscules et sans
+                césure possible, il sortait du cadre. */}
+            <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8 break-words">Zones d'interventions</h3>
             <ul className="space-y-3">
               {[
                 { name: 'Annecy', slug: 'annecy' },
@@ -163,21 +166,25 @@ export function Footer() {
         
         {/* Footer Bottom Bar */}
         <div className="pt-8 pb-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex flex-wrap justify-center gap-6 md:gap-10">
+          {/* `py-1.5` : ces liens ne faisaient que 17 px de haut, mesuré au
+              navigateur — sous le minimum de 24 px pour une cible tactile. Le
+              texte reste identique, seule la zone atteignable au doigt grandit.
+              L'espacement vertical est réduit d'autant pour compenser. */}
+          <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-1">
             {[
               { name: 'Mentions légales', path: '/mentions-legales' },
               { name: 'Politique de confidentialité', path: '/politique-de-confidentialite' },
               { name: 'CGV Pro', path: '/cgv-pro' },
               { name: 'Contact', path: '/contact' },
             ].map((link) => (
-              <Link key={link.name} to={link.path} className="text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">
+              <Link key={link.name} to={link.path} className="inline-flex items-center py-1.5 text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">
                 {link.name}
               </Link>
             ))}
             <button
               type="button"
               onClick={() => openCookieSettings()}
-              className="text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors"
+              className="inline-flex items-center py-1.5 text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors"
             >
               Cookies
             </button>
@@ -186,11 +193,13 @@ export function Footer() {
             <p className="text-[11px] font-bold uppercase tracking-widest text-white/20">
               © {new Date().getFullYear()} Tous droits réservés
             </p>
+            {/* Le cadenas reste à 13 px ; c'est la zone cliquable qui passe à 24,
+                via le padding. Une cible de 13×13 px se rate une fois sur deux au doigt. */}
             <Link
               to="/admin"
               aria-label="Espace administration"
               title="Administration"
-              className="text-white/20 hover:text-brand-cyan transition-colors"
+              className="-m-1.5 grid h-6 w-6 place-items-center p-1.5 text-white/20 hover:text-brand-cyan transition-colors"
             >
               <Lock size={13} />
             </Link>

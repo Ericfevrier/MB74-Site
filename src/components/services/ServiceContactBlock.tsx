@@ -112,7 +112,11 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
                     </span>
                     <span className="min-w-0">
                       <span className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400">{r.label}</span>
-                      <span className="block font-semibold text-brand-dark text-sm leading-snug">{r.value}</span>
+                      {/* `overflow-wrap:anywhere` : à 768 px, les trois colonnes
+                          laissent 136 px de large et l'adresse e-mail en réclame
+                          186. Sans point de césure naturel, elle était coupée.
+                          Elle passe désormais à la ligne au lieu d'être tronquée. */}
+                      <span className="block font-semibold text-brand-dark text-sm leading-snug [overflow-wrap:anywhere]">{r.value}</span>
                     </span>
                   </span>
                 );

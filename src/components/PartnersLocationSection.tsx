@@ -11,8 +11,14 @@ type Partner = { name: string; logo?: string; role?: string; url?: string };
 function PartnerItem({ p }: { p: Partner }) {
   // Hauteur commune (harmonisée) + largeur naturelle → logos serrés, sans marge inutile.
   // Angles arrondis (visibles pour les logos ayant un fond).
+  // PAS de loading="lazy" ici. Ces logos vivent dans un bandeau animé en CSS : ils
+  // entrent dans le champ de vision par translation, pas par défilement de la page.
+  // Le chargement différé ne se déclenchait donc pas, et le visiteur voyait le texte
+  // alternatif à la place du logo — mesuré au navigateur : naturalWidth restait à 0
+  // sur vanclaes, pcm et sports-service tant qu'on ne forçait pas le chargement.
+  // Les cinq fichiers pèsent 35 Ko au total, le différé n'apportait rien.
   const logo = p.logo
-    ? <img src={p.logo} alt={p.name} loading="lazy" className="max-h-24 sm:max-h-36 lg:max-h-40 w-auto max-w-full object-contain rounded-2xl" />
+    ? <img src={p.logo} alt={p.name} decoding="async" className="max-h-24 sm:max-h-36 lg:max-h-40 w-auto max-w-full object-contain rounded-2xl" />
     : <span className="text-2xl sm:text-4xl font-bold italic tracking-tighter whitespace-nowrap text-brand-dark">{p.name}</span>;
   const inner = (
     <span className="flex flex-col items-center gap-2">

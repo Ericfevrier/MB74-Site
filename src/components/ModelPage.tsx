@@ -821,16 +821,27 @@ function PresentationSlider({ images, alt, studio }: { images: string[]; alt: st
         ))}
         {!studio && <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-dark/30 to-transparent" />}
 
+        {/* Le point visible fait 8 px, mais la zone cliquable doit en faire 24 :
+            mesuré au navigateur, ces boutons étaient des cibles de 8×8 px, sous le
+            minimum recommandé. Le point est désormais dessiné dans un <span> et le
+            <button> ne sert plus qu'à porter la zone tactile — apparence inchangée,
+            seule la surface atteignable grandit. */}
         {slides.length > 1 && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex items-center z-10">
             {slides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setIdx(i)}
                 aria-label={`Afficher l’image ${i + 1}`}
                 aria-current={i === idx}
-                className={`h-2 rounded-full transition-all duration-300 ${i === idx ? 'w-7 bg-brand-cyan' : 'w-2 bg-white/50 hover:bg-white/80'}`}
-              />
+                className="group flex h-6 min-w-6 items-center justify-center px-1"
+              >
+                <span
+                  className={`block h-2 rounded-full transition-all duration-300 ${
+                    i === idx ? 'w-7 bg-brand-cyan' : 'w-2 bg-white/50 group-hover:bg-white/80'
+                  }`}
+                />
+              </button>
             ))}
           </div>
         )}
