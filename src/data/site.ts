@@ -34,11 +34,23 @@ const STATIC_SITE = {
   addressPostal: '74410',
   addressRegion: 'Haute-Savoie',
   addressCountry: 'FR',
-  // ⚠️ Coordonnées du bourg de Saint-Jorioz, PAS de l'adresse exacte : cette
-  // adresse est absente d'OpenStreetMap et rien ne justifie d'inventer une
-  // précision qu'on n'a pas. À remplacer par les coordonnées relevées sur
-  // Google Maps (clic droit sur le point → les deux nombres affichés).
-  geo: { lat: 45.836, lng: 6.171 },
+  // Coordonnées relevées sur Google Maps, sur le point exact du shop.
+  geo: { lat: 45.831543, lng: 6.177957 },
+  /** Lien court Google Maps vers la fiche du lieu. */
+  mapsUrl: 'https://maps.app.goo.gl/LFW7MZ6bhFz8YFP49',
+  /**
+   * Carte intégrée, ancrée sur l'établissement lui-même.
+   *
+   * Ce format (`/maps/embed?pb=…`) porte l'identifiant du lieu et ne demande
+   * aucune clé d'API. L'ancien code appelait l'Embed API avec
+   * `process.env.GOOGLE_MAPS_PLATFORM_KEY`, une variable serveur qui n'existe
+   * pas dans le navigateur : la clé partait vide, la carte échouait, et une
+   * seconde iframe de repli se chargeait par-dessus. Deux cartes par page.
+   * Cette URL pointe le lieu par son identifiant, pas par une recherche
+   * textuelle qui peut tomber à côté.
+   */
+  mapsEmbed:
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3062.333921962156!2d6.175403776589482!3d45.831460871082385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478b914222776873%3A0x319712d38fa97bc9!2s1099%20Imp.%20du%20Semnoz%2C%2074410%20Saint-Jorioz!5e1!3m2!1sfr!2sfr!4v1786088021235!5m2!1sfr!2sfr',
 
   // --- 2. Atelier / hangar d'hivernage ---
   workshop: {

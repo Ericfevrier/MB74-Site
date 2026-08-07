@@ -1859,7 +1859,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "gamme": "Ski Nautique",
     "year": "2026",
     "metaTitle": "Ski Nautique 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez la gamme Ski Nautique. Le Ski Nautique 2026, bateau de référence pour le ski slalom, à découvrir chez Motor Boat 74 à Annecy",
+    "metaDescription": "Ski Nautique 2026 : le bateau de référence du ski nautique de compétition. Prix, fiche technique et essai sur le lac d’Annecy.",
     "intro": [
       "Nautique a relevé le défi de créer un bateau de ski nautique alliant performance, maniabilité et confort pour slalom, figures et saut.",
       "Le Ski Nautique combine une coque légère et robuste à des technologies de pointe comme MicroTuner®, Automated HydroGate® et Zero Off®, offrant des wakes stables, précis et adaptés à tous les niveaux. Le poste de pilotage intuitif, la sellerie modulable et la plage arrière optimisée garantissent un confort et une fonctionnalité optimale pour skieurs et coachs.",
