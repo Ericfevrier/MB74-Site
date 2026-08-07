@@ -28,7 +28,9 @@ const CITY_GEO: Record<string, { region: string; area: string }> = {
   'evian-les-bains': { region: 'FR-74', area: 'Haute-Savoie' },
   'thonon-les-bains': { region: 'FR-74', area: 'Haute-Savoie' },
   geneve: { region: 'CH-GE', area: 'Canton de Genève, Suisse' },
-  'lac-de-serre-poncon': { region: 'FR-05', area: 'Hautes-Alpes' },
+  // Serre-Ponçon (Hautes-Alpes) est retiré : à ~4 h de route, il diluait le
+  // signal géographique d'une entreprise qui se positionne sur les lacs alpins
+  // du nord. La page est redirigée en 301 vers l'hivernage général.
 };
 
 export function cityPageMeta({ data, params }: { data?: { city?: HivernageCity } | null; params: { slug?: string } }) {

@@ -474,7 +474,7 @@ export const PAGES: PageDef[] = [
         fields: [
           { key: 'zones.eyebrow', label: 'Sur-titre', type: 'text', default: "Zone d'intervention" },
           { key: 'zones.title', label: 'Titre', type: 'text', default: "Nous intervenons sur tout le lac d'Annecy" },
-          { key: 'zones.intro', label: 'Introduction (vide = version stylée)', type: 'textarea', default: "Notre bateau-atelier dépanne les bateaux sur l'ensemble du lac d'Annecy : d'Annecy à Doussard, en passant par Annecy-le-Vieux, Veyrier-du-Lac, Menthon-Saint-Bernard, Talloires-Montmin, Duingt, Saint-Jorioz et Sevrier. Sur le Léman ou le lac du Bourget, contactez-nous." },
+          { key: 'zones.intro', label: 'Introduction (vide = version stylée)', type: 'textarea', default: "Notre bateau-atelier dépanne les bateaux sur l'ensemble du lac d'Annecy : d'Annecy à Doussard, en passant par Annecy-le-Vieux, Veyrier-du-Lac, Menthon-Saint-Bernard, Talloires-Montmin, Duingt, Saint-Jorioz et Sevrier. Le dépannage sur l’eau est réservé au lac d’Annecy, en saison : c’est là qu’est basé notre bateau-atelier." },
           {
             key: 'zones.items', label: 'Communes', type: 'list', itemLabel: 'Commune',
             itemFields: [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'desc', label: 'Description', type: 'textarea' }],
@@ -740,7 +740,7 @@ export const PAGES: PageDef[] = [
           {
             key: 'zones.items', label: 'Zones (badges)', type: 'list', itemLabel: 'Zone',
             itemFields: [{ key: 'name', label: 'Nom', type: 'text' }],
-            defaultList: [{ name: 'Annecy' }, { name: 'Aix-les-Bains' }, { name: 'Thonon-les-Bains' }, { name: 'Évian-les-Bains' }, { name: 'Genève' }, { name: 'Lac de Serre-Ponçon' }],
+            defaultList: [{ name: 'Annecy' }, { name: 'Aix-les-Bains' }, { name: 'Thonon-les-Bains' }, { name: 'Évian-les-Bains' }, { name: 'Genève' }],
           },
         ],
       },

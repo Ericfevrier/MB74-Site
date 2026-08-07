@@ -27,6 +27,10 @@ const STATIC_REDIRECTS = new Map([
   ['/bateaux-neufs', '/bateaux/neufs'],
   ['/bateaux-occasion', '/bateaux/occasion'],
   ['/shop', '/blog'],
+  // Page retirée : Serre-Ponçon (Hautes-Alpes) est hors du territoire réel de
+  // l'entreprise. On redirige plutôt que de laisser un 404, pour conserver les
+  // liens et l'historique d'indexation vers la page d'hivernage générale.
+  ['/services/hivernage-bateaux/lac-de-serre-poncon', '/hivernage-stockage-bateau'],
 ]);
 
 export function normalizePath(p) {

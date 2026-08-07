@@ -93,7 +93,6 @@ export function Footer() {
                 { name: 'Thonon-les-Bains', slug: 'thonon-les-bains' },
                 { name: 'Évian-les-Bains', slug: 'evian-les-bains' },
                 { name: 'Genève', slug: 'geneve' },
-                { name: 'Lac de Serre-Ponçon', slug: 'lac-de-serre-poncon' },
               ].map((item) => (
                 <li key={item.slug}>
                   <Link to={`/services/hivernage-bateaux/${item.slug}`} className="hover:text-brand-cyan transition-colors text-[14px] font-medium">{item.name}</Link>

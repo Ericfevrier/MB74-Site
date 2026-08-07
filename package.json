@@ -8,9 +8,11 @@
   },
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "prebuild": "tsx scripts/sync-content.ts && tsx scripts/generate-sitemap.ts",
+    "sync": "tsx scripts/sync-content.ts && tsx scripts/generate-sitemap.ts",
+    "prebuild": "npm run sync",
     "build": "vite build",
     "dev:ssr": "react-router dev",
+    "prebuild:ssr": "npm run sync",
     "build:ssr": "react-router build",
     "start:ssr": "react-router-serve ./build/server/index.js",
     "preview": "vite preview",

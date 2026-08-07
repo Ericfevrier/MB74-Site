@@ -24,7 +24,7 @@ export interface HivernageCity {
   seo?: import('../lib/seo').Seo;
 }
 
-export const HIVERNAGE_CITY_ORDER: string[] = ["annecy","aix-les-bains","evian-les-bains","thonon-les-bains","geneve","lac-de-serre-poncon"];
+export const HIVERNAGE_CITY_ORDER: string[] = ["annecy","aix-les-bains","evian-les-bains","thonon-les-bains","geneve"];
 
 const STATIC_CITIES: Record<string, HivernageCity> = {
   "annecy": {

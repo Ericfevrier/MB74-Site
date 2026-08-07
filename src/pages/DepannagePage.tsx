@@ -357,7 +357,7 @@ export function DepannagePage() {
                   <p className="text-gray-600 leading-relaxed mt-4 text-sm md:text-base max-w-3xl">
                     {t.raw('zones.intro')
                       ? t.raw('zones.intro')
-                      : <>Notre bateau-atelier dépanne les bateaux sur l'ensemble du lac d'Annecy : d'<strong>Annecy</strong> à <strong>Doussard</strong>, en passant par <strong>Annecy-le-Vieux</strong>, <strong>Veyrier-du-Lac</strong>, <strong>Menthon-Saint-Bernard</strong>, <strong>Talloires-Montmin</strong>, <strong>Duingt</strong>, <strong>Saint-Jorioz</strong> et <strong>Sevrier</strong>. Sur le Léman ou le lac du Bourget, contactez-nous : nous étudions chaque demande.</>}
+                      : <>Notre bateau-atelier dépanne les bateaux sur l'ensemble du lac d'Annecy : d'<strong>Annecy</strong> à <strong>Doussard</strong>, en passant par <strong>Annecy-le-Vieux</strong>, <strong>Veyrier-du-Lac</strong>, <strong>Menthon-Saint-Bernard</strong>, <strong>Talloires-Montmin</strong>, <strong>Duingt</strong>, <strong>Saint-Jorioz</strong> et <strong>Sevrier</strong>. Le dépannage sur l’eau est réservé au lac d’Annecy, en saison : c’est là qu’est basé notre bateau-atelier.</>}
                   </p>
                 </div>
                 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
