@@ -125,12 +125,16 @@ export const PAGES: PageDef[] = [
               { key: 'role', label: 'Statut (optionnel, ex. Concessionnaire, Importateur)', type: 'text' },
               { key: 'url', label: 'Lien (optionnel)', type: 'url' },
             ],
+            // Dossier « reseau » et non « partners » : les bloqueurs de publicité
+            // (uBlock, AdGuard, DNS filtrants) coupent couramment les requêtes dont
+            // l'URL contient /partners/. Les fichiers répondaient bien en 200 côté
+            // serveur, mais n'arrivaient pas jusqu'au navigateur du visiteur.
             defaultList: [
-              { name: 'Nautique', logo: '/images/partners/nautique.webp', role: 'Concessionnaire officiel', url: '/marque/nautique' },
-              { name: 'Connelly', logo: '/images/partners/connelly.webp', role: 'Importateur exclusif', url: '' },
-              { name: 'Vanclaes', logo: '/images/partners/vanclaes.webp', role: '', url: '' },
-              { name: 'PCM Marine', logo: '/images/partners/pcm.webp', role: '', url: '' },
-              { name: 'Sports Service', logo: '/images/partners/sports-service.webp', role: '', url: '' },
+              { name: 'Nautique', logo: '/images/reseau/nautique.webp', role: 'Concessionnaire officiel', url: '/marque/nautique' },
+              { name: 'Connelly', logo: '/images/reseau/connelly.webp', role: 'Importateur exclusif', url: '' },
+              { name: 'Vanclaes', logo: '/images/reseau/vanclaes.webp', role: '', url: '' },
+              { name: 'PCM Marine', logo: '/images/reseau/pcm.webp', role: '', url: '' },
+              { name: 'Sports Service', logo: '/images/reseau/sports-service.webp', role: '', url: '' },
             ],
           },
         ],

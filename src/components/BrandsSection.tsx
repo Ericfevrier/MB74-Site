@@ -177,8 +177,16 @@ export function BrandsSection() {
             </div>
           </div>
 
-          <Link to="/contact" className="px-12 py-5 border-2 border-brand-cyan text-brand-cyan font-bold text-sm uppercase tracking-widest rounded-2xl hover:bg-brand-cyan hover:text-brand-dark transition-all duration-500 shadow-xl shadow-brand-cyan/10">
-            DÉCOUVRIR LE CATALOGUE COMPLET
+          {/* inline-block indispensable : le parent n'est pas un conteneur flex, donc
+              ce <a> restait `display:inline`. Sur mobile le libellé passe à la ligne,
+              et une boîte inline ne peut pas encadrer deux lignes : la bordure se
+              brisait et le texte débordait du bouton. Padding réduit sur petit écran
+              pour que le libellé tienne sur une seule ligne le plus longtemps possible. */}
+          <Link
+            to="/contact"
+            className="inline-block max-w-full px-6 sm:px-12 py-4 sm:py-5 border-2 border-brand-cyan text-brand-cyan font-bold text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest rounded-2xl hover:bg-brand-cyan hover:text-brand-dark transition-all duration-500 shadow-xl shadow-brand-cyan/10"
+          >
+            Découvrir le catalogue complet
           </Link>
         </div>
       </section>
