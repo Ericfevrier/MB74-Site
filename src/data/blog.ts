@@ -49,6 +49,18 @@ const STATIC_BLOG_ARTICLES: BlogArticle[] = [
     image: '/images/hivernage/annecy.webp',
     readingTime: '12 min',
   },
+  {
+    slug: 'bateau-en-panne-lac-annecy',
+    // URL identique au WordPress : c'est elle qui porte l'historique d'indexation.
+    path: '/blog/bateau-en-panne-lac-annecy',
+    title: "Bateau en panne sur le lac d'Annecy : que faire ?",
+    excerpt:
+      "Les pannes les plus fréquentes sur le lac d'Annecy, les vérifications à faire avant d'insister sur le moteur, et le moment où il faut appeler un professionnel.",
+    category: 'entretien-reparation',
+    date: '2026-07-27',
+    image: '/images/de-pannage.webp',
+    readingTime: '7 min',
+  },
 ];
 
 // Source effective : CMS si généré, sinon statique.

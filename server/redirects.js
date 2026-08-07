@@ -73,9 +73,14 @@ const STATIC_REDIRECTS = new Map([
   // envoie vers la page de service correspondante, plus utile au visiteur
   // qu'un index vide. L'article /blog/hivernage/hivernage-bateau-guide-complet
   // n'est pas affecté : la correspondance est exacte.
+  //
+  // /blog/bateau-en-panne-lac-annecy figurait ICI par erreur. Vérification faite
+  // sur le WordPress en ligne, c'est un ARTICLE (post 6420, 1 600 mots ciblant
+  // « bateau en panne lac Annecy »), pas une archive de catégorie. Le rediriger
+  // aurait perdu le contenu. Il est repris à l'identique sur le nouveau site,
+  // à la même URL — d'où l'absence de redirection.
   ['/blog/hivernage', '/hivernage-stockage-bateau'],
   ['/blog/entretien-et-reparation', '/entretien-reparation'],
-  ['/blog/bateau-en-panne-lac-annecy', '/depannage'],
 
   // Plomberie Yoast : Search Console a `sitemap_index.xml` enregistré comme
   // sitemap du site, et Google recrawle les sous-sitemaps longtemps après leur

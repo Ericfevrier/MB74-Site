@@ -29,6 +29,10 @@ export default [
   route('la-team', 'routes/team.tsx'),
   route('blog', 'routes/blog.tsx'),
   route('blog/hivernage/hivernage-bateau-guide-complet', 'routes/blog-hivernage.tsx'),
+  // Article repris de WordPress : l'URL doit rester exactement celle d'origine.
+  // Route explicite AVANT blog/:slug — la route dynamique lit le contenu en base
+  // côté navigateur, elle ne peut donc pas être prérendue.
+  route('blog/bateau-en-panne-lac-annecy', 'routes/blog-depannage.tsx'),
   route('blog/:slug', 'routes/blog-article.tsx'),
 
   // Admin (back-office, non indexé, non prérendu)
