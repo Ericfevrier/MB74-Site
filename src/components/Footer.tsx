@@ -85,10 +85,11 @@ export function Footer() {
 
           {/* Column 4: Zones d'interventions */}
           <div className="col-span-1 lg:col-span-2">
-            {/* `break-words` : mesuré à 390 px, le titre dépassait de sa colonne
-                (160 px de contenu pour 151 px disponibles). En majuscules et sans
-                césure possible, il sortait du cadre. */}
-            <h3 className="text-white text-lg font-bold uppercase tracking-tight mb-8 break-words">Zones d'interventions</h3>
+            {/* Mesuré à 390 px : ce titre réclamait 160 px pour 151 disponibles.
+                `break-words` corrigeait le débordement mais coupait le mot en deux
+                — « ZONES D'INTERVENTION / S » à l'écran. On réduit plutôt le corps
+                du texte sur mobile : le titre tient alors sur une ligne entière. */}
+            <h3 className="text-white text-base sm:text-lg font-bold uppercase tracking-tight mb-8">Zones d'interventions</h3>
             <ul className="space-y-3">
               {[
                 { name: 'Annecy', slug: 'annecy' },
