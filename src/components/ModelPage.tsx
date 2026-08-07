@@ -38,33 +38,40 @@ export function modelPageMeta({ data, params }: { data?: { model?: NautiqueModel
   // `AutoDealer` — un type automobile, sémantiquement faux pour un bateau — sur le
   // MÊME `@id` que le `LocalBusiness` du reste du site, soit deux types
   // contradictoires pour une seule entité. Google consolide par `@id`.
-  const business = businessNode;
-  const schemaProduct = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: `${fullName} ${model.year}`,
-    brand: { '@type': 'Brand', name: brandName },
-    category: 'Wakeboat / Bateau de sport nautique',
-    image: [heroAbs],
-    description: model.metaDescription,
-    releaseDate: model.year,
-    ...(milestones.length
-      ? { additionalProperty: { '@type': 'PropertyValue', name: 'Millésimes documentés', value: milestones.map((m) => m.year).join(', ') } }
-      : {}),
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'EUR',
-      availability: 'https://schema.org/InStock',
-      url: canonical,
-      seller: business,
-    },
-  };
+  /**
+   * Un seul nœud décrit le bateau, et ce n'est plus un `Product`.
+   *
+   * La page en portait deux — `Product` et `Vehicle` — pour le même objet. Le
+   * `Product` annonçait une `Offer` sans prix : Google la juge incomplète, la
+   * fiche n'est éligible à aucun résultat enrichi et la Search Console remonte
+   * une erreur. Et le prix ne peut pas être ajouté : les bateaux neufs se
+   * vendent sur devis selon motorisation et options (c'est la réponse de la FAQ
+   * juste en dessous). Un balisage qui ne peut structurellement jamais devenir
+   * valide ne rapporte rien : il est retiré.
+   *
+   * `Vehicle` reste, parce qu'il porte ce que `Product` ne portait pas — la
+   * motorisation, la gamme — et qu'il décrit correctement l'objet sans réclamer
+   * de prix. Ce qui n'existait que sur le `Product` (visuel, description,
+   * millésimes) est repris ici pour ne rien perdre.
+   *
+   * À surveiller : `Vehicle` dérive de `Product` dans schema.org. Si la Search
+   * Console venait à le remonter à son tour dans le rapport Produits, c'est ce
+   * bloc entier qu'il faudrait supprimer — la page garderait Vehicle en moins
+   * ses FAQ, fil d'Ariane et vidéo, qui sont les balisages réellement utiles.
+   */
   const schemaVehicle = {
     '@context': 'https://schema.org',
     '@type': 'Vehicle',
     name: `${fullName} ${model.year}`,
     brand: { '@type': 'Brand', name: brandName },
+    category: 'Wakeboat / Bateau de sport nautique',
+    image: [heroAbs],
+    description: model.metaDescription,
+    productionDate: model.year,
     vehicleConfiguration: model.gamme,
+    ...(milestones.length
+      ? { additionalProperty: { '@type': 'PropertyValue', name: 'Millésimes documentés', value: milestones.map((m) => m.year).join(', ') } }
+      : {}),
     ...(model.motorizations && model.motorizations.length
       ? {
           vehicleEngine: model.motorizations.map((m) => ({
@@ -110,12 +117,19 @@ export function modelPageMeta({ data, params }: { data?: { model?: NautiqueModel
     ),
     canonical,
     image: heroAbs,
-    ogType: 'product',
+    // `product` promettait un prix et une disponibilité qu'aucun balisage de la
+    // page ne fournit plus. Une fiche modèle sans prix est une page éditoriale.
+    ogType: 'website',
     twitterCard: true,
     geo: { region: 'FR-74', placename: "Lac d'Annecy, Haute-Savoie" },
     jsonLd: [
-      schemaProduct,
       schemaVehicle,
+      // Le concessionnaire était déclaré ici en tant que `seller` de l'offre
+      // supprimée. Il reste déclaré en propre : Google consolide par `@id`, et
+      // ces fiches sont les pages d'atterrissage les plus fréquentes du site.
+      // Le `@context` est ajouté ici : `businessNode` n'en porte pas, il était
+      // jusqu'ici toujours imbriqué dans un nœud qui en fournissait un.
+      { '@context': 'https://schema.org', ...businessNode },
       faqSchema(model.faqs.map((f) => ({ q: f.q, a: f.a.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') }))),
       breadcrumbSchema([
         { name: 'Accueil', url: `${SITE.url}/` },

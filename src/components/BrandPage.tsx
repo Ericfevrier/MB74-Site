@@ -51,9 +51,17 @@ export function brandPageMeta({ data, params }: { data?: { brand?: BrandData } |
     url: canonical,
     description: brand.tagline || brand.description.slice(0, 160),
     about: brandNode,
-    // `role` est la position commerciale réelle (concessionnaire / importateur) ;
-    // schema.org n'a pas de propriété dédiée, on la porte par le nom de l'offre.
-    provider: { '@id': `${SITE.url}/#business` },
+    // Le lien marque ↔ concessionnaire passe par `provider` : c'est la seule
+    // relation nécessaire. La position commerciale exacte (concessionnaire /
+    // importateur) reste portée par le titre, le H1 et la meta description —
+    // schema.org n'a pas de propriété dédiée pour la distinguer.
+    //
+    // Le nœud complet, et pas une simple référence par `@id` : c'est
+    // l'`OfferCatalog` supprimé ci-dessous qui le portait jusqu'ici, et ces deux
+    // pages de marque sont les hubs les plus liés du site. Retirer le catalogue
+    // sans reprendre le vendeur aurait coûté le signal local là où il compte le
+    // plus.
+    provider: businessNode,
     ...(models.length
       ? {
           mainEntity: {
@@ -70,18 +78,21 @@ export function brandPageMeta({ data, params }: { data?: { brand?: BrandData } |
       : {}),
   };
 
-  const schemaOffer = {
-    '@context': 'https://schema.org',
-    '@type': 'OfferCatalog',
-    name: `${role} ${brand.name} — ${SITE.name}`,
-    url: canonical,
-    seller: businessNode,
-    itemListElement: models.map((m) => ({
-      '@type': 'Offer',
-      itemOffered: { '@type': 'Product', name: m.fullName || m.name, brand: { '@id': brandNode['@id'] } },
-      url: `${SITE.url}/${id}/${m.slug}`,
-    })),
-  };
+  /**
+   * Pas d'`OfferCatalog` ici, et c'est délibéré.
+   *
+   * Il déclarait chaque modèle comme un `Product` imbriqué dans une `Offer`.
+   * Google extrait ces nœuds et les évalue un par un : quinze `Product` sans
+   * prix, donc quinze erreurs « il faut indiquer offers, review ou
+   * aggregateRating » en Search Console. Or les bateaux neufs se vendent sur
+   * devis (voir la FAQ « Quel est le prix du… ») — aucun prix ne peut être
+   * publié, et sans prix un balisage Product ne peut structurellement jamais
+   * devenir valide ni produire le moindre résultat enrichi.
+   *
+   * Le `CollectionPage` ci-dessus exprime déjà la même relation hub → fiches
+   * par son `ItemList`, sans rien réclamer. Le balisage Product reste sur les
+   * pages d'occasion, qui ont un prix réel et sont donc réellement éligibles.
+   */
 
   return pageMeta({
     title: `${heading} | ${SITE.name}`,
@@ -95,7 +106,6 @@ export function brandPageMeta({ data, params }: { data?: { brand?: BrandData } |
     geo: { region: 'FR-74', placename: "Lac d'Annecy, Haute-Savoie" },
     jsonLd: [
       schemaCollection,
-      ...(models.length ? [schemaOffer] : []),
       // Même traitement que les fiches modèle, qui portent déjà un `faqSchema` :
       // les questions affichées sur la page sont déclarées telles quelles.
       ...(FAQS_BY_BRAND[id] ? [faqSchema(FAQS_BY_BRAND[id].map((f) => ({ q: f.question, a: f.answer })))] : []),
