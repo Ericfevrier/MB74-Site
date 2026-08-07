@@ -13,6 +13,7 @@
  * Build attendu : `npm run build:ssr` (génère build/client prérendu).
  */
 import express from 'express';
+import compression from 'compression';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { existsSync, readFileSync } from 'fs';
@@ -36,6 +37,31 @@ const spaFallback = path.join(clientDir, '__spa-fallback.html');
 const app = express();
 app.disable('x-powered-by');
 app.set('trust proxy', true);
+
+/**
+ * Compression — AVANT tout le reste, pour couvrir HTML, JS, CSS, JSON et XML.
+ *
+ * Rien ne compressait quoi que ce soit : l'app Express sert TOUT (document et
+ * assets, voir .github/workflows/deploy.yml), et aucun intermédiaire ne prenait
+ * le relais. Chaque page partait donc en clair — 76 Ko de HTML et 800 Ko de JS
+ * et CSS sur l'accueil, là où gzip ramène l'ensemble autour du quart.
+ */
+app.use(compression());
+
+/**
+ * En-têtes de sécurité de base.
+ *
+ * `nosniff` empêche un navigateur de réinterpréter un fichier servi contre le
+ * type déclaré. `Referrer-Policy` conserve le domaine référent sur les liens
+ * sortants — utile pour la mesure d'audience — sans divulguer le chemin complet.
+ * `frame-ancestors` bloque la mise en cadre du site par un tiers.
+ */
+app.use((req, res, next) => {
+  res.set('X-Content-Type-Options', 'nosniff');
+  res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.set('Content-Security-Policy', "frame-ancestors 'self'");
+  next();
+});
 
 /* ------------------------------------------------------------------ */
 /*  Protection PRÉPRODUCTION (staging)                                 */
