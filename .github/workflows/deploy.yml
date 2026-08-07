@@ -2,19 +2,30 @@ name: Build & publish bundle SSR (o2switch)
 
 # On ne build PAS sur o2switch (outils natifs incompatibles : esbuild, moteur Tailwind…).
 # Ce workflow build le site sur un runner GitHub (Linux récent, prebuilds OK) puis
-# publie un bundle PRÊT À L'EMPLOI (pur JS au runtime) sur la branche `deploy`.
-# o2switch n'a plus qu'à : git pull origin deploy && npm install --omit=dev && restart.
+# publie un bundle PRÊT À L'EMPLOI (pur JS au runtime) sur une branche de déploiement.
+# o2switch n'a plus qu'à : git fetch && git reset --hard && restart.
+#
+# DEUX ENVIRONNEMENTS
+#   main       -> branche `deploy`      -> préprod  (staging.motorboat74.com)
+#   production -> branche `deploy-prod` -> prod     (motorboat74.com)
+#
+# Mettre en ligne = `git push origin main:production` une fois la préprod validée.
+# Le bundle est identique dans les deux cas : ce sont les variables d'environnement
+# de chaque application cPanel (base, SESSION_SECRET, STAGING_PROTECT) qui les
+# distinguent, jamais le code. Une préprod qui diffère du code de prod ne prouve rien.
 
 on:
   push:
-    branches: [main]
+    branches: [main, production]
   workflow_dispatch:
 
 permissions:
   contents: write
 
+# Une file par environnement : publier en prod ne doit pas annuler une publication
+# de préprod en cours, et réciproquement.
 concurrency:
-  group: deploy-bundle
+  group: deploy-bundle-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -74,18 +85,36 @@ jobs:
           # connexion. Mélanger Apache (assets symlinkés) et Passenger (document) provoquait
           # des 421 (Misdirected Request) en HTTP/2. Express sert les assets via express.static.
 
-      - name: Publier sur la branche deploy
+      # La branche cible dépend de la branche source. `git init` à chaque passage
+      # réécrit l'historique en force : on ne peut donc PAS figer la prod sur un
+      # ancien commit de `deploy`, il n'existe plus après la publication suivante.
+      # D'où deux branches distinctes plutôt qu'un pointeur mobile.
+      - name: Choisir l'environnement
+        id: env
+        run: |
+          if [ "${GITHUB_REF_NAME}" = "production" ]; then
+            echo "branch=deploy-prod" >> "$GITHUB_OUTPUT"
+            echo "dir=~/mb74-prod"    >> "$GITHUB_OUTPUT"
+            echo "label=PRODUCTION (motorboat74.com)" >> "$GITHUB_OUTPUT"
+          else
+            echo "branch=deploy"      >> "$GITHUB_OUTPUT"
+            echo "dir=~/mb74-site"    >> "$GITHUB_OUTPUT"
+            echo "label=préprod (staging.motorboat74.com)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publier sur la branche de déploiement
         run: |
           cd deploy-bundle
-          git init -q -b deploy
+          git init -q -b "${TARGET}"
           git config user.email "ci@motorboat74.com"
           git config user.name "MB74 CI"
           git add -A
-          git commit -q -m "deploy: bundle SSR depuis ${GITHUB_SHA::7}"
-          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:deploy
+          git commit -q -m "deploy: bundle SSR depuis ${GITHUB_SHA::7} (${GITHUB_REF_NAME})"
+          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${TARGET}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET: ${{ steps.env.outputs.branch }}
 
       - name: Commande à passer sur o2switch
         run: |
-          echo "::notice::cd ~/mb74-site && git fetch origin && git reset --hard origin/deploy && mkdir -p tmp && touch tmp/restart.txt"
+          echo "::notice::${{ steps.env.outputs.label }} — cd ${{ steps.env.outputs.dir }} && git fetch origin && git reset --hard origin/${{ steps.env.outputs.branch }} && mkdir -p tmp && touch tmp/restart.txt"
