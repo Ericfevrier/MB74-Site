@@ -89,57 +89,61 @@ export function ServiceContactBlock({ subject, title, showMap, wide, hideHeader 
           </div>
         )}
 
-        <div className="grid lg:grid-cols-5 gap-8 items-start">
-          {/* Coordonnées */}
-          <div className="lg:col-span-2">
-            <h3 className="text-lg font-bold uppercase tracking-tight text-brand-dark mb-4">Informations de contact</h3>
-            <div className="bg-white border border-gray-200/80 rounded-3xl p-7 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]">
-              <ul className="divide-y divide-gray-100">
-                {infoRows.map((r) => {
-                  const Inner = (
-                    <span className="flex items-center gap-4 py-9 first:pt-2 last:pb-2 group">
-                      <span className="w-10 h-10 rounded-full bg-brand-cyan/10 text-brand-cyan flex items-center justify-center flex-shrink-0 transition group-hover:bg-brand-cyan group-hover:text-brand-dark">
-                        <r.icon size={17} />
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400">{r.label}</span>
-                        <span className="block font-semibold text-brand-dark text-sm leading-snug">{r.value}</span>
-                      </span>
+        {/*
+          Coordonnées fusionnées en bandeau, formulaire centré dessous.
+
+          Les deux blocs étaient côte à côte en 2/5 et 3/5 : la carte de
+          coordonnées, courte par nature (trois lignes), laissait une colonne de
+          vide sur toute la hauteur du formulaire. Une mise en page en colonnes
+          suppose des contenus de hauteur comparable, ce qui n'est pas le cas ici.
+
+          En bandeau, les trois coordonnées se lisent d'un coup avant le
+          formulaire, et celui-ci récupère toute la largeur utile — centré, donc
+          au centre de l'attention.
+        */}
+        <div className="mx-auto max-w-4xl">
+          <div className="bg-white border border-gray-200/80 rounded-3xl shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03] overflow-hidden">
+            <ul className="grid sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
+              {infoRows.map((r) => {
+                const Inner = (
+                  <span className="flex items-center gap-4 p-6 group h-full">
+                    <span className="w-11 h-11 rounded-full bg-brand-cyan/10 text-brand-cyan flex items-center justify-center flex-shrink-0 transition group-hover:bg-brand-cyan group-hover:text-brand-dark">
+                      <r.icon size={17} />
                     </span>
-                  );
-                  return (
-                    <li key={r.label}>
-                      {r.href ? (
-                        <a href={r.href} className="block hover:text-brand-cyan">{Inner}</a>
-                      ) : (
-                        Inner
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-
-            {/*
-              Carte compacte, sous les coordonnées : elle sert à SITUER, pas à
-              explorer. Elle avait été déplacée en bande pleine largeur sous le
-              formulaire — après l'appel à l'action, donc au mauvais moment de
-              la lecture, et avec deux cartouches d'adresse superposés (celui de
-              Google et le nôtre). Elle revient ici, près de l'adresse qu'elle
-              illustre.
-
-              `showMap` n'est pas passé par les pages qui portent déjà la section
-              Showroom : la carte y est présentée dans son vrai contexte.
-            */}
-            {showMap && (
-              <div className={`mt-6 ${wide ? 'h-72' : 'h-60'} rounded-3xl overflow-hidden border border-gray-200/80 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]`}>
-                <GoogleMapCustom light />
-              </div>
-            )}
+                    <span className="min-w-0">
+                      <span className="block text-[11px] font-semibold uppercase tracking-widest text-gray-400">{r.label}</span>
+                      <span className="block font-semibold text-brand-dark text-sm leading-snug">{r.value}</span>
+                    </span>
+                  </span>
+                );
+                return (
+                  <li key={r.label}>
+                    {r.href ? (
+                      <a href={r.href} className="block h-full hover:text-brand-cyan">{Inner}</a>
+                    ) : (
+                      Inner
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
 
-          {/* Formulaire */}
-          <div className="lg:col-span-3">
+          {/*
+            Carte : entre l'adresse qu'elle illustre et le formulaire, donc
+            AVANT l'appel à l'action. Elle avait été placée sous le formulaire,
+            au mauvais moment de la lecture.
+
+            `showMap` n'est pas passé par les pages qui portent déjà la section
+            Showroom : la carte y est présentée dans son vrai contexte.
+          */}
+          {showMap && (
+            <div className="mt-6 h-64 md:h-80 rounded-3xl overflow-hidden border border-gray-200/80 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]">
+              <GoogleMapCustom light />
+            </div>
+          )}
+
+          <div className="mt-10">
             <h3 className="text-lg font-bold uppercase tracking-tight text-brand-dark mb-4">Demande d'informations</h3>
             <div className="bg-white border border-gray-200/80 rounded-3xl p-6 lg:p-8 shadow-xl shadow-gray-400/10 ring-1 ring-black/[0.03]">
             {done ? (
