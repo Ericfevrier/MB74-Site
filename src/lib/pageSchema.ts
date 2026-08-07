@@ -146,8 +146,8 @@ export const PAGES: PageDef[] = [
         title: 'Bannière',
         fields: [
           { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/services-hub.webp' },
-          { key: 'hero.title', label: 'Titre', type: 'text', default: 'Nos services' },
-          { key: 'hero.subtitle', label: 'Sous-titre', type: 'textarea', default: 'Découvrez notre gamme complète de services nautiques professionnels. De la vente à l’entretien, en passant par l’hivernage, MotorBoat74 vous accompagne dans tous vos projets nautiques.' },
+          { key: 'hero.title', label: 'Titre', type: 'text', default: 'Nos services nautiques en Haute-Savoie' },
+          { key: 'hero.subtitle', label: 'Sous-titre', type: 'textarea', default: 'Découvrez notre gamme complète de services nautiques professionnels. De la vente à l’entretien, en passant par l’hivernage, Motor Boat 74 vous accompagne dans tous vos projets nautiques.' },
           {
             key: 'hero.stats', label: 'Chiffres clés (bannière)', type: 'list', itemLabel: 'Chiffre',
             itemFields: [{ key: 'value', label: 'Titre', type: 'text' }, { key: 'label', label: 'Sous-texte', type: 'text' }],
@@ -191,8 +191,8 @@ export const PAGES: PageDef[] = [
         title: 'Bannière',
         fields: [
           { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/2026-g23-perf-18.webp' },
-          { key: 'hero.title', label: 'Titre (vide = titre stylé par défaut)', type: 'text', default: 'Hivernage et stockage de bateau à Annecy · Hangar sécurisé 3 000 m²' },
-          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le Lac d'Annecy, le Léman et toute la région." },
+          { key: 'hero.title', label: 'Titre (vide = titre stylé par défaut)', type: 'text', default: 'Hivernage de bateau à Annecy · hangar sécurisé 3 000 m²' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Concessionnaire Nautique en Haute-Savoie, Motor Boat 74 hiverne, stocke et remet à l'eau votre bateau sur le Lac d'Annecy, le Léman et toute la région." },
           {
             key: 'hero.usps', label: 'Points forts (bannière)', type: 'list', itemLabel: 'Point fort',
             itemFields: [{ key: 'title', label: 'Titre', type: 'text' }, { key: 'desc', label: 'Description', type: 'textarea' }],
@@ -208,7 +208,7 @@ export const PAGES: PageDef[] = [
         title: 'Section « En bref »',
         fields: [
           { key: 'bref.eyebrow', label: 'Sur-titre', type: 'text', default: 'En bref, Hivernage bateau Annecy' },
-          { key: 'bref.lead', label: 'Phrase d’accroche (vide = version stylée)', type: 'textarea', default: "MotorBoat 74 est le spécialiste de l'hivernage et du stockage de bateau en Haute-Savoie, basé à Saint-Ferréol à 20 minutes d'Annecy." },
+          { key: 'bref.lead', label: 'Phrase d’accroche (vide = version stylée)', type: 'textarea', default: "Motor Boat 74 est le spécialiste de l'hivernage et du stockage de bateau en Haute-Savoie, basé à Saint-Ferréol à 20 minutes d'Annecy." },
           { key: 'bref.desc', label: 'Description', type: 'textarea', default: "L'hivernage consiste à mettre le bateau hors d'eau, purger et protéger le moteur contre le gel, puis le remiser au sec jusqu'au printemps. Notre formule complète couvre la mise hors d'eau, l'hivernage moteur certifié, le stockage en hangar isolé de 3 000 m² et la remise à l'eau, partout sur le Lac d'Annecy, le Lac du Bourget et le Léman." },
           {
             key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
@@ -257,7 +257,7 @@ export const PAGES: PageDef[] = [
               { q: "Quelle est la durée minimale d'un contrat de stockage ?", a: "Nos contrats hivernaux couvrent généralement 6 à 7 mois (d'octobre à avril). Nous proposons aussi des contrats à l'année ou sur-mesure." },
               { q: "Mon bateau est-il assuré de façon sécurisée chez vous ?", a: "Notre centre dispose d'un contrat d'assurance multirisque professionnelle 'stockage et garde'. Vous devez maintenir votre propre assurance tous risques en cours de validité." },
               { q: "Puis-je accéder à mon bateau pendant l'hivernage ?", a: "Les accès du hangar sont hautement contrôlés 7j/7. Vous pouvez planifier une visite ou retirer des effets personnels sur rendez-vous fixé 48h à l'avance." },
-              { q: "Prenez-vous en charge toutes les marques de bateaux ?", a: "Absolument. MotorBoat 74 est expert toutes marques : Nautique, Malibu, MasterCraft, Regal, Sea Ray, Tigé, Chaparral, Jeanneau, Beneteau, Moomba…" },
+              { q: "Prenez-vous en charge toutes les marques de bateaux ?", a: "Absolument. Motor Boat 74 est expert toutes marques : Nautique, Malibu, MasterCraft, Regal, Sea Ray, Tigé, Chaparral, Jeanneau, Beneteau, Moomba…" },
               { q: "Quelle est la différence entre un hivernage actif et passif ?", a: "L'hivernage passif (le nôtre, sous hangar) est un arrêt total idéal pour les hivers rudes : vidanges, mise au sec, préservation. L'hivernage actif (moteur qui tourne à quai) est risqué face aux hivers glacials de Haute-Savoie." },
               { q: "Gérez-vous la récupération de mon bateau au port ?", a: "Oui. Nous nous déplaçons à votre place de port (Annecy, Sevrier, Saint-Jorioz, Talloires, Veyrier, Thonon, Évian) avec remorques adaptées ou camion de grutage." },
             ],
@@ -276,13 +276,13 @@ export const PAGES: PageDef[] = [
         fields: [
           { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/entretien.webp' },
           { key: 'hero.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Entretien et réparation de bateaux à Annecy' },
-          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: 'De la révision moteur aux travaux de carrosserie, MotorBoat 74 garantit performance, sécurité et longévité à votre bateau. Interventions rapides et soignées, en atelier ou sur place.' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: 'De la révision moteur aux travaux de carrosserie, Motor Boat 74 garantit performance, sécurité et longévité à votre bateau. Interventions rapides et soignées, en atelier ou sur place.' },
         ],
       },
       {
         title: 'Section « En bref »',
         fields: [
-          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: "MotorBoat 74 assure l'entretien et la réparation de bateaux à Annecy et en Haute-Savoie." },
+          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: "Motor Boat 74 assure l'entretien et la réparation de bateaux à Annecy et en Haute-Savoie." },
           { key: 'bref.desc', label: 'Description', type: 'textarea', default: "Révision moteur (hors-bord et in-board, toutes marques), réparation, travaux de carrosserie, peinture, gel-coat et pose d'accastillage : notre atelier prend en charge votre bateau de A à Z, sur place ou en atelier, pour une navigation sûre et performante." },
           {
             key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
@@ -393,7 +393,7 @@ export const PAGES: PageDef[] = [
         fields: [
           { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/depannage.webp' },
           { key: 'hero.title', label: 'Titre (vide = version stylée)', type: 'text', default: "Dépannage de bateau sur le Lac d'Annecy · 7j/7 en saison" },
-          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Une panne sur l'eau ? Chaque minute compte. En Haute-Savoie, MotorBoat 74 intervient rapidement avec un bateau-atelier équipé pour vous remettre en sécurité et reprendre la navigation." },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Une panne sur l'eau ? Chaque minute compte. En Haute-Savoie, Motor Boat 74 intervient rapidement avec un bateau-atelier équipé pour vous remettre en sécurité et reprendre la navigation." },
           {
             key: 'hero.usps', label: 'Points forts (bannière)', type: 'list', itemLabel: 'Point fort',
             itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'text' }],
@@ -404,7 +404,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Section « En bref »',
         fields: [
-          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: "MotorBoat 74 assure le dépannage de bateau sur le lac d'Annecy, 7j/7 en saison, avec un bateau-atelier équipé." },
+          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: "Motor Boat 74 assure le dépannage de bateau sur le lac d'Annecy, 7j/7 en saison, avec un bateau-atelier équipé." },
           { key: 'bref.desc', label: 'Description', type: 'textarea', default: "En cas de panne moteur, électrique ou d'immobilisation sur l'eau, nous intervenons généralement sous 30 à 60 minutes pour réparer directement à flot. Si nécessaire, nous sécurisons et remorquons votre bateau jusqu'à notre atelier ou au port le plus proche." },
           {
             key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
@@ -519,7 +519,7 @@ export const PAGES: PageDef[] = [
         fields: [
           { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/transport.webp' },
           { key: 'hero.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Transport de bateau en France et en Europe' },
-          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: 'Achat, vente ou simple déplacement ? MotorBoat 74 assure le convoyage sécurisé de votre bateau, avec véhicules et remorques adaptés, partout en France et en Europe.' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: 'Achat, vente ou simple déplacement ? Motor Boat 74 assure le convoyage sécurisé de votre bateau, avec véhicules et remorques adaptés, partout en France et en Europe.' },
           {
             key: 'hero.usps', label: 'Points forts (bannière)', type: 'list', itemLabel: 'Point fort',
             itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'text' }],
@@ -530,7 +530,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Section « En bref »',
         fields: [
-          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: 'MotorBoat 74 assure le transport de bateau partout en France et en Europe.' },
+          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: 'Motor Boat 74 assure le transport de bateau partout en France et en Europe.' },
           { key: 'bref.desc', label: 'Description', type: 'textarea', default: "Service clé en main pour un achat, une vente, une mise à l'eau ou un transfert entre ports : nous chargeons, arrimons et convoyons votre bateau en toute sécurité grâce à des véhicules et remorques adaptés, avec assurance professionnelle." },
           {
             key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
@@ -638,7 +638,7 @@ export const PAGES: PageDef[] = [
         fields: [
           { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/sellerie.webp' },
           { key: 'hero.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Sellerie de bateau sur mesure · confection & rénovation' },
-          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Rénover l'intérieur de votre bateau ou remplacer une sellerie usée ? De la conception à la pose, MotorBoat 74 et ses artisans partenaires redonnent confort, style et protection à votre bateau." },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Rénover l'intérieur de votre bateau ou remplacer une sellerie usée ? De la conception à la pose, Motor Boat 74 et ses artisans partenaires redonnent confort, style et protection à votre bateau." },
           {
             key: 'hero.usps', label: 'Points forts (bannière)', type: 'list', itemLabel: 'Point fort',
             itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'text' }],
@@ -649,7 +649,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Section « En bref »',
         fields: [
-          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: 'MotorBoat 74 réalise la sellerie de bateau sur mesure à Annecy : confection, réparation et rénovation complète.' },
+          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: 'Motor Boat 74 réalise la sellerie de bateau sur mesure à Annecy : confection, réparation et rénovation complète.' },
           { key: 'bref.desc', label: 'Description', type: 'textarea', default: "En partenariat avec des artisans spécialisés, nous fabriquons coussins et assises personnalisés, réparons la sellerie abîmée et rénovons l'intérieur de votre bateau, avec des matériaux marins résistants aux UV et à l'humidité. La pose est réalisée et ajustée directement à bord." },
           {
             key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
@@ -771,7 +771,7 @@ export const PAGES: PageDef[] = [
         fields: [
           { key: 'hero.image', label: 'Image de fond', type: 'image', default: '/images/services/remorques.webp' },
           { key: 'hero.title', label: 'Titre (vide = version stylée)', type: 'text', default: 'Remorques de bateau sur mesure' },
-          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: 'Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. MotorBoat 74 sélectionne, règle et prépare une remorque homologuée CE, parfaitement adaptée à votre embarcation.' },
+          { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: 'Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. Motor Boat 74 sélectionne, règle et prépare une remorque homologuée CE, parfaitement adaptée à votre embarcation.' },
           {
             key: 'hero.usps', label: 'Points forts (bannière)', type: 'list', itemLabel: 'Point fort',
             itemFields: [{ key: 't', label: 'Titre', type: 'text' }, { key: 'd', label: 'Description', type: 'text' }],
@@ -782,7 +782,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Section « En bref »',
         fields: [
-          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: 'MotorBoat 74 propose des remorques de bateau sur mesure à Annecy et en Haute-Savoie.' },
+          { key: 'bref.lead', label: 'Accroche (vide = version stylée)', type: 'textarea', default: 'Motor Boat 74 propose des remorques de bateau sur mesure à Annecy et en Haute-Savoie.' },
           { key: 'bref.desc', label: 'Description', type: 'textarea', default: "Remorques homologuées CE, simples ou doubles essieux freinées, adaptées au wake, à la pêche ou au ski nautique. Nous sélectionnons le modèle dimensionné à votre bateau parmi nos marques partenaires, et nous l'ajustons, prête à l'emploi." },
           {
             key: 'bref.facts', label: 'Faits clés', type: 'list', itemLabel: 'Fait',
@@ -867,7 +867,7 @@ export const PAGES: PageDef[] = [
             defaultList: [
               { q: 'Comment choisir la bonne remorque pour mon bateau ?', a: 'Notre équipe vous accompagne pour sélectionner une remorque selon la taille de votre bateau, sa fréquence d’utilisation et vos trajets, pour un transport sécurisé et durable.' },
               { q: 'Proposez-vous l’installation et la préparation à l’usage ?', a: 'Oui, nous préparons et ajustons chaque remorque pour qu’elle soit prête à l’emploi, avec un contrôle complet des équipements et des conseils.' },
-              { q: 'Où obtenir une remorque sur mesure à Annecy ou en Haute-Savoie ?', a: 'MotorBoat 74 propose des remorques sur mesure, disponibles pour retrait ou livraison à Annecy et dans toute la Haute-Savoie.' },
+              { q: 'Où obtenir une remorque sur mesure à Annecy ou en Haute-Savoie ?', a: 'Motor Boat 74 propose des remorques sur mesure, disponibles pour retrait ou livraison à Annecy et dans toute la Haute-Savoie.' },
               { q: 'Quels sont vos horaires ?', a: 'Nous intervenons 7j/7 en période estivale, de 8h00 à 20h00. En cas d’urgence, contactez-nous.' },
             ],
           },
@@ -883,7 +883,7 @@ export const PAGES: PageDef[] = [
       {
         title: 'Bannière',
         fields: [
-          { key: 'hero.title', label: 'Titre', type: 'text', default: 'Nos bateaux' },
+          { key: 'hero.title', label: 'Titre', type: 'text', default: 'Wakeboats Nautique et MasterCraft' },
           { key: 'hero.subtitle', label: 'Sous-titre (vide = version stylée)', type: 'textarea', default: "Wakeboats et bateaux de ski nautique Nautique et MasterCraft, neufs et d'occasion, près du lac d'Annecy. Conseil personnalisé, essai sur l'eau, reprise et financement." },
         ],
       },
@@ -922,7 +922,7 @@ export const PAGES: PageDef[] = [
       },
     ],
   },
-  titleHero('bateaux-neufs', 'Bateaux — Neufs', '/bateaux/neufs', 'Bateaux neufs',
+  titleHero('bateaux-neufs', 'Bateaux — Neufs', '/bateaux/neufs', 'Bateaux neufs Nautique et MasterCraft',
     "La dernière génération de wakeboats et de bateaux de ski nautique Nautique et MasterCraft. Configurez votre bateau, essayez-le sur le lac d'Annecy et profitez de notre accompagnement complet."),
   titleHero('bateaux-vendus', 'Bateaux — Vendus', '/bateaux/vendu', 'Bateaux vendus',
     "Un aperçu des bateaux récemment vendus par Motor Boat 74. Un modèle similaire vous intéresse ? Nous lançons une recherche sur mesure et vous alertons dès qu'un bateau correspondant arrive."),
@@ -1094,12 +1094,12 @@ export const PAGES: PageDef[] = [
  */
 const SEO_DEFAULTS: Record<string, { title: string; description: string }> = {
   accueil: {
-    title: "Motorboat 74 | Vente et entretien de bateaux sur le Lac d'Annecy",
+    title: "Motor Boat 74 | Bateaux et services nautiques à Annecy",
     description: "Découvrez une sélection exclusive de bateaux (Nautique, MasterCraft, etc.) au bord du Lac d'Annecy. Hivernage, entretien et réparation.",
   },
   'services-hub': {
     title: 'Nos Services Nautiques | Motor Boat 74',
-    description: 'Découvrez les services de MotorBoat74 à Annecy : vente de bateaux Nautique, hivernage sécurisé, entretien, dépannage, transport et sellerie en Haute-Savoie.',
+    description: 'Découvrez les services de Motor Boat 74 à Annecy : vente de bateaux Nautique, hivernage sécurisé, entretien, dépannage, transport et sellerie en Haute-Savoie.',
   },
   hivernage: {
     title: 'Hivernage & Stockage Bateau Annecy, Hangar 3000 m² | MB74',
@@ -1147,7 +1147,7 @@ const SEO_DEFAULTS: Record<string, { title: string; description: string }> = {
   },
   contact: {
     title: 'Contactez-nous | Motor Boat 74',
-    description: 'MotorBoat74 vous accompagne pour l’achat, la vente, l’entretien ou l’hivernage de votre bateau. Notre shop et nos bureaux sont à Saint-Jorioz, à 8 minutes d’Annecy, et notre atelier à Saint-Ferréol.',
+    description: 'Motor Boat 74 vous accompagne pour l’achat, la vente, l’entretien ou l’hivernage de votre bateau. Notre shop et nos bureaux sont à Saint-Jorioz, à 8 minutes d’Annecy, et notre atelier à Saint-Ferréol.',
   },
 };
 

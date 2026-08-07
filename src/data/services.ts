@@ -75,7 +75,7 @@ export const services: ServiceDef[] = [
       'Entretien et réparation de bateaux à Annecy et Haute-Savoie. Nous assurons la révision moteur, coque, circuits électriques et maintenance totale.',
     h1: 'Entretien et réparation de bateaux',
     heroIntro:
-      'Confiez l’entretien et la réparation de votre bateau à MotorBoat74, spécialiste à Annecy et en Haute-Savoie. De la révision moteur aux travaux de carénage, en passant par la réparation d’équipements et la préparation à la saison, nous garantissons performance, sécurité et longévité à votre embarcation. Interventions rapides et soignées, sur place ou en atelier.',
+      'Confiez l’entretien et la réparation de votre bateau à Motor Boat 74, spécialiste à Annecy et en Haute-Savoie. De la révision moteur aux travaux de carénage, en passant par la réparation d’équipements et la préparation à la saison, nous garantissons performance, sécurité et longévité à votre embarcation. Interventions rapides et soignées, sur place ou en atelier.',
     heroImage: '/images/services/entretien.webp',
     heroCtas: [
       { label: 'Demander un devis gratuit', href: '#contact', primary: true },
@@ -121,7 +121,7 @@ export const services: ServiceDef[] = [
         eyebrow: 'Mécanique nautique',
         heading: 'Nos services d’entretien mécanique',
         intro:
-          'Professionnels de la mécanique nautique, nous possédons toutes les connaissances et le matériel nécessaire à l’entretien de votre bateau. Qu’il s’agisse d’un moteur hors-bord 2 temps ou 4 temps, ou d’un moteur in-bord Z-Drive, V-Drive ou ligne d’arbre, MotorBoat74 assure un suivi complet pour une navigation en toute sécurité.',
+          'Professionnels de la mécanique nautique, nous possédons toutes les connaissances et le matériel nécessaire à l’entretien de votre bateau. Qu’il s’agisse d’un moteur hors-bord 2 temps ou 4 temps, ou d’un moteur in-bord Z-Drive, V-Drive ou ligne d’arbre, Motor Boat 74 assure un suivi complet pour une navigation en toute sécurité.',
         layout: 'cards',
         items: [
           {
@@ -141,7 +141,7 @@ export const services: ServiceDef[] = [
         eyebrow: 'Atelier carrosserie',
         heading: 'Carrosserie et embellissement du bateau',
         intro:
-          'Équipé d’un atelier carrosserie complet, MotorBoat74 est votre partenaire pour la réfection et l’embellissement de votre bateau. Nous prenons soin de votre navire avec précision et professionnalisme.',
+          'Équipé d’un atelier carrosserie complet, Motor Boat 74 est votre partenaire pour la réfection et l’embellissement de votre bateau. Nous prenons soin de votre navire avec précision et professionnalisme.',
         layout: 'cards',
         items: [
           {
@@ -172,7 +172,7 @@ export const services: ServiceDef[] = [
     ],
     faqs: [
       {
-        question: 'Quels services propose MotorBoat74 pour l’entretien des bateaux ?',
+        question: 'Quels services propose Motor Boat 74 pour l’entretien des bateaux ?',
         answer:
           'Nous proposons vidange moteur, contrôle des circuits d’eau et de carburant, révision des équipements électriques, nettoyage intérieur/extérieur, polissage de la coque, et maintenance des accessoires.',
       },
@@ -199,7 +199,7 @@ export const services: ServiceDef[] = [
       {
         question: 'Sur quels types de bateaux travaillez-vous ?',
         answer:
-          'MotorBoat74 intervient sur tous types de bateaux de plaisance, ski nautique, wakeboard, voiliers et hors-bords, avec ou sans remorque.',
+          'Motor Boat 74 intervient sur tous types de bateaux de plaisance, ski nautique, wakeboard, voiliers et hors-bords, avec ou sans remorque.',
       },
     ],
   },
@@ -213,10 +213,10 @@ export const services: ServiceDef[] = [
     icon: 'lifebuoy',
     metaTitle: 'Dépannage Bateau Lac d’Annecy 7j/7 | Motor Boat 74',
     metaDescription:
-      'Besoin d’un dépannage sur le lac d’Annecy ? MotorBoat74 intervient 7j/7 avec un bateau-atelier pour réparer votre bateau rapidement.',
+      'Besoin d’un dépannage sur le lac d’Annecy ? Motor Boat 74 intervient 7j/7 avec un bateau-atelier pour réparer votre bateau rapidement.',
     h1: 'Dépannage de votre bateau sur le Lac d’Annecy',
     heroIntro:
-      'Lorsque votre bateau tombe en panne sur le lac d’Annecy, chaque minute compte. MotorBoat74 comprend l’urgence de la situation et s’engage à intervenir rapidement pour vous remettre en sécurité et vous permettre de reprendre vos activités nautiques.',
+      'Lorsque votre bateau tombe en panne sur le lac d’Annecy, chaque minute compte. Motor Boat 74 comprend l’urgence de la situation et s’engage à intervenir rapidement pour vous remettre en sécurité et vous permettre de reprendre vos activités nautiques.',
     heroImage: '/images/services/depannage.webp',
     heroCtas: [
       { label: 'Appel d’urgence', href: `tel:${TEL}`, primary: true },
@@ -268,7 +268,7 @@ export const services: ServiceDef[] = [
       },
       {
         eyebrow: 'Vos garanties',
-        heading: 'Pourquoi choisir MotorBoat74 pour votre dépannage ?',
+        heading: 'Pourquoi choisir Motor Boat 74 pour votre dépannage ?',
         layout: 'why',
         items: [
           {

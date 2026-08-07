@@ -26,7 +26,7 @@ export function GoogleMapCustom({ address, light }: GoogleMapCustomProps = {}) {
         allowFullScreen={true}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        title="Localisation Motorboat 74"
+        title="Localisation Motor Boat 74"
       ></iframe>
 
       {/* Fallback for when API_KEY is missing in the embed URL (Google sometimes allows basic embed without key, but if not, we use the share link format) */}
@@ -39,7 +39,7 @@ export function GoogleMapCustom({ address, light }: GoogleMapCustomProps = {}) {
           allowFullScreen={true}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title="Localisation Motorboat 74"
+          title="Localisation Motor Boat 74"
           className="absolute inset-0"
         ></iframe>
       )}

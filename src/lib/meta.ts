@@ -47,6 +47,23 @@ export function canonicalUrl(url: string): string {
   return path === '' ? `${m[1]}/` : `${m[1]}${path}`;
 }
 
+/** Limites retenues : 60 signes pour un titre ou un H1, 155 pour une description. */
+export const SEO_LIMITS = { title: 60, description: 155 } as const;
+
+/**
+ * Renvoie la première variante qui tient dans la limite.
+ *
+ * Sert à respecter les limites SANS jamais tronquer : une coupe brute produit
+ * des libellés cassés en plein mot — c'est exactement ce que faisait la
+ * description des pages de marque. On écrit plutôt plusieurs formulations, de
+ * la plus riche à la plus courte, et on retient la première qui passe.
+ *
+ * Le dernier élément est le repli : à lui d'être court par construction.
+ */
+export function fitLength(limit: number, ...variants: string[]): string {
+  return variants.find((v) => v && v.length <= limit) ?? variants[variants.length - 1] ?? '';
+}
+
 export function pageMeta(i: PageMetaInput): MetaDescriptor[] {
   const m: MetaDescriptor[] = [{ title: i.title }];
   const canonical = i.canonical ? canonicalUrl(i.canonical) : undefined;

@@ -9,7 +9,7 @@ import { faqSchema, breadcrumbSchema } from '../lib/schema';
 export function blogHivernageMeta() {
   const path = '/blog/hivernage/hivernage-bateau-guide-complet';
   const canonical = `${SITE.url}${path}/`;
-  const title = 'Hivernage bateau : le guide complet pour bien préparer votre bateau';
+  const title = 'Hivernage bateau : le guide complet';
   const hero = '/images/hivernage/annecy.webp';
   const author = "L'équipe Motor Boat 74";
   const schemaArticle = {
@@ -93,7 +93,7 @@ const Tip = ({ label, children }: { label: string; children: React.ReactNode }) 
 
 export function BlogHivernagePage() {
   const path = '/blog/hivernage/hivernage-bateau-guide-complet';
-  const title = 'Hivernage bateau : le guide complet pour bien préparer votre bateau';
+  const title = 'Hivernage bateau : le guide complet';
   const hero = '/images/hivernage/annecy.webp';
   const author = "L'équipe Motor Boat 74";
 

@@ -54,7 +54,7 @@ export function depannageMeta() {
   return pageMeta({
     title: 'Dépannage Bateau Lac d’Annecy 7j/7 | Motor Boat 74',
     description:
-      'Dépannage de bateau sur le lac d’Annecy : intervention rapide 7j/7 (30-60 min) avec bateau-atelier équipé, réparation à flot, remorquage. Appelez Motor Boat 74.',
+      'Dépannage de bateau sur le lac d’Annecy : intervention 7j/7 en saison sous 30 à 60 min, bateau-atelier équipé, remorquage.',
     canonical,
     image: `${SITE.url}/images/services/depannage.webp`,
     robots: 'index, follow, max-image-preview:large',
@@ -168,7 +168,7 @@ export function DepannagePage() {
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
               {t.raw('hero.subtitle')
                 ? t.raw('hero.subtitle')
-                : <>Une panne sur l'eau&nbsp;? Chaque minute compte. En Haute-Savoie, MotorBoat 74 intervient rapidement avec un <strong className="text-brand-cyan">bateau-atelier équipé</strong> pour vous remettre en sécurité et reprendre la navigation.</>}
+                : <>Une panne sur l'eau&nbsp;? Chaque minute compte. En Haute-Savoie, Motor Boat 74 intervient rapidement avec un <strong className="text-brand-cyan">bateau-atelier équipé</strong> pour vous remettre en sécurité et reprendre la navigation.</>}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">

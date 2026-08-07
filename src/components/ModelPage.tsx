@@ -13,7 +13,7 @@ import { useLiveUsedBoats } from '../lib/publicApi';
 import { useSeoOverride } from '../lib/seo';
 import { SITE } from '../data/site';
 import { ServiceContactBlock } from './services/ServiceContactBlock';
-import { pageMeta } from '../lib/meta';
+import { pageMeta, fitLength, SEO_LIMITS } from '../lib/meta';
 import { breadcrumbSchema, faqSchema, businessNode } from '../lib/schema';
 
 const GROUP_ICON: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
@@ -90,8 +90,24 @@ export function modelPageMeta({ data, params }: { data?: { model?: NautiqueModel
     : null;
 
   return pageMeta({
-    title: model.metaTitle,
-    description: model.metaDescription,
+    // Le titre éditorial est gardé s'il tient dans la limite ; sinon on retombe
+    // sur des formulations de plus en plus courtes, jamais sur une troncature.
+    // Ce garde-fou vaut aussi pour les modèles créés depuis l'admin, où rien
+    // n'empêche de saisir un titre de 90 signes — c'était le cas du G25 Paragon.
+    title: fitLength(
+      SEO_LIMITS.title,
+      model.metaTitle,
+      `${fullName} ${model.year} — prix et fiche technique`,
+      `${fullName} ${model.year} — prix et specs`,
+      `${model.short} ${model.year} — prix et specs`,
+      `${model.short} ${model.year}`,
+    ),
+    description: fitLength(
+      SEO_LIMITS.description,
+      model.metaDescription,
+      `${fullName} ${model.year} : ${model.tagline || model.gamme}. Prix, fiche technique et essai à Annecy.`,
+      `${fullName} ${model.year} : prix, fiche technique et essai sur le lac d’Annecy.`,
+    ),
     canonical,
     image: heroAbs,
     ogType: 'product',

@@ -22,9 +22,11 @@ const STAT_ICONS = [Warehouse, Clock, MapPin];
 export function servicesHubMeta() {
   const canonical = `${SITE.url}/services/`;
   return pageMeta({
-    title: 'Nos Services Nautiques | Motor Boat 74',
+    // Page de SERVICE : elle garde et renforce l'ancrage local, contrairement
+    // aux pages de vente. Mot-clé principal : « services nautiques Haute-Savoie ».
+    title: 'Services nautiques en Haute-Savoie | Motor Boat 74',
     description:
-      'Découvrez les services de MotorBoat74 à Annecy : vente de bateaux Nautique, hivernage sécurisé, entretien, dépannage, transport et sellerie en Haute-Savoie.',
+      'Hivernage, entretien, réparation, dépannage, transport, sellerie et remorques de bateau en Haute-Savoie, autour du lac d’Annecy.',
     canonical,
     image: `${SITE.url}/images/services/services-hub.webp`,
     jsonLd: [

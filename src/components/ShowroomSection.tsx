@@ -27,7 +27,7 @@ export function ShowroomSection() {
           <div className="h-[400px] rounded-3xl overflow-hidden shadow-2xl">
             <img 
                src="/images/img-20230924-wa0017-1-11zon-11zon-e1727707593371-11zon.webp" 
-               alt="Showroom Motorboat 74" 
+               alt="Showroom Motor Boat 74" 
                className="w-full h-full object-cover"
                loading="lazy"
                referrerPolicy="no-referrer"

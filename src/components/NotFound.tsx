@@ -4,7 +4,7 @@ import { Compass, ArrowLeft } from 'lucide-react';
 import { usePageContent } from '../lib/pageContent';
 
 export function notFoundMeta() {
-  return [{ title: 'Page introuvable | Motorboat 74' }, { name: 'robots', content: 'noindex' }];
+  return [{ title: 'Page introuvable | Motor Boat 74' }, { name: 'robots', content: 'noindex' }];
 }
 
 export function NotFound() {

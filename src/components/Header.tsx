@@ -58,7 +58,7 @@ export function Header() {
           {/* Logo Area */}
           <Link to="/" className="flex items-center space-x-3 sm:space-x-4 flex-shrink-0 cursor-pointer group ml-0 lg:ml-[-15px]">            <img
               src="/images/logo-transprent.webp"
-              alt="Motorboat 74"
+              alt="Motor Boat 74"
               className="h-16 w-16 lg:h-[100px] lg:w-[100px] object-contain transition-transform group-hover:scale-105 duration-300"
               referrerPolicy="no-referrer"
             />

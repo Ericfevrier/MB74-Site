@@ -52,7 +52,7 @@ export function Footer() {
             </div>
 
             <p className="text-sm leading-relaxed text-gray-300 font-medium">
-              Motorboat74, concessionnaire officiel de la marque Nautique et importateur de Connelly Ski en Haute-Savoie, est spécialisé dans la vente, l'hivernage et l'entretien de bateaux à moteur. Nous vous accompagnons dans tous vos projets nautiques sur le Lac d'Annecy et ses environs.
+              Motor Boat 74, concessionnaire officiel de la marque Nautique et importateur de Connelly Ski en Haute-Savoie, est spécialisé dans la vente, l'hivernage et l'entretien de bateaux à moteur. Nous vous accompagnons dans tous vos projets nautiques sur le Lac d'Annecy et ses environs.
             </p>
 
             <a href={s.phoneHref} className="inline-flex items-center gap-3 text-white hover:text-brand-cyan transition-colors">

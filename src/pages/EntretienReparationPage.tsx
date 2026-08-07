@@ -63,7 +63,7 @@ export function entretienMeta() {
   return pageMeta({
     title: 'Réparation & Entretien Bateau Annecy | Motor Boat 74',
     description:
-      'Entretien et réparation de bateaux à Annecy : révision moteur, réparation, carrosserie, peinture et accastillage, en atelier ou sur place. Devis gratuit sous 24 h.',
+      'Entretien et réparation de bateaux à Annecy : moteur, coque, carrosserie et accastillage, en atelier ou sur place. Devis sous 24 h.',
     canonical,
     image: `${SITE.url}/images/services/entretien.webp`,
     robots: 'index, follow, max-image-preview:large',
@@ -181,7 +181,7 @@ export function EntretienReparationPage() {
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
               {t.raw('hero.subtitle')
                 ? t.raw('hero.subtitle')
-                : <>De la <strong className="text-brand-cyan">révision moteur</strong> aux travaux de carrosserie, MotorBoat 74 garantit performance, sécurité et longévité à votre bateau. Interventions rapides et soignées, <strong className="text-white">en atelier ou sur place</strong>.</>}
+                : <>De la <strong className="text-brand-cyan">révision moteur</strong> aux travaux de carrosserie, Motor Boat 74 garantit performance, sécurité et longévité à votre bateau. Interventions rapides et soignées, <strong className="text-white">en atelier ou sur place</strong>.</>}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">

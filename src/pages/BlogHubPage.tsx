@@ -21,7 +21,7 @@ export function blogHubMeta({ data }: { data?: { articles?: BlogArticle[] } } = 
   return pageMeta({
     title: `Blog | Conseils & actualités nautiques | ${SITE.name}`,
     description:
-      'Le blog de Motor Boat 74 : guides d’entretien et d’hivernage, comparatifs, actualités Nautique et MasterCraft, conseils d’achat et de revente, près du lac d’Annecy.',
+      'Conseils d’experts sur l’hivernage, l’entretien et l’achat de bateau, par l’équipe Motor Boat 74 sur le lac d’Annecy.',
     canonical,
     image: HERO,
     ogTitle: `Blog | ${SITE.name}`,

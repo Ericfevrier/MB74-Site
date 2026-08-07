@@ -26,6 +26,14 @@ export interface BrandData {
   logo: string;
   /** Statut commercial affiché (ex. "Concessionnaire officiel", "Importateur officiel"). Défaut : "Concessionnaire officiel". */
   role?: string;
+  /**
+   * Statut commercial pour le titre et le H1, quand il diffère du `role` affiché.
+   * Sert à porter la portée réelle — « importateur exclusif France » n'est vrai
+   * que pour MasterCraft et ne peut donc pas venir d'un modèle commun.
+   */
+  seoRole?: string;
+  /** Description de recherche, 155 caractères maximum. */
+  metaDescription?: string;
   /** Hero "emblème + wordmark" : affiche le logo (sur pastille blanche) + le nom de la marque en grand à côté.
    *  (Pour les logos qui ne contiennent pas déjà le nom, ex. MasterCraft.) */
   heroWordmark?: boolean;
@@ -45,11 +53,12 @@ export const STATIC_BRANDS_DATA: Record<string, BrandData> = {
     id: "nautique",
     name: "Nautique",
     fullName: "Nautique",
+    metaDescription: "Concessionnaire officiel Nautique : wakeboats et bateaux de ski nautique G, S, GS et Ski Nautique. Essai sur le lac d'Annecy, livraison France.",
     logo: "/images/nautique-web-logo-white.webp",
     role: "Concessionnaire officiel",
     heroImage: "/images/2026-p23-ext-09-11zon.webp",
     tagline: "L'excellence sur l'eau depuis 1925",
-    description: "MotorBoat74 vous propose une sélection haut de gamme de bateaux Nautique, spécialement conçus pour le ski nautique, le wakeboard et le wakesurf. Ces bateaux se démarquent par une construction robuste, des matériaux premium et une finition irréprochable.\n\nChaque modèle est pensé pour offrir des sensations de glisse exceptionnelles, une navigation fluide et une ergonomie parfaite à bord. Que vous soyez rider expérimenté ou que vous souhaitiez profiter de moments en famille sur l’eau, la gamme Nautique répond à toutes les envies.\n\nEn tant que concessionnaire officiel, nous vous accompagnons à chaque étape : conseil, choix du modèle, options, financement… avec un seul objectif : trouver le bateau parfaitement adapté à vos besoins et votre style de navigation.",
+    description: "Motor Boat 74 vous propose une sélection haut de gamme de bateaux Nautique, spécialement conçus pour le ski nautique, le wakeboard et le wakesurf. Ces bateaux se démarquent par une construction robuste, des matériaux premium et une finition irréprochable.\n\nChaque modèle est pensé pour offrir des sensations de glisse exceptionnelles, une navigation fluide et une ergonomie parfaite à bord. Que vous soyez rider expérimenté ou que vous souhaitiez profiter de moments en famille sur l’eau, la gamme Nautique répond à toutes les envies.\n\nEn tant que concessionnaire officiel, nous vous accompagnons à chaque étape : conseil, choix du modèle, options, financement… avec un seul objectif : trouver le bateau parfaitement adapté à vos besoins et votre style de navigation.",
     models: [
       {
         name: "G25 Paragon",
@@ -178,8 +187,13 @@ export const STATIC_BRANDS_DATA: Record<string, BrandData> = {
   },
   mastercraft: {
     id: "mastercraft",
-    name: "Mastercraft",
+    // La marque s'ecrit MasterCraft (C majuscule). Ce champ portait "Mastercraft",
+    // d'ou un titre "Importateur officiel Mastercraft" sur sa propre page : la
+    // marque mal orthographiee sur la page censee la representer.
+    name: "MasterCraft",
     fullName: "MasterCraft Boats",
+    seoRole: "importateur exclusif France",
+    metaDescription: "Importateur exclusif MasterCraft en France : NXT, XT, X, XStar, ProStar. Moteurs Ilmor, système SurfStar. Essai sur le lac d'Annecy, livraison France.",
     logo: "/images/mcft-70e1d427.webp",
     role: "Importateur officiel",
     heroWordmark: true,

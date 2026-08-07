@@ -16,9 +16,9 @@ const HERO = '/images/imported/iujfrvnt-dt-background-image-1.webp';
 export function teamMeta() {
   const canonical = `${SITE.url}/la-team/`;
   return pageMeta({
-    title: 'La Team | Motor Boat 74, concessionnaire Nautique près d’Annecy',
+    title: 'La Team | Motor Boat 74',
     description:
-      'Rencontrez l’équipe de Motor Boat 74, concessionnaire officiel Nautique et importateur Connelly Ski en Haute-Savoie : vente, hivernage et entretien de bateaux près du lac d’Annecy.',
+      'L’équipe Motor Boat 74 : conseillers, techniciens et selliers au service de votre bateau, sur le lac d’Annecy et en Haute-Savoie.',
     canonical,
     image: HERO,
     ogTitle: 'La Team | Motor Boat 74',

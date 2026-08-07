@@ -165,7 +165,7 @@ export function hivernageMeta() {
   return pageMeta({
     title: 'Hivernage & Stockage Bateau Annecy, Hangar 3000 m² | MB74',
     description:
-      "Hivernage et stockage de bateau à Annecy (Haute-Savoie) : hangar sécurisé 3 000 m², hivernage moteur certifié, antigel, remise à l'eau incluse. Devis personnalisé gratuit sous 24 h.",
+      "Hivernage de bateau à Annecy : hangar sécurisé de 3 000 m², hivernage moteur certifié, antigel, remise à l'eau. Devis gratuit sous 24 h.",
     canonical: 'https://motorboat74.com/hivernage-stockage-bateau',
     image: 'https://motorboat74.com/images/2026-g23-perf-18.webp',
     robots: 'index, follow, max-image-preview:large',
@@ -173,7 +173,7 @@ export function hivernageMeta() {
     ogDescription:
       "Hivernage moteur certifié, antigel, stockage hors-gel et remise à l'eau incluse sur le Lac d'Annecy. Devis personnalisé gratuit sous 24 h.",
     ogLocale: 'fr_FR',
-    ogSiteName: 'MotorBoat 74',
+    ogSiteName: 'Motor Boat 74',
     twitterCard: true,
     // Cette page a pour sujet le hangar : on géolocalise sur l'atelier, mais
     // depuis SITE.workshop. La page portait ici une TROISIÈME paire de
@@ -266,7 +266,7 @@ export function HivernageStockagePage() {
         <div className="absolute inset-0 z-0">
           <img
             src={t('hero.image')}
-            alt="MotorBoat 74, hivernage et stockage de bateau en Haute-Savoie, sur le Lac d'Annecy"
+            alt="Motor Boat 74, hivernage et stockage de bateau en Haute-Savoie, sur le Lac d'Annecy"
             className="w-full h-full object-cover opacity-60 scale-105"
             referrerPolicy="no-referrer" fetchPriority="high" />
           {/* Directional gradient: dark on the text side, image kept visible on the right */}
@@ -290,13 +290,13 @@ export function HivernageStockagePage() {
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase text-white tracking-tight leading-tight mb-4">
               {t.raw('hero.title')
                 ? t.raw('hero.title')
-                : <>Hivernage et stockage de bateau à <span className="text-brand-cyan">Annecy</span> <span className="text-white/90">· Hangar sécurisé 3 000 m²</span></>}
+                : <>Hivernage de bateau à <span className="text-brand-cyan">Annecy</span> <span className="text-white/90">· hangar sécurisé 3 000 m²</span></>}
             </h1>
 
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
               {t.raw('hero.subtitle')
                 ? t.raw('hero.subtitle')
-                : <>Concessionnaire Nautique en Haute-Savoie, MotorBoat 74 hiverne, stocke et remet à l'eau votre bateau sur le <strong className="text-brand-cyan">Lac d'Annecy</strong>, le <strong className="text-white">Léman</strong> et toute la région.</>}
+                : <>Concessionnaire Nautique en Haute-Savoie, Motor Boat 74 hiverne, stocke et remet à l'eau votre bateau sur le <strong className="text-brand-cyan">Lac d'Annecy</strong>, le <strong className="text-white">Léman</strong> et toute la région.</>}
             </p>
 
             {/* 3 USP as requested */}
@@ -523,7 +523,7 @@ export function HivernageStockagePage() {
                 <div className="mb-12">
                   <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-2">Protocole certifié</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-bold uppercase text-brand-dark tracking-tight">
-                    Comment se déroule l'hivernage chez MotorBoat 74
+                    Comment se déroule l'hivernage chez Motor Boat 74
                   </h2>
                 </div>
 
@@ -642,7 +642,7 @@ export function HivernageStockagePage() {
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 relative group">
                     <img 
                       src="/images/placeholder-boat.webp" 
-                      alt="hangar de stockage de bateaux à Annecy avec MotorBoat 74" 
+                      alt="hangar de stockage de bateaux à Annecy avec Motor Boat 74" 
                       className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" 
                       loading="lazy"
                       referrerPolicy="no-referrer"
@@ -780,7 +780,7 @@ export function HivernageStockagePage() {
                     Hivernage de bateau partout en Haute-Savoie et autour des lacs alpins
                   </h2>
                   <p className="text-sm text-gray-600 mt-4 leading-relaxed">
-                    Chez MotorBoat 74, nous couvrons la totalité des grands bassins nautiques de Haute-Savoie, Savoie et de l'arc lémanique. Pour assurer un maillage optimal, notre équipe assure le transport, la dépose et la récupération sur les principaux ports.
+                    Chez Motor Boat 74, nous couvrons la totalité des grands bassins nautiques de Haute-Savoie, Savoie et de l'arc lémanique. Pour assurer un maillage optimal, notre équipe assure le transport, la dépose et la récupération sur les principaux ports.
                   </p>
                 </div>
 
@@ -855,7 +855,7 @@ export function HivernageStockagePage() {
                       {"★★★★★".split('').map((star, i) => <Star key={i} className="w-4 h-4 fill-brand-cyan text-brand-cyan" />)}
                     </div>
                     <p className="text-gray-600 text-xs italic leading-relaxed mb-4">
-                      "C'est la troisième année que je confie mon Super Air Nautique G23 pour l'hivernage chez MotorBoat 74. Le moteur est vidangé avec un soin exceptionnel et j'aime retrouver mon intérieur absolument sec et dépoussiéré chaque printemps. Recommandation totale !"
+                      "C'est la troisième année que je confie mon Super Air Nautique G23 pour l'hivernage chez Motor Boat 74. Le moteur est vidangé avec un soin exceptionnel et j'aime retrouver mon intérieur absolument sec et dépoussiéré chaque printemps. Recommandation totale !"
                     </p>
                     <div className="text-xs font-bold text-brand-dark uppercase tracking-wider">
                      , Marc D. · Annecy, Nautique G23
@@ -969,7 +969,7 @@ export function HivernageStockagePage() {
                     Réservez votre hivernage 2025/2026 dès aujourd'hui
                   </h2>
                   <p className="text-xs text-gray-500 mt-2 font-medium">
-                    Complétez notre formulaire allégé en 24h. Un technicien qualifié MotorBoat 74 chiffre votre proposition sur-mesure.
+                    Complétez notre formulaire allégé en 24h. Un technicien qualifié Motor Boat 74 chiffre votre proposition sur-mesure.
                   </p>
                 </div>
               </div>

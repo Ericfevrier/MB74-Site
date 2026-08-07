@@ -10,7 +10,7 @@ import { getUsedBoatBySlug, allUsedBoats, availableUsedBoats, type UsedBoat } fr
 import { getBrandModels } from '../data/boatBrands';
 import { UsedBoatCard } from '../components/UsedBoatCard';
 import { ServiceContactBlock } from '../components/services/ServiceContactBlock';
-import { pageMeta } from '../lib/meta';
+import { pageMeta, fitLength, SEO_LIMITS } from '../lib/meta';
 import { breadcrumbSchema, faqSchema } from '../lib/schema';
 import { useSeoOverride } from '../lib/seo';
 
@@ -71,8 +71,22 @@ export function occasionDetailMeta({ data, params }: { data?: { boat?: UsedBoat 
   nextYear.setFullYear(nextYear.getFullYear() + 1);
 
   return pageMeta({
-    title: `${boat.title} ${boat.year} d’occasion${boat.price && !boat.sold ? ` - ${boat.price}` : ''} | Motor Boat 74`,
-    description: `${boat.title} ${boat.year} d’occasion${brandName ? ` (${brandName})` : ''} chez Motor Boat 74, près du lac d’Annecy. ${boat.power ? boat.power + '. ' : ''}${boat.hours ? boat.hours + ' moteur. ' : ''}Révisé, essai sur l’eau, reprise et financement.`,
+    // Le prix est l'information qui décide du clic sur une annonce d'occasion :
+    // il passe avant le nom du vendeur quand les 60 signes ne permettent pas les
+    // deux. Variantes de la plus riche à la plus courte, jamais de troncature.
+    title: fitLength(
+      SEO_LIMITS.title,
+      `${boat.title} ${boat.year} d’occasion${boat.price && !boat.sold ? ` - ${boat.price}` : ''} | Motor Boat 74`,
+      `${boat.title} ${boat.year} d’occasion${boat.price && !boat.sold ? ` - ${boat.price}` : ''}`,
+      `${boat.title} ${boat.year} d’occasion`,
+      `${boat.title} ${boat.year}`,
+    ),
+    description: fitLength(
+      SEO_LIMITS.description,
+      `${boat.title} ${boat.year} d’occasion${brandName ? ` (${brandName})` : ''}, révisé par nos ateliers. ${boat.power ? boat.power + '. ' : ''}${boat.hours ? boat.hours + ' moteur. ' : ''}Essai, reprise, financement.`,
+      `${boat.title} ${boat.year} d’occasion, révisé par nos ateliers. ${boat.hours ? boat.hours + ' moteur. ' : ''}Essai, reprise et financement.`,
+      `${boat.title} ${boat.year} d’occasion, révisé par nos ateliers. Essai sur l’eau, reprise et financement.`,
+    ),
     canonical,
     image: heroAbs,
     ogTitle: `${boat.title} ${boat.year} d’occasion | Motor Boat 74`,

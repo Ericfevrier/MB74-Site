@@ -57,7 +57,7 @@ export function sellerieMeta() {
   return pageMeta({
     title: 'Sellerie de Bateau Sur Mesure et Rénovation | Motor Boat 74',
     description:
-      "Sellerie de bateau à Annecy : confection sur mesure, réparation et rénovation complète. Matériaux marins anti-UV et anti-humidité, pose incluse. Devis gratuit.",
+      "Sellerie de bateau sur mesure à Annecy : confection, réparation et rénovation complète en matériaux marins anti-UV. Pose incluse.",
     canonical,
     image: `${SITE.url}/images/services/sellerie.webp`,
     robots: 'index, follow, max-image-preview:large',
@@ -175,7 +175,7 @@ export function SelleriePage() {
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
               {t.raw('hero.subtitle')
                 ? t.raw('hero.subtitle')
-                : <>Rénover l'intérieur de votre bateau ou remplacer une sellerie usée&nbsp;? De la <strong className="text-brand-cyan">conception à la pose</strong>, MotorBoat 74 et ses artisans partenaires redonnent confort, style et protection à votre bateau.</>}
+                : <>Rénover l'intérieur de votre bateau ou remplacer une sellerie usée&nbsp;? De la <strong className="text-brand-cyan">conception à la pose</strong>, Motor Boat 74 et ses artisans partenaires redonnent confort, style et protection à votre bateau.</>}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">

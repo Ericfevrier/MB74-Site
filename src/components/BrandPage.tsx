@@ -13,9 +13,20 @@ import { FAQS_BY_BRAND } from './FAQSection';
 export function brandPageMeta({ data, params }: { data?: { brand?: BrandData } | null; params: { id?: string } }) {
   const id = (params.id || '').toLowerCase();
   const brand = data?.brand ?? (id ? brandsData[id] : undefined);
-  if (!brand) return [{ title: 'Marque non trouvée | Motorboat 74' }, { name: 'robots', content: 'noindex' }];
+  if (!brand) return [{ title: 'Marque non trouvée | Motor Boat 74' }, { name: 'robots', content: 'noindex' }];
   const role = brand.role || 'Concessionnaire officiel';
   const canonical = `${SITE.url}/marque/${id}`;
+
+  /**
+   * Titre et H1 rédigés, plutôt que composés depuis fullName + role + nom du site.
+   * Le modèle commun produisait « Nautique | Concessionnaire officiel Nautique |
+   * Motor Boat 74 » : la marque trois fois, 59 caractères, et une graphie du nom
+   * du site qu'on ne trouve nulle part ailleurs. Il écrivait aussi « Importateur
+   * officiel Mastercraft » sur la page MasterCraft.
+   * `seoRole` porte la portée réelle quand elle diffère du statut affiché.
+   */
+  const seoRole = brand.seoRole || role.toLowerCase();
+  const heading = `${brand.name} — ${seoRole}`;
 
   // Ces deux pages de marque sont les hubs les plus liés du site (2e et 3e rang
   // sur le maillage interne) et ne portaient AUCUN JSON-LD, là où chaque fiche
@@ -73,8 +84,12 @@ export function brandPageMeta({ data, params }: { data?: { brand?: BrandData } |
   };
 
   return pageMeta({
-    title: `${brand.fullName} | ${role} ${brand.name} | Motorboat 74`,
-    description: `Découvrez la gamme ${brand.name}. ${brand.description.substring(0, 100)}...`,
+    title: `${heading} | ${SITE.name}`,
+    // La description était une troncature brute à 100 caractères de la
+    // description éditoriale : elle coupait en plein mot et finissait par « … ».
+    // Sur les deux pages les plus liées du site. Elle est désormais rédigée.
+    description:
+      brand.metaDescription || `${role} ${brand.name} : ${brand.tagline}. Essai sur le lac d'Annecy, livraison France.`,
     canonical,
     image: brand.heroImage?.startsWith('http') ? brand.heroImage : `${SITE.url}${brand.heroImage}`,
     geo: { region: 'FR-74', placename: "Lac d'Annecy, Haute-Savoie" },
@@ -181,7 +196,13 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
             transition={{ duration: 0.8 }}
           >
             <div className="flex flex-col items-center justify-center gap-6 mb-8">
-              <h1 className="sr-only">{brand.fullName}, {role} chez Motor Boat 74</h1>
+              {/*
+                H1 aligné sur le titre de recherche. Il valait
+                « Nautique , Concessionnaire officiel chez Motor Boat 74 » — 54
+                caractères dont une virgule isolée, artefact du gabarit JSX, et
+                le nom du site répété alors qu'il figure déjà dans le titre.
+              */}
+              <h1 className="sr-only">{brand.name} — {brand.seoRole || (brand.role || 'Concessionnaire officiel').toLowerCase()}</h1>
               <span className="bg-brand-cyan text-brand-dark px-6 py-2 rounded-full text-[12px] font-bold uppercase tracking-widest shadow-lg shadow-brand-cyan/20">
                 {role} {brand.name}
               </span>
@@ -319,7 +340,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
                   <div className={`aspect-[4/3] overflow-hidden relative ${catalogStudio ? 'bg-gradient-to-b from-white to-gray-100' : ''}`}>
                     <img
                       src={model.image}
-                      alt={`Bateau ${model.name} vendu chez Motorboat 74`}
+                      alt={`Bateau ${model.name} vendu chez Motor Boat 74`}
                       className={`w-full h-full transition-transform duration-700 group-hover:scale-105 ${catalogStudio ? 'object-contain p-3' : 'object-cover'}`}
                       loading="lazy"
                       referrerPolicy="no-referrer"

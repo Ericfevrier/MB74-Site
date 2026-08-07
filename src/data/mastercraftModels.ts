@@ -427,8 +427,15 @@ function build(i: MCInput): NautiqueModel {
     fullName: `MasterCraft ${i.short}`,
     gamme: SERIES_NAME[i.series],
     year: '2026',
-    metaTitle: `MasterCraft ${i.short} 2026 - Fiche technique et prix | Motor Boat 74`,
-    metaDescription: `MasterCraft ${i.short} 2026 : ${SERIES_TYPE[i.series]} de ${metric(i.length)} pour ${i.seats}, moteur ${primary.name} (${primary.power}). Prix, fiche technique et essai sur le lac d’Annecy chez Motor Boat 74.`,
+    // Titre sans « | Motor Boat 74 » : à 60 caractères, le suffixe (15 signes)
+    // ne tient pas avec le millésime ET « fiche technique ». Sur une fiche
+    // modèle la requête est le modèle, pas le vendeur — et Google affiche le
+    // domaine de toute façon. Les mots-clés passent avant la signature.
+    metaTitle: `MasterCraft ${i.short} 2026 — prix et fiche technique`,
+    // Le suffixe « Prix, fiche technique et essai sur le lac d'Annecy chez
+    // Motor Boat 74. » pesait 70 signes et poussait ces 15 descriptions
+    // jusqu'à 191 caractères, donc coupées dans les résultats.
+    metaDescription: `MasterCraft ${i.short} 2026 : ${SERIES_TYPE[i.series]} de ${metric(i.length)} pour ${i.seats}, moteur ${primary.name} (${primary.power}). Prix et essai à Annecy.`,
     intro: [i.intro],
     tagline: i.tagline,
     hero: i.gallery[0],

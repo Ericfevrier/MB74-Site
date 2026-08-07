@@ -60,9 +60,11 @@ export function meta() {
   };
 
   return pageMeta({
-    title: 'Bateaux d’occasion Nautique & MasterCraft près d’Annecy | Motor Boat 74',
+    // Mot-clé principal : « bateau d'occasion ». Secondaires : wakeboat,
+    // Nautique, MasterCraft. Territoire national : pas de qualificatif local.
+    title: 'Bateaux d’occasion Nautique & MasterCraft | Motor Boat 74',
     description:
-      'Wakeboats et bateaux de ski nautique d’occasion révisés et garantis, près du lac d’Annecy. Nautique, MasterCraft : prix, année, heures moteur.',
+      'Wakeboats d’occasion Nautique et MasterCraft révisés et garantis par nos ateliers : millésime, heures moteur et prix. Livraison France.',
     canonical,
     image: abs(HERO),
     ogTitle: 'Bateaux d’occasion Nautique & MasterCraft | Motor Boat 74',
@@ -99,7 +101,7 @@ export default function Occasion() {
         </div>
         <div className="relative max-w-[1400px] mx-auto px-4 lg:px-8 py-20 lg:py-24 text-center">
           <Breadcrumb className="mb-6 inline-flex" items={[{ label: 'Accueil', to: '/' }, { label: 'Bateaux', to: '/bateaux' }, { label: 'Occasion' }]} />
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Bateaux d’occasion</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight mb-6">Bateaux d’occasion Nautique et MasterCraft</h1>
           <p className="text-gray-200 text-lg leading-relaxed max-w-2xl mx-auto">
             Des wakeboats et bateaux de ski nautique <strong>révisés et garantis</strong>, suivis par nos ateliers.
             Accédez à un modèle haut de gamme à budget maîtrisé, près du lac d’Annecy.

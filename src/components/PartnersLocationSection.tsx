@@ -264,7 +264,7 @@ export function PartnersLocationSection() {
                     <div className="absolute bottom-4 left-4 right-4 sm:bottom-8 sm:left-8 sm:right-8 bg-brand-dark/90 backdrop-blur-2xl p-5 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10 flex items-center justify-between gap-3 shadow-2xl z-20">
                       <div>
                          <p className="text-[10px] font-bold uppercase tracking-widest text-brand-cyan mb-1 leading-none">Chantier Nautique</p>
-                         <p className="text-lg font-bold text-white uppercase tracking-tight">Motorboat 74</p>
+                         <p className="text-lg font-bold text-white uppercase tracking-tight">Motor Boat 74</p>
                       </div>
                       <a 
                         href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${SITE.addressStreet} ${SITE.addressPostal} ${SITE.addressLocality}`)}`}

@@ -83,7 +83,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "gamme": "Série S",
     "year": "2026",
     "metaTitle": "Super Air Nautique S21 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez le Super Air Nautique S21 2026 chez MotorBoat74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
+    "metaDescription": "Découvrez le Super Air Nautique S21 2026 chez Motor Boat 74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
     "intro": [
       "Le Super Air Nautique S21 est un bateau pensé pour ceux qui veulent profiter pleinement de l’eau, que ce soit pour le wakesurf, le wakeboard ou simplement naviguer avec confort et style. Avec ses 6,55 m de longueur et sa technologie Next Gen Surf System, il génère des vagues parfaitement calibrées pour tous les niveaux, des débutants aux riders confirmés. Son moteur puissant et silencieux assure des départs nets et une navigation stable, même avec plusieurs passagers à bord.",
       "À l’intérieur, le S21 mise sur le confort et la praticité : des assises ergonomiques, de l’espace pour tous les passagers, des rangements bien pensés et des finitions solides qui résistent à l’usage quotidien. La conduite est précise et intuitive, ce qui permet de se concentrer sur la glisse ou le plaisir de la balade sans se préoccuper du bateau."
@@ -280,7 +280,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "gamme": "Série S",
     "year": "2026",
     "metaTitle": "Super Air Nautique S23 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez le Super Air Nautique S23 2026 chez MotorBoat74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
+    "metaDescription": "Découvrez le Super Air Nautique S23 2026 chez Motor Boat 74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
     "intro": [
       "Le Super Air Nautique S23 s’inscrit dans la série S de Nautique, pensée pour que chaque sortie sur l’eau soit simple et agréable, que vous soyez en wakeboard, en wakesurf ou en balade avec vos proches. Sa coque, conçue pour produire des vagues nettes et modulables, et le Nautique Surf System permettent d’adapter la forme et la taille des vagues à vos envies, sans effort.",
       "À bord, tout est pensé pour le confort et la praticité : sièges modulables, rangements intelligents, passages sécurisés et tour de contrôle facile à déployer. Le poste de pilotage centralise les commandes avec l’écran tactile LINC, la direction électrique et la caméra de surveillance, pour que piloter reste naturel et fluide.",
@@ -480,7 +480,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "gamme": "Série S",
     "year": "2026",
     "metaTitle": "Super Air Nautique S25 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez le Super Air Nautique S25 2026 chez MotorBoat74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
+    "metaDescription": "Découvrez le Super Air Nautique S25 2026 chez Motor Boat 74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
     "intro": [
       "Le Super Air Nautique S25 fait partie de la série S de Nautique, conçue pour offrir une expérience complète sur l’eau, que ce soit pour le wakeboard, le wakesurf ou simplement profiter du bateau en famille et entre amis. Sa coque a été pensée pour créer des vagues modulables et un sillage adapté à chaque activité, tandis que les technologies embarquées, comme le Nautique Surf System et le Configurable Running Surface, permettent d’ajuster les performances en temps réel selon les envies de chacun.",
       "À bord, tout a été imaginé pour le confort et la praticité : des sièges avant et arrière modulables, des espaces de rangement intelligents, un passage arrière antidérapant et des fonctionnalités comme la pompe à air intégrée ou la recharge sans fil. La barre et le poste de pilotage mettent la navigation à portée de main grâce à l’écran tactile panoramique LINC, la direction électrique et la caméra de surveillance, pour que piloter reste simple et sûr.",
@@ -673,7 +673,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "gamme": "Série GS",
     "year": "2026",
     "metaTitle": "Super Air Nautique GS20 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez le Super Air Nautique GS20 2026 chez MotorBoat74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
+    "metaDescription": "Découvrez le Super Air Nautique GS20 2026 chez Motor Boat 74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
     "intro": [
       "Le Air Nautique GS20 se positionne comme un bateau de traction polyvalent, conçu pour le wakesurf, le wakeboard et le ski nautique. Sa coque mono-hull associe l’ADN du Ski Nautique à la conception avancée de la série G, générant des vagues et un sillage modulable selon le niveau et le type de pratique. Le ballast intégré et le système de réglage des plaques permettent d’adapter la forme des vagues et la hauteur du sillage. Doté de technologies embarquées pour la gestion de la propulsion et de l’électronique, et d’un aménagement intérieur étudié pour le confort à bord, le GS20 offre une expérience de navigation complète pour les sports tractés."
     ],
@@ -844,7 +844,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "gamme": "Série GS",
     "year": "2026",
     "metaTitle": "Super Air Nautique GS22 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez le Super Air Nautique GS22 2026 chez MotorBoat74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
+    "metaDescription": "Découvrez le Super Air Nautique GS22 2026 chez Motor Boat 74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
     "intro": [
       "Le Super Air Nautique GS22 est un bateau multisports de 6,70 m pensé pour les vrais passionnés de sports nautiques. Conçu pour exceller en wakesurf, wakeboard et ski nautique, sa coque hybride, issue des séries Ski Nautique et G-Series, permet de créer des vagues précises et modulables, parfaitement adaptées à chaque discipline et à chaque niveau de pratique.",
       "Avec une puissance moteur pouvant atteindre 570 chevaux et une capacité d’accueil jusqu’à 15 personnes, le GS22 allie performance brute et polyvalence. Son système de ballast intégré et réglable offre un contrôle total du sillage, permettant de sculpter la vague idéale pour chaque activité, tandis que le design du cockpit et les finitions premium garantissent un confort et une ergonomie optimisés pour l’utilisateur exigeant."
@@ -1021,7 +1021,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "gamme": "Série GS",
     "year": "2026",
     "metaTitle": "Super Air Nautique GS24 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez le Super Air Nautique GS24 2026 chez MotorBoat74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
+    "metaDescription": "Découvrez le Super Air Nautique GS24 2026 chez Motor Boat 74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
     "intro": [
       "Le Super Air Nautique GS24 est un bateau de plus de 7 mètres qui mise sur la polyvalence. Sa coque inspirée des Ski Nautique et de la série G lui permet d’exceller aussi bien en wakesurf qu’en wakeboard ou en ski nautique. Avec une capacité d’accueil jusqu’à 17 personnes, il offre un intérieur spacieux et confortable, idéal pour profiter de longues journées en famille ou entre amis.",
       "Côté technologie, il embarque le Nautique Surf System avec WAVEPLATE® pour créer des vagues personnalisées, ainsi que le système NCRS qui adapte automatiquement la coque à l’activité choisie. La motorisation PCM, de 355 à 570 chevaux, assure puissance et fiabilité, tandis que le Nautique Steering Assist facilite les manœuvres à basse vitesse. Enfin, la connectivité MyNautique permet de garder un œil sur le bateau à distance pour plus de simplicité au quotidien."
@@ -1207,7 +1207,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "gamme": "Série G",
     "year": "2026",
     "metaTitle": "Super Air Nautique G25 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez le Super Air Nautique G25 2026 chez MotorBoat74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
+    "metaDescription": "Découvrez le Super Air Nautique G25 2026 chez Motor Boat 74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
     "intro": [
       "Le Super Air Nautique G25 2026 a été conçu pour ceux qui veulent partager la glisse en groupe sans compromettre le confort ni la performance. Avec sa capacité de 19 personnes, il permet de profiter de la vague avec famille ou amis, tout en conservant maniabilité et stabilité.",
       "Sa coque intègre la technologie Nautique Configurable Running Surface® (NCRS), qui ajuste la forme de la vague selon que vous pratiquez le wakesurf ou le wakeboard. Chaque run peut ainsi être parfaitement modulé pour répondre aux besoins des riders, qu’ils soient débutants ou confirmés.",
@@ -1428,7 +1428,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "gamme": "Paragon Series",
     "year": "2026",
     "metaTitle": "Nautique G23 Paragon 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez le Nautique G23 Paragon 2026 chez MotorBoat74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
+    "metaDescription": "Découvrez le Nautique G23 Paragon 2026 chez Motor Boat 74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",
     "intro": [
       "Le Super Air Nautique G23 Paragon est un bateau de wake haut de gamme qui incarne à la fois luxe, performance et innovation. Conçu pour les passionnés de wakeboard et de wakesurf, il se distingue par un design angulaire affirmé et des coques multidimensionnelles capables de générer des vagues puissantes et parfaitement modulables. À bord, chaque détail a été pensé pour offrir un confort optimal, dans un cadre élégant et moderne, établissant de nouveaux standards dans l’univers des sports nautiques.",
       "Pour marquer le centenaire de la marque, Nautique dévoile une édition spéciale Centennial du G23. Cette version anniversaire se pare d’éléments exclusifs, comme un logo centenaire finement gravé sur le volant et une teinte de coque inédite baptisée « Centennial Black Metal Flake ». Ce coloris unique marie l’intensité d’un noir onyx profond à des paillettes dorées, offrant un rendu visuel spectaculaire et raffiné, à la hauteur de l’événement."
@@ -1859,7 +1859,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "gamme": "Ski Nautique",
     "year": "2026",
     "metaTitle": "Ski Nautique 2026 - Fiche Technique Et Prix",
-    "metaDescription": "Découvrez la gamme Ski Nautique. Le Ski Nautique 2026, bateau de référence pour le ski slalom, à découvrir chez Motorboat74 à Annecy",
+    "metaDescription": "Découvrez la gamme Ski Nautique. Le Ski Nautique 2026, bateau de référence pour le ski slalom, à découvrir chez Motor Boat 74 à Annecy",
     "intro": [
       "Nautique a relevé le défi de créer un bateau de ski nautique alliant performance, maniabilité et confort pour slalom, figures et saut.",
       "Le Ski Nautique combine une coque légère et robuste à des technologies de pointe comme MicroTuner®, Automated HydroGate® et Zero Off®, offrant des wakes stables, précis et adaptés à tous les niveaux. Le poste de pilotage intuitif, la sellerie modulable et la plage arrière optimisée garantissent un confort et une fonctionnalité optimale pour skieurs et coachs.",
@@ -2031,8 +2031,8 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "short": "G23",
     "gamme": "Série G",
     "year": "2026",
-    "metaTitle": "Super Air Nautique G23, Fiche Technique & Prix | MotorBoat74",
-    "metaDescription": "Découvrez le Super Air Nautique G23 chez MotorBoat74, concessionnaire officiel Nautique à Annecy. Fiche technique, performances wakeboard/wakesurf et essai sur le lac d'Annecy.",
+    "metaTitle": "Super Air Nautique G23, Fiche Technique & Prix | Motor Boat 74",
+    "metaDescription": "Découvrez le Super Air Nautique G23 chez Motor Boat 74, concessionnaire officiel Nautique à Annecy. Fiche technique, performances wakeboard/wakesurf et essai sur le lac d'Annecy.",
     "intro": [
       "Depuis plus de dix ans, le G23 est le wakeboat le plus recherché de l'industrie, avec le palmarès pour le prouver. Ce modèle primé est la référence absolue des riders professionnels qui veulent repousser les limites du possible sur l'eau, tout en s'adaptant aux débutants grâce à des vagues et sillages modulables selon le niveau de chacun.",
       "Le design orienté performance du G23 a été méticuleusement affiné pour incarner le sommet de l'excellence sur l'eau, avec une profusion d'équipements luxueux pour une finition inégalée."
@@ -2158,15 +2158,15 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "faqs": [
       {
         "q": "Quel est le prix du Super Air Nautique G23 ?",
-        "a": "Le prix du G23 dépend de la configuration et des options. MotorBoat74, concessionnaire officiel Nautique à Annecy, établit un devis personnalisé et propose neuf comme occasion. Contactez-nous pour connaître les disponibilités."
+        "a": "Le prix du G23 dépend de la configuration et des options. Motor Boat 74, concessionnaire officiel Nautique à Annecy, établit un devis personnalisé et propose neuf comme occasion. Contactez-nous pour connaître les disponibilités."
       },
       {
         "q": "Où acheter un Super Air Nautique G23 en France ?",
-        "a": "En France, vous pouvez acheter le G23 directement chez MotorBoat74, concessionnaire officiel Nautique, avec accompagnement complet pour l'achat, l'entretien et l'hivernage."
+        "a": "En France, vous pouvez acheter le G23 directement chez Motor Boat 74, concessionnaire officiel Nautique, avec accompagnement complet pour l'achat, l'entretien et l'hivernage."
       },
       {
         "q": "Peut-on essayer le G23 sur le lac d'Annecy ?",
-        "a": "Oui, MotorBoat74 organise des essais du G23 sur le lac d'Annecy. Réservez votre créneau en nous contactant."
+        "a": "Oui, Motor Boat 74 organise des essais du G23 sur le lac d'Annecy. Réservez votre créneau en nous contactant."
       },
       {
         "q": "Qui peut assurer l’hivernage de mon Super Air Nautique G23 ?",
@@ -2180,8 +2180,8 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "short": "G21",
     "gamme": "Série G",
     "year": "2026",
-    "metaTitle": "Super Air Nautique G21, Fiche Technique & Prix | MotorBoat74",
-    "metaDescription": "Découvrez le Super Air Nautique G21 chez MotorBoat74, concessionnaire officiel Nautique à Annecy. Fiche technique, performances et essai sur le lac d'Annecy.",
+    "metaTitle": "Super Air Nautique G21, Fiche Technique & Prix | Motor Boat 74",
+    "metaDescription": "Découvrez le Super Air Nautique G21 chez Motor Boat 74, concessionnaire officiel Nautique à Annecy. Fiche technique, performances et essai sur le lac d'Annecy.",
     "intro": [
       "Le G21 confirme sa réputation de bateau de 21 pieds le plus innovant du marché. Doté de la meilleure coque de l'industrie, ce performeur primé délivre des vagues et sillages de niveau professionnel, modulables pour accueillir tous les passagers à bord.",
       "Ce performeur légendaire affiche une esthétique moderne incomparable et un intérieur iconique typiquement Série G, avec une profusion d'équipements de série premium et d'options pour configurer votre G21 selon vos préférences exactes."
@@ -2307,15 +2307,15 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "faqs": [
       {
         "q": "Quel est le prix du Super Air Nautique G21 ?",
-        "a": "Le prix du G21 dépend de la configuration et des options. MotorBoat74, concessionnaire officiel Nautique à Annecy, établit un devis personnalisé. Contactez-nous pour les disponibilités neuf et occasion."
+        "a": "Le prix du G21 dépend de la configuration et des options. Motor Boat 74, concessionnaire officiel Nautique à Annecy, établit un devis personnalisé. Contactez-nous pour les disponibilités neuf et occasion."
       },
       {
         "q": "Où acheter un Super Air Nautique G21 en France ?",
-        "a": "En France, vous pouvez acheter le G21 directement chez MotorBoat74, concessionnaire officiel Nautique, avec un accompagnement complet."
+        "a": "En France, vous pouvez acheter le G21 directement chez Motor Boat 74, concessionnaire officiel Nautique, avec un accompagnement complet."
       },
       {
         "q": "Peut-on essayer le G21 sur le lac d'Annecy ?",
-        "a": "Oui, MotorBoat74 organise des essais du G21 sur le lac d'Annecy. Contactez-nous pour réserver."
+        "a": "Oui, Motor Boat 74 organise des essais du G21 sur le lac d'Annecy. Contactez-nous pour réserver."
       },
       {
         "q": "Le stockage hivernal du Super Air Nautique G21 est-il possible chez vous ?",

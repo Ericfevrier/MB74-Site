@@ -29,9 +29,11 @@ export function bateauxNeufsMeta() {
   const canonical = `${SITE.url}/bateaux/neufs/`;
   const allModels = neufsBrands().flatMap((b) => b.models.map((m) => ({ b, m })));
   return pageMeta({
-    title: 'Bateaux neufs Nautique & MasterCraft près d’Annecy | Motor Boat 74',
+    // Mot-clé principal : « bateau neuf ». Secondaires : wakeboat, Nautique,
+    // MasterCraft. Territoire national : pas de qualificatif local dans le titre.
+    title: 'Bateaux neufs Nautique & MasterCraft | Motor Boat 74',
     description:
-      'Découvrez nos bateaux neufs Nautique et MasterCraft : wakeboats et bateaux de ski nautique dernière génération. Configuration, essai sur le lac d’Annecy et devis chez Motor Boat 74.',
+      'Wakeboats et bateaux de ski nautique neufs Nautique et MasterCraft : configuration, essai sur le lac d’Annecy, livraison partout en France.',
     canonical,
     image: HERO,
     ogTitle: 'Bateaux neufs Nautique & MasterCraft | Motor Boat 74',

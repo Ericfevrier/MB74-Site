@@ -9,8 +9,11 @@ import { businessNode } from '../lib/schema';
 
 export function meta() {
   return [
-    { title: `${SITE.name} | Vente et entretien de bateaux sur le Lac d'Annecy` },
-    { name: 'description', content: "Découvrez une sélection exclusive de bateaux (Nautique, MasterCraft, etc.) au bord du Lac d'Annecy. Hivernage, entretien et réparation." },
+    // 54 signes au lieu de 65 : l'ancien titre était coupé dans les résultats.
+    // La description porte les deux statuts commerciaux, dont l'exclusivité
+    // MasterCraft en France, qui n'apparaissait nulle part en page d'accueil.
+    { title: `${SITE.name} | Bateaux et services nautiques à Annecy` },
+    { name: 'description', content: "Concessionnaire Nautique et importateur exclusif MasterCraft. Vente, hivernage, entretien et dépannage de bateaux sur le lac d'Annecy." },
     { tagName: 'link', rel: 'canonical', href: `${SITE.url}/` },
     { property: 'og:type', content: 'website' },
     { property: 'og:title', content: `${SITE.name} | Vente et entretien de bateaux` },

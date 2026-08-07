@@ -37,7 +37,7 @@ const FAQS = [
   },
   {
     q: 'Où obtenir une remorque sur mesure à Annecy ou en Haute-Savoie ?',
-    a: 'MotorBoat 74 propose des remorques sur mesure, adaptées à vos besoins, disponibles pour retrait ou livraison à Annecy et dans toute la Haute-Savoie.',
+    a: 'Motor Boat 74 propose des remorques sur mesure, adaptées à vos besoins, disponibles pour retrait ou livraison à Annecy et dans toute la Haute-Savoie.',
   },
   {
     q: 'Quels sont vos horaires ?',
@@ -154,7 +154,7 @@ export function RemorquesPage() {
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
               {t.raw('hero.subtitle')
                 ? t.raw('hero.subtitle')
-                : <>Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. MotorBoat 74 sélectionne, règle et prépare une remorque <strong className="text-brand-cyan">homologuée CE</strong>, <strong className="text-white">parfaitement adaptée</strong> à votre embarcation.</>}
+                : <>Trouvez la remorque parfaite pour transporter votre bateau en toute sécurité. Motor Boat 74 sélectionne, règle et prépare une remorque <strong className="text-brand-cyan">homologuée CE</strong>, <strong className="text-white">parfaitement adaptée</strong> à votre embarcation.</>}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">
               {t.list<{ t: string; d: string }>('hero.usps').map((u, i) => {

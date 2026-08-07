@@ -152,7 +152,7 @@ export function TransportPage() {
             <p className="text-base md:text-lg text-gray-300 font-medium mb-6 max-w-2xl leading-relaxed">
               {t.raw('hero.subtitle')
                 ? t.raw('hero.subtitle')
-                : <>Achat, vente ou simple déplacement&nbsp;? MotorBoat 74 assure le <strong className="text-brand-cyan">convoyage sécurisé</strong> de votre bateau, avec véhicules et remorques adaptés, <strong className="text-white">partout en France et en Europe</strong>.</>}
+                : <>Achat, vente ou simple déplacement&nbsp;? Motor Boat 74 assure le <strong className="text-brand-cyan">convoyage sécurisé</strong> de votre bateau, avec véhicules et remorques adaptés, <strong className="text-white">partout en France et en Europe</strong>.</>}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left max-w-3xl">
               {t.list<{ t: string; d: string }>('hero.usps').map((u, i) => {

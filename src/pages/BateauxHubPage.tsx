@@ -38,9 +38,14 @@ const faqs = [
 export function bateauxHubMeta() {
   const canonical = `${SITE.url}/bateaux/`;
   return pageMeta({
-    title: 'Bateaux neufs et d’occasion près d’Annecy | Motor Boat 74',
+    // Mot-clé principal : « wakeboat ». Secondaires : bateau de ski nautique,
+    // Nautique, MasterCraft. L'ancrage « près d'Annecy » est retiré des pages de
+    // vente : le territoire de distribution est national, et un qualificatif
+    // local dans le titre plafonne la portée d'une page qui n'a pas de limite
+    // géographique. Les pages de service, elles, le gardent.
+    title: 'Wakeboats Nautique & MasterCraft | Motor Boat 74',
     description:
-      'Bateaux neufs et d’occasion près du lac d’Annecy : wakeboats et bateaux de ski Nautique et MasterCraft. Essai sur l’eau, reprise, financement et entretien chez Motor Boat 74.',
+      'Wakeboats et bateaux de ski nautique Nautique et MasterCraft, neufs et d’occasion. Essai sur le lac d’Annecy, livraison partout en France.',
     canonical,
     image: HERO,
     jsonLd: [
