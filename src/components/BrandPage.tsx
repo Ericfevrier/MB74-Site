@@ -241,7 +241,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
       </section>
 
       {/* Brand Intro */}
-      <article className="py-24 bg-brand-dark text-white">
+      <article className="py-14 sm:py-24 bg-brand-dark text-white">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
@@ -313,7 +313,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
       </article>
 
       {/* Models Section */}
-      <section className="py-24 bg-ink-950">
+      <section className="py-14 sm:py-24 bg-ink-950">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
             <div className="flex items-center justify-center gap-3 mb-4">
@@ -324,7 +324,9 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
             <h2 className="text-3xl md:text-5xl font-bold text-white uppercase tracking-tight">La Gamme {brand.name}</h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Deux colonnes dès le mobile, comme sur /bateaux/neufs : une seule
+              colonne transformait le catalogue en défilement interminable. */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {brand.models.map((model, idx) => {
               const slug = model.name.toLowerCase().replace(/\s+/g, '-');
               const gamme = getBrandModels(id)?.models[slug]?.gamme;
@@ -347,14 +349,15 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
                     />
                     {!catalogStudio && <div className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-transparent to-transparent" />}
                   </div>
-                  <div className="p-6 flex-1 flex flex-col">
+                  <div className="p-3 sm:p-6 flex-1 flex flex-col">
                     {gamme && (
                       <span className="text-[10px] uppercase tracking-widest font-bold text-brand-cyan mb-1.5">{gamme}</span>
                     )}
-                    <h3 className="text-lg font-bold text-white uppercase tracking-tight mb-2 leading-tight">
+                    <h3 className="text-sm sm:text-lg font-bold text-white uppercase tracking-tight mb-2 leading-tight">
                       {model.name}
                     </h3>
-                    <p className="text-gray-400 text-sm mb-6 leading-relaxed flex-1">
+                    {/* Masqué sous `sm` : illisible dans une colonne de 175 px. */}
+                    <p className="hidden sm:block text-gray-400 text-sm mb-6 leading-relaxed flex-1">
                       {model.description}
                     </p>
                     <Link
@@ -363,9 +366,11 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
                       // le modèle » ne dit rien de la cible : répété 54 fois, il gâchait
                       // le seul signal sémantique vers les fiches modèles.
                       aria-label={`Découvrir le ${model.name}`}
-                      className="mt-auto inline-flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-widest text-xs py-3.5 rounded-xl group-hover:bg-brand-cyan group-hover:text-brand-dark group-hover:border-brand-cyan transition-all duration-300 min-h-[44px]"
+                      className="mt-auto inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-wider sm:tracking-widest text-[10px] sm:text-xs py-3 sm:py-3.5 rounded-xl group-hover:bg-brand-cyan group-hover:text-brand-dark group-hover:border-brand-cyan transition-all duration-300 min-h-[44px]"
                     >
-                      Découvrir le modèle <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
+                      <span className="sm:hidden">Découvrir</span>
+                      <span className="hidden sm:inline">Découvrir le modèle</span>
+                      <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
                     </Link>
                   </div>
                 </motion.article>
@@ -374,7 +379,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
           </div>
 
           {brand.models.length === 0 && (
-            <div className="text-center py-20 bg-ink-900 rounded-3xl border border-dashed border-white/15">
+            <div className="text-center py-12 sm:py-20 bg-ink-900 rounded-3xl border border-dashed border-white/15">
               <p className="text-gray-400 italic">De nouveaux modèles {brand.name} arrivent bientôt…</p>
             </div>
           )}
@@ -396,7 +401,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
       <ShowroomSection />
 
       {/* CTA Section */}
-      <section className="py-24 bg-brand-dark overflow-hidden relative">
+      <section className="py-14 sm:py-24 bg-brand-dark overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-64 -mt-64"></div>
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 relative z-10 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white uppercase tracking-tight mb-8">Prêt à naviguer en {brand.name} ?</h2>

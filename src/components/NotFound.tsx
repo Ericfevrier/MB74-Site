@@ -10,7 +10,7 @@ export function notFoundMeta() {
 export function NotFound() {
   const t = usePageContent('notfound');
   return (
-    <section className="min-h-[70vh] flex items-center justify-center bg-brand-dark text-white px-4 py-24 relative overflow-hidden">
+    <section className="min-h-[70vh] flex items-center justify-center bg-brand-dark text-white px-4 py-14 sm:py-24 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-64 -mt-64"></div>
 
       <div className="relative z-10 text-center max-w-xl">

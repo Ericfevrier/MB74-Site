@@ -47,7 +47,7 @@ export function ErrorBoundary() {
   const detail = isDev && error instanceof Error ? error.stack || error.message : null;
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-brand-dark text-white px-4 py-24 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center bg-brand-dark text-white px-4 py-14 sm:py-24 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-64 -mt-64" />
       <div className="relative z-10 text-center max-w-xl">
         <div className="w-20 h-20 rounded-3xl bg-brand-cyan/10 flex items-center justify-center text-brand-cyan mx-auto mb-8">

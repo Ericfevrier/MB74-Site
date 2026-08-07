@@ -10,7 +10,7 @@ export function ModelComparison({ comparisons }: ModelComparisonProps) {
   const [activeCategory, setActiveCategory] = useState(0);
 
   return (
-    <section className="py-24 bg-white text-brand-dark overflow-hidden border-t border-gray-200">
+    <section className="py-14 sm:py-24 bg-white text-brand-dark overflow-hidden border-t border-gray-200">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-12">

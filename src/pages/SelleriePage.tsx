@@ -218,7 +218,7 @@ export function SelleriePage() {
       </section>
 
       {/* 2. En bref */}
-      <section aria-label="L'essentiel en bref" className="py-20 bg-brand-light relative overflow-hidden">
+      <section aria-label="L'essentiel en bref" className="py-12 sm:py-20 bg-brand-light relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[480px] h-[480px] bg-brand-cyan/10 rounded-full blur-[120px] -mr-40 -mt-40 -z-0"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
           <h2 className="sr-only">Sellerie de bateau à Annecy : l'essentiel</h2>
@@ -266,7 +266,7 @@ export function SelleriePage() {
       </section>
 
       {/* 3. Quand refaire sa sellerie */}
-      <section className="py-24 bg-ink-950 relative overflow-hidden">
+      <section className="py-14 sm:py-24 bg-ink-950 relative overflow-hidden">
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -z-10"></div>
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -300,7 +300,7 @@ export function SelleriePage() {
       </section>
 
       {/* 4. Workspace : process + services + bénéfices + zones + FAQ + formulaire */}
-      <section className="py-24 bg-transparent border-t border-gray-200 relative z-10">
+      <section className="py-14 sm:py-24 bg-transparent border-t border-gray-200 relative z-10">
         <div className="container mx-auto px-4 lg:px-8 max-w-[1400px]">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             <div className="lg:col-span-2 space-y-24">

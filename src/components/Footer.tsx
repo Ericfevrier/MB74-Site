@@ -34,9 +34,9 @@ export function Footer() {
   const services = menus?.['footer-services']?.length ? menus['footer-services'] : STATIC_SERVICES;
   const bateaux = menus?.['footer-bateaux']?.length ? menus['footer-bateaux'] : STATIC_BATEAUX;
   return (
-    <footer className="bg-ink-850 text-gray-400 pt-20">
+    <footer className="bg-ink-850 text-gray-400 pt-12 sm:pt-20">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-10 mb-20">
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-10 mb-12 sm:mb-20">
 
           {/* Column 1: Info & Image */}
           <div className="col-span-2 lg:col-span-3 space-y-8">

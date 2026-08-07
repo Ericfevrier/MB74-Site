@@ -115,10 +115,12 @@ export default function Occasion() {
         </div>
       </header>
 
-      <section className="bg-brand-light py-20">
+      <section className="bg-brand-light py-12 sm:py-20">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
+          {/* Deux colonnes dès le mobile : cohérent avec le catalogue des neufs,
+              et un acheteur compare mieux quand il voit plusieurs bateaux à la fois. */}
           {boats.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-7">
               {boats.map((b) => (
                 <UsedBoatCard key={b.slug} boat={b} variant="available" />
               ))}
@@ -133,7 +135,7 @@ export default function Occasion() {
         </div>
       </section>
 
-      <section className="bg-white py-20 border-t border-gray-100">
+      <section className="bg-white py-12 sm:py-20 border-t border-gray-100">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="text-center mb-12">
             <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">Acheter d’occasion en confiance</span>

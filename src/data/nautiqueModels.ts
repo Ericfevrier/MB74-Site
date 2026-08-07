@@ -1425,7 +1425,7 @@ export const nautiqueModels: Record<string, NautiqueModel> = {
     "slug": "g23-paragon",
     "name": "G23 Paragon",
     "short": "G23 Paragon",
-    "gamme": "Paragon Series",
+    "gamme": "Série Paragon",
     "year": "2026",
     "metaTitle": "Nautique G23 Paragon 2026 - Fiche Technique Et Prix",
     "metaDescription": "Découvrez le Nautique G23 Paragon 2026 chez Motor Boat 74, concessionnaire officiel à Annecy. Découvrez le bateau dans notre showroom !",

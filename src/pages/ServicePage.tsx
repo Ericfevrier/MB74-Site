@@ -324,7 +324,7 @@ export function ServicePage() {
       ))}
 
       {/* FAQ */}
-      <section className="bg-brand-light py-24">
+      <section className="bg-brand-light py-14 sm:py-24">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark text-center mb-14">
             On répond à vos <span className="text-brand-cyan">questions</span>

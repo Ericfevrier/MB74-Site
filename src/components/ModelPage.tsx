@@ -295,7 +295,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
       </nav>
 
       {/* ===================== PRÉSENTATION (texte gauche / image droite) ===================== */}
-      <section className="py-20 bg-brand-dark">
+      <section className="py-12 sm:py-20 bg-brand-dark">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
             <SectionEyebrow label="Le bateau" />
@@ -316,7 +316,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
 
       {/* ===================== GALERIE ===================== */}
       {model.gallery.length > 1 && (
-        <section id="galerie" className={`py-20 bg-ink-950 ${sectionPad}`}>
+        <section id="galerie" className={`py-12 sm:py-20 bg-ink-950 ${sectionPad}`}>
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="En images" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-10">Galerie</h2>
@@ -364,11 +364,14 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
 
       {/* ===================== POINTS FORTS (alternés) ===================== */}
       {model.highlights.length > 0 && (
-        <section id="points-forts" className={`py-20 bg-brand-dark ${sectionPad}`}>
+        <section id="points-forts" className={`py-12 sm:py-20 bg-brand-dark ${sectionPad}`}>
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="Conçu pour rider" />
-            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-14">Les points forts du {model.name}</h2>
-            <div className="space-y-14">
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-8 sm:mb-14">Les points forts du {model.name}</h2>
+            {/* `space-y` ramené de 14 à 8 sous `sm` : cinq blocs image + texte
+                empilés, cette section pesait 4 000 px sur mobile — presque cinq
+                écrans pour une seule rubrique. */}
+            <div className="space-y-8 sm:space-y-14">
               {model.highlights.map((h, i) => {
                 const hImg = model.highlightImages?.[i];
                 const img = hImg || model.gallery[(i + 1) % model.gallery.length];
@@ -381,17 +384,19 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.5 }}
-                    className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"
+                    className="grid lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-12 items-center"
                   >
-                    <div className={`overflow-hidden rounded-[2rem] border border-white/10 ${!lifestyle ? 'bg-gradient-to-b from-white to-gray-100' : ''} ${reverse ? 'lg:order-2' : ''}`}>
-                      <img src={img} alt={`${fullName}, ${h.title.toLowerCase()}`} loading="lazy" referrerPolicy="no-referrer" className={`w-full h-full aspect-[16/10] ${lifestyle ? 'object-cover' : 'object-contain p-4'}`} />
+                    {/* Format 16/10 sur grand écran, 16/9 sur mobile : la photo passe
+                        de 224 à 199 px de haut, cinq fois sur la page. */}
+                    <div className={`overflow-hidden rounded-2xl sm:rounded-[2rem] border border-white/10 ${!lifestyle ? 'bg-gradient-to-b from-white to-gray-100' : ''} ${reverse ? 'lg:order-2' : ''}`}>
+                      <img src={img} alt={`${fullName}, ${h.title.toLowerCase()}`} loading="lazy" referrerPolicy="no-referrer" className={`w-full h-full aspect-video sm:aspect-[16/10] ${lifestyle ? 'object-cover' : 'object-contain p-4'}`} />
                     </div>
                     <div className={reverse ? 'lg:order-1' : ''}>
-                      <div className="flex items-center gap-3 mb-4">
-                        <span className="text-brand-cyan/30 font-bold text-2xl">0{i + 1}</span>
-                        <h3 className="font-bold text-2xl uppercase tracking-tight text-brand-cyan">{h.title}</h3>
+                      <div className="flex items-center gap-3 mb-2 sm:mb-4">
+                        <span className="text-brand-cyan/30 font-bold text-xl sm:text-2xl">0{i + 1}</span>
+                        <h3 className="font-bold text-xl sm:text-2xl uppercase tracking-tight text-brand-cyan">{h.title}</h3>
                       </div>
-                      <p className="text-gray-300 leading-relaxed text-lg">{h.text}</p>
+                      <p className="text-gray-300 leading-relaxed text-base sm:text-lg">{h.text}</p>
                     </div>
                   </motion.div>
                 );
@@ -402,7 +407,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
       )}
 
       {/* ===================== VIDÉO + relance ===================== */}
-      <section id="video" className={`py-20 bg-ink-950 ${sectionPad}`}>
+      <section id="video" className={`py-12 sm:py-20 bg-ink-950 ${sectionPad}`}>
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <SectionEyebrow label="En mouvement" />
           <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-10">Le {model.name} en vidéo</h2>
@@ -435,7 +440,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
 
       {/* ===================== SPÉCIFICATIONS ===================== */}
       {model.specs.length > 0 && (
-        <section id="specs" className={`py-20 bg-brand-dark ${sectionPad}`}>
+        <section id="specs" className={`py-12 sm:py-20 bg-brand-dark ${sectionPad}`}>
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="Fiche technique" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-12">Spécifications techniques</h2>
@@ -466,7 +471,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
 
       {/* ===================== HISTORIQUE DES MILLÉSIMES (conditionnel) ===================== */}
       {milestones.length > 0 && (
-        <section id="millesimes" className={`py-20 bg-ink-950 ${sectionPad}`}>
+        <section id="millesimes" className={`py-12 sm:py-20 bg-ink-950 ${sectionPad}`}>
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="Historique" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-5 leading-tight">
@@ -536,7 +541,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
 
       {/* ===================== ÉQUIPEMENTS & OPTIONS ===================== */}
       {hasEquip && (
-        <section id="equipements" className={`py-20 bg-ink-950 ${sectionPad}`}>
+        <section id="equipements" className={`py-12 sm:py-20 bg-ink-950 ${sectionPad}`}>
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <SectionEyebrow label="À bord" />
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white mb-12">Équipements et options</h2>
@@ -630,7 +635,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
       )}
 
       {/* ===================== OCCASIONS ===================== */}
-      <section id="occasions" className={`py-20 bg-brand-dark ${sectionPad}`}>
+      <section id="occasions" className={`py-12 sm:py-20 bg-brand-dark ${sectionPad}`}>
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
             <div>
@@ -695,7 +700,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
 
       {/* ===================== FAQ ===================== */}
       {model.faqs.length > 0 && (
-        <section id="faq" className={`py-24 bg-ink-950 ${sectionPad}`}>
+        <section id="faq" className={`py-14 sm:py-24 bg-ink-950 ${sectionPad}`}>
           <div className="max-w-4xl mx-auto px-4 lg:px-8">
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white text-center mb-14">
               On répond à vos <span className="text-brand-cyan">questions</span>
@@ -731,7 +736,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
       <ServiceContactBlock subject={`${fullName} ${model.year}`} showMap wide />
 
       {/* ===================== AUTRES MODÈLES (maillage latéral) ===================== */}
-      <section className="bg-ink-950 py-24 border-t border-white/10">
+      <section className="bg-ink-950 py-14 sm:py-24 border-t border-white/10">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-white text-center mb-12">Découvrez les autres modèles</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">

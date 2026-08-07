@@ -5,7 +5,7 @@ import { SITE } from '../data/site';
 
 export function ShowroomSection() {
   return (
-    <section className="py-24 bg-brand-dark text-white">
+    <section className="py-14 sm:py-24 bg-brand-dark text-white">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-8">

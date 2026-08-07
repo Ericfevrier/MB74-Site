@@ -133,7 +133,7 @@ export function HivernageCityPage({ city: cityProp }: { city?: HivernageCity | n
       </header>
 
       {/* Solutions */}
-      <section className="bg-brand-light py-20">
+      <section className="bg-brand-light py-12 sm:py-20">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mb-12">
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mb-5">Des solutions d’hivernage adaptées à votre bateau</h2>
@@ -154,7 +154,7 @@ export function HivernageCityPage({ city: cityProp }: { city?: HivernageCity | n
       </section>
 
       {/* Pourquoi */}
-      <section className="bg-brand-dark text-white py-20">
+      <section className="bg-brand-dark text-white py-12 sm:py-20">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mb-12">
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight mb-5">Pourquoi nous faire confiance ?</h2>
@@ -176,7 +176,7 @@ export function HivernageCityPage({ city: cityProp }: { city?: HivernageCity | n
 
       {/* Expertise hyper-locale */}
       {city.localExpertise && (
-        <section className="bg-brand-light py-20 border-t border-gray-200">
+        <section className="bg-brand-light py-12 sm:py-20 border-t border-gray-200">
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <div className="max-w-3xl mb-12">
               <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs block mb-3">Notre connaissance du terrain</span>
@@ -199,7 +199,7 @@ export function HivernageCityPage({ city: cityProp }: { city?: HivernageCity | n
 
       {/* Zones d'intervention / ports */}
       {city.ports.length > 0 && (
-        <section className="bg-brand-light py-20">
+        <section className="bg-brand-light py-12 sm:py-20">
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <div className="max-w-3xl mb-12">
               <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mb-5">
@@ -232,7 +232,7 @@ export function HivernageCityPage({ city: cityProp }: { city?: HivernageCity | n
       )}
 
       {/* Nos autres services dans la zone (maillage interne local) */}
-      <section className="bg-brand-dark text-white py-20 border-t border-white/5">
+      <section className="bg-brand-dark text-white py-12 sm:py-20 border-t border-white/5">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs block mb-3">Une prise en charge complète</span>

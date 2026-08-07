@@ -65,7 +65,7 @@ export function FAQSection({ brandName }: { brandName: string }) {
   const faqs = FAQS_BY_BRAND[brandName.toLowerCase()] ?? FAQS_BY_BRAND.nautique;
 
   return (
-    <section className="py-24 bg-brand-light text-brand-dark">
+    <section className="py-14 sm:py-24 bg-brand-light text-brand-dark">
       <div className="max-w-4xl mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight text-center mb-16">
           ON RÉPOND À VOS <span className="text-brand-cyan">QUESTIONS</span>

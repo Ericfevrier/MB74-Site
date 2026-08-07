@@ -77,7 +77,7 @@ export function ServicesHubPage() {
       </header>
 
       {/* Cartes services */}
-      <section className="bg-brand-light py-24">
+      <section className="bg-brand-light py-14 sm:py-24">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {cards.map((c, i) => {

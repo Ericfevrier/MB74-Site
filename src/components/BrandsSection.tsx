@@ -25,7 +25,7 @@ export function BrandsSection() {
   return (
     <>
       {/* Nautique Section */}
-      <section className="bg-ink-850 py-20 text-white overflow-hidden relative">
+      <section className="bg-ink-850 py-12 sm:py-20 text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[100px] -mr-64 -mt-64"></div>
         
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 relative z-10">
@@ -95,7 +95,7 @@ export function BrandsSection() {
       </section>
 
       {/* Connelly Section */}
-      <section className="bg-brand-light py-20 text-brand-dark relative overflow-hidden">
+      <section className="bg-brand-light py-12 sm:py-20 text-brand-dark relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-cyan/10 rounded-full blur-[80px] -ml-40 -mb-40"></div>
         
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 text-center relative z-10">
@@ -118,7 +118,7 @@ export function BrandsSection() {
             </div>
           </div>
 
-          <div className="max-w-3xl mx-auto space-y-6 text-gray-600 text-base leading-relaxed mb-20">
+          <div className="max-w-3xl mx-auto space-y-6 text-gray-600 text-base leading-relaxed mb-12 sm:mb-20">
             <p className="font-bold text-brand-dark text-2xl tracking-tight">
               L'essence du sport nautique américain à votre portée.
             </p>
@@ -127,7 +127,7 @@ export function BrandsSection() {
             </p>
           </div>
 
-          <div className="relative group mb-20">
+          <div className="relative group mb-12 sm:mb-20">
             {/* Scroll Buttons */}
             <button 
               aria-label="Faire défiler à gauche"

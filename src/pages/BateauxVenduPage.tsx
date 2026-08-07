@@ -64,7 +64,7 @@ export function BateauxVenduPage({ boats: boatsProp }: { boats?: UsedBoat[] } = 
       </header>
 
       {/* Liste des vendus */}
-      <section className="bg-brand-light py-20">
+      <section className="bg-brand-light py-12 sm:py-20">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {boats.map((b) => (

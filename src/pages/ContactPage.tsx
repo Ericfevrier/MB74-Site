@@ -70,7 +70,7 @@ export function ContactPage() {
       <ServiceContactBlock subject="Contact" hideHeader />
 
       {/* Carte + horaires */}
-      <section className="bg-white pb-24">
+      <section className="bg-white pb-14 sm:pb-24">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 grid lg:grid-cols-3 gap-8 items-stretch">
           <div className="lg:col-span-2 min-h-[420px] rounded-[2rem] overflow-hidden shadow-xl shadow-brand-dark/5 border border-gray-200">
             <GoogleMapCustom />

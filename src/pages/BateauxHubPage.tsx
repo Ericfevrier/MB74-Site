@@ -104,7 +104,7 @@ export function BateauxHubPage() {
       </header>
 
       {/* Neuf / Occasion */}
-      <section className="bg-brand-light py-20">
+      <section className="bg-brand-light py-12 sm:py-20">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 grid md:grid-cols-2 gap-7">
           {[
             { to: '/bateaux/neufs', icon: Sparkles, t: 'Bateaux neufs', n: `${newCount} modèles`, d: 'La dernière génération de wakeboats Nautique et MasterCraft, configurables selon votre usage et vos options.' },
@@ -130,7 +130,7 @@ export function BateauxHubPage() {
       </section>
 
       {/* Marques */}
-      <section className="bg-white py-20 border-t border-gray-100">
+      <section className="bg-white py-12 sm:py-20 border-t border-gray-100">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="text-center mb-12">
             <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">Nos marques</span>
@@ -161,7 +161,7 @@ export function BateauxHubPage() {
       </section>
 
       {/* Pourquoi MB74 */}
-      <section className="bg-brand-light py-20">
+      <section className="bg-brand-light py-12 sm:py-20">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="text-center mb-12">
             <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{t('acc.eyebrow')}</span>
@@ -185,7 +185,7 @@ export function BateauxHubPage() {
       </section>
 
       {/* FAQ */}
-      <section className="bg-white py-20 border-t border-gray-100">
+      <section className="bg-white py-12 sm:py-20 border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-4 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-brand-dark mb-10 text-center">{t('faq.title')}</h2>
           <div className="space-y-4">

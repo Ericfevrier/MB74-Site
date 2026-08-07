@@ -33,7 +33,7 @@ export function OtherServices({ currentSlug }: { currentSlug?: string }) {
   const items = ALL.filter((s) => s.slug !== currentSlug);
 
   return (
-    <section className="bg-ink-950 py-20 border-t border-white/5">
+    <section className="bg-ink-950 py-12 sm:py-20 border-t border-white/5">
       <div className="container mx-auto px-4 lg:px-8 max-w-[1400px]">
         <div className="text-center mb-12">
           <span className="text-brand-cyan uppercase tracking-widest font-bold text-xs block mb-3">Nos services</span>

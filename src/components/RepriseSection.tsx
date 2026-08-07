@@ -42,7 +42,7 @@ const STEPS = [
 
 export function RepriseSection() {
   return (
-    <section className="bg-brand-dark text-white py-20 border-t border-white/5">
+    <section className="bg-brand-dark text-white py-12 sm:py-20 border-t border-white/5">
       <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
         <div className="text-center mb-14">
           <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">Reprise</span>

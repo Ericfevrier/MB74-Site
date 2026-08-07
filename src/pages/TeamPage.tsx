@@ -111,7 +111,7 @@ export function TeamPage() {
       </section>
 
       {/* CTA Venez nous rencontrer */}
-      <section className="bg-brand-dark text-white py-20 overflow-hidden relative">
+      <section className="bg-brand-dark text-white py-12 sm:py-20 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] -mr-64 -mt-64" />
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 relative z-10 text-center">
           <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight mb-6">{t('cta.title')}</h2>
@@ -130,7 +130,7 @@ export function TeamPage() {
       </section>
 
       {/* Où nous trouver : map + showroom (sans le bloc de texte « Visitez notre showroom ») */}
-      <section className="bg-brand-dark pb-24">
+      <section className="bg-brand-dark pb-14 sm:pb-24">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="h-[400px] rounded-3xl overflow-hidden shadow-2xl">

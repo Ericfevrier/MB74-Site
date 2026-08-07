@@ -100,7 +100,7 @@ export function BateauxNeufsPage() {
 
       {/* Gammes par marque */}
       {brands.map((b, bi) => (
-        <section key={b.id} id={b.id} className={`py-20 scroll-mt-24 ${bi % 2 === 0 ? 'bg-brand-light' : 'bg-white border-y border-gray-100'}`}>
+        <section key={b.id} id={b.id} className={`py-12 sm:py-20 scroll-mt-24 ${bi % 2 === 0 ? 'bg-brand-light' : 'bg-white border-y border-gray-100'}`}>
           <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
             <div className="flex items-end justify-between gap-4 mb-12">
               <div>
@@ -112,25 +112,34 @@ export function BateauxNeufsPage() {
               </Link>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Deux colonnes DÈS le mobile. En une seule, les 24 modèles de cette
+                page faisaient 14 700 px de haut à 390 px de large — 17 écrans rien
+                que pour les catalogues. Le format 2-up est celui de tous les
+                catalogues mobiles : on voit quatre bateaux d'un coup au lieu d'un. */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
               {b.models.map((m) => (
                 <article key={m.slug} className="group bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-lg shadow-brand-dark/5 hover:border-brand-cyan hover:-translate-y-1.5 transition-all flex flex-col">
                   <Link to={`/${b.id}/${m.slug}`} className="block aspect-[4/3] overflow-hidden bg-ink-900 relative">
                     <img src={m.hero} alt={`${m.fullName || m.name} neuf`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 via-transparent to-transparent" />
                   </Link>
-                  <div className="p-6 flex-1 flex flex-col">
+                  <div className="p-3 sm:p-6 flex-1 flex flex-col">
                     {m.gamme && <span className="text-[10px] uppercase tracking-widest font-bold text-brand-cyan mb-1.5">{m.gamme}</span>}
-                    <h3 className="text-lg font-bold text-brand-dark uppercase tracking-tight mb-2 leading-tight">{m.fullName || m.name}</h3>
-                    {m.tagline && <p className="text-gray-500 text-sm mb-6 leading-relaxed line-clamp-3 flex-1">{m.tagline}</p>}
+                    <h3 className="text-sm sm:text-lg font-bold text-brand-dark uppercase tracking-tight mb-2 leading-tight">{m.fullName || m.name}</h3>
+                    {/* Le résumé est masqué en dessous de `sm` : dans une colonne de
+                        175 px il tombait à trois lignes tronquées par « … », sans
+                        rien apprendre que la photo et le nom ne disent déjà. */}
+                    {m.tagline && <p className="hidden sm:block text-gray-500 text-sm mb-6 leading-relaxed line-clamp-3 flex-1">{m.tagline}</p>}
                     <Link
                       to={`/${b.id}/${m.slug}`}
                       // Voir BrandPage.tsx : libellé visible court, cible explicitée
                       // pour les lecteurs d'écran et les moteurs.
                       aria-label={`Découvrir le ${m.fullName || m.name}`}
-                      className="mt-auto inline-flex items-center justify-center gap-2 bg-brand-light border border-gray-200 text-brand-dark font-bold uppercase tracking-widest text-xs py-3.5 rounded-xl group-hover:bg-brand-cyan group-hover:border-brand-cyan transition-all min-h-[44px]"
+                      className="mt-auto inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-brand-light border border-gray-200 text-brand-dark font-bold uppercase tracking-wider sm:tracking-widest text-[10px] sm:text-xs py-3 sm:py-3.5 rounded-xl group-hover:bg-brand-cyan group-hover:border-brand-cyan transition-all min-h-[44px]"
                     >
-                      Découvrir le modèle <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
+                      <span className="sm:hidden">Découvrir</span>
+                      <span className="hidden sm:inline">Découvrir le modèle</span>
+                      <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
                     </Link>
                   </div>
                 </article>

@@ -56,7 +56,7 @@ export function UsedBoatCard({ boat, variant }: { boat: UsedBoat; variant: 'avai
 
         {/* Prix en surimpression */}
         <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
-          <h3 className="text-white font-bold uppercase tracking-tight leading-tight text-lg drop-shadow-sm">{boat.title}</h3>
+          <h3 className="text-white font-bold uppercase tracking-tight leading-tight text-sm sm:text-lg drop-shadow-sm">{boat.title}</h3>
           <span
             className={`flex-shrink-0 font-bold text-sm px-3.5 py-2 rounded-xl backdrop-blur-md ${
               sold ? 'bg-white/15 text-gray-200 line-through' : 'bg-white text-brand-dark shadow-lg'
@@ -68,9 +68,11 @@ export function UsedBoatCard({ boat, variant }: { boat: UsedBoat; variant: 'avai
       </Link>
 
       {/* Corps */}
-      <div className="p-5 flex-1 flex flex-col">
-        {/* Specs */}
-        <dl className="grid grid-cols-2 gap-2.5 mb-5">
+      <div className="p-3 sm:p-5 flex-1 flex flex-col">
+        {/* Specs — une seule colonne sous `sm` : la carte ne fait plus que 175 px
+            de large depuis le passage du catalogue en deux colonnes, et deux
+            caractéristiques côte à côte y étaient illisibles. */}
+        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 mb-3 sm:mb-5">
           {specs.map((s) => (
             <div key={s.label} className="flex items-center gap-2.5 bg-brand-light rounded-xl px-3 py-2.5 min-w-0">
               <s.Icon size={15} className="text-brand-cyan flex-shrink-0" />
@@ -91,7 +93,7 @@ export function UsedBoatCard({ boat, variant }: { boat: UsedBoat; variant: 'avai
             Voir le détail <ArrowRight size={14} />
           </Link>
         ) : (
-          <div className="mt-auto flex gap-2.5">
+          <div className="mt-auto flex flex-col sm:flex-row gap-2 sm:gap-2.5">
             <a
               href={SITE.phoneHref}
               className="flex-1 inline-flex items-center justify-center gap-1.5 bg-brand-cyan text-brand-dark font-bold uppercase text-[11px] tracking-widest py-3 rounded-xl hover:bg-brand-dark hover:text-white transition"
