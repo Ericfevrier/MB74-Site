@@ -249,17 +249,27 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
           </div>
         )}
 
-        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 lg:py-10 lg:min-h-[68dvh] grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        {/* Fil d'Ariane SORTI de la grille.
+            Il vivait dans la colonne de texte, qui porte `order-2` : sur mobile
+            l'image du bateau passait donc avant lui et le repoussait à 413 px du
+            haut, sous un visuel plein écran — mesuré sur les 27 pages modèle.
+            Or c'est précisément sur mobile qu'il sert le plus : on arrive par une
+            recherche, en plein milieu du site, sans être passé par l'accueil.
+            Placé au-dessus de la grille, il est en tête quel que soit l'ordre
+            des colonnes. */}
+        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6 lg:pt-8">
+          <Breadcrumb
+            items={[
+              { label: 'Accueil', to: '/' },
+              { label: 'Marques', to: brandPath },
+              { label: brandName, to: brandPath },
+              { label: model.short },
+            ]}
+          />
+        </div>
+
+        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6 pb-8 lg:pt-8 lg:pb-10 lg:min-h-[68dvh] grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="order-2 lg:order-1">
-            <Breadcrumb
-              className="mb-8"
-              items={[
-                { label: 'Accueil', to: '/' },
-                { label: 'Marques', to: brandPath },
-                { label: brandName, to: brandPath },
-                { label: model.short },
-              ]}
-            />
             <div className="flex items-center gap-3 mb-4">
               <span className="w-8 h-1 bg-brand-cyan rounded-full" />
               <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">{model.gamme} · Millésime {model.year}</span>

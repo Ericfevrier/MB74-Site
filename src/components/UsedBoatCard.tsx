@@ -55,16 +55,17 @@ export function UsedBoatCard({ boat, variant }: { boat: UsedBoat; variant: 'avai
         </span>
 
         {/* Prix en surimpression.
-            Le catalogue est en DEUX COLONNES dès le mobile : à 320 px chaque
-            carte ne fait que 138 px de large. Titre et prix côte à côte n'y
-            tiennent pas, et le prix étant en `flex-shrink-0`, c'est lui qui
-            sortait de la carte — coupé net par l'`overflow-hidden` du visuel.
-            Mesuré à 320, 360 et 390 px : « 148 000 € » s'arrêtait à 363 px pour
-            un écran de 320. Le prix est l'information décisive d'une annonce.
-            Ils s'empilent donc tant que la carte est étroite, et repassent côte
-            à côte dès 640 px, où la carte atteint ~300 px. */}
-        <div className="absolute bottom-4 left-4 right-4 flex flex-col items-start gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-3">
-          <h3 className="text-white font-bold uppercase tracking-tight leading-tight text-sm sm:text-lg drop-shadow-sm">{boat.title}</h3>
+            `flex-wrap` plutôt qu'un point de rupture : la largeur de la carte
+            dépend du nombre de colonnes de la grille qui l'accueille, et cette
+            grille change à 640 et 1024 px. Un `sm:` codé en dur ici supposerait
+            connaître la largeur du parent, ce qui est faux dès qu'une page
+            réutilise la carte dans une autre disposition. Titre et prix se
+            placent côte à côte s'ils tiennent, le prix passe dessous sinon —
+            sans jamais déborder, ce qui arrivait quand il était `flex-shrink-0`
+            sur une carte de 138 px : « 148 000 € » était coupé net par
+            l'`overflow-hidden` du visuel. */}
+        <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-end justify-between gap-x-3 gap-y-1">
+          <h3 className="text-white font-bold uppercase tracking-tight leading-tight text-base sm:text-lg drop-shadow-sm">{boat.title}</h3>
           <span
             className={`flex-shrink-0 font-bold text-sm px-3.5 py-2 rounded-xl backdrop-blur-md ${
               sold ? 'bg-white/15 text-gray-200 line-through' : 'bg-white text-brand-dark shadow-lg'
@@ -76,11 +77,14 @@ export function UsedBoatCard({ boat, variant }: { boat: UsedBoat; variant: 'avai
       </Link>
 
       {/* Corps */}
-      <div className="p-3 sm:p-5 flex-1 flex flex-col">
-        {/* Specs — une seule colonne sous `sm` : la carte ne fait plus que 175 px
-            de large depuis le passage du catalogue en deux colonnes, et deux
-            caractéristiques côte à côte y étaient illisibles. */}
-        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 mb-3 sm:mb-5">
+      <div className="p-5 flex-1 flex flex-col">
+        {/* Specs sur deux colonnes. Elles avaient été repliées sur une seule
+            quand le catalogue est passé en deux colonnes dès le mobile : la
+            carte tombait à 175 px et deux caractéristiques côte à côte y étaient
+            illisibles. Le catalogue étant revenu à une colonne sur mobile, la
+            carte y fait de nouveau ~350 px et deux colonnes tiennent
+            confortablement, pour une fiche deux fois moins haute. */}
+        <dl className="grid grid-cols-2 gap-2.5 mb-5">
           {specs.map((s) => (
             <div key={s.label} className="flex items-center gap-2.5 bg-brand-light rounded-xl px-3 py-2.5 min-w-0">
               <s.Icon size={15} className="text-brand-cyan flex-shrink-0" />
@@ -105,7 +109,7 @@ export function UsedBoatCard({ boat, variant }: { boat: UsedBoat; variant: 'avai
             Voir le détail <ArrowRight size={14} />
           </Link>
         ) : (
-          <div className="mt-auto flex flex-col sm:flex-row gap-2 sm:gap-2.5">
+          <div className="mt-auto flex gap-2.5">
             <a
               href={SITE.phoneHref}
               className="flex-1 inline-flex items-center justify-center gap-1.5 bg-brand-cyan text-brand-dark font-bold uppercase text-[11px] tracking-widest min-h-11 py-3 rounded-xl hover:bg-brand-dark hover:text-white transition"

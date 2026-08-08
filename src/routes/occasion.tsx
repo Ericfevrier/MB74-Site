@@ -117,10 +117,16 @@ export default function Occasion() {
 
       <section className="bg-brand-light py-12 sm:py-20">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
-          {/* Deux colonnes dès le mobile : cohérent avec le catalogue des neufs,
-              et un acheteur compare mieux quand il voit plusieurs bateaux à la fois. */}
+          {/* UNE colonne sur mobile.
+              Le catalogue passait à deux colonnes dès 320 px, où chaque carte ne
+              faisait plus que 138 px de large : titre tronqué, caractéristiques
+              empilées une par une, boutons à la verticale, et le prix — la
+              donnée décisive d'une annonce — réduit à une pastille compressée.
+              L'argument « comparer plusieurs bateaux à la fois » ne tient pas à
+              cette largeur : on ne compare pas ce qu'on ne peut pas lire.
+              Deux colonnes reviennent à 640 px, trois à partir de 1024 px. */}
           {boats.length > 0 ? (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
               {boats.map((b) => (
                 <UsedBoatCard key={b.slug} boat={b} variant="available" />
               ))}

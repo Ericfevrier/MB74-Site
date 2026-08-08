@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SITE } from '../data/site';
 
 interface GoogleMapCustomProps {
@@ -39,18 +39,59 @@ export function GoogleMapCustom({ address, light }: GoogleMapCustomProps = {}) {
       ? 'grayscale(55%) saturate(1.25) hue-rotate(-8deg) contrast(1.04) brightness(1.02)'
       : 'invert(90%) hue-rotate(180deg) brightness(0.9) contrast(0.9)';
 
+  /*
+   * L'iframe n'est montée qu'à l'approche de l'écran.
+   *
+   * `loading="lazy"` y était déjà, mais le seuil natif des iframes est
+   * généreux : mesuré sur /bateaux/occasion, la carte partait dès le
+   * chargement et déclenchait 13 requêtes vers maps.googleapis.com, alors
+   * qu'elle se trouve tout en bas de la page.
+   *
+   * L'enjeu n'est pas seulement le poids. Cette page émettait une quarantaine
+   * de requêtes simultanées vers motorboat74.com, et o2switch en refuse une
+   * partie au-delà d'un certain débit (429) : ce sont les images des annonces
+   * qui perdaient l'arbitrage et restaient noires. Retarder ce qui n'est pas
+   * visible, c'est laisser passer ce qui l'est.
+   *
+   * Le conteneur garde ses dimensions dans les deux états : rien ne bouge à
+   * l'arrivée de la carte, le décalage cumulé reste nul.
+   */
+  const conteneur = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = conteneur.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === 'undefined') { setVisible(true); return; }
+    const obs = new IntersectionObserver(
+      (entrees) => {
+        if (!entrees.some((e) => e.isIntersecting)) return;
+        setVisible(true);
+        obs.disconnect();
+      },
+      { rootMargin: '400px 0px' },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <div className={`relative h-full w-full rounded-[3rem] overflow-hidden ${light ? 'bg-gray-100' : 'bg-ink-900'}`}>
-      <iframe
-        src={src}
-        width="100%"
-        height="100%"
-        style={{ border: 0, filter }}
-        allowFullScreen={true}
-        loading="lazy"
-        referrerPolicy="strict-origin-when-cross-origin"
-        title={`${SITE.name} — ${SITE.addressStreet}, ${SITE.addressPostal} ${SITE.addressLocality}`}
-      ></iframe>
+    <div
+      ref={conteneur}
+      className={`relative h-full w-full rounded-[3rem] overflow-hidden ${light ? 'bg-gray-100' : 'bg-ink-900'}`}
+    >
+      {visible && (
+        <iframe
+          src={src}
+          width="100%"
+          height="100%"
+          style={{ border: 0, filter }}
+          allowFullScreen={true}
+          loading="lazy"
+          referrerPolicy="strict-origin-when-cross-origin"
+          title={`${SITE.name} — ${SITE.addressStreet}, ${SITE.addressPostal} ${SITE.addressLocality}`}
+        ></iframe>
+      )}
     </div>
   );
 }
