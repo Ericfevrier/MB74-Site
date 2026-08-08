@@ -99,11 +99,11 @@ function CardIcon({ name }: { name?: string }) {
   );
 }
 
-const reveal = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' },
-};
+// Les cartes de service s'affichaient une a une, decalees de 0,08 s : sur une
+// page qui en aligne jusqu'a huit, le contenu se construisait pendant tout le
+// defilement. L'objet `reveal` qui portait ce comportement est supprime, ainsi
+// que le fondu-montee de 24 px. Le survol garde ses transitions : elles
+// repondent a un geste, elles n'imitent pas un chargement.
 
 function SectionHead({ section }: { section: ServiceSection }) {
   return (
@@ -124,10 +124,8 @@ function SectionHead({ section }: { section: ServiceSection }) {
 
 function ServiceCardItem({ card, i }: { card: ServiceCard; i: number }) {
   return (
-    <motion.div
-      {...reveal}
-      transition={{ duration: 0.5, delay: i * 0.08 }}
-      className="bg-white border border-gray-200 rounded-3xl p-8 shadow-lg shadow-brand-dark/5 hover:border-brand-cyan/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+    <div
+            className="bg-white border border-gray-200 rounded-3xl p-8 shadow-lg shadow-brand-dark/5 hover:border-brand-cyan/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
       <CardIcon name={card.icon} />
       <h3 className="font-bold text-xl text-brand-dark mb-4 uppercase tracking-tight">{card.title}</h3>
@@ -142,7 +140,7 @@ function ServiceCardItem({ card, i }: { card: ServiceCard; i: number }) {
           ))}
         </ul>
       )}
-    </motion.div>
+    </div>
   );
 }
 
@@ -181,18 +179,16 @@ function SectionBlock({ section, index }: { section: ServiceSection; index: numb
             {section.items.map((card, i) => {
               const Icon = card.icon ? CARD_ICONS[card.icon] : undefined;
               return (
-                <motion.div
+                <div
                   key={i}
-                  {...reveal}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="bg-ink-900 border border-white/5 rounded-3xl p-7 hover:border-brand-cyan/30 hover:-translate-y-1 transition-all duration-300"
+                                    className="bg-ink-900 border border-white/5 rounded-3xl p-7 hover:border-brand-cyan/30 hover:-translate-y-1 transition-all duration-300"
                 >
                   <span className="w-12 h-12 rounded-2xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center mb-5">
                     {Icon ? <Icon size={22} /> : <Anchor size={22} />}
                   </span>
                   <h3 className="font-bold text-lg text-white mb-2 uppercase tracking-tight">{card.title}</h3>
                   <p className="text-gray-400 leading-relaxed text-sm">{card.desc}</p>
-                </motion.div>
+                </div>
               );
             })}
           </div>
@@ -201,18 +197,16 @@ function SectionBlock({ section, index }: { section: ServiceSection; index: numb
         {section.layout === 'steps' && (
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {section.items.map((card, i) => (
-              <motion.div
+              <div
                 key={i}
-                {...reveal}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="relative bg-white border border-gray-200 rounded-3xl p-6 shadow-lg shadow-brand-dark/5"
+                                className="relative bg-white border border-gray-200 rounded-3xl p-6 shadow-lg shadow-brand-dark/5"
               >
                 <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-brand-cyan text-brand-dark font-bold mb-4">
                   {i + 1}
                 </span>
                 <h3 className="font-bold text-base text-brand-dark mb-2 leading-tight uppercase tracking-tight">{card.title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{card.desc}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}

@@ -388,12 +388,13 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
                 const lifestyle = hImg ? true : !studio;
                 const reverse = i % 2 === 1;
                 return (
-                  <motion.div
+                  // Sections « points forts » affichées d'emblée. Elles
+                  // montaient de 30 px en fondu au passage à l'écran, avec un
+                  // seuil de déclenchement à −80 px : sur une fiche qui en
+                  // compte jusqu'à cinq, le contenu se dérobait à chaque
+                  // défilement au lieu d'être simplement là.
+                  <div
                     key={i}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.5 }}
                     className="grid lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-12 items-center"
                   >
                     {/* Format 16/10 sur grand écran, 16/9 sur mobile : la photo passe
@@ -408,7 +409,7 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
                       </div>
                       <p className="text-gray-300 leading-relaxed text-base sm:text-lg">{h.text}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>

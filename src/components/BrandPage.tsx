@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router';
-import { motion } from 'motion/react';
 import { useSeoOverride } from '../lib/seo';
 import { ArrowRight, ChevronRight, ShieldCheck, Waves, Wallet, Wrench } from 'lucide-react';
 import { brandsData, type BrandData } from '../data/brands';
@@ -208,11 +207,16 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
         </div>
 
         <div className="max-w-[1400px] mx-auto px-4 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          {/*
+            Aucune animation d'apparition ici, volontairement.
+            Ce bloc arrivait en fondu-montée sur 0,8 s : à l'ouverture de la
+            page, le titre de la marque n'existait pas encore à l'écran. Un
+            visiteur qui arrive lit un chargement, pas une page. Le contenu est
+            prérendu, il doit s'afficher tel quel.
+            Effet de bord bienvenu : plus aucun `style="opacity:0"` dans le HTML
+            livré, donc plus rien à rattraper quand le script tarde ou échoue.
+          */}
+          <div>
             <div className="flex flex-col items-center justify-center gap-6 mb-8">
               {/*
                 H1 aligné sur le titre de recherche. Il valait
@@ -272,7 +276,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
             <p className="text-brand-cyan text-[11px] sm:text-sm md:text-base font-bold uppercase tracking-[0.18em] sm:tracking-[0.3em] mb-4">
               {brand.tagline}
             </p>
-          </motion.div>
+          </div>
         </div>
 
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-brand-dark to-transparent"></div>
@@ -282,12 +286,10 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
       <article className="py-14 sm:py-24 bg-brand-dark text-white">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
+            {/* Glissement latéral de 30 px sur 0,8 s au passage à l'écran :
+                supprimé. C'est ce décalage qui donnait la sensation que la page
+                se construisait sous le doigt pendant le défilement. */}
+            <div>
               <div className="flex items-center gap-3 mb-5">
                 <span className="w-8 h-1 bg-brand-cyan rounded-full" />
                 <span className="text-brand-cyan font-bold uppercase tracking-widest text-xs">La marque</span>
@@ -316,15 +318,9 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative"
-            >
+            <div className="relative">
               {/* Halo décoratif. `-inset-4` le faisait dépasser de 16 px de
                   chaque côté de son conteneur, débordement rattrapé par le seul
                   garde-fou `overflow-x: clip` global — donc masqué plutôt que
@@ -356,7 +352,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
                   </p>
                 </div>
               )}
-            </motion.div>
+            </div>
           </div>
         </div>
       </article>
@@ -379,13 +375,16 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
             {brand.models.map((model, idx) => {
               const slug = model.name.toLowerCase().replace(/\s+/g, '-');
               const gamme = getBrandModels(id)?.models[slug]?.gamme;
+              // La grille de modèles s'affiche d'un bloc, sans apparition.
+              // Chaque carte montait de 30 px en fondu, avec un décalage en
+              // cascade de 0,08 s par colonne : sur 15 modèles, le catalogue se
+              // construisait sous les yeux pendant tout le défilement, et la
+              // page paraissait charger en continu.
+              // Le survol garde sa transition (`hover:-translate-y-1.5`) :
+              // celle-là répond à un geste, elle n'imite pas un chargement.
               return (
-                <motion.article
+                <article
                   key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: (idx % 4) * 0.08 }}
                   className="group relative bg-ink-900 border border-white/10 rounded-3xl overflow-hidden hover:border-brand-cyan hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
                 >
                   <div className={`aspect-[4/3] overflow-hidden relative ${catalogStudio ? 'bg-gradient-to-b from-white to-gray-100' : ''}`}>
@@ -422,7 +421,7 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
                       <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
                     </Link>
                   </div>
-                </motion.article>
+                </article>
               );
             })}
           </div>

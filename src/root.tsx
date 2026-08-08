@@ -112,9 +112,9 @@ export default function App() {
      * Elles sont pilotées en JavaScript et échappent donc à la règle CSS
      * `prefers-reduced-motion` d'index.css — il faut bien les deux.
      *
-     * Framer conserve volontairement les fondus d'opacité et ne neutralise que
-     * les déplacements : les blocs en `whileInView` (initial opacity 0) continuent
-     * de se révéler. Les couper aurait laissé du contenu invisible à l'écran.
+     * Il ne reste que des animations déclenchées par un clic : ouverture
+     * d'accordéon, lightbox. Les révélations au défilement ont toutes été
+     * retirées — elles donnaient l'impression que la page se chargeait encore.
      */
     <MotionConfig reducedMotion="user">
       <SettingsProvider>
