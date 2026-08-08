@@ -54,8 +54,16 @@ export function UsedBoatCard({ boat, variant }: { boat: UsedBoat; variant: 'avai
           {brandName(boat.brandId)} · {boat.year}
         </span>
 
-        {/* Prix en surimpression */}
-        <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
+        {/* Prix en surimpression.
+            Le catalogue est en DEUX COLONNES dès le mobile : à 320 px chaque
+            carte ne fait que 138 px de large. Titre et prix côte à côte n'y
+            tiennent pas, et le prix étant en `flex-shrink-0`, c'est lui qui
+            sortait de la carte — coupé net par l'`overflow-hidden` du visuel.
+            Mesuré à 320, 360 et 390 px : « 148 000 € » s'arrêtait à 363 px pour
+            un écran de 320. Le prix est l'information décisive d'une annonce.
+            Ils s'empilent donc tant que la carte est étroite, et repassent côte
+            à côte dès 640 px, où la carte atteint ~300 px. */}
+        <div className="absolute bottom-4 left-4 right-4 flex flex-col items-start gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-3">
           <h3 className="text-white font-bold uppercase tracking-tight leading-tight text-sm sm:text-lg drop-shadow-sm">{boat.title}</h3>
           <span
             className={`flex-shrink-0 font-bold text-sm px-3.5 py-2 rounded-xl backdrop-blur-md ${

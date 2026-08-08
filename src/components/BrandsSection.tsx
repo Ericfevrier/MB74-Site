@@ -128,18 +128,26 @@ export function BrandsSection() {
           </div>
 
           <div className="relative group mb-12 sm:mb-20">
-            {/* Scroll Buttons */}
+            {/* Boutons de défilement.
+                Ils sortaient du conteneur de 96 px dès `xl` (1280 px). Or le
+                conteneur fait 1400 px au maximum : il faut 1400 + 2×96 ≈ 1600 px
+                d'écran pour que ces 96 px existent. Entre 1280 et 1599 px, les
+                deux boutons se retrouvaient donc HORS ÉCRAN — mesuré à 1280 et
+                1440 px : bord droit à −28 px à gauche, 1332 px à droite — et le
+                carrousel n'était plus navigable au clic.
+                Le débordement extérieur ne s'applique plus qu'à partir de
+                1600 px, là où la place existe réellement. */}
             <button 
               aria-label="Faire défiler à gauche"
               onClick={() => scroll('left')}
-              className="absolute left-2 xl:-left-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white border border-gray-200 text-brand-dark flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 hover:scale-110 active:scale-95 invisible sm:visible"
+              className="absolute left-2 min-[1600px]:-left-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white border border-gray-200 text-brand-dark flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 hover:scale-110 active:scale-95 invisible sm:visible"
             >
               <ChevronLeft size={24} />
             </button>
             <button 
               aria-label="Faire défiler à droite"
               onClick={() => scroll('right')}
-              className="absolute right-2 xl:-right-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white border border-gray-200 text-brand-dark flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 hover:scale-110 active:scale-95 invisible sm:visible"
+              className="absolute right-2 min-[1600px]:-right-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white border border-gray-200 text-brand-dark flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-100 hover:scale-110 active:scale-95 invisible sm:visible"
             >
               <ChevronRight size={24} />
             </button>

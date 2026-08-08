@@ -221,21 +221,37 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
                 le nom du site répété alors qu'il figure déjà dans le titre.
               */}
               <h1 className="sr-only">{brand.name} — {brand.seoRole || (brand.role || 'Concessionnaire officiel').toLowerCase()}</h1>
-              <span className="bg-brand-cyan text-brand-dark px-6 py-2 rounded-full text-[12px] font-bold uppercase tracking-widest shadow-lg shadow-brand-cyan/20">
+              {/*
+                Tout ce bloc était dimensionné en dur et se faisait TRANCHER sur
+                mobile — la section est en `overflow-hidden`, donc rien ne
+                dépassait à l'écran : le contenu était simplement coupé, sans
+                barre de défilement ni indice. Mesuré sur iPhone 12 (390 px) :
+                le mot « MasterCraft » réclamait 354 px, le logo sortait
+                entièrement par la gauche (bord droit à −2 px), et la signature
+                394 px pour 390 disponibles.
+
+                `max-w-full` sur les enfants : sans lui, un élément flex ne
+                descend pas sous la largeur de son contenu (`min-width: auto`)
+                et refuse de se replier.
+              */}
+              <span className="bg-brand-cyan text-brand-dark max-w-full px-4 sm:px-6 py-2 rounded-full text-[11px] sm:text-[12px] font-bold uppercase tracking-widest text-center shadow-lg shadow-brand-cyan/20">
                 {role} {brand.name}
               </span>
               {brand.heroWordmark ? (
-                <div className="flex items-center justify-center gap-4 md:gap-5">
-                  <span className="bg-white rounded-2xl p-3 md:p-4 shadow-xl flex items-center justify-center flex-shrink-0">
+                <div className="flex max-w-full items-center justify-center gap-3 sm:gap-4 md:gap-5">
+                  <span className="bg-white rounded-2xl p-2 sm:p-3 md:p-4 shadow-xl flex items-center justify-center flex-shrink-0">
                     <img
                       src={brand.logo}
                       alt={`Logo ${brand.name}`}
-                      className="h-12 md:h-[72px] w-auto object-contain"
+                      className="h-9 sm:h-12 md:h-[72px] w-auto object-contain"
                       fetchPriority="high"
                       referrerPolicy="no-referrer"
                     />
                   </span>
-                  <span className="text-white font-bold uppercase tracking-tight leading-none text-5xl md:text-7xl">{brand.name}</span>
+                  {/* Taille fluide plutôt que deux paliers : le nom de marque
+                      varie de 8 à 11 caractères, un palier fixe ne peut pas
+                      convenir aux deux. */}
+                  <span className="min-w-0 text-white font-bold uppercase tracking-tight leading-none text-[clamp(1.75rem,9vw,4.5rem)]">{brand.name}</span>
                 </div>
               ) : (
                 <div className="h-20 md:h-28 flex items-center justify-center">
@@ -249,7 +265,11 @@ export function BrandPage({ brand: brandProp }: { brand?: BrandData | null } = {
                 </div>
               )}
             </div>
-            <p className="text-brand-cyan text-sm md:text-base font-bold uppercase tracking-[0.3em] mb-4">
+            {/* L'interlettrage de 0.3em ajoute 30 % de largeur : c'est lui qui
+                portait la signature à 394 px pour 390 disponibles. Il est réduit
+                sur mobile, où il n'y a pas la place, et retrouve sa valeur dès
+                640 px. */}
+            <p className="text-brand-cyan text-[11px] sm:text-sm md:text-base font-bold uppercase tracking-[0.18em] sm:tracking-[0.3em] mb-4">
               {brand.tagline}
             </p>
           </motion.div>
