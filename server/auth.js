@@ -1,0 +1,222 @@
+/**
+ * Authentification admin — compte unique via variables d'environnement.
+ *   ADMIN_USERNAME       : identifiant
+ *   ADMIN_PASSWORD_HASH  : hash bcrypt du mot de passe (cf. scripts/hash-password.mjs)
+ *   SESSION_SECRET       : clé de signature du cookie de session (recommandé en prod)
+ *
+ * Session sans état (stateless) : cookie httpOnly signé en HMAC-SHA256 → survit aux
+ * redémarrages Passenger, pas de table ni de store mémoire. Tout est en pur JS (crypto natif + bcryptjs).
+ */
+import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
+
+export const COOKIE_NAME = 'mb74_admin';
+export const COOKIE_TTL_MS = 1000 * 60 * 60 * 12; // 12 h
+
+/**
+ * Clé de secours tirée au sort AU DÉMARRAGE, jamais écrite nulle part.
+ *
+ * Le repli était une chaîne écrite en dur dans le code. Le dépôt étant public,
+ * cette clé l'était aussi : n'importe qui pouvait forger un cookie de session
+ * `{u:…, r:'super-admin'}` correctement signé et obtenir l'administration
+ * complète sans jamais connaître le mot de passe. Vérifié : le jeton forgé
+ * passait, /api/admin/me répondait « super-admin ».
+ *
+ * Une clé aléatoire par processus invalide les sessions à chaque redémarrage —
+ * il faut se reconnecter après un `touch tmp/restart.txt` — mais aucun secret
+ * connu ne circule. C'est le repli, pas la configuration visée : renseigner
+ * SESSION_SECRET rend les sessions durables.
+ */
+const BOOT_SECRET = crypto.randomBytes(32).toString('hex');
+let warned = false;
+
+function secret() {
+  // 1. Clé dédiée, explicitement configurée. C'est le cas nominal.
+  if (process.env.SESSION_SECRET) return process.env.SESSION_SECRET;
+  // 2. Hash bcrypt du mot de passe : secret, et le changer invalide les sessions.
+  if (process.env.ADMIN_PASSWORD_HASH) return process.env.ADMIN_PASSWORD_HASH;
+  // 3. Dérivée du mot de passe en clair (option recommandée sur cPanel) : stable
+  //    d'un redémarrage à l'autre, et jamais transmise telle quelle.
+  if (process.env.ADMIN_PASSWORD) {
+    return crypto.createHash('sha256').update(`mb74|${process.env.ADMIN_PASSWORD}`).digest('hex');
+  }
+  // 4. Rien de configuré : on ne retombe JAMAIS sur une valeur devinable.
+  if (!warned) {
+    warned = true;
+    console.warn(
+      '[auth] Ni SESSION_SECRET ni ADMIN_PASSWORD configurés : clé de session aléatoire, ' +
+        'les sessions ne survivront pas au redémarrage. Renseignez SESSION_SECRET dans .env.',
+    );
+  }
+  return BOOT_SECRET;
+}
+
+const b64url = (s) => Buffer.from(s).toString('base64url');
+const sign = (payload) => crypto.createHmac('sha256', secret()).update(payload).digest('base64url');
+
+/** Crée le jeton de session signé, portant l'utilisateur et son rôle. */
+export function createToken(username, role = 'super-admin') {
+  const payload = b64url(JSON.stringify({ u: username, r: role, e: Date.now() + COOKIE_TTL_MS }));
+  return `${payload}.${sign(payload)}`;
+}
+
+/** Vérifie le jeton → { username, role } ou null. */
+export function verifyToken(token) {
+  if (!token) return null;
+  const i = token.lastIndexOf('.');
+  if (i < 0) return null;
+  const payload = token.slice(0, i);
+  const sig = token.slice(i + 1);
+  const expected = sign(payload);
+  const a = Buffer.from(sig);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+  try {
+    const { u, r, e } = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    if (!u || !e || Date.now() > Number(e)) return null;
+    return { username: u, role: r || 'admin' };
+  } catch {
+    return null;
+  }
+}
+
+export const authConfigured = () =>
+  Boolean(process.env.ADMIN_USERNAME && (process.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD_HASH));
+
+/* --------------------- Réinitialisation de mot de passe ---------------------- */
+// Jeton de reset sans état : HMAC signé, lié au hash courant du compte (`bind`).
+// Dès que le mot de passe change, `bind` change → tout ancien lien devient invalide
+// (usage unique de fait). TTL court porté dans la charge utile.
+export const RESET_TTL_MS = 30 * 60 * 1000; // 30 min
+
+export function createResetToken(username, bind, ttlMs = RESET_TTL_MS) {
+  const payload = b64url(JSON.stringify({ u: username, e: Date.now() + ttlMs }));
+  const sig = crypto.createHmac('sha256', secret()).update(`reset:${payload}:${bind || ''}`).digest('base64url');
+  return `${payload}.${sig}`;
+}
+
+/** Vérifie le jeton avec le `bind` courant → username ou null. */
+export function verifyResetToken(token, bind) {
+  if (!token) return null;
+  const i = token.lastIndexOf('.');
+  if (i < 0) return null;
+  const payload = token.slice(0, i);
+  const sig = token.slice(i + 1);
+  const expected = crypto.createHmac('sha256', secret()).update(`reset:${payload}:${bind || ''}`).digest('base64url');
+  const a = Buffer.from(sig);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+  try {
+    const { u, e } = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    if (!u || !e || Date.now() > Number(e)) return null;
+    return u;
+  } catch {
+    return null;
+  }
+}
+
+function safeEqualStr(a, b) {
+  const ba = Buffer.from(String(a));
+  const bb = Buffer.from(String(b));
+  return ba.length === bb.length && crypto.timingSafeEqual(ba, bb);
+}
+
+/**
+ * Vérifie identifiant + mot de passe.
+ * Priorité à ADMIN_PASSWORD (en clair) : fiable sur les panels qui interprètent le `$`
+ * des hash bcrypt (cPanel/Passenger). Sinon, repli sur ADMIN_PASSWORD_HASH (bcrypt).
+ */
+export async function checkCredentials(username, password) {
+  if (!authConfigured()) return false;
+  const okUser = username === process.env.ADMIN_USERNAME;
+
+  if (process.env.ADMIN_PASSWORD) {
+    return okUser && safeEqualStr(password || '', process.env.ADMIN_PASSWORD);
+  }
+
+  // Toujours exécuter un compare bcrypt pour limiter l'oracle temporel sur l'existence du compte.
+  const hash = okUser
+    ? process.env.ADMIN_PASSWORD_HASH
+    : '$2a$10$CwTycUXWue0Thq9StjUM0uJ8.7qXr8oQ7m0Q6m0Q6m0Q6m0Q6m0Qe';
+  let okPass = false;
+  try {
+    okPass = await bcrypt.compare(String(password || ''), hash);
+  } catch {
+    okPass = false;
+  }
+  return okUser && okPass;
+}
+
+function readCookie(req, name) {
+  const raw = req.headers.cookie || '';
+  for (const part of raw.split(';')) {
+    const idx = part.indexOf('=');
+    if (idx < 0) continue;
+    if (part.slice(0, idx).trim() === name) return decodeURIComponent(part.slice(idx + 1).trim());
+  }
+  return null;
+}
+
+export function currentAdmin(req) {
+  return verifyToken(readCookie(req, COOKIE_NAME));
+}
+
+/* ------------------------------ CSRF (stateless) ------------------------------ */
+// Jeton CSRF dérivé en HMAC du token de session (signed double-submit) : pas de
+// stockage, invalidé avec la session. Le client le renvoie dans l'en-tête X-CSRF-Token.
+export function csrfToken(sessionToken) {
+  if (!sessionToken) return '';
+  return crypto.createHmac('sha256', secret()).update(`csrf:${sessionToken}`).digest('base64url');
+}
+export function csrfForReq(req) {
+  return csrfToken(readCookie(req, COOKIE_NAME));
+}
+
+/** Middleware : 401 si pas de session valide ; 403 si mutation sans jeton CSRF valide. */
+export function requireAuth(req, res, next) {
+  const user = currentAdmin(req);
+  if (!user) return res.status(401).json({ ok: false, error: 'Non authentifié.' });
+  req.admin = user; // { username, role }
+  if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
+    const header = req.get('x-csrf-token') || '';
+    const expected = csrfForReq(req);
+    if (!header || !expected || !safeEqualStr(header, expected)) {
+      return res.status(403).json({ ok: false, error: 'Jeton de sécurité invalide ou expiré. Rechargez la page.' });
+    }
+  }
+  next();
+}
+
+/** Middleware : réservé au super-admin (gestion des utilisateurs). */
+export function requireSuperAdmin(req, res, next) {
+  requireAuth(req, res, () => {
+    if (req.admin.role !== 'super-admin') {
+      return res.status(403).json({ ok: false, error: 'Réservé au super-administrateur.' });
+    }
+    next();
+  });
+}
+
+/* --------------------- Anti-brute-force sur le login (mémoire) ----------------- */
+const attempts = new Map(); // ip -> { count, first, until }
+const MAX_ATTEMPTS = 8;
+const ATTEMPT_WINDOW = 15 * 60 * 1000; // 15 min
+const LOCK_MS = 15 * 60 * 1000;
+
+/** Renvoie le nombre de secondes de blocage restant (0 si non bloqué). */
+export function loginBlockedSeconds(ip) {
+  const a = attempts.get(ip);
+  if (a && a.until && Date.now() < a.until) return Math.ceil((a.until - Date.now()) / 1000);
+  return 0;
+}
+export function recordLoginFailure(ip) {
+  const now = Date.now();
+  let a = attempts.get(ip);
+  if (!a || now - a.first > ATTEMPT_WINDOW) a = { count: 0, first: now, until: 0 };
+  a.count += 1;
+  if (a.count >= MAX_ATTEMPTS) a.until = now + LOCK_MS;
+  attempts.set(ip, a);
+}
+export function recordLoginSuccess(ip) {
+  attempts.delete(ip);
+}

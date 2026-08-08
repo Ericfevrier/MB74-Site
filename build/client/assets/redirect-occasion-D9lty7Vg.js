@@ -1,0 +1,1 @@
+import{w as t,a as o}from"./react-vendor-CzeHyoPF.js";import"./vendor-7OC5HNn7.js";function a(){return o("/bateaux/occasion")}const c=t(function(){return null});export{a as clientLoader,c as default};
