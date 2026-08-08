@@ -62,7 +62,114 @@
 
   /* Gris de texte atténué */
   --color-mute: #a0a0a0;
+
+  /* ---------------------------------------------------------------------
+   * Variantes lisibles sur fond CLAIR.
+   *
+   * Le cyan de marque est excellent sur sombre (6,4:1 sur brand-dark,
+   * 8,7:1 sur ink-950) et illisible sur clair : 1,95:1 sur brand-light,
+   * 2,15:1 sur blanc, là où la norme demande 4,5:1. Même constat pour les
+   * gris atténués, pensés pour du texte sur sombre.
+   *
+   * Ces variantes gardent EXACTEMENT la teinte de marque — 195,1° pour le
+   * cyan, comme #06BEFC — et n'en changent que la clarté. Elles ne servent
+   * qu'au TEXTE et aux BORDURES sur surface claire ; les aplats gardent le
+   * cyan d'origine (voir le bloc « surfaces » plus bas).
+   * ------------------------------------------------------------------ */
+  --color-brand-cyan-ink: #027297;   /* 4,78 à 5,45:1 sur les fonds clairs du site */
+  --color-gray-attenue: #5B6472;     /* remplace gray-400 sur clair — 5,26 à 5,98:1 */
+  --color-gray-doux: #4A5565;        /* remplace gray-500 sur clair — 6,64 à 7,56:1 */
 }
+
+/* ===========================================================================
+ * COULEURS DE TEXTE PILOTÉES PAR LA SURFACE
+ *
+ * Le problème : `text-brand-cyan` apparaît 424 fois, `text-gray-400` 202 fois,
+ * tantôt sur fond sombre — où elles sont parfaitement lisibles et ne doivent
+ * surtout pas bouger — tantôt sur fond clair, où elles échouent. Corriger
+ * classe par classe demanderait de trancher 800 occurrences à la main, avec
+ * autant d'occasions de se tromper.
+ *
+ * La solution tient au fait que LES VARIABLES CSS HÉRITENT : une variable
+ * redéfinie sur une section n'est visible que dans cette section, et une
+ * sous-section peut la redéfinir à son tour. C'est exactement la règle
+ * voulue — « la surface la plus proche décide de la couleur du texte » — et
+ * elle se règle en une quinzaine de lignes au lieu de trois cents retouches.
+ *
+ * Pourquoi ne pas redéfinir `--color-brand-cyan` directement, ce qui serait
+ * plus court ? Parce que `bg-brand-cyan` s'en sert aussi : les boutons cyan
+ * pleins, signature de la charte, deviendraient bleu foncé. On ne retouche
+ * donc que la couleur de TEXTE et de BORDURE.
+ *
+ * Les surfaces translucides (`bg-white/5`, `bg-brand-dark/20`…) sont
+ * volontairement absentes des deux listes : ce sont des voiles posés sur une
+ * autre surface, pas des surfaces. Le sélecteur `~=` compare des jetons de
+ * classe entiers, donc `bg-white/5` n'est jamais confondu avec `bg-white`.
+ * ======================================================================== */
+:root {
+  /* Par défaut, rien ne change : ce sont les couleurs d'aujourd'hui. */
+  --mb-cyan-texte: var(--color-brand-cyan);
+  --mb-gris-400: var(--color-gray-400);
+  --mb-gris-500: var(--color-gray-500);
+}
+
+:is(
+  [class~="bg-white"],
+  [class~="bg-white/90"],
+  [class~="bg-white/80"],
+  [class~="bg-brand-light"],
+  [class~="bg-brand-light/95"],
+  [class~="bg-brand-mist"],
+  [class~="bg-gray-50"],
+  [class~="bg-gray-100"],
+  [class~="bg-[#e8eef2]"]
+) {
+  --mb-cyan-texte: var(--color-brand-cyan-ink);
+  --mb-gris-400: var(--color-gray-attenue);
+  --mb-gris-500: var(--color-gray-doux);
+}
+
+:is(
+  [class~="bg-brand-dark"],
+  [class~="bg-brand-dark/95"],
+  [class~="bg-brand-dark/98"],
+  [class~="bg-brand-dark/90"],
+  [class~="bg-brand-dark/80"],
+  [class~="bg-ink-950"],
+  [class~="bg-ink-950/95"],
+  [class~="bg-ink-900"],
+  [class~="bg-ink-850"],
+  [class~="bg-ink-800"],
+  [class~="bg-[#0e0e10]"]
+) {
+  --mb-cyan-texte: var(--color-brand-cyan);
+  --mb-gris-400: var(--color-gray-400);
+  /* gray-500 tombe à 2,5–3,9:1 sur nos fonds sombres : on le remonte au 400,
+     qui y tient entre 4,7 et 7,2:1. */
+  --mb-gris-500: var(--color-gray-400);
+}
+
+/* Ces règles sont HORS `@layer` : elles l'emportent donc sur les utilitaires
+   Tailwind quelle que soit leur spécificité. Les variantes sont reprises une
+   à une — un sélecteur par attribut du type [class*="text-brand-cyan"]
+   colorerait aussi l'état de repos d'un `hover:text-brand-cyan`. */
+.text-brand-cyan,
+.hover\:text-brand-cyan:hover,
+.group-hover\:text-brand-cyan:is(:where(.group):hover *),
+.marker\:text-brand-cyan::marker,
+.marker\:text-brand-cyan ::marker {
+  color: var(--mb-cyan-texte);
+}
+
+.border-brand-cyan,
+.hover\:border-brand-cyan:hover,
+.focus\:border-brand-cyan:focus,
+.group-hover\:border-brand-cyan:is(:where(.group):hover *) {
+  border-color: var(--mb-cyan-texte);
+}
+
+.text-gray-400 { color: var(--mb-gris-400); }
+.text-gray-500 { color: var(--mb-gris-500); }
 
 html {
   scroll-behavior: smooth;

@@ -408,7 +408,10 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
                     </div>
                     <div className={reverse ? 'lg:order-1' : ''}>
                       <div className="flex items-center gap-3 mb-2 sm:mb-4">
-                        <span className="text-brand-cyan/30 font-bold text-xl sm:text-2xl">0{i + 1}</span>
+                        {/* Le cyan à 30 % ne donne que 1,76:1 sur brand-dark ;
+                            à 70 % il atteint 3,85:1, au-dessus du seuil de 3:1
+                            qui s'applique à ce corps de texte. */}
+                        <span className="text-brand-cyan/70 font-bold text-xl sm:text-2xl">0{i + 1}</span>
                         <h3 className="font-bold text-xl sm:text-2xl uppercase tracking-tight text-brand-cyan">{h.title}</h3>
                       </div>
                       <p className="text-gray-300 leading-relaxed text-base sm:text-lg">{h.text}</p>

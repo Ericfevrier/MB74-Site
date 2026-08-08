@@ -164,7 +164,7 @@ export function PartnersLocationSection() {
                  <form className="space-y-6" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                         <label htmlFor="nom-complet" className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-2">Nom Complet</label>
+                         <label htmlFor="nom-complet" className="text-[10px] font-bold uppercase tracking-widest text-white/60 ml-2">Nom Complet</label>
                          <input
                            id="nom-complet"
                            name="nom"
@@ -175,7 +175,7 @@ export function PartnersLocationSection() {
                          />
                       </div>
                       <div className="space-y-2">
-                         <label htmlFor="email-address" className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-2">Email</label>
+                         <label htmlFor="email-address" className="text-[10px] font-bold uppercase tracking-widest text-white/60 ml-2">Email</label>
                          <input
                            id="email-address"
                            name="email"
@@ -187,7 +187,7 @@ export function PartnersLocationSection() {
                       </div>
                     </div>
                     <div className="space-y-2">
-                       <label htmlFor="contact-message" className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-2">Message</label>
+                       <label htmlFor="contact-message" className="text-[10px] font-bold uppercase tracking-widest text-white/60 ml-2">Message</label>
                        <textarea
                           id="contact-message"
                           name="message"
@@ -200,7 +200,7 @@ export function PartnersLocationSection() {
                     
                     {/* File Upload / Add Image */}
                     <div className="space-y-2">
-                       <label className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-2">Ajouter une image (Optionnel)</label>
+                       <label className="text-[10px] font-bold uppercase tracking-widest text-white/60 ml-2">Ajouter une image (Optionnel)</label>
                        <div className="relative group/upload">
                           <input 
                             type="file" 
@@ -213,7 +213,7 @@ export function PartnersLocationSection() {
                             htmlFor="image-upload"
                             className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/10 rounded-2xl hover:border-brand-cyan hover:bg-brand-cyan/5 transition-all cursor-pointer group-hover/upload:scale-[0.995]"
                           >
-                             <div className="flex flex-col items-center gap-2 text-white/40 group-hover/upload:text-brand-cyan">
+                             <div className="flex flex-col items-center gap-2 text-white/60 group-hover/upload:text-brand-cyan">
                                 {fileName ? (
                                   <>
                                     <span className="text-brand-cyan font-bold text-sm">✓ {fileName}</span>
@@ -250,7 +250,7 @@ export function PartnersLocationSection() {
                       <Phone size={20} />
                     </div>
                     <div>
-                      <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Appelez-nous</h4>
+                      <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/60">Appelez-nous</h4>
                       <a href="tel:+33457572727" className="inline-flex min-h-11 items-center font-bold hover:text-brand-cyan transition-colors">04 57 57 27 27</a>
                     </div>
                   </div>
@@ -259,7 +259,7 @@ export function PartnersLocationSection() {
                       <Mail size={20} />
                     </div>
                     <div>
-                      <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/40">Email direct</h4>
+                      <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/60">Email direct</h4>
                       <a href="mailto:contact@motorboat74.com" className="inline-flex min-h-11 items-center font-bold hover:text-brand-cyan transition-colors">contact@motorboat74.com</a>
                     </div>
                   </div>

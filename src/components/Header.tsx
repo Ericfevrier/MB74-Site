@@ -66,7 +66,10 @@ export function Header() {
             />
             <div className="text-white hidden sm:block">
               <span className="text-xl font-bold leading-none tracking-tight group-hover:text-brand-cyan transition-colors block">MOTORBOAT <span className="text-brand-cyan group-hover:text-white">74</span></span>
-              <p className="text-[10px] tracking-widest font-bold opacity-30 uppercase mt-1">Services Nautiques</p>
+              {/* `opacity-30` donnait 2,5:1 sur le fond de l'en-tête, pour un
+                  texte de 10 px : sous le seuil de 4,5:1. À 70 % il atteint
+                  6,7:1 en restant nettement en retrait du nom de la marque. */}
+              <p className="text-[10px] tracking-widest font-bold opacity-70 uppercase mt-1">Services Nautiques</p>
             </div>
           </Link>
 

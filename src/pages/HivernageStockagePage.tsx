@@ -488,17 +488,17 @@ export function HivernageStockagePage() {
                   {/* Formule 2 */}
                   <div className="bg-white border border-gray-200 rounded-3xl p-8 relative flex flex-col justify-between hover:shadow-2xl transition-all">
                     <div>
-                      <div className="mb-4 text-brand-cyan/50 font-bold text-2xl">02</div>
+                      <div className="mb-4 text-brand-cyan font-bold text-2xl">02</div>
                       <h3 className="text-xl font-bold uppercase text-brand-dark mb-2">Stockage seul</h3>
                       <p className="text-xs text-gray-600 mb-6">Une place au sec et sécurisée pour garer votre remorque avec son bateau.</p>
                       
                       <ul className="space-y-3 mb-8 text-sm text-gray-600">
-                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan/60 flex-shrink-0" /> Emplacement sous hangar sec couvert</li>
-                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan/60 flex-shrink-0" /> Zone entièrement climatisée & hors gel</li>
-                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan/60 flex-shrink-0" /> Surveillance vidéo en continu 24h/24</li>
-                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan/60 flex-shrink-0" /> Alarme intrusions branchée gendarmerie</li>
-                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan/60 flex-shrink-0" /> Remisage sur votre remorque ou plots</li>
-                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan/60 flex-shrink-0" /> Options de contrats annuels adaptatifs</li>
+                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0" /> Emplacement sous hangar sec couvert</li>
+                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0" /> Zone entièrement climatisée & hors gel</li>
+                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0" /> Surveillance vidéo en continu 24h/24</li>
+                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0" /> Alarme intrusions branchée gendarmerie</li>
+                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0" /> Remisage sur votre remorque ou plots</li>
+                        <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-brand-cyan flex-shrink-0" /> Options de contrats annuels adaptatifs</li>
                       </ul>
                     </div>
 

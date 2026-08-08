@@ -183,20 +183,20 @@ export function Footer() {
               { name: 'CGV Pro', path: '/cgv-pro' },
               { name: 'Contact', path: '/contact' },
             ].map((link) => (
-              <Link key={link.name} to={link.path} className="inline-flex min-h-8 items-center text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">
+              <Link key={link.name} to={link.path} className="inline-flex min-h-8 items-center text-[11px] font-bold uppercase tracking-widest text-white/60 hover:text-white transition-colors">
                 {link.name}
               </Link>
             ))}
             <button
               type="button"
               onClick={() => openCookieSettings()}
-              className="inline-flex min-h-8 items-center text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors"
+              className="inline-flex min-h-8 items-center text-[11px] font-bold uppercase tracking-widest text-white/60 hover:text-white transition-colors"
             >
               Cookies
             </button>
           </div>
           <div className="flex items-center gap-5">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-white/20">
+            <p className="text-[11px] font-bold uppercase tracking-widest text-white/50">
               © {new Date().getFullYear()} Tous droits réservés
             </p>
             {/* Le cadenas reste à 13 px ; c'est la zone cliquable qui passe à 32.
@@ -206,7 +206,7 @@ export function Footer() {
               to="/admin"
               aria-label="Espace administration"
               title="Administration"
-              className="-m-2.5 grid h-8 w-8 shrink-0 place-items-center text-white/20 hover:text-brand-cyan transition-colors"
+              className="-m-2.5 grid h-8 w-8 shrink-0 place-items-center text-white/50 hover:text-brand-cyan transition-colors"
             >
               <Lock size={13} />
             </Link>
