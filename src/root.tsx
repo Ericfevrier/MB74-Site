@@ -1,6 +1,5 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation, useRouteError, isRouteErrorResponse, Link } from 'react-router';
 import { Compass, RotateCcw, ArrowLeft } from 'lucide-react';
-import { MotionConfig } from 'motion/react';
 import './index.css';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -35,22 +34,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {/*
          * Filet sans JavaScript.
          *
-         * Les révélations au défilement (`motion/react`) sont prérendues avec
-         * leur état de DÉPART inline : le HTML livré contient
-         * `style="opacity:0;transform:translateY(30px)"` sur, entre autres,
-         * les 15 cartes modèle des pages de marque et les héros. Le contenu est
-         * bien là — c'est tout l'intérêt du prérendu — mais invisible tant que
-         * le script n'a pas pris la main.
+         * Les accordéons — FAQ des pages modèle, service et hivernage, options
+         * d'équipement — sont prérendus repliés : le HTML livré porte
+         * `style="grid-template-rows:0fr;opacity:0"` sur les panneaux fermés.
+         * Le contenu est bien là, et c'est voulu : il reste ainsi indexable.
+         * Mais sans script, aucun clic ne peut les ouvrir.
          *
-         * Ces trois règles rendent la page lisible telle quelle. Elles ne
-         * s'appliquent que si JavaScript est absent ; dès qu'il tourne,
-         * `<noscript>` est ignoré et l'animation reprend normalement.
-         *
-         * `height:0px` vise les accordéons FAQ : sans script on ne peut pas les
-         * ouvrir, donc on affiche les réponses dépliées.
+         * Ces règles les déplient. Elles ne s'appliquent que si JavaScript est
+         * absent ; dès qu'il tourne, `<noscript>` est ignoré et les accordéons
+         * reprennent leur comportement normal.
          */}
         <noscript>
-          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}[style*="height:0px"]{height:auto!important}`}</style>
+          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}[style*="0fr"]{grid-template-rows:1fr!important}[style*="height:0px"]{height:auto!important}`}</style>
         </noscript>
       </head>
       <body>
@@ -117,29 +112,30 @@ export default function App() {
   }
   return (
     /*
-     * `reducedMotion="user"` fait respecter le réglage système à TOUTES les
-     * animations `motion/react` du site, sans avoir à les reprendre une par une.
-     * Elles sont pilotées en JavaScript et échappent donc à la règle CSS
-     * `prefers-reduced-motion` d'index.css — il faut bien les deux.
+     * `MotionConfig` — et avec lui l'import de `motion/react` — a été retiré
+     * d'ici. Il n'existe plus une seule animation JavaScript sur le site :
+     * accordéons et visionneuse d'images sont passés en CSS.
      *
-     * Il ne reste que des animations déclenchées par un clic : ouverture
-     * d'accordéon, lightbox. Les révélations au défilement ont toutes été
-     * retirées — elles donnaient l'impression que la page se chargeait encore.
+     * L'enjeu n'était pas le composant mais l'import : `root.tsx` étant chargé
+     * par toutes les routes, il tirait les 40 Ko de la bibliothèque sur les
+     * 69 pages, y compris l'accueil qui n'a jamais eu la moindre animation.
+     *
+     * Le réglage système reste respecté : les transitions CSS obéissent à la
+     * règle `prefers-reduced-motion` d'index.css, ce que `reducedMotion="user"`
+     * assurait pour les animations JavaScript, qui, elles, y échappaient.
      */
-    <MotionConfig reducedMotion="user">
-      <SettingsProvider>
-        {/* `min-h-dvh` et non `min-h-screen` : sur iOS, `100vh` vaut le viewport
-            barre d'adresse masquée, soit ~60 px de plus que la hauteur réellement
-            visible au chargement. L'unité dynamique suit la barre. */}
-        <div className="min-h-dvh flex flex-col bg-brand-light">
-          <Header />
-          <main className="flex-1">
-            <Outlet />
-          </main>
-          <Footer />
-          <CookieConsent />
-        </div>
-      </SettingsProvider>
-    </MotionConfig>
+    <SettingsProvider>
+      {/* `min-h-dvh` et non `min-h-screen` : sur iOS, `100vh` vaut le viewport
+          barre d'adresse masquée, soit ~60 px de plus que la hauteur réellement
+          visible au chargement. L'unité dynamique suit la barre. */}
+      <div className="min-h-dvh flex flex-col bg-brand-light">
+        <Header />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+        <CookieConsent />
+      </div>
+    </SettingsProvider>
   );
 }

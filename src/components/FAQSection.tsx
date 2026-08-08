@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
 
 interface FAQItem {
@@ -85,24 +84,44 @@ export function FAQSection({ brandName }: { brandName: string }) {
                 </button>
               </h3>
               {/*
-                Réponse TOUJOURS montée, repliée par l'animation de hauteur.
+                Réponse TOUJOURS montée, repliée par une transition CSS.
 
-                Le montage était conditionné à `activeIndex === idx` : seule la
-                réponse ouverte existait dans le DOM, donc une seule des quatre
-                se retrouvait dans le HTML prérendu. Les trois autres étaient
-                invisibles des moteurs comme des lecteurs d'écran.
+                Deux exigences se cumulent ici. D'abord l'indexation : le montage
+                était autrefois conditionné à `activeIndex === idx`, si bien
+                qu'une seule des quatre réponses figurait dans le HTML prérendu —
+                les trois autres étaient invisibles des moteurs comme des
+                lecteurs d'écran. Un contenu replié reste indexé dès lors qu'il
+                est dans le DOM : il suffit de ne pas le démonter.
 
-                Un contenu replié dans un accordéon reste indexé dès lors qu'il
-                est dans le DOM : il suffit de ne plus le démonter.
+                Ensuite le poids. On ne peut pas animer `height` de 0 à `auto` :
+                le navigateur ne sait pas interpoler vers une valeur qu'il ignore
+                encore. C'était la seule raison d'être de `motion` sur cette
+                page. Mais une grille sait le faire — `grid-template-rows` passe
+                de `0fr` à `1fr`, et la fraction, elle, s'interpole. L'accordéon
+                s'ouvre à la hauteur exacte de son contenu, sans les 40 Ko de
+                bibliothèque.
+
+                `min-h-0` sur l'enfant est indispensable : un élément de grille
+                vaut `min-height: auto` par défaut et refuse de descendre sous la
+                hauteur de son contenu — la ligne resterait ouverte.
+
+                Bénéfice second : cette transition CSS obéit d'elle-même à la
+                règle `prefers-reduced-motion` d'index.css, ce qu'une animation
+                pilotée en JavaScript ne fait pas.
               */}
-              <motion.div
-                initial={false}
-                animate={{ height: activeIndex === idx ? 'auto' : 0, opacity: activeIndex === idx ? 1 : 0 }}
-                className="overflow-hidden"
+              <div
+                className="grid overflow-hidden"
+                style={{
+                  gridTemplateRows: activeIndex === idx ? '1fr' : '0fr',
+                  opacity: activeIndex === idx ? 1 : 0,
+                  transition: 'grid-template-rows 300ms ease-out, opacity 300ms ease-out',
+                }}
                 aria-hidden={activeIndex !== idx}
               >
-                <div className="px-6 pb-6 text-gray-600 font-medium leading-relaxed">{faq.answer}</div>
-              </motion.div>
+                <div className="min-h-0">
+                  <div className="px-6 pb-6 text-gray-600 font-medium leading-relaxed">{faq.answer}</div>
+                </div>
+              </div>
             </div>
           ))}
         </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router';
-import { motion, AnimatePresence } from 'motion/react';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { OtherServices } from '../components/OtherServices';
 import { pageMeta } from '../lib/meta';
@@ -933,21 +932,26 @@ export function HivernageStockagePage() {
                             className={`w-5 h-5 text-brand-cyan transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} 
                           />
                         </button>
-                        <AnimatePresence initial={false}>
-                          {isOpen && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: 'auto', opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.3 }}
-                              className="overflow-hidden bg-white border-t border-gray-200"
-                            >
-                              <div className="p-6 text-sm text-gray-600 leading-relaxed font-light">
-                                {faq.a}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                        {/* Repli CSS, réponse toujours montée — voir FAQSection.tsx.
+                            La bordure haute n'apparaît qu'à l'ouverture : posée
+                            en permanence, elle laisserait un trait résiduel sur
+                            un panneau replié à hauteur nulle. */}
+                        <div
+                          className="grid overflow-hidden bg-white"
+                          style={{
+                            gridTemplateRows: isOpen ? '1fr' : '0fr',
+                            opacity: isOpen ? 1 : 0,
+                            borderTop: isOpen ? '1px solid var(--color-gray-200)' : '1px solid transparent',
+                            transition: 'grid-template-rows 300ms ease-out, opacity 300ms ease-out',
+                          }}
+                          aria-hidden={!isOpen}
+                        >
+                          <div className="min-h-0">
+                            <div className="p-6 text-sm text-gray-600 leading-relaxed font-light">
+                              {faq.a}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     );
                   })}

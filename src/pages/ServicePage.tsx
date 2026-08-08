@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useParams, Navigate, Link } from 'react-router';
-import { motion, AnimatePresence } from 'motion/react';
 import { Breadcrumb } from '../components/Breadcrumb';
 import {
   ChevronDown, Check, ArrowRight, Phone,
@@ -336,18 +335,23 @@ export function ServicePage() {
                     className={`flex-shrink-0 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180 text-brand-cyan' : ''}`}
                   />
                 </button>
-                <AnimatePresence>
-                  {activeFaq === idx && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="px-6 pb-6 text-gray-600 leading-relaxed"
-                    >
-                      {faq.answer}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* Repli CSS, réponse toujours montée — voir FAQSection.tsx pour
+                    le détail du procédé. Le montage conditionnel précédent
+                    laissait les réponses hors du HTML prérendu, alors qu'elles
+                    alimentent le balisage FAQPage de la page. */}
+                <div
+                  className="grid overflow-hidden"
+                  style={{
+                    gridTemplateRows: activeFaq === idx ? '1fr' : '0fr',
+                    opacity: activeFaq === idx ? 1 : 0,
+                    transition: 'grid-template-rows 300ms ease-out, opacity 300ms ease-out',
+                  }}
+                  aria-hidden={activeFaq !== idx}
+                >
+                  <div className="min-h-0">
+                    <div className="px-6 pb-6 text-gray-600 leading-relaxed">{faq.answer}</div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

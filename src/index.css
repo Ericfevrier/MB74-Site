@@ -175,6 +175,17 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Fondu d'apparition — remplace le seul usage restant de `motion` (visionneuse
+   d'images des pages modèle). La règle `prefers-reduced-motion` plus bas ramène
+   sa durée à 0,01 ms, ce qu'une animation JavaScript n'aurait pas respecté. */
+@keyframes mb-fondu {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.mb-fondu {
+  animation: mb-fondu 200ms ease-out;
+}
+
 /*
  * Mouvement réduit — respecté globalement, plus seulement sur le défilement.
  *

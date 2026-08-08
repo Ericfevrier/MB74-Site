@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link, Navigate } from 'react-router';
-import { motion, AnimatePresence } from 'motion/react';
 import {
   ChevronDown, ArrowRight, Phone, Ruler, Users, Gauge, Check, X,
   ChevronLeft, ChevronRight, Play, Sparkles, Fuel, Settings2,
@@ -629,20 +628,27 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
                         {o.title}
                         <ChevronDown className={`flex-shrink-0 transition-transform duration-300 ${openOpt === i ? 'rotate-180 text-brand-cyan' : ''}`} />
                       </button>
-                      <AnimatePresence>
-                        {openOpt === i && (
-                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="px-5 pb-5">
-                            <ul className="space-y-2">
-                              {o.items.map((it, j) => (
-                                <li key={j} className="flex items-start gap-3 text-gray-300 text-sm">
-                                  <Check size={16} className="text-brand-cyan flex-shrink-0 mt-0.5" />
-                                  <span>{it}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      {/* Repli CSS, contenu toujours monté — voir FAQSection.tsx. */}
+                      <div
+                        className="grid overflow-hidden"
+                        style={{
+                          gridTemplateRows: openOpt === i ? '1fr' : '0fr',
+                          opacity: openOpt === i ? 1 : 0,
+                          transition: 'grid-template-rows 300ms ease-out, opacity 300ms ease-out',
+                        }}
+                        aria-hidden={openOpt !== i}
+                      >
+                        <div className="min-h-0">
+                          <ul className="space-y-2 px-5 pb-5">
+                            {o.items.map((it, j) => (
+                              <li key={j} className="flex items-start gap-3 text-gray-300 text-sm">
+                                <Check size={16} className="text-brand-cyan flex-shrink-0 mt-0.5" />
+                                <span>{it}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -740,13 +746,22 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
                       <ChevronDown className={`flex-shrink-0 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180 text-brand-cyan' : ''}`} />
                     </button>
                   </h3>
-                  <AnimatePresence>
-                    {activeFaq === idx && (
-                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="px-6 pb-6 text-gray-400 leading-relaxed">
-                        {renderAnswer(faq.a)}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {/* Repli CSS, réponse toujours montée — voir FAQSection.tsx.
+                      Ces réponses alimentent le balisage FAQPage de la page
+                      modèle : elles doivent figurer dans le HTML prérendu. */}
+                  <div
+                    className="grid overflow-hidden"
+                    style={{
+                      gridTemplateRows: activeFaq === idx ? '1fr' : '0fr',
+                      opacity: activeFaq === idx ? 1 : 0,
+                      transition: 'grid-template-rows 300ms ease-out, opacity 300ms ease-out',
+                    }}
+                    aria-hidden={activeFaq !== idx}
+                  >
+                    <div className="min-h-0">
+                      <div className="px-6 pb-6 text-gray-400 leading-relaxed">{renderAnswer(faq.a)}</div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -795,12 +810,15 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
         </a>
       </div>
 
-      {/* ===================== LIGHTBOX ===================== */}
-      <AnimatePresence>
-        {lightbox !== null && (
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4"
+      {/* ===================== LIGHTBOX =====================
+          Ouverture en fondu par une animation CSS (`mb-fondu`, index.css).
+          La fermeture est immédiate : `AnimatePresence` savait retarder le
+          démontage le temps d'un fondu sortant, mais c'était le dernier service
+          rendu par `motion` sur tout le site — 40 Ko de bibliothèque pour
+          200 ms sur une image qu'on vient de fermer volontairement. */}
+      {lightbox !== null && (
+          <div
+            className="mb-fondu fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4"
             onClick={closeLb}
           >
             <button onClick={closeLb} aria-label="Fermer" className="absolute top-5 right-5 w-11 h-11 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20"><X size={22} /></button>
@@ -813,9 +831,8 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
               onClick={(e) => e.stopPropagation()}
               className="max-w-full max-h-[85dvh] rounded-2xl object-contain"
             />
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+      )}
     </div>
   );
 }
