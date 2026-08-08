@@ -1,5 +1,47 @@
-/* Police Inter chargée via <link> dans <head> (voir root.tsx) — évite la chaîne de requêtes bloquante d'un @import CSS. */
 @import "tailwindcss";
+
+/* ===========================================================================
+ * INTER, AUTO-HÉBERGÉE
+ *
+ * La police venait de fonts.googleapis.com. PageSpeed mesurait, sur la page
+ * d'accueil en 4G lente : 780 ms de rendu BLOQUÉ par la feuille de style
+ * Google, puis une chaîne critique vers fonts.gstatic.com pour le fichier
+ * lui-même. Deux origines externes, deux résolutions DNS, deux poignées de
+ * main TLS — avant que le premier texte ne s'affiche.
+ *
+ * Servie depuis le même domaine, la police part avec la connexion déjà
+ * ouverte, et le `<link rel="preload">` de root.tsx la demande dès la lecture
+ * du `<head>`, en parallèle du CSS au lieu d'attendre après lui.
+ *
+ * UN SEUL FICHIER PAR SOUS-ENSEMBLE : Inter est une police VARIABLE depuis la
+ * v20. Les six URL que Google sert pour les six graisses pointent en réalité
+ * vers un fichier identique — vérifié par empreinte SHA-256, les six sont au
+ * même octet près. D'où `font-weight: 100 900` : une seule requête couvre
+ * toute la plage, au lieu de cinq téléchargements du même contenu.
+ *
+ * Cyrillique, grec et vietnamien sont écartés : le site est en français. Les
+ * `unicode-range` sont ceux de Google, pour que le navigateur ne télécharge
+ * `latin-ext` (83 Ko) que s'il rencontre un caractère qui l'exige — sur une
+ * page française courante, seul `latin` (47 Ko) part.
+ *
+ * Inter est sous licence SIL Open Font, l'auto-hébergement est prévu par elle.
+ * ======================================================================== */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
 
 @theme {
   --font-sans: "Inter", "Arial", ui-sans-serif, system-ui, sans-serif;

@@ -15,6 +15,7 @@ import { SITE } from '../data/site';
 import { ServiceContactBlock } from './services/ServiceContactBlock';
 import { pageMeta, fitLength, SEO_LIMITS } from '../lib/meta';
 import { breadcrumbSchema, faqSchema, businessNode } from '../lib/schema';
+import { useLazyCarousel } from '../lib/lazyCarousel';
 
 const GROUP_ICON: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Dimensions: Ruler,
@@ -147,6 +148,9 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
   const [openOpt, setOpenOpt] = useState<number | null>(0);
   const [activeAnchor, setActiveAnchor] = useState<string>('');
   const liveBoats = useLiveUsedBoats(); // occasions live (admin) pour le carrousel « similaires »
+  // Vignettes du carrousel « occasions similaires » : chargées a l'approche de
+  // la section, jamais au chargement de la fiche.
+  const occasionsRef = useLazyCarousel<HTMLDivElement>();
   useSeoOverride(model?.seo);
 
   useEffect(() => {
@@ -659,14 +663,15 @@ export function ModelPage({ model: modelProp }: { model?: NautiqueModel | null }
           </div>
 
           {occasions.length > 0 ? (
-            <div className="flex gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-2 -mx-4 px-4">
+            <div ref={occasionsRef} className="flex gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-2 -mx-4 px-4">
               {occasions.map((b, i) => (
                 <article key={i} className="flex-shrink-0 w-[300px] md:w-[340px] snap-start bg-ink-900 border border-white/10 rounded-3xl overflow-hidden">
                   <div className="relative aspect-[4/3] overflow-hidden">
-                    {/* Même règle que le carrousel de l'accueil : au-delà de la
-                        première vignette, les suivantes attendent hors écran à
-                        droite et le chargement différé ne se déclenche pas. */}
-                    <img src={b.image} alt={`${b.title} ${b.year} d'occasion`} loading={i === 0 ? 'lazy' : undefined} decoding="async" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                    {/* Différé, et réellement chargé par `useLazyCarousel` quand
+                        la section approche : le contournement précédent — retirer
+                        `lazy` au-delà de la première — faisait partir toutes ces
+                        vignettes dès l'ouverture de la fiche. */}
+                    <img src={b.image} alt={`${b.title} ${b.year} d'occasion`} loading="lazy" decoding="async" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                     {b.sold && (
                       <span className="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">Vendu</span>
                     )}

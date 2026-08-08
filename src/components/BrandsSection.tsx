@@ -1,9 +1,13 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLazyCarousel } from '../lib/lazyCarousel';
 
 export function BrandsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  // Charge les six vignettes du carrousel quand la section approche de l'ecran,
+  // et pas avant : elles pesaient 600 Ko partis des le chargement de la page.
+  useLazyCarousel(scrollRef);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -173,7 +177,7 @@ export function BrandsSection() {
                     src={sport.img}
                     alt={`Équipement ${sport.name} Connelly`}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-110"
-                    loading={idx < 2 ? 'lazy' : undefined}
+                    loading="lazy"
                     decoding="async"
                     referrerPolicy="no-referrer"
                   />

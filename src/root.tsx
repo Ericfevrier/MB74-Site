@@ -17,9 +17,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="theme-color" content="#2F2D2D" />
         <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+        {/*
+          Police servie depuis notre domaine (voir le bloc @font-face
+          d'index.css). Les deux `preconnect` vers Google et le `<link
+          rel="stylesheet">` externe qui bloquait le rendu 780 ms sont
+          supprimés — il n'y a plus d'origine tierce à joindre.
+
+          `preload` : sans lui, le navigateur ne découvre la police qu'après
+          avoir téléchargé ET analysé le CSS. Ici il la demande dès la lecture
+          du `<head>`, en parallèle. Seul le sous-ensemble latin est préchargé :
+          c'est celui dont une page française a besoin ; `latin-ext` reste
+          disponible et ne part que si un caractère l'exige.
+        */}
+        <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <Meta />
         <Links />
         {/*

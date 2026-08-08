@@ -375,6 +375,35 @@ if (WP_UPLOADS && existsSync(WP_UPLOADS)) {
 app.use('/uploads', express.static(path.join(rootDir, 'uploads'), { maxAge: '1y' }));
 // Assets fingerprintés → cache immuable ; autres fichiers publics → cache court.
 app.use('/assets', express.static(path.join(clientDir, 'assets'), { immutable: true, maxAge: '1y' }));
+/*
+ * Police auto-hébergée : cache d'un an, immuable.
+ * Le contenu d'un fichier de police ne change jamais — une nouvelle version
+ * d'Inter porterait un autre nom. C'est aussi la ressource préchargée dans le
+ * `<head>` : la laisser expirer au bout d'une heure annulerait le bénéfice dès
+ * la deuxième visite.
+ */
+app.use(
+  '/fonts',
+  express.static(path.join(clientDir, 'fonts'), { immutable: true, maxAge: '1y', index: false, redirect: false }),
+);
+
+/*
+ * Images du build : 30 jours au lieu d'une heure.
+ *
+ * PageSpeed relevait 885 Ko servis avec un cache d'une heure — toutes les
+ * photos de bateaux, les logos de marque, les visuels de service. Une heure
+ * signifie qu'un visiteur qui revient le lendemain retélécharge tout.
+ *
+ * Ces fichiers ne portent PAS d'empreinte dans leur nom, contrairement à ceux
+ * d'`/assets`. Conséquence directe et à connaître : REMPLACER UNE IMAGE EN
+ * GARDANT LE MÊME NOM DE FICHIER laisse les visiteurs sur l'ancienne version
+ * pendant 30 jours. Pour changer un visuel, changer aussi son nom.
+ * Les médias téléversés depuis l'admin vivent dans `/uploads`, servi plus haut.
+ */
+app.use(
+  '/images',
+  express.static(path.join(clientDir, 'images'), { maxAge: '30d', index: false, redirect: false }),
+);
 // redirect:false → ne pas rediriger '/depannage' vers '/depannage/' (les dossiers
 // prérendus existent) ; le catch-all sert directement le HTML de la route.
 app.use(express.static(clientDir, { maxAge: '1h', index: false, redirect: false }));

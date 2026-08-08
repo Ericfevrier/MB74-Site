@@ -97,7 +97,23 @@ export function PartnersLocationSection() {
           <div className="mb-marquee relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
             <div className="mb-marquee-track">
               {[0, 1].map((copy) => (
-                <div key={copy} className="flex items-center shrink-0" aria-hidden={copy === 1}>
+                /*
+                 * La seconde piste est un DOUBLON visuel, présent uniquement
+                 * pour que la boucle du défilement soit continue.
+                 *
+                 * `aria-hidden` seul ne suffisait pas : les logos sont des
+                 * liens, qui restaient atteignables au clavier. On tabulait
+                 * donc deux fois sur les mêmes partenaires, dont la seconde
+                 * sur des éléments annoncés comme inexistants aux lecteurs
+                 * d'écran — c'est l'échec « ARIA hidden element must not be
+                 * focusable or contain focusable elements » relevé par
+                 * Lighthouse, en accessibilité comme en navigation agentique.
+                 *
+                 * `inert` retire tout le sous-arbre du parcours clavier ET de
+                 * l'arbre d'accessibilité, ce qu'`aria-hidden` ne fait qu'à
+                 * moitié. React 19 le passe tel quel en attribut HTML.
+                 */
+                <div key={copy} className="flex items-center shrink-0" aria-hidden={copy === 1} inert={copy === 1}>
                   {partners.map((p, i) => (
                     /* Créneau de largeur fixe : ~5 logos visibles à la fois (20vw sur desktop). */
                     <div key={`${copy}-${i}`} className="shrink-0 flex items-center justify-center w-[50vw] sm:w-[33vw] lg:w-[20vw] px-1.5 sm:px-2.5">
