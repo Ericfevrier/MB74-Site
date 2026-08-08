@@ -50,8 +50,46 @@ const parseArr = (v) => {
   }
 };
 
+/*
+ * URL WordPress héritée → fichier importé localement.
+ *
+ * La table `used_boats` vient de l'import WordPress et conserve les adresses
+ * absolues de l'ancien site : https://motorboat74.com/wp-content/uploads/…
+ * Ces chemins n'existent plus depuis la refonte, et les 50 images des annonces
+ * répondaient donc 404. Le symptôme trompait : le HTML prérendu, lui, porte les
+ * bonnes URL (les données statiques de src/data/usedBoats.ts passent par une
+ * fonction de conversion). Les vignettes s'affichaient donc une fraction de
+ * seconde, puis disparaissaient — c'est l'HYDRATATION qui les cassait, en
+ * remplaçant les données statiques par les données live de la base.
+ *
+ * On reproduit ici la conversion de src/data/usedBoats.ts, à l'identique :
+ *   elementor/thumbs/NOM.jpeg  →  /images/imported/wp-thumb-<nom-normalisé>.webp
+ *   2025/09/NOM.jpg            →  /images/imported/wp-<chemin-normalisé>.webp
+ *
+ * Vérifié sur les 50 URL renvoyées par l'API : 50 pointent vers un fichier
+ * présent dans public/images/imported/.
+ *
+ * La fonction est neutre sur toute autre valeur — les images ajoutées depuis
+ * l'admin (/uploads/…) traversent sans être touchées — et idempotente : une
+ * adresse déjà convertie ne contient plus « wp-content/uploads ».
+ */
+const wpSan = (s) =>
+  s.replace(/\.(jpg|jpeg|png|webp|avif)$/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+function normaliserImageWp(u) {
+  if (typeof u !== 'string' || !u) return u;
+  const sansParametres = u.split('?')[0].split('#')[0];
+  const m = sansParametres.match(/\/wp-content\/uploads\/(.+)$/);
+  if (!m) return u;
+  const vignette = m[1].match(/^elementor\/thumbs\/(.+)$/);
+  return vignette
+    ? `/images/imported/wp-thumb-${wpSan(vignette[1])}.webp`
+    : `/images/imported/wp-${wpSan(m[1])}.webp`;
+}
+
 /** Ligne DB → forme `UsedBoat` du site (camelCase). `admin` ajoute id/status/sortOrder. */
 function rowToBoat(r, admin = false) {
+  const galerie = parseArr(r.gallery);
   const boat = {
     slug: r.slug,
     modelSlug: r.model_slug || '',
@@ -65,8 +103,8 @@ function rowToBoat(r, admin = false) {
     location: r.location || undefined,
     price: r.price,
     priceValue: r.price_value ?? undefined,
-    image: r.image,
-    gallery: parseArr(r.gallery),
+    image: normaliserImageWp(r.image),
+    gallery: galerie && galerie.map(normaliserImageWp),
     description: r.description || undefined,
     highlights: parseArr(r.highlights),
     sold: !!r.sold,
